@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,9 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'app.css' %}">
     {% block css_files %}{% endblock css_files %}
 </head>
 <body>
+    <header id='main-navigation'>
+        <h1><a href="{% url 'index' %}">Беларускія аўдыякнігі</a></h1>
+        <nav>
+            <a href="{% url 'books-page' %}">Ўсе кнігі</a>
+        </nav>
+    </header>
+
     {% block content %}
     {% endblock content %}
 </html>

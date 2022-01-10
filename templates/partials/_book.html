@@ -1,0 +1,23 @@
+{% load static %}
+
+<li>
+    <article class='book'>
+        <a href="">
+            <img src="{% static 'images/imeleg.png' %}" alt="Ivan Meleg - Podih navalnici">
+            <div class='book__content'>
+                <h4>Іван Мележ</h4>
+                <h3>Подых навальніцы</h3>
+            </div>
+        </a>
+    </article>
+</li>
+{% comment %} 
+<div class="card" style="width: 18rem;">
+    <a href="{% url "post-detail-page" post.slug %}">
+    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+    <div class="card-body">
+        <h3 class="card-title">{{ post.title }}</h3>
+        <p class="card-text">{{ post.excerpt }}</p>
+    </div>
+    </a>
+</div> {% endcomment %}

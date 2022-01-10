@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     Беларускія аўдыякнігі
 {% endblock title %}
 
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'books.css' %}">
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+{% endblock css_files %}
+
 {% block content %}
-    <header id='main-navigation'>
-        <h1><a href="">Беларускія аўдыякнігі</a></h1>
-        <nav>
-            <a href="">Ўсе кнігі</a>
-        </nav>
-    </header>
+
     <section id='welcome'>
         <header>
-            <img src="" alt="Audiobooks BY">
+            <img src="{% static 'images/logo.png' %}" alt="Audiobooks BY">
             <h2>Books from Belarus</h2>
         </header>
         <p>Навігатар па аўдыякнігах на беларускай мове і буларускіх аўтараў.</p>
@@ -24,17 +25,10 @@
         <h2>Прапануем паслухаць</h2>
 
         <ul>
-            <li>
-                <article id='book'>
-                    <a href="">
-                        <img src="" alt="Ivan Meleg - Podih navalnici">
-                        <div class='book__content'>
-                            <h4>Іван Мележ</h4>
-                            <h3>Подых навальніцы</h3>
-                        </div>
-                    </a>
-                </article>
-            </li>
+            {% include 'partials/_book.html' %}
+            {% include 'partials/_book.html' %}
+            {% include 'partials/_book.html' %}
+            {% include 'partials/_book.html' %}
         </ul>
     </section>
 

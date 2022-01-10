@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Ўсе аўдыякнігі
+{% endblock title %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'books.css' %}">
+    <link rel="stylesheet" href="{% static 'all-books.css' %}">
+{% endblock css_files %}
+
+{% block content %}
+<section id="all-books">
+    <h2>Тут вы можаце знайсці ўсе кнігі</h2>
+
+    <ul>
+        {% include 'partials/_book.html' %}
+        {% include 'partials/_book.html' %}
+        {% include 'partials/_book.html' %}
+        {% include 'partials/_book.html' %}
+        {% include 'partials/_book.html' %}
+        {% include 'partials/_book.html' %}
+        {% include 'partials/_book.html' %}
+        {% include 'partials/_book.html' %}
+    </ul>
+</section>
+{% endblock content %}

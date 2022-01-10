@@ -5,5 +5,59 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>Дабро пажалаваць!</h1>
+    <header id='main-navigation'>
+        <h1><a href="">Беларускія аўдыякнігі</a></h1>
+        <nav>
+            <a href="">Ўсе кнігі</a>
+        </nav>
+    </header>
+    <section id='welcome'>
+        <header>
+            <img src="" alt="Audiobooks BY">
+            <h2>Books from Belarus</h2>
+        </header>
+        <p>Навігатар па аўдыякнігах на беларускай мове і буларускіх аўтараў.</p>
+        <p>Тут вы можаце знайсці як аудыякнігі сучасных аўтараў так і дзіцячыя альбо класічныя кнігі.</p>
+    </section>
+
+    <section id='suggested-books'>
+        <h2>Прапануем паслухаць</h2>
+
+        <ul>
+            <li>
+                <article id='book'>
+                    <a href="">
+                        <img src="" alt="Ivan Meleg - Podih navalnici">
+                        <div class='book__content'>
+                            <h4>Іван Мележ</h4>
+                            <h3>Подых навальніцы</h3>
+                        </div>
+                    </a>
+                </article>
+            </li>
+        </ul>
+    </section>
+
+    <section id='new-books'>
+        <h2>Навінкі</h2>
+
+        <ul>
+            <li>
+                <article id='book'>
+                    <a href="">
+                        <img src="" alt="Jack London - Beli Klyk">
+                        <div class='book__content'>
+                            <h4>Джэк Лондан</h4>
+                            <h3>Белы клык</h3>
+                        </div>
+                    </a>
+                </article>
+            </li>
+        </ul>
+    </section>
+
+    <footer id='footer'>
+        <p>Made with love</p>
+    </footer>
+
 {% endblock content %}

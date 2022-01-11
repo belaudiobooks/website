@@ -2,6 +2,12 @@
 
 This project is created to allow users quickly find audioboooks that are translated to Belarusian 
 
+## Project structure
+* booksby - main project folder with settings and project top url setup
+* books, user, person - apps for each instance 
+* templates - all html templates based on each other
+* static - static files, css, js, images
+
 ## Backend setup
 
 **Note: You should have Python and Postgresql installed on your local env**
@@ -32,7 +38,7 @@ pip install -r requirements.txt
 ```
 
 ### Test initial state
-**Note: Depends on your python installation you might need to user `python3` instead of `python` in the commands below
+**Note: Depends on your python installation you might need to user `python3` instead of `python` in the commands below**
 ```
 python manage.py runserver
 ```

@@ -2,11 +2,14 @@
 
 <li>
     <article class='book'>
-        <a href="">
-            <img src="{% static 'images/imeleg.png' %}" alt="Ivan Meleg - Podih navalnici">
+        <a href="{% url 'book-detail-page' book.slug %}">
+            <img src="{% static 'images/'|add:book.image %}" alt="{{ book.title }}">
             <div class='book__content'>
-                <h4>Іван Мележ</h4>
-                <h3>Подых навальніцы</h3>
+                <h4>{{ book.title }}</h4>
+                <h3>{{ book.author }}</h3>
+                <p>
+                    {{ book.annotation }}
+                </p>
             </div>
         </a>
     </article>

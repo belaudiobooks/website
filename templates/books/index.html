@@ -25,28 +25,18 @@
         <h2>Прапануем паслухаць</h2>
 
         <ul>
-            {% include 'partials/_book.html' %}
-            {% include 'partials/_book.html' %}
-            {% include 'partials/_book.html' %}
-            {% include 'partials/_book.html' %}
+            {% for book in promo_books %}
+                {% include 'partials/_book.html' %}
+            {% endfor %}
         </ul>
     </section>
 
     <section id='new-books'>
         <h2>Навінкі</h2>
-
         <ul>
-            <li>
-                <article id='book'>
-                    <a href="">
-                        <img src="" alt="Jack London - Beli Klyk">
-                        <div class='book__content'>
-                            <h4>Джэк Лондан</h4>
-                            <h3>Белы клык</h3>
-                        </div>
-                    </a>
-                </article>
-            </li>
+            {% for book in books %}
+                {% include 'partials/_book.html' %}
+            {% endfor %}
         </ul>
     </section>
 

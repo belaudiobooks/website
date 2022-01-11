@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ book.title|title }}
+{% endblock title %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'book-detail.css' %}">
+{% endblock css_files %}
+
+{% block content %}
+    <section id='summary'>
+        <h2>{{ book.title|title }}</h2>
+        <article>
+            <img src="{% static 'images/'|add:book.image %}" alt="{{ book.title }}">
+            <h4>By {{ book.author|title }}</h4>
+            <h3>{{ book.annotation}}</h3>
+            <div>
+                Created on <time>{{ book.date|date:'d M Y' }}</time>    
+            </div>
+        </article>     
+    </section>
+
+    <main>
+        <p>{{ book.content|linebreaks }}</p>
+    </main>
+{% endblock content %}

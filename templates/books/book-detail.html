@@ -13,8 +13,12 @@
     <section id='summary'>
         <h2>{{ book.title|title }}</h2>
         <article>
-            <img src="{% static 'images/'|add:book.image %}" alt="{{ book.title }}">
-            <h4>By {{ book.author|title }}</h4>
+            <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+            <h4>
+                {% for author in authors %}
+                    <span>{{ author.name }}</span>
+                {% endfor %}
+            </h4>
             <h3>{{ book.annotation}}</h3>
             <div>
                 Created on <time>{{ book.date|date:'d M Y' }}</time>    
@@ -23,6 +27,6 @@
     </section>
 
     <main>
-        <p>{{ book.content|linebreaks }}</p>
+        <p>{{ book.description|linebreaks }}</p>
     </main>
 {% endblock content %}

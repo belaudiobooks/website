@@ -19,11 +19,17 @@
         </header>
         <p>Навігатар па аўдыякнігах на беларускай мове і буларускіх аўтараў.</p>
         <p>Тут вы можаце знайсці як аудыякнігі сучасных аўтараў так і дзіцячыя альбо класічныя кнігі.</p>
+
+        <form action="" method="get">
+            <input type="text" name="search" id="seacrh">
+            <button type="submin">Пошук</button>
+        </form>
     </section>
+
+    
 
     <section id='suggested-books'>
         <h2>Прапануем паслухаць</h2>
-
         <ul>
             {% for book in promo_books %}
                 {% include 'partials/_book.html' %}

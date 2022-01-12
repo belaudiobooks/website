@@ -3,10 +3,14 @@
 <li>
     <article class='book'>
         <a href="{% url 'book-detail-page' book.slug %}">
-            <img src="{% static 'images/'|add:book.image %}" alt="{{ book.title }}">
+            <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
             <div class='book__content'>
                 <h4>{{ book.title }}</h4>
-                <h3>{{ book.author }}</h3>
+                <h3>
+                    {% for author in book.authors.all  %}
+                        {{ author }}
+                    {% endfor %}
+                </h3>
                 <p>
                     {{ book.annotation }}
                 </p>

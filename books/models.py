@@ -37,7 +37,7 @@ class Book(models.Model):
     slug = models.SlugField(_('slug'), unique=True, db_index=True, allow_unicode=True, blank=True)
     cover_image_name = models.CharField(max_length=50)
     genre = models.ManyToManyField(Genre, related_name='genre')
-    promoted = models.BooleanField(_(''), default=False)
+    promoted = models.BooleanField(_('Promoted'), default=False)
     annotation = TextField(_('Book Annotation'), blank=True)
     
     def __str__(self) -> str:

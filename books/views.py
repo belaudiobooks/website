@@ -58,7 +58,8 @@ def search(request):
         search_results = (books.filter(title__icontains=keywords) | books.filter(authors__name__icontains=keywords)).distinct()
 
         context = {
-            'books': search_results
+            'books': search_results,
+            'values': keywords
         }
 
     else:

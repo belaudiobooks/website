@@ -9,10 +9,11 @@ __pycache__/
 # testing json files:
 *-*.json
 
-#migrations
+# migrations
 **/migrations/**
-**/migrations
-**/migrations/__init__.py
+# Need to have migrations folder existing so that makemigrations triggers. 
+# See https://stackoverflow.com/questions/36153748/django-makemigrations-no-changes-detected
+!**/migrations/__init__.py
 
 # Distribution / packaging
 .Python

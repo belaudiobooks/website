@@ -15,8 +15,8 @@
     "fields": {
       "name": "Транлэйтар Тэст2",
       "description": "Гэта апісанне Транслэйтара Тест2",
-      "photo": "",
-      "slug": "translatar-test2"
+      "photo": "photos/natatki_tatki.jpeg",
+      "slug": "tranleitar-test2"
     }
   },
   {
@@ -25,8 +25,8 @@
     "fields": {
       "name": "Аўтар Адын",
       "description": "Гэта теставае апісаніе Аутра Адын",
-      "photo": "",
-      "slug": "aytar-adin"
+      "photo": "photos/zhylibyli_pany_kublicki_dy_zablocki.jpeg",
+      "slug": "autar-adyn"
     }
   },
   { "model": "books.genre", "pk": 2, "fields": { "name": "Раман" } },
@@ -47,6 +47,42 @@
       "narrators": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
       "translators": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
       "genre": [3]
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": "85886426-1ed6-465c-afde-390454372e5b",
+    "fields": {
+      "title": "Яшчэ Ўдачная Кніга",
+      "description": "ВЕльмі ўдачная кніга",
+      "added_at": "2022-01-13T19:00:05.294Z",
+      "date": "2004-01-13",
+      "slug": "iashche-udachnaia-kniga",
+      "cover_image": "covers/jordzis.jpeg",
+      "promoted": true,
+      "annotation": "Вельмі фывадлофыдва дфывола дфоывадл фоыдваол фдывлоа фыва",
+      "authors": ["42a74e0c-3b4b-4815-a797-da7c21bf9b37"],
+      "narrators": ["42a74e0c-3b4b-4815-a797-da7c21bf9b37"],
+      "translators": [],
+      "genre": [2]
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": "cd5d325e-eb33-47a4-b27b-68b46c4ad74e",
+    "fields": {
+      "title": "New Book",
+      "description": "New book added from JSON",
+      "added_at": "2022-01-12T16:32:42.056Z",
+      "date": "2015-01-12",
+      "slug": "new-book",
+      "cover_image": "covers/Screen_Shot_2022-01-12_at_2.36.47_PM.png",
+      "promoted": true,
+      "annotation": "Гэта кароткае апісанне New book added from JSON",
+      "authors": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
+      "narrators": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
+      "translators": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
+      "genre": [2]
     }
   },
   {
@@ -72,21 +108,19 @@
   },
   {
     "model": "books.book",
-    "pk": "cd5d325e-eb33-47a4-b27b-68b46c4ad74e",
+    "pk": "e87cac77-6eed-43e6-9a53-743721a21bbf",
     "fields": {
-      "title": "New Book",
-      "description": "New book added from JSON",
-      "added_at": "2022-01-12T16:32:42.056Z",
-      "date": "2015-01-12",
-      "slug": "new-book",
-      "cover_image": "covers/Screen_Shot_2022-01-12_at_2.36.47_PM.png",
+      "title": "Гэта новая кніга",
+      "description": "Новая кніга",
+      "added_at": "2022-01-13T18:56:26.568Z",
+      "date": "2011-01-13",
+      "slug": "geta-novaia-kniga",
+      "cover_image": "covers/kazachka_pra_pescik_i_tychynku.jpeg",
       "promoted": true,
-      "annotation": "Гэта кароткае апісанне New book added from JSON",
-      "authors": [
-        "1fe5c628-bc1c-45be-b891-b8fb706441a3"
-      ],
-      "narrators": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
-      "translators": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
+      "annotation": "нывадфытва фывдлаофыдва дфлыова",
+      "authors": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
+      "narrators": [],
+      "translators": [],
       "genre": [2]
     }
   },

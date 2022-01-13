@@ -6,12 +6,11 @@
 {% endblock title %}
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'books.css' %}">
-    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/books.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css_files %}
 
 {% block content %}
-
     <section id='welcome'>
         <header>
             <img src="{% static 'images/logo.png' %}" alt="Audiobooks BY">
@@ -20,7 +19,7 @@
         <p>Навігатар па аўдыякнігах на беларускай мове і буларускіх аўтараў.</p>
         <p>Тут вы можаце знайсці як аудыякнігі сучасных аўтараў так і дзіцячыя альбо класічныя кнігі.</p>
 
-        <form action="" method="get">
+        <form action="{% url 'search' %}" method="get">
             <input type="text" name="search" id="seacrh">
             <button type="submin">Пошук</button>
         </form>
@@ -46,8 +45,5 @@
         </ul>
     </section>
 
-    <footer id='footer'>
-        <p>Made with love</p>
-    </footer>
 
 {% endblock content %}

@@ -121,7 +121,9 @@ env.bak/
 venv.bak/
 app/static/
 .app/static/
+
 /static
+
 
 # Spyder project settings
 .spyderproject
@@ -147,8 +149,10 @@ dmypy.json
 *.pyc
 __pycache__
 db.sqlite3
+
 media
 .DS_Store
 
 # VSCode
 .vscode
+

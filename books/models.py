@@ -7,8 +7,6 @@ from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.db.models.fields import TextField
 from django.utils.translation import gettext as _
-from django.utils.text import slugify
-from django.urls import reverse
 
 
 class Person(models.Model):
@@ -44,7 +42,11 @@ class Book(models.Model):
     annotation = TextField(_('Book Annotation'), blank=True)
     
     def __str__(self) -> str:
-        return f'{self.authors.all()[0]} - {self.title}'
+        return "%s (%s)" % (
+            self.title,
+            ", ".join(author.name for author in self.authors.all()),
+        )
+        # f'{self.authors.all()[0]} - {self.title}'
 
     def save(self, *args, **kwargs):
         self.slug = defaultfilters.slugify(unidecode(self.title))

@@ -48,8 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Development debug toolbar
-    'debug_toolbar', 
     'books',
     'user'
 ]
@@ -62,8 +60,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Development debug toolbar
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'booksby.urls'
@@ -88,10 +84,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'booksby.wsgi.application'
 
-#  FOR Development debug toolbar
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

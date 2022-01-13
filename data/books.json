@@ -1,0 +1,112 @@
+"""
+JSON file with the current DB scructure.
+Use `python manage.py loaddata books.json` to seed the DB with the data below.
+"""
+[
+  {
+    "model": "books.person",
+    "pk": "038f41b9-0def-48d0-95f8-33734e6cd70f",
+    "fields": {
+      "name": "Нарратар Тэст1",
+      "description": "Гэта наратар тэст 1 апісанне",
+      "photo": ""
+    }
+  },
+  {
+    "model": "books.person",
+    "pk": "1fe5c628-bc1c-45be-b891-b8fb706441a3",
+    "fields": {
+      "name": "Транлэйтар Тэст2",
+      "description": "Гэта апісанне Транслэйтара Тест2",
+      "photo": ""
+    }
+  },
+  {
+    "model": "books.person",
+    "pk": "42a74e0c-3b4b-4815-a797-da7c21bf9b37",
+    "fields": {
+      "name": "Аўтар Адын",
+      "description": "Гэта теставае апісаніе Аутра Адын",
+      "photo": ""
+    }
+  },
+  { "model": "books.genre", "pk": 2, "fields": { "name": "Раман" } },
+  { "model": "books.genre", "pk": 3, "fields": { "name": "А вайне" } },
+  {
+    "model": "books.book",
+    "pk": "6c60f801-2bff-4299-91ba-b13a9d0c172b",
+    "fields": {
+      "title": "Тэст Книга 2",
+      "description": "Аписание книги 2",
+      "added_at": "2022-01-12T17:12:11.303Z",
+      "date": "2022-01-12",
+      "slug": "test-kniga-2",
+      "cover_image": "covers/Screen_Shot_2022-01-12_at_2.36.53_PM.png",
+      "promoted": true,
+      "annotation": "this is short annotation to the test book2",
+      "authors": ["42a74e0c-3b4b-4815-a797-da7c21bf9b37"],
+      "narrators": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
+      "translators": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
+      "genre": [3]
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": "cd5d545e-eb33-47a4-b27b-68b46c4ad74e",
+    "fields": {
+      "title": "Кніга Тэст",
+      "description": "Тэставая кніга апісаніе",
+      "added_at": "2022-01-12T16:32:42.056Z",
+      "date": "2022-01-12",
+      "slug": "kniga-test",
+      "cover_image": "covers/Screen_Shot_2022-01-12_at_2.36.47_PM.png",
+      "promoted": false,
+      "annotation": "Гэта кароткае апісанне Кнігі Тэст1",
+      "authors": [
+        "1fe5c628-bc1c-45be-b891-b8fb706441a3",
+        "038f41b9-0def-48d0-95f8-33734e6cd70f"
+      ],
+      "narrators": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
+      "translators": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
+      "genre": [2]
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": "cd5d325e-eb33-47a4-b27b-68b46c4ad74e",
+    "fields": {
+      "title": "New Book",
+      "description": "New book added from JSON",
+      "added_at": "2022-01-12T16:32:42.056Z",
+      "date": "2015-01-12",
+      "slug": "new-book",
+      "cover_image": "covers/Screen_Shot_2022-01-12_at_2.36.47_PM.png",
+      "promoted": true,
+      "annotation": "Гэта кароткае апісанне New book added from JSON",
+      "authors": [
+        "1fe5c628-bc1c-45be-b891-b8fb706441a3"
+      ],
+      "narrators": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
+      "translators": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
+      "genre": [2]
+    }
+  },
+  {
+    "model": "books.linktype",
+    "pk": 1,
+    "fields": {
+      "name": "Litres",
+      "caption": "Test caption",
+      "icon": "icons/Screen_Shot_2022-01-12_at_2.48.32_PM.png"
+    }
+  },
+  {
+    "model": "books.link",
+    "pk": "b19adba3-be4e-4f58-9e8e-24bf2d797c79",
+    "fields": {
+      "url": "http://localhost/",
+      "url_type": 1,
+      "book": "cd5d545e-eb33-47a4-b27b-68b46c4ad74e"
+    }
+  }
+]

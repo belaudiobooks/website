@@ -121,6 +121,7 @@ env.bak/
 venv.bak/
 app/static/
 .app/static/
+/static
 
 # Spyder project settings
 .spyderproject

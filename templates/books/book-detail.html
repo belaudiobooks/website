@@ -18,7 +18,9 @@
             <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
             <h4>
                 {% for author in authors %}
+                    <a href="{% url 'person-detail-page' author.slug %}">
                     <span>{{ author.name }}</span>
+                    </a>   
                 {% endfor %}
             </h4>
             <h3>{{ book.annotation}}</h3>

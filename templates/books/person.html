@@ -10,12 +10,18 @@
 {% block content %}
 
     <section id='new-books'>
-        <h2>Навінкі</h2>
-        <ul>
-            {% for book in books %}
-                {% include 'partials/_book.html' %}
-            {% endfor %}
-        </ul>
+                <article class='book'>
+                        {% if person.photo %}
+                            <img src="{{ person.photo.url }}" alt="{{ person.name }}">
+                        {% endif %}
+                            <div class='book__content'>
+                                <h4>{{ person.name }}</h4>
+                                <p>
+                                    {{ person.description }}
+                                </p>
+                            </div>
+
+                </article>
     </section>
 
 

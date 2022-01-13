@@ -20,5 +20,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('books.urls'))
+    path('', include('books.urls')),
+    path('__debug__/', include('debug_toolbar.urls')), # Development debug toolbar
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

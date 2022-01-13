@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'css/books.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock css_files %}
+
+{% block content %}
+
+    <section id='welcome'>
+
+        <form action="{% url 'search' %}" method="get">
+            <input type="text" name="search" id="seacrh">
+            <button type="submin">Пошук</button>
+        </form>
+    </section>
+
+    <section id='new-books'>
+        <h2>Навінкі</h2>
+        <ul>
+            {% for book in books %}
+                {% include 'partials/_book.html' %}
+            {% endfor %}
+        </ul>
+    </section>
+
+
+{% endblock content %}

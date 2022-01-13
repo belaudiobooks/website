@@ -23,6 +23,11 @@ Update values:
 
 ### Create Python virtual enviroment
 
+Ensure venv is installed:
+```
+apt-get install python3-venv
+```
+
 In the project folder run:
 ```
 python -m venv ./venv

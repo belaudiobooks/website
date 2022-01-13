@@ -21,7 +21,13 @@ class LinkAdmin(admin.ModelAdmin):
     def get_book(self, obj):
         return obj.book
 
-admin.site.register(Person)
+
+class PersonAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+    list_filter = ("name",)
+
+
+admin.site.register(Person, PersonAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Genre)
 admin.site.register(Link, LinkAdmin)

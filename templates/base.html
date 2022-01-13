@@ -18,12 +18,8 @@
     {% block css_files %}{% endblock css_files %}
 </head>
 <body>
-    <header id='main-navigation'>
-        <h1><a href="{% url 'index' %}">Беларускія аўдыякнігі</a></h1>
-        <nav>
-            <a href="{% url 'books-page' %}">Ўсе кнігі</a>
-        </nav>
-    </header>
+     <!-- Header -->
+     {% include 'partials/_header.html' %}
 
     {% block content %}{% endblock content %}
 

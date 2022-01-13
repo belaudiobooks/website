@@ -38,6 +38,16 @@ def book_detail(request, slug):
 
     return render(request, 'books/book-detail.html', context)
 
+def person_detail(request, slug):
+    """Detailed book page"""
+    identified_person = get_object_or_404(Person, slug=slug)
+
+    context = {
+        'person': identified_person,
+    }
+
+    return render(request, 'books/person.html', context)
+
 def search(request):
     """Search results"""
     books = Book.objects.all().order_by('-added_at')
@@ -47,8 +57,13 @@ def search(request):
     if keywords:
         search_results = (books.filter(title__icontains=keywords) | books.filter(authors__name__icontains=keywords)).distinct()
 
-    context = {
-        'books': search_results
-    }
+        context = {
+            'books': search_results
+        }
+
+    else:
+        context = {
+            'books': books
+        }
 
     return render(request, 'books/search.html', context)

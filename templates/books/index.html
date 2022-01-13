@@ -11,22 +11,6 @@
 {% endblock css_files %}
 
 {% block content %}
-    <section id='welcome'>
-        <header>
-            <img src="{% static 'images/logo.png' %}" alt="Audiobooks BY">
-            <h2>Books from Belarus</h2>
-        </header>
-        <p>Навігатар па аўдыякнігах на беларускай мове і буларускіх аўтараў.</p>
-        <p>Тут вы можаце знайсці як аудыякнігі сучасных аўтараў так і дзіцячыя альбо класічныя кнігі.</p>
-
-        <form action="{% url 'search' %}" method="get">
-            <input type="text" name="search" id="seacrh">
-            <button type="submin">Пошук</button>
-        </form>
-    </section>
-
-    
-
     <section id='suggested-books'>
         <h2>Прапануем паслухаць</h2>
         <ul>

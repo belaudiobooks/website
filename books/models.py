@@ -14,9 +14,14 @@ class Person(models.Model):
     name = models.CharField(_('Person Name'), max_length=100, default='')
     description = models.TextField(_('Person Description'))
     photo = models.ImageField(upload_to='photos', null=True)
+    slug = models.SlugField(_('Person slug'), unique=True, db_index=True, allow_unicode=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.name}'
+    
+    def save(self, *args, **kwargs):
+        self.slug = defaultfilters.slugify(unidecode(self.name))
+        super().save(*args, **kwargs)
 
 
 class Genre(models.Model):

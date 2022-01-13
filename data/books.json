@@ -1,7 +1,3 @@
-"""
-JSON file with the current DB scructure.
-Use `python manage.py loaddata books.json` to seed the DB with the data below.
-"""
 [
   {
     "model": "books.person",
@@ -9,7 +5,8 @@ Use `python manage.py loaddata books.json` to seed the DB with the data below.
     "fields": {
       "name": "Нарратар Тэст1",
       "description": "Гэта наратар тэст 1 апісанне",
-      "photo": ""
+      "photo": "",
+      "slug": "narratar-test"
     }
   },
   {
@@ -18,7 +15,8 @@ Use `python manage.py loaddata books.json` to seed the DB with the data below.
     "fields": {
       "name": "Транлэйтар Тэст2",
       "description": "Гэта апісанне Транслэйтара Тест2",
-      "photo": ""
+      "photo": "",
+      "slug": "translatar-test2"
     }
   },
   {
@@ -27,7 +25,8 @@ Use `python manage.py loaddata books.json` to seed the DB with the data below.
     "fields": {
       "name": "Аўтар Адын",
       "description": "Гэта теставае апісаніе Аутра Адын",
-      "photo": ""
+      "photo": "",
+      "slug": "aytar-adin"
     }
   },
   { "model": "books.genre", "pk": 2, "fields": { "name": "Раман" } },

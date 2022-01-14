@@ -6,11 +6,40 @@
 {% endblock title %}
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'css/books.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/books.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css_files %}
 
 {% block content %}
+
+    {% comment %} <div class="container">
+        <div class="row" style="background-color: #7879F1;">
+            <div class="col-md-6" style="background-color: #717931;">
+                NAME AND LOGO
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col d-none d-md-block" style="background-color: #7879F1;">
+                        SOCIAL MEDIA ICONS
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" style="background-color: #127931;">
+                        MAIN TEXT
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-none d-md-block" style="background-color: #127931;">
+                NAVIGAION ICONS
+            </div>
+            <div class="col" style="background-color: #7879F1;">
+                SEARCH BAR
+            </div>
+        </div>
+    </div> {% endcomment %}
+
     <section id='suggested-books'>
         <h2>Прапануем паслухаць</h2>
         <ul>

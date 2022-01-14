@@ -1,0 +1,117 @@
+{% load static %}
+
+<nav class="navbar" style="background-color: #7879F1;">
+<div class="container">
+  <div class="row">
+      <div class="col-md-6">
+        <a href="{% url 'index' %}" class="link-dark text-decoration-none">
+          <img src="{% static 'images/AudioBooksLogo.svg' %}" alt="Audiobooks BY" class="img-fluid mx-auto d-block">
+          <h3 class="text-center">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
+        </a>
+      </div>
+      <div class="col-md-6">
+          <div class="row">
+              <div class="col d-none d-md-block">
+                  <p class="text-end">SOCIAL MEDIA ICONS</p>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col">
+                <p>Навігатар па аўдыякнігах  на беларускай мове і беларускіх аўтараў.</p>
+                <p>Тут вы можаце хутка знайсці як аўдыякнігі сучасных аўтараў  так і дзіцячыя альбо класічныя кнігі. Сайт не змяшчае самі кнігі,  а дае спасылцы на пляцоўкі дзе іх можна паслухаць альбо набыць.</p>
+                <p>Калiласка, скарыстаецеся пошукам.</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</nav>
+<nav class="navbar navbar-expand-md navbar-light sticky-top d-flex" style="background-color: #7879F1;">
+  <div class="container">
+    
+      <div class="col">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class = "nav-link text-white
+                {% if '/' != request.path %}
+                text-opacity-75"
+                {% endif %}
+                href="{% url 'index' %}">Да дому
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class = "nav-link text-white
+                {% if '/authors' != request.path %}
+                text-opacity-75"
+                {% endif %}
+                href="#">Аўтары
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class = "nav-link text-white
+                {% if '/books' != request.path %}
+                text-opacity-75"
+                {% endif %}
+                href="{% url 'books' %}">Kнігі
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class = "nav-link text-white
+                {% if '/about' != request.path %}
+                text-opacity-75"
+                {% endif %}
+                href="#">Кантакты
+              </a>
+            </li>  
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <form class="d-flex" action="{% url 'search' %}" method="get">
+          <div class="input-group">
+            <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, назва кнігі" aria-label="Аўтар, назва кнігі" aria-describedby="button-search" name="search" id="search">
+            <button class="btn p-0 bg-white" type="submit" id="button-search"><img src="{% static 'images/FindIcon.png' %}" alt="Пошук"></button>
+          </div>
+        </form>
+      </div>
+    
+  </div>
+  </nav>
+{% comment %} 
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: #7879F1;">
+  <div class="container-fluid">
+    <section>
+      <header>
+          <img src="{% static 'images/AudioBooksLogo.svg' %}" alt="Audiobooks BY">
+          <h3>БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
+      </header>
+      <p>Навігатар па аўдыякнігах  на беларускай мове і беларускіх аўтараў.</p>
+      <p>Тут вы можаце хутка знайсці як аўдыякнігі сучасных аўтараў  так і дзіцячыя альбо класічныя кнігі. Сайт не змяшчае самі кнігі,  а дае спасылцы на пляцоўкі дзе іх можна паслухаць альбо набыць.</p>
+      <p>Калiласка, скарыстаецеся пошукам.</p>
+  </section>
+    <a class="navbar-brand" href="{% url 'index' %}">Беларускія аўдыякнігі</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Да дому</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'books-page' %}">Ўсе кнігі</a>
+        </li>
+        
+      </ul>
+      <form class="d-flex" action="{% url 'search' %}" method="get">
+        <input class="form-control me-2" type="text" name="search" id="search" placeholder="Аўтар, назва кнігі" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Пошук</button>
+      </form>
+    </div>
+  </div>
+</nav> {% endcomment %}

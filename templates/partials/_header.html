@@ -1,13 +1,27 @@
 {% load static %}
 
-<header id='main-navigation'>
+{% comment %} 
+<div class="pagewide p-3 bg-info d-none d-lg-block fixed-top">
+    <div class="container">
+        <section>
+            <header>
+                <img src="{% static 'images/AudioBooksLogo.svg' %}" alt="Audiobooks BY">
+                <h2>Books from Belarus</h2>
+            </header>
+            <p>Навігатар па аўдыякнігах на беларускай мове і буларускіх аўтараў.</p>
+            <p>Тут вы можаце знайсці як аудыякнігі сучасных аўтараў так і дзіцячыя альбо класічныя кнігі.</p>
+        </section>
+    </div>
+</div> {% endcomment %}
+
+{% comment %} <header id='main-navigation'>
     <h1><a href="{% url 'index' %}">Беларускія аўдыякнігі</a></h1>
     <nav>
         <a href="{% url 'books-page' %}">Ўсе кнігі</a>
     </nav>
-</header>
+</header> {% endcomment %}
 
-<section id='welcome'>
+{% comment %} <section id='welcome'>
     <header>
         <img src="{% static 'images/logo.png' %}" alt="Audiobooks BY">
         <h2>Books from Belarus</h2>
@@ -19,4 +33,5 @@
         <input type="text" name="search" id="seacrh">
         <button type="submin">Пошук</button>
     </form>
-</section>
+</section> {% endcomment %}
+

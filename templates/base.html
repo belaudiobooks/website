@@ -7,26 +7,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <!-- Font Awesome -->
-    {% comment %} <link rel="stylesheet" href="{% static 'css/all.css' %}"> {% endcomment %}
+    
     <!-- Bootstrap -->
-    {% comment %} <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/bootstrap.css.map' %}"> {% endcomment %}
     <!-- Custom -->
-    {% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endcomment %}
-    {% comment %} <link rel="stylesheet" href="{% static 'app.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endcomment %}
+
     {% block css_files %}{% endblock css_files %}
 </head>
 <body>
-     <!-- Header -->
-     {% include 'partials/_header.html' %}
+    <!-- Navbar-->
+    {% include 'partials/_navbar.html' %}
+    
+    <!-- Header -->
+    {% comment %} {% include 'partials/_header.html' %} {% endcomment %}
 
+    <!-- Main conten block {% endcomment -->
     {% block content %}{% endblock content %}
 
     <!-- Footer -->
     {% include 'partials/_footer.html' %}
 
-    <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>
-    <script src="{% static 'js/main.js' %} "></script>
+    {% comment %} <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script> {% endcomment %}
+    <script src="{% static 'js/bootstrap.bundle.js' %} "></script>
+    {% comment %} <script src="{% static 'js/bootstrap.bundle.js.map' %} "></script> {% endcomment %}
+    {% comment %} <script src="{% static 'js/main.js' %} "></script> {% endcomment %}
 </html>

@@ -25,6 +25,6 @@ def download_and_resize_image(url: str, name: str) -> str:
         image = image.resize((new_width, new_height))
 
     cur_dir = os.path.dirname(os.path.realpath(__file__))
-    outname = f"{cur_dir}/images/{name}.{img_format.lower()}"
-    image.save(outname)
+    outname = f"images/{name}.{img_format.lower()}"
+    image.save(cur_dir + "/" + outname)
     return outname

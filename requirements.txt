@@ -11,3 +11,4 @@ requests>=2.27.1,<2.28.0
 types-requests
 pylint
 mypy
+feedparser

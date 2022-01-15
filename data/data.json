@@ -167,6 +167,22 @@
     {
       "id": 42,
       "name": "Ганна Севярынец"
+    },
+    {
+      "id": 43,
+      "name": "Ян Баршчэўскі"
+    },
+    {
+      "id": 44,
+      "name": "Валер Будзевіч"
+    },
+    {
+      "id": 45,
+      "name": "Іван Шамякін"
+    },
+    {
+      "id": 46,
+      "name": "Кацярына Ягорава"
     }
   ],
   "books": [
@@ -454,6 +470,26 @@
         {
           "type": "knizhny_voz",
           "url": "https://knizhnyvoz.by/app/book/60fb04271a319f7d10e97dea"
+        },
+        {
+          "type": "google_podcast",
+          "url": "https://www.google.com/podcasts?feed=aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3NlbV9rYW1qYW5qb3UvcnNzLnhtbA=="
+        },
+        {
+          "type": "apple_podcast",
+          "url": "https://podcasts.apple.com/podcast/id1576260996"
+        },
+        {
+          "type": "yandex_podcast",
+          "url": "https://music.yandex.ru/album/16901989"
+        },
+        {
+          "type": "spotify_podcast",
+          "url": "https://open.spotify.com/show/5Z2EckUhgJeQgY9icv1523"
+        },
+        {
+          "type": "casbtox_podcast",
+          "url": "https://castbox.fm/vic/1576260996"
         }
       ],
       "cover_image": "images/sem_kamjanjou.jpeg"
@@ -623,20 +659,34 @@
     {
       "id": 23,
       "title": "Людзі на балоце",
-      "description": "Раман «Людзі на балоце», які распачынае хроніку, уводзіць чытача ў беларускі свет вёскі Курані, дзе здзяйсняецца драма жыцця і кахання галоўных герояў.",
+      "description": "Імя Івана Мележа застанецца ў нацыянальнай і сусветнай літаратуры дзякуючы створанай ім эпічнай «Палескай хроніцы» - глыбокаму філасофска-мастацкаму асэнсаванню жыцця Беларусі ў пераломныя 1920-1930-я гады. Раман «Людзі на балоце», які распачынае хроніку, уводзіць чытача ў беларускі свет вёскі Курані, дзе здзяйсняецца драма жыцця і кахання галоўных герояў. Сам Мележ невыпадкова называў свой твор «лірычным раманам».\n\nАгучка: Кацярына Ягорава\n\nКантакты: belaudiobooks@gmail.com",
       "authors": [
         41
       ],
-      "narrators": [],
+      "narrators": [
+        46
+      ],
       "translators": [],
       "links": [
         {
           "type": "google_podcast",
-          "url": "https://podcasts.google.com/feed/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2JlbGF1ZGlvYm9va3MvaXZhbl9tZWxlemhfemF2ZWlfc25lemhhbi9yc3MueG1s"
+          "url": "https://www.google.com/podcasts?feed=aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2JlbGF1ZGlvYm9va3MvaXZhbl9tZWxlemhfbHlkemlfbmFfYmFsb2NlL3Jzcy54bWw="
         },
         {
           "type": "apple_podcast",
           "url": "https://podcasts.apple.com/podcast/id1589739401"
+        },
+        {
+          "type": "yandex_podcast",
+          "url": "https://music.yandex.ru/album/18673258"
+        },
+        {
+          "type": "spotify_podcast",
+          "url": "https://open.spotify.com/show/7mdw7YHbjx08VzLqcQ4GIn"
+        },
+        {
+          "type": "casbtox_podcast",
+          "url": "https://castbox.fm/vic/1589739401"
         }
       ],
       "cover_image": "images/ljudzi_na_baloce.jpeg"
@@ -644,20 +694,34 @@
     {
       "id": 24,
       "title": "Подых навальніцы",
-      "description": "Чытач знаёміцца з другой часткай «Палескай хронікі» Івана Мележа, дзе сустрэнецца са знаёмымі героямі — Васілём Дзятлам, Ганнай Чарнушкай, Халімонам і Яўхімам Глушакамі, «бальшавіком з чалавечым тварам» Апейкам. З’яўляюцца і новыя — зацяты калектывізатар Башлыкоў, паэт Алесь Маёвы.",
+      "description": "Чытач знаёміцца з другой часткай «Палескай хронікі» Івана Мележа, дзе сустрэнецца са знаёмымі героямі — Васілём Дзятлам, Ганнай Чарнушкай, Халімонам і Яўхімам Глушакамі, «бальшавіком з чалавечым тварам» Апейкам. З’яўляюцца і новыя — зацяты калектывізатар Башлыкоў, паэт Алесь Маёвы. Пісьменнік працягвае разгортваць апавядальную плынь, якую можна назваць сагай пра Палессе і параўнаць з творамі Галсуорсі, Фолкнера, Гарсія Маркеса, якія ад рэгіянальнага ішлі да ўніверсальнага. Цэнтрам створанага Мележам свету па-ранейшаму застаюцца Курані, дзе хаты стаялі на востраве, дзе кахаліся Васіль і Ганна. І працягваюць кахаць, нягледзячы ні на што — ні на Глушакоў, ні на вясковую мараль, ні на калектывізацыю. Але не пакідае Васіля мара пра зямлю запаветную, тую, што каля цагельні…\n\n            Чытае Валер Будзевіч",
       "authors": [
         41
       ],
-      "narrators": [],
+      "narrators": [
+        44
+      ],
       "translators": [],
       "links": [
         {
           "type": "google_podcast",
-          "url": "https://podcasts.google.com/feed/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2JlbGF1ZGlvYm9va3MvaXZhbl9tZWxlemhfcG9kdWhfbmF2YWxuaWN5L3Jzcy54bWw_Y2FjaGU9YnVzdA"
+          "url": "https://podcasts.google.com/feed/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2JlbGF1ZGlvYm9va3MvaXZhbl9tZWxlemhfcG9kdWhfbmF2YWxuaWN5L3Jzcy54bWw_Y2FjaGU9YnVzdA?sa=X&ved=0CAMQ4aUDahcKEwiwg9z8mZz0AhUAAAAAHQAAAAAQNA"
         },
         {
           "type": "apple_podcast",
           "url": "https://podcasts.apple.com/podcast/id1594114643"
+        },
+        {
+          "type": "yandex_podcast",
+          "url": "https://music.yandex.ru/album/19270950"
+        },
+        {
+          "type": "spotify_podcast",
+          "url": "https://open.spotify.com/show/66BxIq7Kr7Pg37gA2qnVIG"
+        },
+        {
+          "type": "casbtox_podcast",
+          "url": "https://castbox.fm/vic/1594114643"
         }
       ],
       "cover_image": "images/podyh_navalnicy.jpeg"
@@ -678,6 +742,146 @@
         }
       ],
       "cover_image": "images/dzen_svjatoga_patryka.jpeg"
+    },
+    {
+      "id": 26,
+      "title": "Шляхціц Завальня, або Беларусь у фантастычных апавяданнях",
+      "description": "Надзелены фенаменальнай фантазіяй і талентам прадбачання, Ян Баршчэўскі стаў адным з пачынальнікаў новай беларускай літаратуры і ўзбагаціў яе, магчыма, адным з самых загадкавых і займальных твораў - кнігаю «Шляхціц Завальня, або Беларусь у фантастычных апавяданнях», у якой шырока выкарыстаны беларускія народныя казкі, легенды і паданні.\n\nЧытае Андрэй Каляда.\n\nАўдыякніга выкладзена ў адкрыты доступ Міністэрствам Інфармацыі Рэспублікі Беларусь: http://mininform.gov.by/news/all/podarok-dlya-shkolnikov-i-lyubiteley-literatury/\n\nКантакты: belaudiobooks@gmail.com",
+      "authors": [
+        43
+      ],
+      "narrators": [
+        36
+      ],
+      "translators": [],
+      "links": [
+        {
+          "type": "google_podcast",
+          "url": "https://www.google.com/podcasts?feed=aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2JlbGF1ZGlvYm9va3MvamFuX2JhcnNoY2hqZXVza2lfc2hsamFoY2ljX3phdmFsbmphL3Jzcy54bWw="
+        },
+        {
+          "type": "apple_podcast",
+          "url": "https://podcasts.apple.com/podcast/id1602930125"
+        },
+        {
+          "type": "yandex_podcast",
+          "url": "https://music.yandex.ru/album/20370672"
+        },
+        {
+          "type": "spotify_podcast",
+          "url": "https://open.spotify.com/show/2Irj2abIsK9cJKMxTD94Lk"
+        },
+        {
+          "type": "casbtox_podcast",
+          "url": "https://castbox.fm/vic/1602930125"
+        }
+      ],
+      "cover_image": "images/shljahcic_zavalnja_abo_belarus_u_fantastychnyh_apavjadannjah.jpeg"
+    },
+    {
+      "id": 27,
+      "title": "Завеі, снежань",
+      "description": "Апошні твор \"Палескай хронікі\" - раман “Завеі, снежань”. У кнізе дзянне адбываецца на фоне вострай ідэалагічнай і палітычнай барацьбы ў Беларусі 1930-х гадоў мінулага стагоддзя. Менавіта гэтая барацьба стала цэнтрам ўвагі пісьменніка. Асабістае жыццё персанажаў цесна пераплятаецца з сацыяльна-палітычнай сітуацыяй у краіне, героі становяцца закладнікамі жорсткай дзяржаўнай сістэмы, пабудаванай на насіллі.\n\nЧытае Валер Будзевіч",
+      "authors": [
+        41
+      ],
+      "narrators": [
+        44
+      ],
+      "translators": [],
+      "links": [
+        {
+          "type": "google_podcast",
+          "url": "https://www.google.com/podcasts?feed=aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2JlbGF1ZGlvYm9va3MvaXZhbl9tZWxlemhfemF2ZWlfc25lemhhbi9yc3MueG1s"
+        },
+        {
+          "type": "apple_podcast",
+          "url": "https://podcasts.apple.com/podcast/id1601067376"
+        },
+        {
+          "type": "yandex_podcast",
+          "url": "https://music.yandex.ru/album/20131673"
+        },
+        {
+          "type": "spotify_podcast",
+          "url": "https://open.spotify.com/show/1E7omUXfDnqB4qdA0mQqRq"
+        },
+        {
+          "type": "casbtox_podcast",
+          "url": "https://castbox.fm/vic/1601067376"
+        }
+      ],
+      "cover_image": "images/zavei_snezhan.jpeg"
+    },
+    {
+      "id": 28,
+      "title": "Зямля пад белымі крыламі",
+      "description": "Нарыс Уладзімера Караткевіча прысьвечаны Беларусі. Аўтар запрашае чытача ў падарожжа па Беларусі, спрабуе паказаць хараство роднай прыроды, прывіць любоў да роднае зямлі, зацікавіць гісторыяй беларускага народу. Падставай для паўстаньна нарысу Уладзімера Караткевіча сталі яго асабістыя перажываньні і ўспрыманьне тых іншых падзеяў, сьведкам каторых ён быў. Як зазначыў сам аўтар, нарыс быў створаны не для таго, каб усё распавесьці, але для таго, каб зацікавіць моладзь гісторыяй і прыродай ды прыгажосьцю роднай зямлі. Нарыс паводле задумы павінен быць штуршком да пазнаньня і цікаўнасьці маладога пакаленьня да роднай зямлі. Да таго ж Уладзімер Караткевіч дае выдатны ўрок патрыятызму што можа быць карыцсны ня толькі моладзі. Некаторыя статыстычныя ды ідэялагічныя факты зьмешчаныя ў нарысе ўжо адышлі ў нябыт, але тое галоўнае, што чытаецца між радкамі, любоў да Беларусі, можа і сёньня запаліць не адно маладое сэрца.\n\n            Аўдыякніга выкладзена ў адкрыты доступ Міністэрствам Інфармацыі Рэспублікі Беларусь: http://mininform.gov.by/news/actual/v-pomoshch-roditelyam-i-shkolnikam-audioknigi/\n\n            Кантакты: belaudiobooks@gmail.com",
+      "authors": [
+        20
+      ],
+      "narrators": [
+        36
+      ],
+      "translators": [],
+      "links": [
+        {
+          "type": "google_podcast",
+          "url": "https://www.google.com/podcasts?feed=aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2JlbGF1ZGlvYm9va3MvdWxhZHppbWlyX2thcmF0a2V2aWNoX3pqYW1samFfcGFkX2JlbHltaV9rcnlsYW1pL3Jzcy54bWw="
+        },
+        {
+          "type": "apple_podcast",
+          "url": "https://podcasts.apple.com/podcast/id1598253871"
+        },
+        {
+          "type": "yandex_podcast",
+          "url": "https://music.yandex.ru/album/19761058"
+        },
+        {
+          "type": "spotify_podcast",
+          "url": "https://open.spotify.com/show/3wtrYFx0OrL1kE7pHTLvox"
+        },
+        {
+          "type": "casbtox_podcast",
+          "url": "https://castbox.fm/vic/1598253871"
+        }
+      ],
+      "cover_image": "images/zjamlja_pad_belymi_krylami.jpeg"
+    },
+    {
+      "id": 29,
+      "title": "Сэрца на далоні",
+      "description": "У цэнтры ўвагі рамана - лёсы сяброў, хірурга Антона Яраша ды журналіста Кірыла Шыковіча. Антон і Кірыл былі ўдзельнікамі падполля ў гады Вялікай Айчыннай вайны. Яны маюць сем’і, займаюцца важнай і патрэбнай людзям справай. Але падзеі ваеннага ліхалецця, нібы злавеснае рэха, урываюцца ў іх жыццё і ламаюць звыклы лад жыцця…\n\n            Аўдыёкніга выкладзена ў адкрыты доступ Міністэрствам Інфармацыі Рэспублікі Беларусь: http://mininform.gov.by/news/actual/v-pomoshch-roditelyam-i-shkolnikam-audioknigi/\n\n            Кантакты: belaudiobooks@gmail.com",
+      "authors": [
+        45
+      ],
+      "narrators": [
+        36
+      ],
+      "translators": [],
+      "links": [
+        {
+          "type": "google_podcast",
+          "url": "https://www.google.com/podcasts?feed=aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2JlbGF1ZGlvYm9va3MvaXZhbl9zaGFtamFraW5fc2VyY2FfbmFfZGFsb25pL3Jzcy54bWw="
+        },
+        {
+          "type": "apple_podcast",
+          "url": "https://podcasts.apple.com/podcast/id1591832751"
+        },
+        {
+          "type": "yandex_podcast",
+          "url": "https://music.yandex.ru/album/18954378"
+        },
+        {
+          "type": "spotify_podcast",
+          "url": "https://open.spotify.com/show/2je0uibKH20d0qPJVMDLUX"
+        },
+        {
+          "type": "casbtox_podcast",
+          "url": "https://castbox.fm/vic/1591832751"
+        }
+      ],
+      "cover_image": "images/sjerca_na_daloni.jpeg"
     }
   ],
   "link_types": [

@@ -76,6 +76,17 @@ def _to_list_of_ids(data: BooksData, people: List[str]) -> List[int]:
     return [_get_or_add_person(data, name).id for name in people]
 
 
+def _merge_links(book: Book, links: List[Link]) -> None:
+    for link in links:
+        found = False
+        for existing_link in book.links:
+            if link.type == existing_link.type:
+                existing_link.url = link.url
+                found = True
+        if not found:
+            book.links.append(link)
+
+
 def add_or_sync_book(data: BooksData, title: str, description: str,
                      authors: List[str], narrators: List[str],
                      translators: List[str], links: List[Link],
@@ -88,7 +99,7 @@ def add_or_sync_book(data: BooksData, title: str, description: str,
     max_id = 0
     book = None
     for existing_book in data.books:
-        if existing_book.title == title:
+        if existing_book.title.lower() == title.lower():
             book = existing_book
             break
         max_id = max(max_id, existing_book.id)
@@ -107,7 +118,13 @@ def add_or_sync_book(data: BooksData, title: str, description: str,
     book.authors = _to_list_of_ids(data, authors)
     book.narrators = _to_list_of_ids(data, narrators)
     book.translators = _to_list_of_ids(data, translators)
-    book.links = links
+    for link in links:
+        if link.url is None:
+            raise ValueError(
+                f"Got null url for book {title} link type {link.type}")
+    if description != "":
+        book.description = description
+    _merge_links(book, links)
 
 
 DATA_FILE = os.path.dirname(os.path.realpath(__file__)) + '/data.json'
@@ -118,7 +135,12 @@ def read_books_data(file: str = DATA_FILE) -> BooksData:
     with open(file, "r", encoding="utf8") as f:
         data = json.loads(f.read())
         people = [Person(**person) for person in data["people"]]
-        books = [Book(**book) for book in data["books"]]
+        books = []
+        for json_book in data["books"]:
+            json_book["links"] = [
+                Link(link["type"], link["url"]) for link in json_book["links"]
+            ]
+            books.append(Book(**json_book))
         link_types = [LinkType(**link) for link in data["link_types"]]
         return BooksData(people, books, link_types)
 

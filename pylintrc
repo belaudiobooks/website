@@ -6,3 +6,5 @@ good-names=i,
            f,
            ex,
            id
+
+ignore-long-lines=^\s*(# )?<?https?://\S+>?$|^\s*(\w*\s*=\s*)?(\"|\').*(\"|\'),?\s*$

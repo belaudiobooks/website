@@ -5,3 +5,9 @@ psycopg2>=2.9.2,<2.10.0 #only run it in EC2 - Mac M1 don't need it
 psycopg2-binary
 unidecode # for unicode slugs
 Pillow # for files upload management
+types-Pillow
+yapf
+requests>=2.27.1,<2.28.0
+types-requests
+pylint
+mypy

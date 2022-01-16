@@ -1,6 +1,6 @@
 {% load static %}
 
-<li>
+{% comment %} <li>
     <article class='book'>
         <a href="{% url 'book-detail-page' book.slug %}">
             <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
@@ -17,14 +17,18 @@
             </div>
         </a>
     </article>
-</li>
-{% comment %} 
+</li> {% endcomment %}
+
 <div class="card" style="width: 18rem;">
-    <a href="{% url "post-detail-page" post.slug %}">
-    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+    <a href="{% url 'book-detail-page' book.slug %}">
+    <img src="{{ book.cover_image.url }}" alt="{{ book.title }} class="card-img-top">
     <div class="card-body">
-        <h3 class="card-title">{{ post.title }}</h3>
-        <p class="card-text">{{ post.excerpt }}</p>
+        <h3 class="card-title">{{ book.title }}</h3>
+        <p class="card-text">
+            {% for author in book.authors.all  %}
+            {{ author }}
+            {% endfor %}
+        </p>
     </div>
     </a>
-</div> {% endcomment %}
+</div>

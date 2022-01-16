@@ -6,23 +6,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    
+    <title>{% block title %}{% endblock %}</title>   
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    {% comment %} <link rel="stylesheet" href="{% static 'css/bootstrap.css.map' %}"> {% endcomment %}
     <!-- Custom -->
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
-    {% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endcomment %}
-
     {% block css_files %}{% endblock css_files %}
 </head>
 <body>
     <!-- Navbar-->
     {% include 'partials/_navbar.html' %}
-    
-    <!-- Header -->
-    {% comment %} {% include 'partials/_header.html' %} {% endcomment %}
 
     <!-- Main conten block {% endcomment -->
     {% block content %}{% endblock content %}

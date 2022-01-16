@@ -1,33 +1,16 @@
 {% load static %}
 
-{% comment %} <li>
-    <article class='book'>
-        <a href="{% url 'book-detail-page' book.slug %}">
-            <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
-            <div class='book__content'>
-                <h4>{{ book.title }}</h4>
-                <h3>
-                    {% for author in book.authors.all  %}
-                        {{ author }}
-                    {% endfor %}
-                </h3>
-                <p>
-                    {{ book.annotation }}
-                </p>
-            </div>
-        </a>
-    </article>
-</li> {% endcomment %}
-
-<div class="card" style="width: 18rem;">
+<div class="card h-100" >
     <a href="{% url 'book-detail-page' book.slug %}">
-    <img src="{{ book.cover_image.url }}" alt="{{ book.title }} class="card-img-top">
+    <img class="card-img-150 card-img-top img-fluid" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
     <div class="card-body">
-        <h3 class="card-title">{{ book.title }}</h3>
+        <h6 class="card-title">{{ book.title }}</h6>
         <p class="card-text">
-            {% for author in book.authors.all  %}
-            {{ author }}
-            {% endfor %}
+        {% for author in book.authors.all %}
+            <a href="{% url 'person-detail-page' author.slug %}">
+                <span>{{ author.name }}</span>
+            </a>   
+        {% endfor %}
         </p>
     </div>
     </a>

@@ -5,30 +5,93 @@
     Беларускія аўдыякнігі
 {% endblock title %}
 
-{% block css_files %}
-    {% comment %} <link rel="stylesheet" href="{% static 'css/books.css' %}"> {% endcomment %}
-    {% comment %} <link rel="stylesheet" href="{% static 'css/index.css' %}"> {% endcomment %}
-{% endblock css_files %}
+{% comment %} {% block css_files %}
+    <link rel="stylesheet" href="{% static 'css/books.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock css_files %} {% endcomment %}
 
 {% block content %}
 
-    <section id='suggested-books'>
-        <h2>Прапануем паслухаць</h2>
-        <ul>
-            {% for book in promo_books %}
-                {% include 'partials/_book.html' %}
-            {% endfor %}
-        </ul>
-    </section>
+<div class="container">
+    <div class="row">
+        {% if promo_books %}
+            <div class="col-12">
+                <h4>Прапануем паслухаць</h4>
+                <p>Самыя папулярные кнiгi на гэты момант</p>
+            </div>
+            {% comment %} <div class="card-group"> {% endcomment %}
+                {% for book in promo_books %}
+                    <div class="col-6 col-sm-3 col-lg-2 mb-4">
+                        {% include 'partials/_book.html' %}
+                    </div>
+                {% endfor %}
+            {% comment %} </div> {% endcomment %}
+        {% endif %}
+    </div>
+</div>
 
-    <section id='new-books'>
-        <h2>Навінкі</h2>
-        <ul>
+<div class="container">
+    <div class="row">
+        {% if books %}
+            <div class="col-12">
+                <h4>Сучасныя пiсьменнiкi</h4>
+                <p>Творы аўтараў канца 20-га – пачатку 21-га стагодзя</p>
+            </div>
             {% for book in books %}
-                {% include 'partials/_book.html' %}
+                <div class="col-6 col-sm-3 col-lg-2 mb-4">
+                    {% include 'partials/_book.html' %}
+                </div>
             {% endfor %}
-        </ul>
-    </section>
+        {% endif %}
+    </div>
+</div>
 
+<div class="container">
+    <div class="row">
+        {% if books %}
+            <div class="col-12">
+                <h4>Дзiцячые кнiгi</h4>
+                <p>Казкi i гiсторыi для самых маленькiх</p>
+            </div>
+            {% for book in books %}
+                <div class="col-6 col-sm-3 col-lg-2 mb-4">
+                    {% include 'partials/_book.html' %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        {% if books %}
+            <div class="col-12">
+                <h4>Класiчныя творы</h4>
+                <p>Творы аўтараў да 20-га стагодзя</p>
+            </div>
+            {% for book in books %}
+                <div class="col-6 col-sm-3 col-lg-2 mb-4">
+                    {% include 'partials/_book.html' %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        {% if books %}
+            <div class="col-12">
+                <h4>Замежныя пiсьменнiкi</h4>
+                <p>Творы замежных аўтараў у перекладзе на беларускую мову</p>
+            </div>
+            {% for book in books %}
+                <div class="col-6 col-sm-3 col-lg-2 mb-4">
+                    {% include 'partials/_book.html' %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
 
 {% endblock content %}

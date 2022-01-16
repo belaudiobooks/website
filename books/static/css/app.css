@@ -9,3 +9,9 @@ h2,
 h3 {
   font-family: 'Montserrat', sans-serif;
 }
+
+.card-img-150{
+  width: 100%!important;
+  height: 10rem!important;
+  object-fit: cover;
+}

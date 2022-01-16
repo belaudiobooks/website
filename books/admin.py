@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin.decorators import display
 
-from .models import Person, Book, Genre, LinkType, Link
+from .models import Person, Book, Tag, LinkType, Link
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -29,6 +29,6 @@ class PersonAdmin(admin.ModelAdmin):
 
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Book, BookAdmin)
-admin.site.register(Genre)
+admin.site.register(Tag)
 admin.site.register(Link, LinkAdmin)
 admin.site.register(LinkType)

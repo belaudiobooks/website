@@ -24,8 +24,8 @@ class Person(models.Model):
         super().save(*args, **kwargs)
 
 
-class Genre(models.Model):
-    name = models.CharField(_('Genre Name'), max_length=50, default='')
+class Tag(models.Model):
+    name = models.CharField(_('Tag'), max_length=50, default='')
 
     def __str__(self) -> str:
         return f'{self.name}'
@@ -42,7 +42,7 @@ class Book(models.Model):
     translators = models.ManyToManyField(Person, related_name='translators', blank=True)
     slug = models.SlugField(_('slug'), unique=True, db_index=True, allow_unicode=True, blank=True)
     cover_image = models.ImageField(upload_to='covers', null=True)
-    genre = models.ManyToManyField(Genre, related_name='genre')
+    tag = models.ManyToManyField(Tag, related_name='tag')
     promoted = models.BooleanField(_('Promoted'), default=False)
     annotation = TextField(_('Book Annotation'), blank=True)
     

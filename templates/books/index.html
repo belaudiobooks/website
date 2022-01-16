@@ -5,32 +5,34 @@
     Беларускія аўдыякнігі
 {% endblock title %}
 
-{% comment %} {% block css_files %}
-    <link rel="stylesheet" href="{% static 'css/books.css' %}">
+{% block css_files %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
-{% endblock css_files %} {% endcomment %}
+{% endblock css_files %}
 
 {% block content %}
 
-<div class="container">
+<div class="container" id="books">
     <div class="row">
         {% if promo_books %}
-            <div class="col-12">
+            <div class="col-10">
                 <h4>Прапануем паслухаць</h4>
                 <p>Самыя папулярные кнiгi на гэты момант</p>
             </div>
-            {% comment %} <div class="card-group"> {% endcomment %}
-                {% for book in promo_books %}
-                    <div class="col-6 col-sm-3 col-lg-2 mb-4">
-                        {% include 'partials/_book.html' %}
-                    </div>
-                {% endfor %}
-            {% comment %} </div> {% endcomment %}
+            <div class="col-2 text-end">
+                <p>
+                    <a class="text-decoration-none" data-bs-toggle="collapse" href="#hideCards" role="button" aria-expanded="false" aria-controls="hideCards">{{len_promo}} books</a>
+                </p>
+            </div>
+            {% for book in promo_books %}
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4 {% if forloop.counter > 6 %}collapse" id="hideCards{% endif %}">
+                    {% include 'partials/_book.html' %}
+                </div>
+            {% endfor %}
         {% endif %}
     </div>
 </div>
 
-<div class="container">
+<div class="container" id="books">
     <div class="row">
         {% if books %}
             <div class="col-12">
@@ -38,7 +40,7 @@
                 <p>Творы аўтараў канца 20-га – пачатку 21-га стагодзя</p>
             </div>
             {% for book in books %}
-                <div class="col-6 col-sm-3 col-lg-2 mb-4">
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}
@@ -46,7 +48,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" id="books">
     <div class="row">
         {% if books %}
             <div class="col-12">
@@ -54,7 +56,7 @@
                 <p>Казкi i гiсторыi для самых маленькiх</p>
             </div>
             {% for book in books %}
-                <div class="col-6 col-sm-3 col-lg-2 mb-4">
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}
@@ -62,7 +64,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" id="books">
     <div class="row">
         {% if books %}
             <div class="col-12">
@@ -70,7 +72,7 @@
                 <p>Творы аўтараў да 20-га стагодзя</p>
             </div>
             {% for book in books %}
-                <div class="col-6 col-sm-3 col-lg-2 mb-4">
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}
@@ -78,7 +80,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" id="books">
     <div class="row">
         {% if books %}
             <div class="col-12">
@@ -86,7 +88,7 @@
                 <p>Творы замежных аўтараў у перекладзе на беларускую мову</p>
             </div>
             {% for book in books %}
-                <div class="col-6 col-sm-3 col-lg-2 mb-4">
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}

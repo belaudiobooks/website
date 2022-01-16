@@ -23,7 +23,7 @@
                     </a>   
                 {% endfor %}
             </h4>
-            <h3>{{ book.annotation}}</h3>
+            <h3>{{ book.annotation|linebreaks}}</h3>
             <div>
                 Created on <time>{{ book.date|date:'d M Y' }}</time>    
             </div>

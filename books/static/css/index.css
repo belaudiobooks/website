@@ -1,52 +1,51 @@
-#welcome {
-  background: linear-gradient(to right top, #7464ff, #6004d7);
-  padding: 6rem 12%;
-}
-
-#welcome header {
-  display: flex;
-  align-items: flex-start;
-  margin: 3rem auto;
-}
-
-#welcome img {
-  width: 5rem;
-  height: 5rem;
-  object-fit: cover;
-  object-position: top;
-  border: 5px solid white;
-  border-radius: 12px;
-  background-color: #ffe1bf;
-  transform: rotateZ(-5deg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-#welcome h2 {
-  font-size: 3.5rem;
-  margin: 0 0 0 2rem;
-  color: #e4e4e4;
-  /* width: 10rem; */
-}
-
-#welcome p {
-  color: white;
-  font-size: 1.5rem;
-}
-
-#suggested-books, #new-books {
-  background-color: rgb(224, 215, 249);
+#books{
+  background-color: white;
   padding: 2rem;
-  border-radius: 12px;
-  width: 60rem;
+  border-radius: 10px;
+  width: 90%;
   margin: 2rem auto 2rem auto;
-  box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-#suggested-books h2, #new-books h2 {
-  text-align: center;
+#books h6{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: black;
 }
 
-#suggested-books ul, #new-books ul {
+#books h7{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #7879F1;
+}
+
+#books p{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+  color: #848484;
+}
+
+#books h4{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 34px;
+}
+
+#books a{
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #7879F1;
+}
+
+#books ul{
   list-style: none;
   margin: 0;
   padding: 0;
@@ -55,22 +54,6 @@
   gap: 1rem;
 }
 
-#suggested-books li, #new-books li {
+#books li{
   flex: 1;
-}
-
-#footer {
-  text-align: center;
-  padding: 3rem;
-  background-color: #7464ff;
-  margin-top: 5rem;
-}
-
-#footer h2 {
-  font-size: 3rem;
-}
-
-#footer p {
-  font-size: 1.5rem;
-  color: #353535;
 }

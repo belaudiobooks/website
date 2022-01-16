@@ -15,3 +15,20 @@ h3 {
   height: 10rem!important;
   object-fit: cover;
 }
+
+
+#footer {
+  text-align: center;
+  padding: 3rem;
+  background-color: #7464ff;
+  margin-top: 5rem;
+}
+
+#footer h2 {
+  font-size: 3rem;
+}
+
+#footer p {
+  font-size: 1.5rem;
+  color: #353535;
+}

@@ -12,7 +12,8 @@ def index(request):
 
     context = {
         'books': latest_books,
-        'promo_books': filtered_books_promo
+        'promo_books': filtered_books_promo,
+        'len_promo': len(filtered_books_promo)
     }
     
     return render(request, 'books/index.html', context)

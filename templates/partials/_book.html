@@ -1,14 +1,14 @@
 {% load static %}
 
 <div class="card h-100" >
-    <a href="{% url 'book-detail-page' book.slug %}">
+    <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none">
     <img class="card-img-150 card-img-top img-fluid" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
     <div class="card-body">
         <h6 class="card-title">{{ book.title }}</h6>
         <p class="card-text">
         {% for author in book.authors.all %}
-            <a href="{% url 'person-detail-page' author.slug %}">
-                <span>{{ author.name }}</span>
+            <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none">
+                <h7>{{ author.name }}</h7>
             </a>   
         {% endfor %}
         </p>

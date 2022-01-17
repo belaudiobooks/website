@@ -98,14 +98,26 @@ def add_or_sync_book(data: BooksData, title: str, description: str,
     merged. If the book doesn't exist - a new books is created with provided fields."""
     max_id = 0
     book = None
+    authors_ids = _to_list_of_ids(data, authors)
     for existing_book in data.books:
-        if existing_book.title.lower() == title.lower():
-            book = existing_book
-            break
+        title_a = existing_book.title.lower()
+        title_b = title.lower()
+        # Try handling cases where some books might have shorten names and different
+        # sources have different variations of those names.
+        if title_a.startswith(title_b) or title_b.startswith(title_a):
+            if authors_ids[0] != existing_book.authors[0]:
+                print(
+                    f"Books '{existing_book.title}' and '{title}' look similar but "
+                    + "have different authors. Not merging.")
+            else:
+                book = existing_book
+                break
         max_id = max(max_id, existing_book.id)
     if book is None:
-        cover_image = image.download_and_resize_image(cover_url,
-                                                      _translit(title))
+        cover_image = ""
+        if len(cover_url):
+            cover_image = image.download_and_resize_image(
+                cover_url, _translit(title))
         book = Book(id=max_id + 1,
                     title=title,
                     description=description,
@@ -115,9 +127,11 @@ def add_or_sync_book(data: BooksData, title: str, description: str,
                     links=[],
                     cover_image=cover_image)
         data.books.append(book)
-    book.authors = _to_list_of_ids(data, authors)
-    book.narrators = _to_list_of_ids(data, narrators)
-    book.translators = _to_list_of_ids(data, translators)
+    book.authors = authors_ids
+    if len(narrators):
+        book.narrators = _to_list_of_ids(data, narrators)
+    if len(translators):
+        book.translators = _to_list_of_ids(data, translators)
     for link in links:
         if link.url is None:
             raise ValueError(

@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="card h-100" >
+<div class="card border-light h-100" >
     <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none">
     <img class="card-img-150 card-img-top img-fluid" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
     <div class="card-body">

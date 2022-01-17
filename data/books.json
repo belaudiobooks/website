@@ -29,8 +29,127 @@
       "slug": "autar-adyn"
     }
   },
-  { "model": "books.genre", "pk": 2, "fields": { "name": "Раман" } },
-  { "model": "books.genre", "pk": 3, "fields": { "name": "А вайне" } },
+  {
+    "model": "books.person",
+    "pk": "45cd7dfe-0496-4cc0-ae73-a321ab6f60c4",
+    "fields": {
+      "name": "Андрэй Мілюхін",
+      "description": "Наратар\r\nАндрэй Мілюхін\r\nАндрэй Мілюхін\r\nАндрэй Мілюхін",
+      "photo": "photos/natatki_tatki_ptpH1fx.jpeg",
+      "slug": "andrei-miliukhin"
+    }
+  },
+  {
+    "model": "books.person",
+    "pk": "6c52de65-6a02-45de-bae1-5a3d02f77e62",
+    "fields": {
+      "name": "Кацярына Ягорава",
+      "description": "Кацярына Ягорава",
+      "photo": "photos/ljudzi_na_baloce_c3y3uee.jpeg",
+      "slug": "katsiaryna-iagorava"
+    }
+  },
+  {
+    "model": "books.person",
+    "pk": "7517a31d-5f9a-44ed-b450-c916d3a19ac7",
+    "fields": {
+      "name": "Крысціна Дробыш",
+      "description": "Транслэйтар- Крысціна Дробыш Крысціна Дробышм",
+      "photo": "photos/prygody_myshki_pikpik_Ek6wWfY.jpeg",
+      "slug": "krystsina-drobysh"
+    }
+  },
+  {
+    "model": "books.person",
+    "pk": "8dfb6af5-505d-493d-a0ab-d1dd94848be2",
+    "fields": {
+      "name": "Іван Мележ",
+      "description": "Іван Мележ",
+      "photo": "photos/ljudzi_na_baloce.jpeg",
+      "slug": "ivan-melezh"
+    }
+  },
+  {
+    "model": "books.person",
+    "pk": "8ede9e05-f619-4960-994b-4b4c1256ced0",
+    "fields": {
+      "name": "Андрэй Хадановіч",
+      "description": "Андрэй Хадановіч Андрэй Хадановіч Андрэй Хадановіч Андрэй Хадановіч Андрэй Хадановіч",
+      "photo": "photos/natatki_tatki_aZWhz8W.jpeg",
+      "slug": "andrei-khadanovich"
+    }
+  },
+  {
+    "model": "books.person",
+    "pk": "a7f0db2e-45b7-4c2d-8c90-d02d512f6bb4",
+    "fields": {
+      "name": "Людміла Рублеўская",
+      "description": "Людміла Рублеўская Людміла Рублеўская Людміла Рублеўская Людміла Рублеўская Людміла Рублеўская Людміла Рублеўская Людміла Рублеўская Людміла Рублеўская",
+      "photo": "photos/prygody_myshki_pikpik.jpeg",
+      "slug": "liudmila-rubleuskaia"
+    }
+  },
+  { "model": "books.tag", "pk": 1, "fields": { "name": "Дзіцячыя" } },
+  { "model": "books.tag", "pk": 2, "fields": { "name": "Сучасныя" } },
+  { "model": "books.tag", "pk": 3, "fields": { "name": "Класічныя" } },
+  { "model": "books.tag", "pk": 4, "fields": { "name": "Замежныя" } },
+  {
+    "model": "books.book",
+    "pk": "36110c3f-2b3b-4dcd-949c-5cc1542115ef",
+    "fields": {
+      "title": "Людзі на балоце",
+      "description": "Імя Івана Мележа застанецца ў нацыянальнай і сусветнай літаратуры дзякуючы створанай ім эпічнай «Палескай хроніцы» - глыбокаму філасофска-мастацкаму асэнсаванню жыцця Беларусі ў пераломныя 1920-1930-я гады. Раман «Людзі на балоце», які распачынае хроніку, уводзіць чытача ў беларускі свет вёскі Курані, дзе здзяйсняецца драма жыцця і кахання галоўных герояў. Сам Мележ невыпадкова называў свой твор «лірычным раманам».\\n\\nАгучка: Кацярына Ягорава\\n\\nКантакты: belaudiobooks@gmail.com",
+      "added_at": "2022-01-16T17:48:53.956Z",
+      "date": "1986-01-16",
+      "slug": "liudzi-na-balotse",
+      "cover_image": "covers/ljudzi_na_baloce.jpeg",
+      "promoted": true,
+      "annotation": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora hic sapiente, nesciunt at eum sequi atque, dolore, voluptas nobis doloribus saepe quaerat cum cupiditate amet! Autem praesentium soluta deserunt quod? Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora hic sapiente, nesciunt at eum sequi atque, dolore, voluptas nobis doloribus saepe quaerat cum cupiditate amet! Autem praesentium soluta deserunt quod? Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora hic sapiente, nesciunt at eum sequi atque, dolore, voluptas nobis doloribus saepe quaerat cum cupiditate amet! Autem praesentium soluta deserunt quod?",
+      "authors": ["8dfb6af5-505d-493d-a0ab-d1dd94848be2"],
+      "narrators": ["6c52de65-6a02-45de-bae1-5a3d02f77e62"],
+      "translators": [],
+      "tag": [3]
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": "51fec2be-7fc1-452a-8b74-07f93c36c692",
+    "fields": {
+      "title": "Прыгоды Мышкі Пік-Пік",
+      "description": "Казачная аповесць\\n\\nУ звычайнай гарадской кватэры, у пакоі, які належыць маленькім Веранічцы і Максімку, жыве пад шафай тоўсценькая лянівая мышка. Гаспадары гэтай кватэры, Мама і Тата Веранічкі і Максімкі, паэты.\\n\\nМусіць, таму і мышка Пік-Пік не зусім звычайная мышка, гэтак жа, як і яе сяброўка, котка Пепіта. Казкі пра прыгоды мышкі Пік-Пік — удалая спроба прыўнесці казачны свет у звычайнае гарадское жыццё, даць сучасным дзецям зразумелага і блізкага ім героя.\\n\\nМышка Пік-Пік, як і многія юныя чытачы, не любіць прыбіраць у сваёй норцы і вельмі любіць салодкае, марыць выйграць у конкурсе прыгажосці, заняцца бізнесам, праславіцца на тэатральнай сцэне… Усё яе прыгоды расказваюцца дасціпна, з гумарам, зразумела самым маленькім чытачам і цікава для дарослых.",
+      "added_at": "2022-01-16T17:51:14.135Z",
+      "date": "2003-01-16",
+      "slug": "prygody-myshki-pik-pik",
+      "cover_image": "covers/prygody_myshki_pikpik.jpeg",
+      "promoted": true,
+      "annotation": "Translator Крысціна Дробыш",
+      "authors": ["a7f0db2e-45b7-4c2d-8c90-d02d512f6bb4"],
+      "narrators": [],
+      "translators": ["7517a31d-5f9a-44ed-b450-c916d3a19ac7"],
+      "tag": [1]
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": "616e4511-5018-4aba-883d-5ec115f6383e",
+    "fields": {
+      "title": "Нататкі таткі",
+      "description": "Калi паэт зрабiўся татам,\\nЖыццё адразу стала святам,\\nI ён абрадаваўся гэтак,\\nШто кнiжку напiсаў для дзетак.\\nАндрэй Хадановiч",
+      "added_at": "2022-01-16T17:54:35.523Z",
+      "date": "2013-01-16",
+      "slug": "natatki-tatki",
+      "cover_image": "covers/natatki_tatki.jpeg",
+      "promoted": true,
+      "annotation": "",
+      "authors": ["8ede9e05-f619-4960-994b-4b4c1256ced0"],
+      "narrators": [
+        "7517a31d-5f9a-44ed-b450-c916d3a19ac7",
+        "45cd7dfe-0496-4cc0-ae73-a321ab6f60c4"
+      ],
+      "translators": [],
+      "tag": [1]
+    }
+  },
   {
     "model": "books.book",
     "pk": "6c60f801-2bff-4299-91ba-b13a9d0c172b",
@@ -46,7 +165,7 @@
       "authors": ["42a74e0c-3b4b-4815-a797-da7c21bf9b37"],
       "narrators": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
       "translators": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
-      "genre": [3]
+      "tag": []
     }
   },
   {
@@ -64,7 +183,7 @@
       "authors": ["42a74e0c-3b4b-4815-a797-da7c21bf9b37"],
       "narrators": ["42a74e0c-3b4b-4815-a797-da7c21bf9b37"],
       "translators": [],
-      "genre": [2]
+      "tag": []
     }
   },
   {
@@ -82,7 +201,7 @@
       "authors": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
       "narrators": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
       "translators": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
-      "genre": [2]
+      "tag": []
     }
   },
   {
@@ -103,7 +222,7 @@
       ],
       "narrators": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
       "translators": ["1fe5c628-bc1c-45be-b891-b8fb706441a3"],
-      "genre": [2]
+      "tag": []
     }
   },
   {
@@ -121,7 +240,7 @@
       "authors": ["038f41b9-0def-48d0-95f8-33734e6cd70f"],
       "narrators": [],
       "translators": [],
-      "genre": [2]
+      "tag": []
     }
   },
   {

@@ -19,12 +19,12 @@
                 <p>Самыя папулярные кнiгi на гэты момант</p>
             </div>
             <div class="col-2 text-end">
-                <p>
-                    <a class="text-decoration-none" data-bs-toggle="collapse" href="#hideCards" role="button" aria-expanded="false" aria-controls="hideCards">{{len_promo}} books</a>
-                </p>
+                    <form action="{% url 'books' %}" method="get">
+                        <button name='books' value='Дзіцячыя'>{{len_promo}} books</button>
+                    </form>
             </div>
             {% for book in promo_books %}
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4 {% if forloop.counter > 6 %}collapse" id="hideCards{% endif %}">
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}

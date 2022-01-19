@@ -22,9 +22,20 @@ def books(request):
     """All books page"""
     sorted_books = Book.objects.all().order_by('title')
 
-    context = {
-        'all_books': sorted_books
-    }
+    tag = request.GET.get('books')
+
+    if tag:
+        books_tag = sorted_books.filter(tag__name__icontains=tag)
+
+        context = {
+            'all_books': books_tag,
+            'values': tag
+        }
+
+    else:
+        context = {
+            'all_books': sorted_books
+        }
 
     return render(request, 'books/all-books.html', context)
 
@@ -52,9 +63,10 @@ def person_detail(request, slug):
 def search(request):
     """Search results"""
     books = Book.objects.all().order_by('-added_at')
-    
+
     # keywords in search field
-    keywords = request.GET['search']
+    keywords = request.GET.get('search')
+
     if keywords:
         search_results = (books.filter(title__icontains=keywords) | books.filter(authors__name__icontains=keywords)).distinct()
 

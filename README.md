@@ -65,6 +65,16 @@ Create superuser creds to access Admin site at: http://127.0.0.1:8000/admin
 python manage.py runserver
 ```
 
+### Run the project with fullbooks data
+It is possible to run server using fresh temporary sqlite3 database initialized with full books data. This way you get view of production-like data. First, it requires cloning https://github.com/belaudiobooks/data repo. Let's say you cloned it as `belaudbiooks_data` repo that sits next to this repo. Then run the following command:
+
+```shell
+BOOKS_DATA_DIR=../audiobooks_data python manage.py runserver_with_tmp_db --settings=booksby.sqlite_settings
+```
+
+It will:
+1. Create temporary database in `/tmp` directory.
+
 ## Books data
 
 Data about books, authors, narrators, translators and so on is currently stored in `data.json` file in `data` folder. There are scripts in that folder that can update the JSON file synchronizing its data with external resources such as https://knizhnyvoz.by, podcasts, https://litres.ru and others. Each script is called syncer and starts with `sync_` prefix. To update data do the following:

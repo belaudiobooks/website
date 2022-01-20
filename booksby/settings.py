@@ -151,3 +151,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User model that supports e-mail instead of username
 AUTH_USER_MODEL = 'user.User'
+
+# for debugging sql
+# LOGGING = {
+#     'version': 1,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'level': 'DEBUG',
+#         },
+#     },
+#     'root': {
+#         'handlers': ['console'],
+#     }
+# }

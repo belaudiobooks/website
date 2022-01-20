@@ -18,9 +18,9 @@
                 <h4>Прапануем паслухаць</h4>
                 <p>Самыя папулярные кнiгi на гэты момант</p>
             </div>
-            <div class="col-2 text-end">
+            <div class="col-2 text-end ">
                     <form action="{% url 'books' %}" method="get">
-                        <button name='books' value='Дзіцячыя'>{{len_promo}} books</button>
+                        <button class="btn btn-link text-decoration-none tag" name='books' value='Дзіцячыя'>{{len_promo}} books</button>
                     </form>
             </div>
             {% for book in promo_books %}

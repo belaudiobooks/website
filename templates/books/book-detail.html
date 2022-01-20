@@ -15,7 +15,7 @@
     <section id='summary'>
         <h2>{{ book.title|title }}</h2>
         <article>
-            <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+            <img src="{% if book.cover_image %}{{ book.cover_image.url }}{% endif %}" alt="{{ book.title }}">
             <h4>
                 {% for author in authors %}
                     <a href="{% url 'person-detail-page' author.slug %}">

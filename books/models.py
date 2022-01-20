@@ -13,7 +13,7 @@ class Person(models.Model):
     uuid = models.UUIDField(_('Person Id'), primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(_('Person Name'), max_length=100, default='')
     description = models.TextField(_('Person Description'))
-    photo = models.ImageField(upload_to='photos', null=True)
+    photo = models.ImageField(upload_to='photos', blank=True, null=True)
     slug = models.SlugField(_('Person slug'), unique=True, db_index=True, allow_unicode=True, blank=True)
 
     def __str__(self) -> str:
@@ -41,10 +41,11 @@ class Book(models.Model):
     narrators = models.ManyToManyField(Person, related_name='narrators', blank=True)
     translators = models.ManyToManyField(Person, related_name='translators', blank=True)
     slug = models.SlugField(_('slug'), unique=True, db_index=True, allow_unicode=True, blank=True)
-    cover_image = models.ImageField(upload_to='covers', null=True)
+    cover_image = models.ImageField(upload_to='covers', blank=True, null=True)
     tag = models.ManyToManyField(Tag, related_name='tag')
     promoted = models.BooleanField(_('Promoted'), default=False)
-    annotation = TextField(_('Book Annotation'), blank=True)
+    annotation = models.TextField(_('Book Annotation'), blank=True)
+    duration_sec = models.DurationField(_('Duration'), blank=True, null=True)
     
     def __str__(self) -> str:
         return "%s (%s)" % (
@@ -61,7 +62,7 @@ class Book(models.Model):
 class LinkType(models.Model):
     name = models.CharField(_('Link Type Name'), max_length=70, blank=True, default='')
     caption = models.CharField(_('Link =Caption'), max_length=100, blank=True, default='')
-    icon = models.ImageField(upload_to='icons', null=True)
+    icon = models.ImageField(upload_to='icons', blank=True, null=True)
 
     def __str__(self) -> str:
         return f'{self.name}'

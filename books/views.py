@@ -6,14 +6,14 @@ from .models import Book, Person
 def index(request):
     """Index page, starting page"""
     # query all books from DB and order by date and by promo filter
-    all_books = Book.objects.all()
+    all_books = Book.objects.all().prefetch_related('authors')
     latest_books = all_books.order_by('-added_at')[:4]
     filtered_books_promo = all_books.filter(promoted=True)
 
     context = {
         'books': latest_books,
         'promo_books': filtered_books_promo,
-        'len_promo': len(filtered_books_promo)
+        'len_promo': len(filtered_books_promo),
     }
     
     return render(request, 'books/index.html', context)

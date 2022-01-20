@@ -38,13 +38,6 @@
   line-height: 34px;
 }
 
-#books a{
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
-  color: #7879F1;
-}
-
 #books ul{
   list-style: none;
   margin: 0;
@@ -56,4 +49,11 @@
 
 #books li{
   flex: 1;
+}
+
+.tag{
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #7879F1;
 }

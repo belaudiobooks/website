@@ -2,7 +2,7 @@
 
 <div class="card border-light h-100" >
     <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none">
-    <img class="card-img-150 card-img-top img-fluid" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+    <img class="card-img-150 card-img-top img-fluid" src="{% if book.cover_image %}{{ book.cover_image.url }}{% endif %}" alt="{{ book.title }}">
     <div class="card-body">
         <h6 class="card-title">{{ book.title }}</h6>
         <p class="card-text">

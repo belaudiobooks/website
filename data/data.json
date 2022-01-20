@@ -656,7 +656,7 @@
           "url": "https://open.spotify.com/show/5Z2EckUhgJeQgY9icv1523"
         },
         {
-          "type": "casbtox_podcast",
+          "type": "castbox_podcast",
           "url": "https://castbox.fm/vic/1576260996"
         }
       ],
@@ -853,7 +853,7 @@
           "url": "https://open.spotify.com/show/7mdw7YHbjx08VzLqcQ4GIn"
         },
         {
-          "type": "casbtox_podcast",
+          "type": "castbox_podcast",
           "url": "https://castbox.fm/vic/1589739401"
         }
       ],
@@ -888,7 +888,7 @@
           "url": "https://open.spotify.com/show/66BxIq7Kr7Pg37gA2qnVIG"
         },
         {
-          "type": "casbtox_podcast",
+          "type": "castbox_podcast",
           "url": "https://castbox.fm/vic/1594114643"
         }
       ],
@@ -940,7 +940,7 @@
           "url": "https://open.spotify.com/show/2Irj2abIsK9cJKMxTD94Lk"
         },
         {
-          "type": "casbtox_podcast",
+          "type": "castbox_podcast",
           "url": "https://castbox.fm/vic/1602930125"
         },
         {
@@ -979,7 +979,7 @@
           "url": "https://open.spotify.com/show/1E7omUXfDnqB4qdA0mQqRq"
         },
         {
-          "type": "casbtox_podcast",
+          "type": "castbox_podcast",
           "url": "https://castbox.fm/vic/1601067376"
         }
       ],
@@ -1014,7 +1014,7 @@
           "url": "https://open.spotify.com/show/3wtrYFx0OrL1kE7pHTLvox"
         },
         {
-          "type": "casbtox_podcast",
+          "type": "castbox_podcast",
           "url": "https://castbox.fm/vic/1598253871"
         },
         {
@@ -1053,7 +1053,7 @@
           "url": "https://open.spotify.com/show/2je0uibKH20d0qPJVMDLUX"
         },
         {
-          "type": "casbtox_podcast",
+          "type": "castbox_podcast",
           "url": "https://castbox.fm/vic/1591832751"
         },
         {
@@ -2866,8 +2866,28 @@
       "icon_url": "https://podcast.ru/img/logos/apple-podcasts.svg"
     },
     {
+      "name": "yandex_podcast",
+      "caption": "Yandex Podcast",
+      "icon_url": "https://podcast.ru/img/logos/apple-podcasts.svg"
+    },
+    {
+      "name": "spotify_podcast",
+      "caption": "Spotify Podcast",
+      "icon_url": "https://podcast.ru/img/logos/apple-podcasts.svg"
+    },
+    {
+      "name": "castbox_podcast",
+      "caption": "Castbox Podcast",
+      "icon_url": "https://podcast.ru/img/logos/apple-podcasts.svg"
+    },
+    {
       "name": "litres",
       "caption": "ЛитРес: Слушай!",
+      "icon_url": "https://www.litres.ru/static/pr/brandbook/litres_listen_app.svg"
+    },
+    {
+      "name": "mininform",
+      "caption": "Міністэрства Інфармацыі РБ (Гугл Дыск)",
       "icon_url": "https://www.litres.ru/static/pr/brandbook/litres_listen_app.svg"
     }
   ]

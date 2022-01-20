@@ -1,31 +1,34 @@
 from django.shortcuts import render, get_object_or_404
 
 from .models import Book, Person
+from .books_handler import BooksHandler
 
+all_books = BooksHandler()
 
 def index(request):
     """Index page, starting page"""
     # query all books from DB and order by date and by promo filter
-    all_books = Book.objects.all().prefetch_related('authors')
-    latest_books = all_books.order_by('-added_at')[:4]
-    filtered_books_promo = all_books.filter(promoted=True)
+    latest_books = all_books.order('-added_at',4)
+    filtered_books_promo = all_books.filter_handler({'field':'promoted','value':True})
+    filtered_books_tag = all_books.filter_handler({'field':'tag','value':'Дзіцячыя'})
 
     context = {
         'books': latest_books,
         'promo_books': filtered_books_promo,
         'len_promo': len(filtered_books_promo),
+        'tag': filtered_books_tag
     }
     
     return render(request, 'books/index.html', context)
 
 def books(request):
     """All books page"""
-    sorted_books = Book.objects.all().order_by('title')
+    sorted_books = all_books.order('title')
 
     tag = request.GET.get('books')
 
     if tag:
-        books_tag = sorted_books.filter(tag__name__icontains=tag)
+        books_tag = all_books.filter_handler({'field':'tag','value':tag})
 
         context = {
             'all_books': books_tag,
@@ -62,13 +65,13 @@ def person_detail(request, slug):
 
 def search(request):
     """Search results"""
-    books = Book.objects.all().order_by('-added_at')
+    books = all_books.order('-added_at')
 
     # keywords in search field
     keywords = request.GET.get('search')
 
     if keywords:
-        search_results = (books.filter(title__icontains=keywords) | books.filter(authors__name__icontains=keywords)).distinct()
+        search_results = (all_books.filter_handler({'field':'title','value':keywords}) | all_books.filter_handler({'field':'author','value':keywords})).distinct()
 
         context = {
             'books': search_results,

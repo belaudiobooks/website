@@ -74,6 +74,8 @@ BOOKS_DATA_DIR=../audiobooks_data python manage.py runserver_with_tmp_db --setti
 
 It will:
 1. Create temporary database in `/tmp` directory.
+2. Fill it with data from `../audiobooks_data` folder.
+3. Start server using `../audiobooks_data` as `MEDIA_ROOT`.
 
 ## Books data
 

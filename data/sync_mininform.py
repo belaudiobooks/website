@@ -1,4 +1,4 @@
-"""
+'''
 Sync books from Mininfarm which released a bunch of audiobooks on Google Disk.
 We use data prepared by lit.letapis.by to get nicer list with links, titles, authors.
 
@@ -20,34 +20,30 @@ console.log(JSON.stringify(Array.from(document.querySelectorAll('.book')).map(el
   url: el.href,
 })).filter(book => book.type.toLowerCase() === 'мінінфарм'), null, 2))
 
-"""
+'''
 
 import json
 import os
 from data import books
 
-MININFORM_JSON = os.path.join(os.path.dirname(__file__), "mininform.json")
+MININFORM_JSON = os.path.join(os.path.dirname(__file__), 'mininform.json')
 
 
-def main() -> None:
-    """Run mains"""
+def run(data: books.BooksData) -> None:
+    '''Run sync'''
 
-    data = books.read_books_data()
     assert os.path.exists(
         MININFORM_JSON), 'Follow instructions in module docstring.'
     with open(MININFORM_JSON, 'r', encoding='utf8') as f:
         mininform = json.load(f)
     for book in mininform:
-        books.add_or_sync_book(data,
-                               title=book["title"],
-                               authors=[book["author"].title()],
-                               cover_url="",
-                               description="",
-                               links=[books.Link("mininform", book["url"])],
-                               narrators=[],
-                               translators=[])
-    books.write_books_data(data)
-
-
-if __name__ == '__main__':
-    main()
+        db_book = books.add_or_update_book(data,
+                                           title=book['title'],
+                                           authors=[book['author'].title()],
+                                           cover_url='',
+                                           description='',
+                                           narrators=[],
+                                           translators=[])
+        books.add_or_update_link(book=db_book,
+                                 url_type='mininform',
+                                 url=book['url'])

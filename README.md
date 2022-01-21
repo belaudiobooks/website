@@ -79,12 +79,15 @@ It will:
 
 ## Books data
 
-Data about books, authors, narrators, translators and so on is currently stored in `data.json` file in `data` folder. There are scripts in that folder that can update the JSON file synchronizing its data with external resources such as https://knizhnyvoz.by, podcasts, https://litres.ru and others. Each script is called syncer and starts with `sync_` prefix. To update data do the following:
+Data about books, authors, narrators, translators and so on is currently stored in separate project: https://github.com/belaudiobooks/data. This project contains scripts that manage and update that data: synchronizing its data with external resources such as https://knizhnyvoz.by, podcasts, https://litres.ru and others. To manage data run `sync.py` script like the following
 
-1. Run a syncer script from project rood directory: `python -m data.sync_knizhny_voz`. 
-2. Check changes in data.json: `git diff data/data.json` or using any other diff tool.
-3. If found an issue - update the script or fix the data manually. Though better update the script to automate issue in future. It's ok to have hardcoded one-off fixes.
-4. When done - commit `data.json` changes.
+1. Checkout belaudiobooks/data repo to separate folder, for example as `belaudbiooks_data`.
+2. Run script:
+```shell
+BOOKS_DATA_DIR=../audiobooks_data python -m data.sync podcasts
+```
+Last argument is command to run. Check `sync.py` for the list of commands.
+3. It will run maybe updates `belaudbiooks_data/data.json`. If it does - check changes and commit them.
 
 
 

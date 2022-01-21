@@ -2,6 +2,7 @@
 
 import io
 import os
+import tempfile
 from PIL import Image
 import requests
 
@@ -9,7 +10,7 @@ MAX_IMAGE_SIZE_PX = 500
 
 
 def download_and_resize_image(url: str, name: str) -> str:
-    """Downloads image, resizes it to match max size limit and stores in in 'images' folder."""
+    """Downloads image, resizes it to match max size limit and stores in in temp folder returning path."""
 
     resp = requests.get(url)
     if resp.status_code != 200:
@@ -24,7 +25,7 @@ def download_and_resize_image(url: str, name: str) -> str:
         new_height = round(image.height * scale)
         image = image.resize((new_width, new_height))
 
-    cur_dir = os.path.dirname(os.path.realpath(__file__))
-    outname = f"images/{name}.{img_format.lower()}"
-    image.save(cur_dir + "/" + outname)
-    return outname
+    image_page = os.path.join(tempfile.gettempdir(),
+                              f'{name}.{img_format.lower()}')
+    image.save(image_page)
+    return image_page

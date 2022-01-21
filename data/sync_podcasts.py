@@ -5,7 +5,7 @@ from typing import Dict, List, Optional
 import requests
 import feedparser
 
-from data.books import BooksData, Link, add_or_sync_book, read_books_data, write_books_data
+from data.books import BooksData, add_or_update_book, add_or_update_link
 
 
 @dataclass
@@ -101,7 +101,7 @@ def _get_podcast_urls(title: str) -> Dict[str, str]:
         "apple_podcast": links["linkItunes"],
         "yandex_podcast": links["linkYandex"],
         "spotify_podcast": links["linkSpotify"],
-        "casbtox_podcast": links["linkCastbox"],
+        "castbox_podcast": links["linkCastbox"],
     }
 
 
@@ -113,27 +113,22 @@ def _sync_from_podcast(data: BooksData, podcast: Podcast) -> None:
     description = feed.get("summary")
     author = feed["author"]
     cover_url = feed["image"]["href"]
+
+    book = add_or_update_book(data,
+                              title=title,
+                              description=description,
+                              authors=[author],
+                              narrators=podcast.narrators,
+                              translators=[],
+                              cover_url=cover_url)
+
     links_dict = _get_podcast_urls(title)
     links_dict.update(podcast.podcasts)
-
-    links = [Link(type, url) for type, url in links_dict.items()]
-    add_or_sync_book(data,
-                     title=title,
-                     description=description,
-                     authors=[author],
-                     narrators=podcast.narrators,
-                     translators=[],
-                     links=links,
-                     cover_url=cover_url)
+    for link_type, url in links_dict.items():
+        add_or_update_link(book=book, url_type=link_type, url=url)
 
 
-def main() -> None:
+def run(data: BooksData) -> None:
     """Run mains"""
-    data = read_books_data()
     for podcast in PODCASTS:
         _sync_from_podcast(data, podcast)
-    write_books_data(data)
-
-
-if __name__ == '__main__':
-    main()

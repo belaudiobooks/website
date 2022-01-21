@@ -84,34 +84,28 @@ def add_or_sync_book_voz(data: books.BooksData, book: dict[str, Any]) -> None:
             translators = names
         elif "чытае" in role or "чытаюць" in role or "выконвае" in role:
             narrators = {*narrators, *names}
-    links = [
-        books.Link(type="knizhny_voz",
-                   url="https://knizhnyvoz.by/app/book/" + book["id"])
-    ]
 
     narrators_list = list(narrators)
     narrators_list.sort()
-    books.add_or_sync_book(data,
-                           title=title,
-                           description=_clean_description(book["description"]),
-                           authors=authors,
-                           narrators=narrators_list,
-                           translators=translators,
-                           links=links,
-                           cover_url=book["imageUri"])
+    db_book = books.add_or_update_book(data,
+                                       title=title,
+                                       description=_clean_description(
+                                           book["description"]),
+                                       authors=authors,
+                                       narrators=narrators_list,
+                                       translators=translators,
+                                       cover_url=book["imageUri"])
+    books.add_or_update_link(book=db_book,
+                             url_type='knizhny_voz',
+                             url="https://knizhnyvoz.by/app/book/" +
+                             book["id"])
 
 
-def main():
+def run(data: books.BooksData):
     "Synchronizes data.json with data from http://knizhnyvoz.by"
-    data = books.read_books_data()
     resp = requests.get(DATA_URL)
     if resp.status_code != 200:
         raise ValueError(f"URL {DATA_URL} returned {resp.status_code}")
     data_json: list[dict[str, Any]] = resp.json()
     for book_json in data_json:
         add_or_sync_book_voz(data, book_json)
-    books.write_books_data(data)
-
-
-if __name__ == '__main__':
-    main()

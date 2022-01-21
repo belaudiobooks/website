@@ -1,22 +1,25 @@
 from django.shortcuts import render, get_object_or_404
 
 from .models import Book, Person
-from .books_handler import BooksHandler
 
-all_books = BooksHandler()
+
+all_books = Book.objects
 
 def index(request):
     """Index page, starting page"""
     # query all books from DB and order by date and by promo filter
-    latest_books = all_books.order('-added_at',4)
-    filtered_books_promo = all_books.filter_handler({'field':'promoted','value':True})
-    filtered_books_tag = all_books.filter_handler({'field':'tag','value':'Дзіцячыя'})
+    promoted_books = all_books.promoted().order_by('-added_at')[:6]
+    tag_modern = all_books.filtered(tag='Сучасныя').order_by('-added_at')[:6]
+    tag_kids = all_books.filtered(tag='Дзіцячыя').order_by('-added_at')[:6]
+    tag_classic = all_books.filtered(tag='Класічныя').order_by('-added_at')[:6]
+    tag_foreign = all_books.filtered(tag='Замежныя').order_by('-added_at')[:6]
 
     context = {
-        'books': latest_books,
-        'promo_books': filtered_books_promo,
-        'len_promo': len(filtered_books_promo),
-        'tag': filtered_books_tag
+        'promo_books': promoted_books,
+        'tag_modern': tag_modern,
+        'tag_kids': tag_kids,
+        'tag_classic': tag_classic,
+        'tag_foreign': tag_foreign
     }
     
     return render(request, 'books/index.html', context)
@@ -25,16 +28,18 @@ def books(request):
     """All books page"""
     sorted_books = all_books.order('title')
 
-    tag = request.GET.get('books')
+    req_tag = request.GET.get('books')
 
-    if tag:
-        books_tag = all_books.filter_handler({'field':'tag','value':tag})
+    if req_tag:
+        if req_tag == 'promoted':
+            books_tag = all_books.promoted()
+        else:
+            books_tag = all_books.filtered(tag=req_tag)
 
         context = {
             'all_books': books_tag,
-            'values': tag
+            'values': req_tag
         }
-
     else:
         context = {
             'all_books': sorted_books
@@ -71,7 +76,7 @@ def search(request):
     keywords = request.GET.get('search')
 
     if keywords:
-        search_results = (all_books.filter_handler({'field':'title','value':keywords}) | all_books.filter_handler({'field':'author','value':keywords})).distinct()
+        search_results = (all_books.filtered(title=keywords) | all_books.filtered(author=keywords)).distinct()
 
         context = {
             'books': search_results,

@@ -11,16 +11,16 @@
 
 {% block content %}
 
-<div class="container" id="books">
-    <div class="row">
-        {% if promo_books %}
+{% if promo_books.exists %}
+    <div class="container" id="books">
+        <div class="row">
             <div class="col-10">
                 <h4>Прапануем паслухаць</h4>
                 <p>Самыя папулярные кнiгi на гэты момант</p>
             </div>
             <div class="col-2 text-end ">
                     <form action="{% url 'books' %}" method="get">
-                        <button class="btn btn-link text-decoration-none tag" name='books' value='Дзіцячыя'>{{len_promo}} books</button>
+                        <button class="btn btn-link text-decoration-none tag" name='books' value='promoted'>{{promo_books.count}} books</button>
                     </form>
             </div>
             {% for book in promo_books %}
@@ -28,72 +28,92 @@
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}
-        {% endif %}
+        </div>
     </div>
-</div>
+{% endif %}
 
-<div class="container" id="books">
-    <div class="row">
-        {% if books %}
-            <div class="col-12">
+{% if tag_modern.exists %}
+    <div class="container" id="books">
+        <div class="row">
+            <div class="col-10">
                 <h4>Сучасныя пiсьменнiкi</h4>
                 <p>Творы аўтараў канца 20-га – пачатку 21-га стагодзя</p>
             </div>
-            {% for book in books %}
+            <div class="col-2 text-end ">
+                <form action="{% url 'books' %}" method="get">
+                    <button class="btn btn-link text-decoration-none tag" name='books' value='Сучасныя'>{{tag_modern.count}} books</button>
+                </form>
+            </div>
+            {% for book in tag_modern %}
                 <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}
-        {% endif %}
+        </div>
     </div>
-</div>
+{% endif %}
 
-<div class="container" id="books">
-    <div class="row">
-        {% if books %}
-            <div class="col-12">
+{% if tag_kids.exists %}
+    <div class="container" id="books">
+        <div class="row">
+            <div class="col-10">
                 <h4>Дзiцячые кнiгi</h4>
                 <p>Казкi i гiсторыi для самых маленькiх</p>
             </div>
-            {% for book in books %}
+            <div class="col-2 text-end ">
+                <form action="{% url 'books' %}" method="get">
+                    <button class="btn btn-link text-decoration-none tag" name='books' value='Дзіцячыя'>{{tag_kids.count}} books</button>
+                </form>
+            </div>
+            {% for book in tag_kids %}
                 <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}
-        {% endif %}
+        </div>
     </div>
-</div>
+{% endif %}
 
-<div class="container" id="books">
-    <div class="row">
-        {% if books %}
-            <div class="col-12">
+{% if tag_classic.exists %}
+    <div class="container" id="books">
+        <div class="row">
+            <div class="col-10">
                 <h4>Класiчныя творы</h4>
                 <p>Творы аўтараў да 20-га стагодзя</p>
             </div>
-            {% for book in books %}
+            <div class="col-2 text-end ">
+                <form action="{% url 'books' %}" method="get">
+                    <button class="btn btn-link text-decoration-none tag" name='books' value='Класічныя'>{{tag_classic.count}} books</button>
+                </form>
+            </div>
+            {% for book in tag_classic %}
                 <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}
-        {% endif %}
+        </div>
     </div>
-</div>
+{% endif %}
 
-<div class="container" id="books">
-    <div class="row">
-        {% if books %}
-            <div class="col-12">
+{% if tag_foreign.exists %}
+    <div class="container" id="books">
+        <div class="row">
+            <div class="col-10">
                 <h4>Замежныя пiсьменнiкi</h4>
                 <p>Творы замежных аўтараў у перекладзе на беларускую мову</p>
             </div>
-            {% for book in books %}
+            <div class="col-2 text-end ">
+                <form action="{% url 'books' %}" method="get">
+                    <button class="btn btn-link text-decoration-none tag" name='books' value='Замежныя'>{{tag_foreign.count}} books</button>
+                </form>
+            </div>
+            {% for book in tag_foreign %}
                 <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                     {% include 'partials/_book.html' %}
                 </div>
             {% endfor %}
-        {% endif %}
+        </div>
     </div>
-</div>
+{% endif %}
 
 {% endblock content %}

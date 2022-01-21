@@ -5,8 +5,8 @@ from django.template import defaultfilters
 
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
-from django.db.models.fields import TextField
 from django.utils.translation import gettext as _
+from .managers import BookManager
 
 
 class Person(models.Model):
@@ -57,6 +57,8 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
         self.slug = defaultfilters.slugify(unidecode(self.title))
         super().save(*args, **kwargs)
+
+    objects = BookManager()
 
 
 class LinkType(models.Model):

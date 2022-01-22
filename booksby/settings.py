@@ -88,6 +88,8 @@ WSGI_APPLICATION = 'booksby.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+project_id = env("GOOGLE_CLOUD_PROJECT")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

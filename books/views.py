@@ -31,14 +31,14 @@ def books(request):
     req_tag = request.GET.get('books')
 
     if req_tag:
-        if req_tag == 'promoted':
+        if req_tag == 'Прапануем паслухаць':
             books_tag = all_books.promoted()
         else:
             books_tag = all_books.filtered(tag=req_tag)
 
         context = {
             'all_books': books_tag,
-            'values': req_tag
+            'tag': req_tag
         }
     else:
         context = {

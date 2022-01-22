@@ -2,11 +2,11 @@
 
 <!-- Top navigation that dissapaer when scrolled -->
 <nav class="navbar" style="background-color: #7879F1;">
-  <div class="container">
+  <div class="container justify-content-center">
     <div class="row">
         <div class="col-md-6">
           <a href="{% url 'index' %}" class="link-dark text-decoration-none">
-            <img src="{% static 'images/AudioBooksLogo.svg' %}" alt="Audiobooks BY" class="img-fluid mx-auto d-block">
+            <img src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY" class="img-fluid mx-auto d-block">
             <h3 class="text-center">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
           </a>
         </div>
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col d-none d-sm-block">
                   <p>Навігатар па аўдыякнігах  на беларускай мове і беларускіх аўтараў.</p>
                   <p>Тут вы можаце хутка знайсці як аўдыякнігі сучасных аўтараў  так і дзіцячыя альбо класічныя кнігі. Сайт не змяшчае самі кнігі,  а дае спасылцы на пляцоўкі дзе іх можна паслухаць альбо набыць.</p>
                   <p>Калiласка, скарыстаецеся пошукам.</p>
@@ -38,7 +38,7 @@
       
       <!-- Collapsing items to the hamburger button on mobile -->
       <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-3">
           <li class="nav-item">
             <a class = "nav-link text-white
               {% if '/' != request.path %}

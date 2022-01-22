@@ -156,3 +156,5 @@ media
 # VSCode
 .vscode
 
+#gcloud
+cloud_sql_proxy

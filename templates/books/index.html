@@ -20,7 +20,7 @@
             </div>
             <div class="col-2 text-end ">
                     <form action="{% url 'books' %}" method="get">
-                        <button class="btn btn-link text-decoration-none tag" name='books' value='promoted'>{{promo_books.count}} books</button>
+                        <button class="btn btn-link text-decoration-none tag" name='books' value='Прапануем паслухаць'>{{promo_books.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
                     </form>
             </div>
             {% for book in promo_books %}
@@ -41,7 +41,7 @@
             </div>
             <div class="col-2 text-end ">
                 <form action="{% url 'books' %}" method="get">
-                    <button class="btn btn-link text-decoration-none tag" name='books' value='Сучасныя'>{{tag_modern.count}} books</button>
+                    <button class="btn btn-link text-decoration-none tag" name='books' value='Сучасныя'>{{tag_modern.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
                 </form>
             </div>
             {% for book in tag_modern %}
@@ -62,7 +62,7 @@
             </div>
             <div class="col-2 text-end ">
                 <form action="{% url 'books' %}" method="get">
-                    <button class="btn btn-link text-decoration-none tag" name='books' value='Дзіцячыя'>{{tag_kids.count}} books</button>
+                    <button class="btn btn-link text-decoration-none tag" name='books' value='Дзіцячыя'>{{tag_kids.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
                 </form>
             </div>
             {% for book in tag_kids %}
@@ -83,7 +83,7 @@
             </div>
             <div class="col-2 text-end ">
                 <form action="{% url 'books' %}" method="get">
-                    <button class="btn btn-link text-decoration-none tag" name='books' value='Класічныя'>{{tag_classic.count}} books</button>
+                    <button class="btn btn-link text-decoration-none tag" name='books' value='Класічныя'>{{tag_classic.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
                 </form>
             </div>
             {% for book in tag_classic %}
@@ -104,7 +104,7 @@
             </div>
             <div class="col-2 text-end ">
                 <form action="{% url 'books' %}" method="get">
-                    <button class="btn btn-link text-decoration-none tag" name='books' value='Замежныя'>{{tag_foreign.count}} books</button>
+                    <button class="btn btn-link text-decoration-none tag" name='books' value='Замежныя'>{{tag_foreign.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
                 </form>
             </div>
             {% for book in tag_foreign %}

@@ -8,21 +8,63 @@
 {% endblock css_files %}
 
 {% block content %}
+<div class="container" id="books">
+    <div class="clearfix">
 
-    <section id='new-books'>
-                <article class='book'>
-                        {% if person.photo %}
-                            <img src="{{ person.photo.url }}" alt="{{ person.name }}">
-                        {% endif %}
-                            <div class='book__content'>
-                                <h4>{{ person.name }}</h4>
-                                <p>
-                                    {{ person.description }}
-                                </p>
-                            </div>
-
-                </article>
-    </section>
+            {% if person.photo %}
+                <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3" src="{{ person.photo.url }}" alt="{{ person.name }}">
+            {% endif %}
+        
+            <p>
+                {{ person.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, accusamus! Neque hic nesciunt nam eos optio provident placeat veniam ad temporibus! Numquam assumenda impedit dicta aspernatur ipsa sapiente veniam delectus.
+            </p>
+        
+            <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem enim obcaecati rerum, id architecto dignissimos aut officiis, suscipit atque error aperiam harum nobis impedit placeat quod saepe repudiandae quia fugiat.
+            </p>
+        
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus pariatur earum voluptatibus quod quisquam ut assumenda repudiandae a totam veniam, perferendis nulla reprehenderit accusantium voluptatum quia nam iure odio sint!
+            </p>
+    </div>
+    {% if author.exists %}
+        <div class="row">
+            <div class="col-12">
+                    <h4>Кнігі {{ person.name }} як аўтар</h4>
+            </div>
+            {% for book in author %}
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+                    {% include 'partials/_book.html' %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if translator.exists %}
+        <div class="row">
+            <div class="col-12">
+                    <h4>Кнігі {{ person.name }} як перакладчык</h4>
+            </div>
+            {% for book in translator %}
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+                    {% include 'partials/_book.html' %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if narrator.exists %}
+        <div class="row">
+            <div class="col-12">
+                    <h4>Кнігі {{ person.name }} як наратар</h4>
+            </div>
+            {% for book in narrator %}
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+                    {% include 'partials/_book.html' %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+</div>
 
 
 {% endblock content %}

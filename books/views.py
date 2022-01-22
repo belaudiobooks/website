@@ -61,9 +61,22 @@ def book_detail(request, slug):
 def person_detail(request, slug):
     """Detailed book page"""
     identified_person = get_object_or_404(Person, slug=slug)
+    related_books=Person.objects.prefetch_related('authors','translators','narrators').filter(uuid=identified_person.uuid)
+    for person in related_books:
+        author = person.authors.all()
+        translator = person.translators.all()
+        narrator = person.narrators.all()
+
+    # TODO: need to think how to refactor queries for less SQL calls:
+    # authors=Person.objects.prefetch_related('authors').all()
+    # narrators=Person.objects.prefetch_related('authors').all()
+    # translators=Person.objects.prefetch_related('authors').all()
 
     context = {
         'person': identified_person,
+        'author': author,
+        'translator': translator,
+        'narrator': narrator
     }
 
     return render(request, 'books/person.html', context)

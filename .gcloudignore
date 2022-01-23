@@ -17,3 +17,6 @@
 __pycache__/
 # Ignored by the build system
 /setup.cfg
+
+# Ignore local .env as we're using the Cloud Secret Manager
+.env

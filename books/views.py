@@ -7,7 +7,7 @@ all_books = Book.objects
 
 def index(request):
     """Index page, starting page"""
-    # query all books from DB and order by date and by promo filter
+    # query all books from DB and order by date and by tag filter
     promoted_books = all_books.promoted().order_by('-added_at')[:6]
     tag_modern = all_books.filtered(tag='Сучасныя').order_by('-added_at')[:6]
     tag_kids = all_books.filtered(tag='Дзіцячыя').order_by('-added_at')[:6]
@@ -61,7 +61,11 @@ def book_detail(request, slug):
 def person_detail(request, slug):
     """Detailed book page"""
     identified_person = get_object_or_404(Person, slug=slug)
+
+    # Prefetch all books in the relationships
     related_books=Person.objects.prefetch_related('authors','translators','narrators').filter(uuid=identified_person.uuid)
+
+    # Select books for each relationship
     for person in related_books:
         author = person.authors.all()
         translator = person.translators.all()

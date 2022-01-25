@@ -14,7 +14,7 @@ class Person(models.Model):
     name = models.CharField(_('Person Name'), max_length=100, default='')
     description = models.TextField(_('Person Description'))
     photo = models.ImageField(upload_to='photos', blank=True, null=True)
-    slug = models.SlugField(_('Person slug'), unique=True, db_index=True, allow_unicode=True, blank=True)
+    slug = models.SlugField(_('Person slug'), max_length = 100, unique=True, db_index=True, allow_unicode=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.name}'
@@ -40,7 +40,7 @@ class Book(models.Model):
     authors = models.ManyToManyField(Person, related_name='authors')
     narrators = models.ManyToManyField(Person, related_name='narrators', blank=True)
     translators = models.ManyToManyField(Person, related_name='translators', blank=True)
-    slug = models.SlugField(_('slug'), unique=True, db_index=True, allow_unicode=True, blank=True)
+    slug = models.SlugField(_('slug'), max_length = 100, unique=True, db_index=True, allow_unicode=True, blank=True)
     cover_image = models.ImageField(upload_to='covers', blank=True, null=True)
     tag = models.ManyToManyField(Tag, related_name='tag')
     promoted = models.BooleanField(_('Promoted'), default=False)

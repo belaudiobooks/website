@@ -7,30 +7,59 @@
 
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'css/book-detail.css' %}">
-    <link rel="stylesheet" href="{% static 'css/books.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/books.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css_files %}
 
 {% block content %}
-    <section id='summary'>
-        <h2>{{ book.title|title }}</h2>
-        <article>
-            <img src="{% if book.cover_image %}{{ book.cover_image.url }}{% endif %}" alt="{{ book.title }}">
-            <h4>
-                {% for author in authors %}
-                    <a href="{% url 'person-detail-page' author.slug %}">
-                    <span>{{ author.name }}</span>
-                    </a>   
-                {% endfor %}
-            </h4>
-            <h3>{{ book.annotation|linebreaks}}</h3>
-            <div>
-                Created on <time>{{ book.date|date:'d M Y' }}</time>    
-            </div>
-        </article>     
-    </section>
+<div class="container" id="books">
+    <div class="clearfix">
+        {% if book.cover_image %}
+            <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+        {% endif %}
+        <h2>{{ book.title }}</h2>
+        <h6>{{ book.duration }}</h6>
+        <div>
+            Аўтар{% if authors.count > 1 %}ы{% endif %}:
+            {% for author in authors %}
+                    <a class="text-decoration-none" href="{% url 'person-detail-page' author.slug %}">
+                    <span>{{ author.name }}</span> 
+                    </a> 
+            {% endfor %}
+        </div>                
+        <div>
+            Перакла{% if translators.count > 1 %}лі{% else %}ў{% endif %}:
+            {% for translator in translators %}
+                    <a class="text-decoration-none" href="{% url 'person-detail-page' translator.slug %}">
+                    <span>{{ translator.name }}</span> 
+                    </a> 
+            {% endfor %}
+        </div> 
+        <div>
+            Агучы{% if narrators.count > 1 %}лі{% else %}ў{% endif %}:
+            {% for narrator in narrators %}
+                    <a class="text-decoration-none" href="{% url 'person-detail-page' narrator.slug %}">
+                    <span>{{ narrator.name }}</span> 
+                    </a> 
+            {% endfor %}
+        </div> 
+        <div class="my-4">
+            <p class="fw-normal">{{ book.description}}</p>
+        </div>
+        <div>
+            Дата <time>{{ book.date|date:'d M Y' }}</time>    
+        </div>
+        <div class="row my-4">
+            {% for tag in tags %}
+                <div class="col-auto p-1">
+                    <form action="{% url 'books' %}" method="get">
+                        <button class="btn btn-tag p-1" name='books' value={{tag}}>{{tag}}</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
-    <main>
-        <p>{{ book.description|linebreaks }}</p>
-    </main>
+
 {% endblock content %}

@@ -53,7 +53,11 @@ def book_detail(request, slug):
 
     context = {
         'book': identified_book,
-        'authors': identified_book.authors.all()
+        'authors': identified_book.authors.all(),
+        'translators': identified_book.translators.all(),
+        'narrators': identified_book.narrators.all(),
+        'tags': identified_book.tag.all()
+        
     }
 
     return render(request, 'books/book-detail.html', context)

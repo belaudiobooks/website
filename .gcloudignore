@@ -20,3 +20,6 @@ __pycache__/
 
 # Ignore local .env as we're using the Cloud Secret Manager
 .env
+env
+media
+./media

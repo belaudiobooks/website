@@ -27,22 +27,26 @@
                     </a> 
             {% endfor %}
         </div>                
-        <div>
-            Перакла{% if translators.count > 1 %}лі{% else %}ў{% endif %}:
-            {% for translator in translators %}
-                    <a class="text-decoration-none" href="{% url 'person-detail-page' translator.slug %}">
-                    <span>{{ translator.name }}</span> 
-                    </a> 
-            {% endfor %}
-        </div> 
-        <div>
-            Агучы{% if narrators.count > 1 %}лі{% else %}ў{% endif %}:
-            {% for narrator in narrators %}
-                    <a class="text-decoration-none" href="{% url 'person-detail-page' narrator.slug %}">
-                    <span>{{ narrator.name }}</span> 
-                    </a> 
-            {% endfor %}
-        </div> 
+        {% if translators.exists %}
+            <div>
+                Перакла{% if translators.count > 1 %}лі{% else %}ў{% endif %}:
+                {% for translator in translators %}
+                        <a class="text-decoration-none" href="{% url 'person-detail-page' translator.slug %}">
+                        <span>{{ translator.name }}</span> 
+                        </a> 
+                {% endfor %}
+            </div> 
+        {% endif %}
+        {% if narrators.exists %}
+            <div>
+                Агучы{% if narrators.count > 1 %}лі{% else %}ў{% endif %}:
+                {% for narrator in narrators %}
+                        <a class="text-decoration-none" href="{% url 'person-detail-page' narrator.slug %}">
+                        <span>{{ narrator.name }}</span> 
+                        </a> 
+                {% endfor %}
+            </div>
+        {% endif %}
         <div class="my-4">
             <p class="fw-normal">{{ book.description}}</p>
         </div>

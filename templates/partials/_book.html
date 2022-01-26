@@ -2,16 +2,28 @@
 
 <div class="card border-light h-100" >
     <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none">
-    <img class="card-img-150 card-img-top img-fluid" src="{% if book.cover_image %}{{ book.cover_image.url }}{% endif %}" alt="{{ book.title }}">
-    <div class="card-body">
-        <h6 class="card-title">{{ book.title }}</h6>
-        <p class="card-text">
-        {% for author in book.authors.all %}
-            <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none">
-                <h7>{{ author.name }}</h7>
-            </a>   
-        {% endfor %}
-        </p>
-    </div>
+        {% if book.cover_image %}
+            <img class="card-img-150 card-img-top img-fluid" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+        {% else %}
+            <div class="d-flex justify-content-center text-center flex-column card-img-150 card-img-top" style="background-image: url({{ colors|random }});background-repeat:no-repeat;">
+                <div class="col-12 pm-2 author">
+                    {% for author in book.authors.all %}{{ author.name }}{% endfor %}
+                </div>
+                {% comment %} <div class="separator"></div> {% endcomment %}
+                <div class="col-12 title pt-2">
+                    {{ book.title }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="card-body">
+            <h6 class="card-title">{{ book.title }}</h6>
+            <p class="card-text">
+            {% for author in book.authors.all %}
+                <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none">
+                    <h7>{{ author.name }}</h7>
+                </a>   
+            {% endfor %}
+            </p>
+        </div>
     </a>
 </div>

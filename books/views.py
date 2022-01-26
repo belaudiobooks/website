@@ -4,6 +4,14 @@ from .models import Book, Person
 
 
 all_books = Book.objects
+COLORS = [
+        'static/cover_templates/cover_templates_blue.jpeg',
+        'static/cover_templates/cover_templates_green.jpeg',
+        'static/cover_templates/cover_templates_grey.jpeg',
+        'static/cover_templates/cover_templates_purple.jpeg',
+        'static/cover_templates/cover_templates_red.jpeg',
+        'static/cover_templates/cover_templates_yellow.jpeg'
+    ]
 
 def index(request):
     """Index page, starting page"""
@@ -20,7 +28,8 @@ def index(request):
         'tag_modern': tag_modern,
         'tag_kids': tag_kids,
         'tag_classic': tag_classic,
-        'tag_foreign': tag_foreign
+        'tag_foreign': tag_foreign,
+        'colors': COLORS
     }
     
     return render(request, 'books/index.html', context)
@@ -39,11 +48,13 @@ def books(request):
 
         context = {
             'all_books': books_tag,
-            'tag': req_tag
+            'tag': req_tag,
+            'colors': COLORS
         }
     else:
         context = {
-            'all_books': sorted_books
+            'all_books': sorted_books,
+            'colors': COLORS
         }
 
     return render(request, 'books/all-books.html', context)
@@ -57,7 +68,8 @@ def book_detail(request, slug):
         'authors': identified_book.authors.all(),
         'translators': identified_book.translators.all(),
         'narrators': identified_book.narrators.all(),
-        'tags': identified_book.tag.all()
+        'tags': identified_book.tag.all(),
+        'colors': COLORS
         
     }
 
@@ -85,7 +97,8 @@ def person_detail(request, slug):
         'person': identified_person,
         'author': author,
         'translator': translator,
-        'narrator': narrator
+        'narrator': narrator,
+        'colors': COLORS
     }
 
     return render(request, 'books/person.html', context)
@@ -102,12 +115,14 @@ def search(request):
 
         context = {
             'books': search_results,
-            'values': keywords
+            'values': keywords,
+            'colors': COLORS
         }
 
     else:
         context = {
-            'books': books
+            'books': books,
+            'colors': COLORS
         }
 
     return render(request, 'books/search.html', context)

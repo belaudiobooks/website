@@ -8,6 +8,7 @@ all_books = Book.objects
 def index(request):
     """Index page, starting page"""
     # query all books from DB and order by date and by tag filter
+    #TODO need to provide proper count for each section right now it sends only 6 and count is always less than 6 on the rendered page
     promoted_books = all_books.promoted().order_by('-added_at')[:6]
     tag_modern = all_books.filtered(tag='Сучасныя').order_by('-added_at')[:6]
     tag_kids = all_books.filtered(tag='Дзіцячыя').order_by('-added_at')[:6]

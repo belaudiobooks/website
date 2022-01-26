@@ -4,6 +4,10 @@ html {
   font-family: 'Montserrat', sans-serif;
 }
 
+body {
+  background-color: #E1E1E1;
+}
+
 h1,
 h2,
 h3 {

@@ -44,6 +44,7 @@ def _get_or_create_people(data: BooksData, people: List[str]) -> List[Person]:
 
 
 def add_or_update_link(book: Book, url_type: str, url: str) -> None:
+    '''Adds or update links of a given book in DB. Compares links by type.'''
     link_type = LinkType.objects.filter(name=url_type).first()
     existing_link = Link.objects.filter(url_type=link_type, book=book)
     if existing_link.count() == 0:
@@ -53,6 +54,13 @@ def add_or_update_link(book: Book, url_type: str, url: str) -> None:
         link = existing_link[0]
         link.url = url
         link.save()
+
+
+def set_photo_from_file(person: Person, path: str) -> None:
+    '''Given person and path to local file - updates or sets photo on person and saves.'''
+    with open(path, 'rb') as f:
+        person.photo.save(person.slug + '.jpg', File(f))
+    person.save()
 
 
 def add_or_update_book(data: BooksData, title: str, description: str,

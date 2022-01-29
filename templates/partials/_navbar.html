@@ -2,25 +2,23 @@
 
 <!-- Top navigation that dissapaer when scrolled -->
 <nav class="navbar" style="background-color: #7879F1;">
-  <div class="container justify-content-center">
+  <div class="container justify-content-center text-white">
     <div class="row">
         <div class="col-md-6">
           <a href="{% url 'index' %}" class="link-dark text-decoration-none">
-            <img src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY" class="img-fluid mx-auto d-block">
-            <h3 class="text-center">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
+            <img src="{% static 'images/AudioBooksLogo.svg' %}" alt="Audiobooks BY" class="mx-auto d-block">
           </a>
         </div>
         <div class="col-md-6">
             <div class="row">
                 <div class="col d-none d-md-block">
-                    <p class="text-end">SOCIAL MEDIA ICONS</p>
+                    <p class="text-end"></p>
                 </div>
             </div>
             <div class="row">
                 <div class="col d-none d-sm-block">
                   <p>Навігатар па аўдыякнігах  на беларускай мове і беларускіх аўтараў.</p>
                   <p>Тут вы можаце хутка знайсці як аўдыякнігі сучасных аўтараў  так і дзіцячыя альбо класічныя кнігі. Сайт не змяшчае самі кнігі,  а дае спасылцы на пляцоўкі дзе іх можна паслухаць альбо набыць.</p>
-                  <p>Калiласка, скарыстаецеся пошукам.</p>
                 </div>
             </div>
         </div>
@@ -30,37 +28,26 @@
 
 <!-- Lower navigation that is always shown even when scrolled -->
 <nav class="navbar navbar-expand-md navbar-light sticky-top d-flex" style="background-color: #7879F1;">
-  <div class="container">
-    <div class="col-2 col-md-6">
+  <div class="container text-white">
+    <div class="col-6 d-none d-md-block text-nowrap">
+      <a href="{% url 'index' %}" class="text-white text-decoration-none">
+        <h3 class="text-center">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
+      </a>
+    </div>
+    <div class="col-3 col-md-3 justify-content-center">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       
       <!-- Collapsing items to the hamburger button on mobile -->
-      <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse text-nowrap" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-3">
-          <li class="nav-item">
-            <a class = "nav-link text-white
-              {% if '/' != request.path %}
-              text-opacity-75"
-              {% endif %}
-              href="{% url 'index' %}">Да дому
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class = "nav-link text-white
-              {% if '/authors' != request.path %}
-              text-opacity-75"
-              {% endif %}
-              href="#">Аўтары
-            </a>
-          </li>
           <li class="nav-item">
             <a class = "nav-link text-white
               {% if '/books' != request.path %}
               text-opacity-75"
               {% endif %}
-              href="{% url 'books' %}">Kнігі
+              href="{% url 'books' %}">Каталаг
             </a>
           </li>
           <li class="nav-item">
@@ -68,7 +55,7 @@
               {% if '/about' != request.path %}
               text-opacity-75"
               {% endif %}
-              href="#">Кантакты
+              href="#">Пра нас
             </a>
           </li>  
         </ul>
@@ -76,7 +63,7 @@
     </div>
 
     <!-- Search form -->
-    <div class="col">
+    <div class="col-9 col-md-3 col-lg-3">
       <form class="d-flex" action="{% url 'search' %}" method="get">
         <div class="input-group">
           <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, назва кнігі" aria-label="Аўтар, назва кнігі" aria-describedby="button-search" name="search" id="search">

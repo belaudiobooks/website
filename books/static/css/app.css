@@ -14,11 +14,17 @@ h3 {
   font-family: 'Montserrat', sans-serif;
 }
 
-.card-img-150{
-  width: 100%!important;
-  height: 10rem!important;
+/* .card-img-150{
+  width: 150!important;
+  height: 150!important;
   object-fit: cover;
-}
+} */
+
+.card-img-150 {
+  width: 150px!important;
+  height: 150px!important;
+  object-fit: cover;
+  }
 
 
 #footer {
@@ -47,6 +53,47 @@ h3 {
   color: black
 }
 
+.cover {
+  width: 500px;
+  height: 500px;
+  background-size: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 60;
+}
+
+.cover.small {
+  width: 150px;
+  height: 150px;
+  background-size: 150px;
+  font-size: 30;
+}
+
+.cover>div {
+  width: 83%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
 .separator {
   height: 3%;
+}
+
+.upper-half {
+  height: 45%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 3%;
+}
+
+.lower-half {
+  height: 51%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-weight: bold;
+  padding-top: 3%;
 }

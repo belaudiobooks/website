@@ -1,3 +1,6 @@
+import functools
+import os
+from typing import Union
 import uuid
 
 from unidecode import unidecode
@@ -8,12 +11,18 @@ from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils.translation import gettext as _
 from .managers import BookManager
 
+def _get_image_name(folder: str, instance: Union['Person', 'Book'], filename: str) -> str:
+    '''Builds stored image file name based on the slug of the model.'''
+    extension = os.path.splitext(filename)[1]
+    return os.path.join(folder, instance.slug + extension)
+
 
 class Person(models.Model):
     uuid = models.UUIDField(_('Person Id'), primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(_('Person Name'), max_length=100, default='')
-    description = models.TextField(_('Person Description'))
-    photo = models.ImageField(upload_to='photos', blank=True, null=True)
+    description = models.TextField(_('Person Description'), blank=True)
+    photo = models.ImageField(
+        upload_to=functools.partial(_get_image_name, 'photos'), blank=True, null=True)
     slug = models.SlugField(_('Person slug'), max_length = 100, unique=True, db_index=True, allow_unicode=True, blank=True)
 
     def __str__(self) -> str:
@@ -41,7 +50,8 @@ class Book(models.Model):
     narrators = models.ManyToManyField(Person, related_name='narrators', blank=True)
     translators = models.ManyToManyField(Person, related_name='translators', blank=True)
     slug = models.SlugField(_('slug'), max_length = 100, unique=True, db_index=True, allow_unicode=True, blank=True)
-    cover_image = models.ImageField(upload_to='covers', blank=True, null=True)
+    cover_image = models.ImageField(
+        upload_to=functools.partial(_get_image_name, 'covers'), blank=True, null=True)
     tag = models.ManyToManyField(Tag, related_name='tag')
     promoted = models.BooleanField(_('Promoted'), default=False)
     annotation = models.TextField(_('Book Annotation'), blank=True)

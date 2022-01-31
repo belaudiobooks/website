@@ -43,7 +43,8 @@ def run(data: books.BooksData) -> None:
                                            cover_url='',
                                            description='',
                                            narrators=[],
-                                           translators=[])
+                                           translators=[],
+                                           duration_sec=0)
         books.add_or_update_link(book=db_book,
                                  url_type='mininform',
                                  url=book['url'])

@@ -8,6 +8,7 @@ Each run script should use this module in the following way:
 '''
 
 from dataclasses import dataclass
+import datetime
 import os
 from typing import List
 from datetime import date
@@ -65,7 +66,8 @@ def set_photo_from_file(person: Person, path: str) -> None:
 
 def add_or_update_book(data: BooksData, title: str, description: str,
                        authors: List[str], narrators: List[str],
-                       translators: List[str], cover_url: str) -> Book:
+                       translators: List[str], cover_url: str,
+                       duration_sec: int) -> Book:
     '''Method for updating BooksData with new data.
 
     If given book already exists in BooksData (compared by title) -
@@ -79,10 +81,15 @@ def add_or_update_book(data: BooksData, title: str, description: str,
         # Try handling cases where some books might have shorten names and different
         # sources have different variations of those names.
         if title_a.startswith(title_b) or title_b.startswith(title_a):
-            if authors_full[0] != existing_book.authors.all().first():
+            existing_author = existing_book.authors.all().first()
+            assert existing_author
+            new_author = authors_full[0]
+            if new_author != existing_author:
                 print(
                     f'Books "{existing_book.title}" and "{title}" look similar but '
-                    + 'have different authors. Not merging.')
+                    +
+                    f'have different authors. Existing {existing_author.name} '
+                    + f'new author {new_author.name}. Not merging.')
             else:
                 book = existing_book
                 break
@@ -102,5 +109,6 @@ def add_or_update_book(data: BooksData, title: str, description: str,
         book.translators.set(_get_or_create_people(data, translators))
     if description != '':
         book.description = description
+    book.duration_sec = datetime.timedelta(seconds=duration_sec)
     book.save()
     return book

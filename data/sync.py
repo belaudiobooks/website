@@ -20,6 +20,7 @@ from data.books import BooksData
 
 def _initialize_db() -> None:
     management.call_command('makemigrations')
+    management.call_command('migrate', 'books', 'zero')
     management.call_command('migrate')
     data_dir = os.environ['BOOKS_DATA_DIR']
     management.call_command('loaddata', os.path.join(data_dir, 'data.json'))

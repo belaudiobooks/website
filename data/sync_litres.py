@@ -6,6 +6,8 @@ By default syncer finds all belarusian audiobooks on LitRes but also has ability
 extra books which aren't included in search results.
 '''
 
+import datetime
+import re
 from typing import List, Optional
 import requests
 import bs4
@@ -15,6 +17,7 @@ from data import books
 REPLACEMENTS = {
     'Дзень Святого Патрыка': 'Дзень Святога Патрыка',
     'Владимир Лисовский': 'Уладзімір Лісоўскі',
+    'Ольгерд Бахаревич': 'Альгерд Бахарэвіч',
 }
 
 
@@ -32,6 +35,10 @@ def _find_mybook_url_by_title(title: str) -> Optional[str]:
     return None
 
 
+LITRES_DURATION_FORMAT = re.compile(
+    r'(?P<hours>\d+?) ч. (?P<minutes>\d+?) мин. (?P<seconds>\d+?) сек.')
+
+
 def _sync_book(data: books.BooksData, url: str) -> None:
     resp = requests.get(url)
     if resp.status_code != 200:
@@ -44,11 +51,22 @@ def _sync_book(data: books.BooksData, url: str) -> None:
         soup.select_one('.biblio_book_author span[itemprop=name]').string)
     narrator = None
     details = soup.select('.biblio_book_info_detailed li')
+    duration = datetime.timedelta()
     for detail in details:
         detail_name = detail.select_one('strong')
-        if detail_name is not None and detail_name.string == 'Чтец:':
+        name = '' if detail_name is None else detail_name.string
+        if name == 'Чтец:':
             narrator = _maybe_replace(
                 detail.select_one('.biblio_info_detailed__link').string)
+        elif name == 'Длительность:':
+            detail_name.string = ''
+            duration_str = '\n'.join(detail.stripped_strings)
+            parts = LITRES_DURATION_FORMAT.match(duration_str)
+            assert parts, f'Duration regex did not match. {duration_str}'
+            time_parts = {}
+            for name, param in parts.groupdict().items():
+                time_parts[name] = int(param)
+            duration = datetime.timedelta(**time_parts)
     assert narrator, 'Did not find narrator'
     description = '\n'.join(
         soup.select_one('.biblio_book_descr_publishers').stripped_strings)
@@ -61,7 +79,9 @@ def _sync_book(data: books.BooksData, url: str) -> None:
                                           authors=[author],
                                           narrators=[narrator],
                                           translators=[],
-                                          cover_url=cover)
+                                          cover_url=cover,
+                                          duration_sec=int(
+                                              duration.total_seconds()))
     books.add_or_update_link(book_model, 'litres', url)
     mybook_url = _find_mybook_url_by_title(orig_title)
     if mybook_url is not None:
@@ -74,7 +94,7 @@ EXTRA_BOOKS = [
 
 
 def _get_belarusian_audiobooks_links() -> List[str]:
-    search_url = 'https://www.litres.ru/luchshie-knigi/audioknigi/?lang=4'
+    search_url = 'https://www.litres.ru/novie/audioknigi/?lang=4'
     resp = requests.get(search_url)
     if resp.status_code != 200:
         raise ValueError(f'URL {search_url} returned {resp.status_code}')

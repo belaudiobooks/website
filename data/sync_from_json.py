@@ -26,7 +26,8 @@ def run(data: books.BooksData) -> None:
                     authors=[author['name']],
                     narrators=[],
                     translators=[],
-                    cover_url=book['cover'])
+                    cover_url=book['cover'],
+                    duration_sec=0)
                 for link in book['links']:
                     books.add_or_update_link(
                         book=db_book,

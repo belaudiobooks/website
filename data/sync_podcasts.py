@@ -1,7 +1,9 @@
 '''Syncs books from podcast rss files.'''
 
 from dataclasses import dataclass
+import datetime
 from typing import Dict, List, Optional
+import django
 import requests
 import feedparser
 
@@ -113,6 +115,10 @@ def _sync_from_podcast(data: BooksData, podcast: Podcast) -> None:
     description = feed.get('summary')
     author = feed['author']
     cover_url = feed['image']['href']
+    duration = datetime.timedelta()
+    for episode in rss['entries']:
+        duration += django.utils.dateparse.parse_duration(
+            episode['itunes_duration'])
 
     book = add_or_update_book(data,
                               title=title,
@@ -120,7 +126,8 @@ def _sync_from_podcast(data: BooksData, podcast: Podcast) -> None:
                               authors=[author],
                               narrators=podcast.narrators,
                               translators=[],
-                              cover_url=cover_url)
+                              cover_url=cover_url,
+                              duration_sec=int(duration.total_seconds()))
 
     links_dict = _get_podcast_urls(title)
     links_dict.update(podcast.podcasts)

@@ -8,15 +8,10 @@ import tempfile
 import os
 from booksby.settings import *
 
-_, path = tempfile.mkstemp(
-    prefix="tmp_db_",
-    suffix=".sqlite3",
-)
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': path,
+        'NAME': os.path.join(tempfile.gettempdir(), 'audiobooksby.sqlite3'),
     }
 }
 

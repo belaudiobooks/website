@@ -89,7 +89,8 @@ def _sync_book(data: books.BooksData, url: str) -> None:
 
 
 EXTRA_BOOKS = [
-    'https://www.litres.ru/maksim-zhbankou/slomo-hatnyaya-krytyka-kulturnaga-dyzaynu-66596742/'
+    'https://www.litres.ru/maksim-zhbankou/slomo-hatnyaya-krytyka-kulturnaga-dyzaynu-66596742/',
+    'https://www.litres.ru/eva-vezhnavec/shlyah-drobnay-svolachy-67123155/',
 ]
 
 

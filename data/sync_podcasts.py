@@ -24,6 +24,12 @@ class Podcast:
 
 # List of known podcasts containing belarusian audiobooks
 PODCASTS = [
+    # Белы клык
+    Podcast(
+        rss_feed=
+        'https://storage.googleapis.com/belaudiobooks/dzek_londan_biely_klyk/rss.xml',
+        podcasts={},
+        narrators=['Андрэй Каляда']),
     # Шляхціц Завальня
     Podcast(
         rss_feed=

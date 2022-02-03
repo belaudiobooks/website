@@ -43,13 +43,13 @@ class Command(BaseCommand):
         print('Dumping data from DB.')
 
         all_people = Person.objects.all()
+        all_tags = Tag.objects.all()
         all_books = Book.objects.all().prefetch_related(
             'authors', 'narrators', 'translators', 'tag')
         all_link_types = LinkType.objects.all()
         all_links = Link.objects.all()
-        all_tags = Tag.objects.all()
         all_objects = list(
-            chain(all_people, all_books, all_link_types, all_tags, all_links))
+            chain(all_people, all_tags, all_books, all_link_types, all_links))
         with open(os.path.join(data_dir, 'data.json'), 'w',
                   encoding='utf8') as f:
             django.core.serializers.serialize('json',

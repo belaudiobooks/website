@@ -5,17 +5,17 @@ from .models import Person, Book, Tag, LinkType, Link
 
 
 class BookAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
-    list_filter = ("authors", "title", "promoted")
-    list_display = ("title", "get_book_authors", "promoted")
+    prepopulated_fields = {'slug': ('title', )}
+    list_filter = ('authors', 'title', 'promoted')
+    list_display = ('title', 'get_book_authors', 'promoted')
 
     @display(description='authors')
     def get_book_authors(self, obj):
-        return ", ".join([str(person.name) for person in obj.authors.all()])
+        return ', '.join([str(person.name) for person in obj.authors.all()])
 
 
 class LinkAdmin(admin.ModelAdmin):
-    list_display = ("url", "get_book", "url_type")
+    list_display = ('url', 'get_book', 'url_type')
 
     @display(description='authors')
     def get_book(self, obj):
@@ -23,8 +23,8 @@ class LinkAdmin(admin.ModelAdmin):
 
 
 class PersonAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("name",)}
-    list_filter = ("name",)
+    prepopulated_fields = {'slug': ('name', )}
+    list_filter = ('name', )
 
 
 admin.site.register(Person, PersonAdmin)

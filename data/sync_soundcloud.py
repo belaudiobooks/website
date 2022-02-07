@@ -38,6 +38,11 @@ RADIO_SVABODA_URLS = [
     'https://soundcloud.com/svaboda/sets/bartosik_klinika'
 ]
 
+MOVA_NANOVA_URLS = [
+    'https://soundcloud.com/maxim-umetsky/sets/nu-lya-vy-ya-1',
+    'https://soundcloud.com/maxim-umetsky/sets/1ozouubviyjh',
+]
+
 
 def _sync_book(data: books.BooksData, url: str, url_type: str) -> None:
     print(f'Processing url {url}')
@@ -66,15 +71,16 @@ def _sync_book(data: books.BooksData, url: str, url_type: str) -> None:
     if narrator == '' or narrator is None:
         narrator = author
     cover = playlist['artwork_url'].replace('-large.', '-t500x500.')
-    book = books.add_or_update_book(data,
-                                    title=title,
-                                    description=playlist['description'],
-                                    authors=author.split(','),
-                                    narrators=narrator.split(','),
-                                    translators=[],
-                                    cover_url=cover,
-                                    duration_sec=round(playlist['duration'] /
-                                                       1000))
+    book = books.add_or_update_book(
+        data,
+        title=title,
+        description=playlist['description']
+        if playlist['description'] is not None else '',
+        authors=author.split(','),
+        narrators=narrator.split(','),
+        translators=[],
+        cover_url=cover,
+        duration_sec=round(playlist['duration'] / 1000))
     book.date = datetime.fromisoformat(playlist['created_at'].replace(
         'Z', '+00:00')).strftime('%Y-%m-%d')
     books.add_or_update_link(book, url_type, url)
@@ -82,5 +88,7 @@ def _sync_book(data: books.BooksData, url: str, url_type: str) -> None:
 
 def run(data: books.BooksData) -> None:
     '''Run mains'''
-    for url in RADIO_SVABODA_URLS:
-        _sync_book(data, url, 'radio_svaboda')
+    # for url in RADIO_SVABODA_URLS:
+    #     _sync_book(data, url, 'radio_svaboda')
+    for url in MOVA_NANOVA_URLS:
+        _sync_book(data, url, 'movananova')

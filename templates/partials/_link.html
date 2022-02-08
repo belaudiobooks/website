@@ -1,0 +1,16 @@
+{% load static %}
+
+<div>
+    <!--Count for many Narrators-->
+    Агучы{% if narration.narrators.all.count > 1 %}лі{% else %}ў{% endif %}:
+        {% for narrator in narration.narrators.all %}
+            <a class="text-decoration-none" href="{% url 'person-detail-page' narrator.slug %}">
+            <span>{{ narrator.name }}</span> 
+            </a> 
+        {% endfor %}
+        <!--Access to the link type-->
+        {% for link in narration.links.all %}
+            {{ link.url_type.icon }}
+            {{ link.url_type.name }}
+        {% endfor %}
+</div>

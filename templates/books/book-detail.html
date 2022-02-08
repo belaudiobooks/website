@@ -27,7 +27,7 @@
                     </a> 
             {% endfor %}
         </div>                
-        {% if translators.exists %}
+        {% comment %} {% if translators.exists %}
             <div>
                 Перакла{% if translators.count > 1 %}лі{% else %}ў{% endif %}:
                 {% for translator in translators %}
@@ -46,13 +46,21 @@
                         </a> 
                 {% endfor %}
             </div>
-        {% endif %}
+        {% endif %} {% endcomment %}
         <div class="my-4">
             <p class="fw-normal">{{ book.description}}</p>
         </div>
         <div>
             Дата <time>{{ book.date|date:'d M Y' }}</time>    
         </div>
+
+        <!--Adding Links-->
+        {% for narration in narrations %}
+            <div class="row">
+                {% include 'partials/_link.html' %}
+            </div>
+        {% endfor %}
+
         <div class="row my-4">
             {% for tag in tags %}
                 <div class="col-auto p-1">

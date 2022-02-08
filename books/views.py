@@ -66,8 +66,7 @@ def book_detail(request, slug):
     context = {
         'book': identified_book,
         'authors': identified_book.authors.all(),
-        'translators': identified_book.translators.all(),
-        'narrators': identified_book.narrators.all(),
+        'narrations': identified_book.narration.all(),
         'tags': identified_book.tag.all(),
         'colors': COLORS
         
@@ -80,13 +79,15 @@ def person_detail(request, slug):
     identified_person = get_object_or_404(Person, slug=slug)
 
     # Prefetch all books in the relationships
-    related_books=Person.objects.prefetch_related('authors','translators','narrators').filter(uuid=identified_person.uuid)
+    related_books=Person.objects.prefetch_related('authors','translators').filter(uuid=identified_person.uuid)
 
     # Select books for each relationship
     for person in related_books:
         author = person.authors.all()
         translator = person.translators.all()
-        narrator = person.narrators.all()
+        #TODO: need to find the way to show narrations now
+        # for narration in person.narrator.all():
+        #     narration
 
     # TODO: need to think how to refactor queries for less SQL calls:
     # authors=Person.objects.prefetch_related('authors').all()
@@ -97,7 +98,8 @@ def person_detail(request, slug):
         'person': identified_person,
         'author': author,
         'translator': translator,
-        'narrator': narrator,
+        #TODO: Need to find the way to show Narrations now
+        # 'narrator': narrator,
         'colors': COLORS
     }
 

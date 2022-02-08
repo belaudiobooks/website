@@ -64,7 +64,11 @@ class LinkAdmin(admin.ModelAdmin):
 
     @display(description='narrators')
     def get_narrators(self, obj):
-        return ', '.join([str(person.name) for person in obj.narration.narrators.all()])
+        if obj.narration:
+            narrators = ', '.join([str(person.name) for person in obj.narration.narrators.all()])
+            return narrators
+        else:
+            return 'None'
 
 
 class IncompletePersonListFilter(admin.SimpleListFilter):

@@ -71,6 +71,7 @@ class Book(models.Model):
 
 
 class Narration(models.Model):
+    uuid = models.UUIDField(_('Narration'), primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     narrators = models.ManyToManyField(Person, related_name='narrators', blank=True)
     book = models.ForeignKey(Book, related_name='narration', blank=True, null=True, on_delete=SET_NULL)
 

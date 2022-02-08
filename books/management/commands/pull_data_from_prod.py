@@ -9,10 +9,11 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 import django
 
-from books.models import Book, Link, LinkType, Person, Tag
+from books.models import Book, Link, LinkType, Narration, Person, Tag
 
 
 class Command(BaseCommand):
+    '''Pulls data and images from production to local repo.'''
     help = 'Pulls data and images from production to local repo.'
 
     def handle(self, *args, **options):
@@ -42,14 +43,17 @@ class Command(BaseCommand):
 
         print('Dumping data from DB.')
 
-        all_people = Person.objects.all()
+        all_people = Person.objects.all().order_by('uuid')
         all_tags = Tag.objects.all()
         all_books = Book.objects.all().prefetch_related(
-            'authors', 'narrators', 'translators', 'tag')
+            'authors', 'translators', 'tag').order_by('uuid')
+        all_narrations = Narration.objects.all().prefetch_related(
+            'narrators').order_by('uuid')
         all_link_types = LinkType.objects.all()
-        all_links = Link.objects.all()
+        all_links = Link.objects.all().order_by('uuid')
         all_objects = list(
-            chain(all_people, all_tags, all_books, all_link_types, all_links))
+            chain(all_people, all_tags, all_books, all_narrations,
+                  all_link_types, all_links))
         with open(os.path.join(data_dir, 'data.json'), 'w',
                   encoding='utf8') as f:
             django.core.serializers.serialize('json',

@@ -47,7 +47,6 @@ class Book(models.Model):
     added_at = models.DateTimeField(_('Added at'), auto_now_add=True)
     date = models.DateField(_('Book Date'), auto_now_add=False)
     authors = models.ManyToManyField(Person, related_name='authors')
-    narrators = models.ManyToManyField(Person, related_name='narrators', blank=True)
     translators = models.ManyToManyField(Person, related_name='translators', blank=True)
     slug = models.SlugField(_('slug'), max_length = 100, unique=True, db_index=True, allow_unicode=True, blank=True)
     cover_image = models.ImageField(
@@ -71,6 +70,12 @@ class Book(models.Model):
     objects = BookManager()
 
 
+class Narration(models.Model):
+    uuid = models.UUIDField(_('Narration'), primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    narrators = models.ManyToManyField(Person, related_name='narrators', blank=True)
+    book = models.ForeignKey(Book, related_name='narration', blank=True, null=True, on_delete=SET_NULL)
+
+
 class LinkType(models.Model):
     name = models.CharField(_('Link Type Name'), max_length=70, blank=True, default='')
     caption = models.CharField(_('Link =Caption'), max_length=100, blank=True, default='')
@@ -83,8 +88,9 @@ class LinkType(models.Model):
 class Link(models.Model):
     uuid = models.UUIDField(_('Link Id'), primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     url = models.URLField(_('URL'), max_length=300)
-    url_type = models.ForeignKey(LinkType, null=True, on_delete=SET_NULL)
-    book = models.ForeignKey(Book, on_delete=CASCADE)
+    url_type = models.ForeignKey(LinkType, related_name='link_type', null=True, on_delete=SET_NULL)
+    narration = models.ForeignKey(Narration, related_name="links", on_delete=CASCADE, null=True)
+    
 
     def __str__(self) -> str:
         return f'{self.url} - {self.url_type}'

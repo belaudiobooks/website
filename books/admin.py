@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin.decorators import display
 from django.db.models import Count
 
-from .models import Person, Book, Tag, LinkType, Link
+from .models import Person, Book, Tag, LinkType, Link, Narration
 
 
 class IncompleteBookListFilter(admin.SimpleListFilter):
@@ -18,7 +18,8 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
             'no_description': 'Missing description',
             'no_cover': 'Missing cover',
             'no_duration': 'Missing duration',
-            'no_narrators': 'Missing narrators',
+            #TODO: Update with new narration model
+            # 'no_narrators': 'Missing narrators',
             'no_tags': 'Missing tags',
         }
         return [
@@ -39,9 +40,10 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
             return queryset.filter(cover_image__exact='')
         if reason == 'no_duration':
             return queryset.filter(duration_sec__exact=None)
-        if reason == 'no_narrators':
-            return queryset.annotate(num_narrators=Count('narrators')).filter(
-                num_narrators=0)
+        #TODO: update querry to link narrators
+        # if reason == 'no_narrators':
+        #     return queryset.annotate(num_narrators=Count('narrators')).filter(
+        #         num_narrators=0)
         if reason == 'no_tags':
             return queryset.annotate(num_tags=Count('tag')).filter(num_tags=0)
         raise ValueError(f'unknown incomplete_reason: {reason}')
@@ -58,11 +60,11 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class LinkAdmin(admin.ModelAdmin):
-    list_display = ('url', 'get_book', 'url_type')
+    list_display = ('url', 'get_narrators', 'url_type')
 
-    @display(description='authors')
-    def get_book(self, obj):
-        return obj.book
+    @display(description='narrators')
+    def get_narrators(self, obj):
+        return ', '.join([str(person.name) for person in obj.narration.narrators.all()])
 
 
 class IncompletePersonListFilter(admin.SimpleListFilter):
@@ -107,3 +109,4 @@ admin.site.register(Book, BookAdmin)
 admin.site.register(Tag)
 admin.site.register(Link, LinkAdmin)
 admin.site.register(LinkType)
+admin.site.register(Narration)

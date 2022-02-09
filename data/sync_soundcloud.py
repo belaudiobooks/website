@@ -71,7 +71,7 @@ def _sync_book(data: books.BooksData, url: str, url_type: str) -> None:
     if narrator == '' or narrator is None:
         narrator = author
     cover = playlist['artwork_url'].replace('-large.', '-t500x500.')
-    book = books.add_or_update_book(
+    narration = books.add_or_update_book(
         data,
         title=title,
         description=playlist['description']
@@ -81,9 +81,10 @@ def _sync_book(data: books.BooksData, url: str, url_type: str) -> None:
         translators=[],
         cover_url=cover,
         duration_sec=round(playlist['duration'] / 1000))
-    book.date = datetime.fromisoformat(playlist['created_at'].replace(
-        'Z', '+00:00')).strftime('%Y-%m-%d')
-    books.add_or_update_link(book, url_type, url)
+    assert narration.book
+    narration.book.date = datetime.fromisoformat(
+        playlist['created_at'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
+    books.add_or_update_link(narration, url_type, url)
 
 
 def run(data: books.BooksData) -> None:

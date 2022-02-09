@@ -73,19 +73,19 @@ def _sync_book(data: books.BooksData, url: str) -> None:
     cover = soup.select_one(
         '.biblio-book-cover-wrapper img')['data-src'].replace(
             '/cover/', '/cover_415/')
-    book_model = books.add_or_update_book(data,
-                                          title=title,
-                                          description=description,
-                                          authors=[author],
-                                          narrators=[narrator],
-                                          translators=[],
-                                          cover_url=cover,
-                                          duration_sec=int(
-                                              duration.total_seconds()))
-    books.add_or_update_link(book_model, 'litres', url)
+    narration = books.add_or_update_book(data,
+                                         title=title,
+                                         description=description,
+                                         authors=[author],
+                                         narrators=[narrator],
+                                         translators=[],
+                                         cover_url=cover,
+                                         duration_sec=int(
+                                             duration.total_seconds()))
+    books.add_or_update_link(narration, 'litres', url)
     mybook_url = _find_mybook_url_by_title(orig_title)
     if mybook_url is not None:
-        books.add_or_update_link(book_model, 'mybook', mybook_url)
+        books.add_or_update_link(narration, 'mybook', mybook_url)
 
 
 EXTRA_BOOKS = [

@@ -10,12 +10,13 @@ Each run script should use this module in the following way:
 from dataclasses import dataclass
 import datetime
 import os
-from typing import List
+from typing import Dict, List
 from datetime import date
+from uuid import UUID
 from unidecode import unidecode
 from django.template import defaultfilters
 from django.core.files import File
-from books.models import Book, Person, Link, LinkType
+from books.models import Book, Narration, Person, Link, LinkType
 from . import image
 
 
@@ -44,12 +45,13 @@ def _get_or_create_people(data: BooksData, people: List[str]) -> List[Person]:
     return [_get_or_add_person(data, name) for name in people]
 
 
-def add_or_update_link(book: Book, url_type: str, url: str) -> None:
+def add_or_update_link(narration: Narration, url_type: str, url: str) -> None:
     '''Adds or update links of a given book in DB. Compares links by type.'''
     link_type = LinkType.objects.filter(name=url_type).first()
-    existing_link = Link.objects.filter(url_type=link_type, book=book)
+    existing_link = Link.objects.filter(url_type=link_type,
+                                        narration=narration)
     if existing_link.count() == 0:
-        link = Link(book=book, url_type=link_type, url=url)
+        link = Link(narration=narration, url_type=link_type, url=url)
         link.save()
     else:
         link = existing_link[0]
@@ -64,10 +66,30 @@ def set_photo_from_file(person: Person, path: str) -> None:
     person.save()
 
 
+def _maybe_add_narration(data: BooksData, book: Book,
+                         narrators_names: List[str]) -> Narration:
+    existing_narrations = book.narration.all()
+    narrators = _get_or_create_people(data, narrators_names)
+    ids: Dict[UUID, bool] = {}
+    for narrator in narrators:
+        ids[narrator.uuid] = True
+    for narration in existing_narrations:
+        if narration.narrators.count() == 0 and len(narrators) == 0:
+            return narration
+        first_narrator = narration.narrators.first()
+        if first_narrator and ids[first_narrator.uuid]:
+            return narration
+    narration = Narration(book=book)
+    narration.save()
+    narration.narrators.set(narrators)
+    narration.save()
+    return narration
+
+
 def add_or_update_book(data: BooksData, title: str, description: str,
                        authors: List[str], narrators: List[str],
                        translators: List[str], cover_url: str,
-                       duration_sec: int) -> Book:
+                       duration_sec: int) -> Narration:
     '''Method for updating BooksData with new data.
 
     If given book already exists in BooksData (compared by title) -
@@ -103,12 +125,11 @@ def add_or_update_book(data: BooksData, title: str, description: str,
             book.save()
         data.books.append(book)
     book.authors.set(authors_full)
-    if len(narrators):
-        book.narrators.set(_get_or_create_people(data, narrators))
     if len(translators):
         book.translators.set(_get_or_create_people(data, translators))
     if description != '':
         book.description = description
     book.duration_sec = datetime.timedelta(seconds=duration_sec)
     book.save()
-    return book
+    narration = _maybe_add_narration(data, book, narrators)
+    return narration

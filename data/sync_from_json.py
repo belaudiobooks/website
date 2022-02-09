@@ -19,7 +19,7 @@ def run(data: books.BooksData) -> None:
             for book in author['books']:
                 title = book['title']
                 print(f'processing {title}')
-                db_book = books.add_or_update_book(
+                narration = books.add_or_update_book(
                     data,
                     title=title,
                     description=book['description'],
@@ -30,7 +30,7 @@ def run(data: books.BooksData) -> None:
                     duration_sec=0)
                 for link in book['links']:
                     books.add_or_update_link(
-                        book=db_book,
+                        narration=narration,
                         url_type=link['type'],
                         url=link['url'],
                     )

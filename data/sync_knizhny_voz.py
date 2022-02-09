@@ -96,7 +96,7 @@ def add_or_sync_book_voz(data: books.BooksData, book: dict[str, Any]) -> None:
 
     narrators_list = list(narrators)
     narrators_list.sort()
-    db_book = books.add_or_update_book(
+    narration = books.add_or_update_book(
         data,
         title=title,
         description=_clean_description(book['description']),
@@ -105,7 +105,7 @@ def add_or_sync_book_voz(data: books.BooksData, book: dict[str, Any]) -> None:
         translators=translators,
         cover_url=book['imageUri'],
         duration_sec=_get_duration_sec(book['id']))
-    books.add_or_update_link(book=db_book,
+    books.add_or_update_link(narration=narration,
                              url_type='knizhny_voz',
                              url='https://knizhnyvoz.by/app/book/' +
                              book['id'])

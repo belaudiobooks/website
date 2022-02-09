@@ -37,14 +37,14 @@ def run(data: books.BooksData) -> None:
     with open(MININFORM_JSON, 'r', encoding='utf8') as f:
         mininform = json.load(f)
     for book in mininform:
-        db_book = books.add_or_update_book(data,
-                                           title=book['title'],
-                                           authors=[book['author'].title()],
-                                           cover_url='',
-                                           description='',
-                                           narrators=[],
-                                           translators=[],
-                                           duration_sec=0)
-        books.add_or_update_link(book=db_book,
+        narration = books.add_or_update_book(data,
+                                             title=book['title'],
+                                             authors=[book['author'].title()],
+                                             cover_url='',
+                                             description='',
+                                             narrators=[],
+                                             translators=[],
+                                             duration_sec=0)
+        books.add_or_update_link(narration=narration,
                                  url_type='mininform',
                                  url=book['url'])

@@ -126,19 +126,19 @@ def _sync_from_podcast(data: BooksData, podcast: Podcast) -> None:
         duration += django.utils.dateparse.parse_duration(
             episode['itunes_duration'])
 
-    book = add_or_update_book(data,
-                              title=title,
-                              description=description,
-                              authors=[author],
-                              narrators=podcast.narrators,
-                              translators=[],
-                              cover_url=cover_url,
-                              duration_sec=int(duration.total_seconds()))
+    narration = add_or_update_book(data,
+                                   title=title,
+                                   description=description,
+                                   authors=[author],
+                                   narrators=podcast.narrators,
+                                   translators=[],
+                                   cover_url=cover_url,
+                                   duration_sec=int(duration.total_seconds()))
 
     links_dict = _get_podcast_urls(title)
     links_dict.update(podcast.podcasts)
     for link_type, url in links_dict.items():
-        add_or_update_link(book=book, url_type=link_type, url=url)
+        add_or_update_link(narration=narration, url_type=link_type, url=url)
 
 
 def run(data: BooksData) -> None:

@@ -13,19 +13,34 @@
 
 {% block content %}
 {% if all_books.exists %}
-    <div class="container" id="books">
+    <div class="container">
         <div class="row">
-            <div class="col-12">
-                {% if tag %}
-                    <h4>{{ tag }}</h4>
-                    <p>Ўсе кнігі выбраныя па тэгу</p>
-                {% endif %}
+            <div class="col-3 mt-5">
+                <ul class="list-unstyled">
+                    {% for tag in tags %}
+                        <li>
+                            <form action="{% url 'books' %}" method="get">
+                                <button class="btn btn-link text-decoration-none tag" name='books' value={{ tag.name }}>{{ tag.name }}</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-            {% for book in all_books %}
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                    {% include 'partials/_book.html' %}
+            <div class="col-9" id="books">
+                <div class="row">
+                    <div class="col-12">
+                        {% if tag %}
+                            <h4>{{ tag }}</h4>
+                            <p>Ўсе кнігі выбраныя па тэгу</p>
+                        {% endif %}
+                    </div>
+                    {% for book in all_books %}
+                        <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-4">
+                            {% include 'partials/_book.html' %}
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
         </div>
     </div>
 {% endif %}

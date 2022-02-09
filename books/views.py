@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from .models import Book, Person
+from .models import Book, Person, Tag
 
 
 all_books = Book.objects
@@ -37,6 +37,7 @@ def index(request):
 def books(request):
     """All books page"""
     sorted_books = all_books.order('title')
+    tags = Tag.objects.all()
 
     req_tag = request.GET.get('books')
 
@@ -49,12 +50,14 @@ def books(request):
         context = {
             'all_books': books_tag,
             'tag': req_tag,
-            'colors': COLORS
+            'colors': COLORS,
+            'tags': tags
         }
     else:
         context = {
             'all_books': sorted_books,
-            'colors': COLORS
+            'colors': COLORS,
+            'tags': tags
         }
 
     return render(request, 'books/all-books.html', context)

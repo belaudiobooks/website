@@ -27,10 +27,6 @@ class BooksData:
     books: List[Book]
 
 
-def _slugify(text):
-    return defaultfilters.slugify(unidecode(text))
-
-
 def _get_or_add_person(data: BooksData, name: str) -> Person:
     for person in data.people:
         if person.name == name:
@@ -118,12 +114,12 @@ def add_or_update_book(data: BooksData, title: str, description: str,
     if book is None:
         book = Book(title=title, description=description, date=date.today())
         book.save()
-        if len(cover_url):
-            cover_image = image.download_and_resize_image(cover_url, book.slug)
-            with open(cover_image, 'rb') as f:
-                book.cover_image.save(os.path.basename(cover_image), File(f))
-            book.save()
-        data.books.append(book)
+    if book.cover_image == '' and len(cover_url):
+        cover_image = image.download_and_resize_image(cover_url, book.slug)
+        with open(cover_image, 'rb') as f:
+            book.cover_image.save(os.path.basename(cover_image), File(f))
+        book.save()
+    data.books.append(book)
     book.authors.set(authors_full)
     if len(translators):
         book.translators.set(_get_or_create_people(data, translators))

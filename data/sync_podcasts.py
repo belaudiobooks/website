@@ -24,6 +24,12 @@ class Podcast:
 
 # List of known podcasts containing belarusian audiobooks
 PODCASTS = [
+    Podcast(
+        rss_feed=
+        'https://storage.googleapis.com/belaudiobooks/vasil_bykau_u_tumanie/rss.xml',
+        podcasts={},
+        narrators=['Андрэй Каляда'],
+    ),
     # Белы клык
     Podcast(
         rss_feed=
@@ -138,10 +144,15 @@ def _sync_from_podcast(data: BooksData, podcast: Podcast) -> None:
     links_dict = _get_podcast_urls(title)
     links_dict.update(podcast.podcasts)
     for link_type, url in links_dict.items():
-        add_or_update_link(narration=narration, url_type=link_type, url=url)
+        if url is None:
+            print(f'URL for podcast {link_type} is missing')
+        else:
+            add_or_update_link(narration=narration,
+                               url_type=link_type,
+                               url=url)
 
 
 def run(data: BooksData) -> None:
     '''Run mains'''
-    for podcast in PODCASTS:
+    for podcast in PODCASTS[0:1]:
         _sync_from_podcast(data, podcast)

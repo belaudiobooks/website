@@ -75,6 +75,7 @@ h3 {
   width: 83%;
   text-align: center;
   box-sizing: border-box;
+  color: black;
 }
 
 .separator {
@@ -96,4 +97,5 @@ h3 {
   justify-content: center;
   font-weight: bold;
   padding-top: 3%;
+  text-transform: uppercase;
 }

@@ -14,7 +14,7 @@ django.setup()
 from django.core import management
 from books.models import Book, Person
 
-from data import sync_from_json, sync_knizhny_voz, sync_litres, sync_mininform, sync_podcasts, sync_soundcloud, validate_data
+from data import sync_from_json, sync_knihi_com, sync_knizhny_voz, sync_litres, sync_mininform, sync_podcasts, sync_soundcloud, validate_data
 from data.books import BooksData
 
 
@@ -40,6 +40,7 @@ SYNC_COMMANDS: Dict[str, Callable[[BooksData], None]] = {
     'from_json': sync_from_json.run,
     'litres': sync_litres.run,
     'soundcloud': sync_soundcloud.run,
+    'knihi_com': sync_knihi_com.run,
     'validate_data': validate_data.run,
 }
 

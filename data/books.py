@@ -73,7 +73,7 @@ def _maybe_add_narration(data: BooksData, book: Book,
         if narration.narrators.count() == 0 and len(narrators) == 0:
             return narration
         first_narrator = narration.narrators.first()
-        if first_narrator and ids[first_narrator.uuid]:
+        if first_narrator and ids.get(first_narrator.uuid, False):
             return narration
     narration = Narration(book=book)
     narration.save()

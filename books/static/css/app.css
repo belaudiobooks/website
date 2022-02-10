@@ -26,6 +26,12 @@ h3 {
   object-fit: cover;
   }
 
+.photo {
+  width: 275px;
+  height: 275px;
+  object-fit: cover;
+  }
+
 
 #footer {
   text-align: center;

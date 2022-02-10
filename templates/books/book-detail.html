@@ -15,7 +15,7 @@
 <div class="container" id="books">
     <div class="clearfix">
         {% if book.cover_image %}
-            <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+            <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 photo" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
         {% endif %}
         <h2>{{ book.title }}</h2>
         <h6>{{ book.duration }}</h6>

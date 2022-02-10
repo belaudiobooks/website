@@ -18,11 +18,13 @@
             <div class="col-3 mt-5">
                 <ul class="list-unstyled">
                     {% for tag in tags %}
-                        <li>
-                            <form action="{% url 'books' %}" method="get">
-                                <button class="btn btn-link text-decoration-none tag" name='books' value={{ tag.name }}>{{ tag.name }}</button>
-                            </form>
-                        </li>
+                        {% if tag.tag.exists %}
+                            <li>
+                                <form action="{% url 'books' %}" method="get">
+                                    <button class="btn btn-link text-decoration-none tag{% if tag.name in request.path %}{% endif %}" name='books' value={{ tag.name }}>{{ tag.name }}</button>
+                                </form>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>

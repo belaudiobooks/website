@@ -12,20 +12,15 @@
     <div class="clearfix">
 
             {% if person.photo %}
-                <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3" src="{{ person.photo.url }}" alt="{{ person.name }}">
+                <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 photo" src="{{ person.photo.url }}" alt="{{ person.name }}">
             {% endif %}
-        
+            <p>
+                {{ person.name }}
+            </p>
             <p>
                 {{ person.description }}
             </p>
         
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem enim obcaecati rerum, id architecto dignissimos aut officiis, suscipit atque error aperiam harum nobis impedit placeat quod saepe repudiandae quia fugiat.
-            </p>
-        
-            <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus pariatur earum voluptatibus quod quisquam ut assumenda repudiandae a totam veniam, perferendis nulla reprehenderit accusantium voluptatum quia nam iure odio sint!
-            </p>
     </div>
     {% if author.exists %}
         <div class="row">

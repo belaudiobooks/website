@@ -75,6 +75,11 @@ class Narration(models.Model):
     narrators = models.ManyToManyField(Person, related_name='narrators', blank=True)
     book = models.ForeignKey(Book, related_name='narration', blank=True, null=True, on_delete=SET_NULL)
 
+    def __str__(self) -> str:
+        return '%s read by %s' % (
+            self.book,
+            ', '.join(narrator.name for narrator in self.narrators.all()),
+        )
 
 class LinkType(models.Model):
     name = models.CharField(_('Link Type Name'), max_length=70, blank=True, default='')

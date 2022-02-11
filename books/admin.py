@@ -60,7 +60,11 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class LinkAdmin(admin.ModelAdmin):
-    list_display = ('url', 'get_narrators', 'url_type')
+    list_display = ('uuid', 'url_type', 'get_book', 'get_narrators', 'url')
+
+    @display(description='book')
+    def get_book(self, obj):
+        return obj.narration.book
 
     @display(description='narrators')
     def get_narrators(self, obj):
@@ -108,9 +112,17 @@ class PersonAdmin(admin.ModelAdmin):
     list_filter = (IncompletePersonListFilter, )
 
 
+class NarrationAdmin(admin.ModelAdmin):
+    list_display = ('uuid', 'book', 'get_narrators')
+
+    @display(description='narrators')
+    def get_narrators(self, obj):
+        return ', '.join([str(person.name) for person in obj.narrators.all()])
+
+
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Tag)
 admin.site.register(Link, LinkAdmin)
 admin.site.register(LinkType)
-admin.site.register(Narration)
+admin.site.register(Narration, NarrationAdmin)

@@ -1,5 +1,26 @@
+{% load static %}
+
 <!-- Footer -->
-<footer id="footer" class="py-4 text-white text-center">
-    Copyright &copy;
-    <span class="year"></span> Беларускія аўдыякнігі
+<footer id="footer" class="py-4 text-white text-start">
+    <div class="container">
+        <div class="row mb-4">
+        <div class="col-5">
+            Звяртайцеся да нас з вашымi прапановамі i пытаннямі.
+        </div>
+        <div class="col-7">
+            Падпiшыцеся на нашыя сацыяльныя сеткi, каб  зауўсёды затсавацца на сувязi з намi.
+        </div>
+        </div>
+        <div class="row mt-2">
+        <div class="col-5 d-grid pe-5">
+            <button class="btn btn-light"><img src="{% static 'images/Mail.png' %}" alt=""></button>
+        </div>
+        <div class="col-7">
+            <button class="btn me-3"><img src="{% static 'images/TelgramIcon.png' %}" alt=""></button>
+            <button class="btn me-3"><img src="{% static 'images/FaceBook.png' %}" alt=""></button>
+            <button class="btn me-3"><img src="{% static 'images/InstagramIcon.png' %}" alt=""></button>
+            <button class="btn me-3"><img src="{% static 'images/TwitterIcon.png' %}" alt=""></button>
+        </div>
+        </div>
+    </div>
 </footer>

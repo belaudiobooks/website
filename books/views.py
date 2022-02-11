@@ -5,12 +5,12 @@ from .models import Book, Person, Tag
 
 all_books = Book.objects
 COLORS = [
-        'static/cover_templates/cover_templates_blue.jpeg',
-        'static/cover_templates/cover_templates_green.jpeg',
-        'static/cover_templates/cover_templates_grey.jpeg',
-        'static/cover_templates/cover_templates_purple.jpeg',
-        'static/cover_templates/cover_templates_red.jpeg',
-        'static/cover_templates/cover_templates_yellow.jpeg'
+        '/static/cover_templates/cover_templates_blue.jpeg',
+        '/static/cover_templates/cover_templates_green.jpeg',
+        '/static/cover_templates/cover_templates_grey.jpeg',
+        '/static/cover_templates/cover_templates_purple.jpeg',
+        '/static/cover_templates/cover_templates_red.jpeg',
+        '/static/cover_templates/cover_templates_yellow.jpeg'
     ]
 
 def index(request):

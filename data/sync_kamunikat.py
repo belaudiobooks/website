@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 import bs4
 import requests
 from data import books
@@ -18,45 +18,49 @@ class RawBook:
     '''All book-related data in one object.'''
     title: str
     author: str
-    narrator: str
     url: str
 
 
-def _get_raw_books() -> List[RawBook]:
-    list = _open_url('https://knihi.com/audyjoknihi.html').select('ul')[1]
+def _get_raw_books(start: int) -> List[RawBook]:
     result = []
-    for item in list.children:
-        if item.name is None:
-            continue
-        if item.name == 'div':
-            print(item)
-            break
-        narrator_el = item.select_one('i')
-        if narrator_el is None:
-            narrator = ''
-        else:
-            narrator = narrator_el.string.removeprefix('чытае ')
-        links = item.select('a')
-        links.pop(0)  # remove file link
-        author = ''
-        if len(links) > 1:
-            author = links.pop(0).string
-        for link in links:
-            title = link.string
-            url = link['href']
-            result.append(
-                RawBook(title=title, author=author, narrator=narrator,
-                        url=url))
+    print(f'processing {start}')
+    items = _open_url(
+        f'https://kamunikat.org/audyjoknihi.html?pub_start={start}').select(
+            '.PubItemContainer')[1:]
+    for item in items:
+        title = item.select_one('h1 a').string
+        url = item.select_one('h1 a')['href']
+        author = []
+        if len(item.select('h3')):
+            author_parts = item.select('h3')[-1].string.split(' ')
+            author_parts.reverse()
+            author = ' '.join(author_parts)
+        book = RawBook(title=title, author=author, url=url)
+        result.append(book)
     print(f'total books {len(result)}')
     return result
+
+
+def _get_description_and_photo(url: str) -> Tuple[str, str]:
+    page = _open_url(url)
+    description = ''
+    if page.select_one('.VolumeSummary p') is not None:
+        description = page.select_one('.VolumeSummary p').string
+    if description is None:
+        description = ''
+    img_tag = page.select_one('.PubImageContainer a')
+    cover_url = ''
+    if img_tag is not None:
+        path = img_tag['href']
+        cover_url = f'https://kamunikat.org/{path}'
+    return (description, cover_url)
 
 
 def _add_book(data: books.BooksData, idx: int, raw_book: RawBook) -> None:
     print(f'\n\n#{idx + 1}')
     print(raw_book.title)
     print(f'author: {raw_book.author}')
-    print(f'narrator: {raw_book.narrator}')
-    url = f'https://knihi.com{raw_book.url}'
+    url = f'https://kamunikat.org{raw_book.url}'
     print(url)
     print('')
     print('what to do? 1 - skip, 2 - accept, 3 - edit')
@@ -78,32 +82,27 @@ def _add_book(data: books.BooksData, idx: int, raw_book: RawBook) -> None:
         new_author = input('-> ')
         if len(new_author) > 0:
             raw_book.author = new_author
-
-        print(f'narrator "{raw_book.narrator}"')
-        new_narrator = input('-> ')
-        if len(new_narrator) > 0:
-            raw_book.narrator = new_narrator
-
-    narrators = []
-    if len(raw_book.narrator) > 0:
-        narrators = raw_book.narrator.split(',')
+    description, cover_url = _get_description_and_photo(url)
+    print(description)
+    print(cover_url)
     narration = books.add_or_update_book(data,
                                          title=raw_book.title,
-                                         description='',
+                                         description=description,
                                          authors=raw_book.author.split(','),
-                                         narrators=narrators,
+                                         narrators=[],
                                          translators=[],
-                                         cover_url='',
+                                         cover_url=cover_url,
                                          duration_sec=0)
     books.add_or_update_link(narration=narration,
-                             url_type='knihi_com',
+                             url_type='kamunikat',
                              url=url)
 
 
 def run(data: books.BooksData) -> None:
     '''Run mains'''
-    start = 140
+    start = 50
+    offset = 0
     step = 10
-    for idx, raw_book in enumerate(_get_raw_books()):
-        if idx >= start and idx < start + step:
+    for idx, raw_book in enumerate(_get_raw_books(start)):
+        if idx >= offset and idx < offset + step:
             _add_book(data, idx, raw_book)

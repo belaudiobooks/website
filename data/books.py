@@ -114,7 +114,10 @@ def add_or_update_book(data: BooksData, title: str, description: str,
     if book is None:
         book = Book(title=title, description=description, date=date.today())
         book.save()
-    if book.cover_image == '' and len(cover_url):
+    print(book.cover_image)
+    if (book.cover_image is None or book.cover_image == ''
+            or book.cover_image.name is None) and len(cover_url):
+        print('trying image')
         cover_image = image.download_and_resize_image(cover_url, book.slug)
         with open(cover_image, 'rb') as f:
             book.cover_image.save(os.path.basename(cover_image), File(f))
@@ -123,7 +126,7 @@ def add_or_update_book(data: BooksData, title: str, description: str,
     book.authors.set(authors_full)
     if len(translators):
         book.translators.set(_get_or_create_people(data, translators))
-    if description != '':
+    if description != '' and description is not None:
         book.description = description
     book.duration_sec = datetime.timedelta(seconds=duration_sec)
     book.save()

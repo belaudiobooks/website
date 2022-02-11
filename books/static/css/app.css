@@ -32,6 +32,11 @@ h3 {
   object-fit: cover;
   }
 
+.link-icon {
+  width: 48px;
+  height: 48px;
+}
+
 
 #footer {
   text-align: center;

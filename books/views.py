@@ -93,6 +93,7 @@ def person_detail(request, slug):
         #     narration
 
     # TODO: need to think how to refactor queries for less SQL calls:
+    # TODO: we also need to change narrator DB access here to pass to the template
     # authors=Person.objects.prefetch_related('authors').all()
     # narrators=Person.objects.prefetch_related('authors').all()
     # translators=Person.objects.prefetch_related('authors').all()

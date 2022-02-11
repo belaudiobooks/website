@@ -2,15 +2,19 @@
 
 <div>
     <!--Count for many Narrators-->
-    Агучы{% if narration.narrators.all.count > 1 %}лі{% else %}ў{% endif %}:
-        {% for narrator in narration.narrators.all %}
-            <a class="text-decoration-none" href="{% url 'person-detail-page' narrator.slug %}">
-            <span>{{ narrator.name }}</span> 
-            </a> 
-        {% endfor %}
+    <div class="col-12 mt-5">
+        Агучка: {% for narrator in narration.narrators.all %}
+                    <a class="text-decoration-none" href="{% url 'person-detail-page' narrator.slug %}">
+                    <span>{{ narrator.name }}</span> 
+                    </a> 
+                {% endfor %}
+    </div>
         <!--Access to the link type-->
-        {% for link in narration.links.all %}
-            {{ link.url_type.icon }}
-            {{ link.url_type.name }}
-        {% endfor %}
+    {% for link in narration.links.all %}
+        <div class="col-12 mt-2">
+            <a href="{{ link.url }}" class="link-dark text-decoration-none">
+                <img class="mx-auto link-icon" src="{% static link.url_type.icon %}" alt={{ link.url_type.caption }} > {{ link.url_type.caption }}
+            </a>
+        </div>
+    {% endfor %}
 </div>

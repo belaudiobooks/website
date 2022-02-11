@@ -50,9 +50,9 @@
         <div class="my-4">
             <p class="fw-normal">{{ book.description}}</p>
         </div>
-        <div>
+        {% comment %} <div>
             Дата <time>{{ book.date|date:'d M Y' }}</time>    
-        </div>
+        </div> {% endcomment %}
 
         <!--Adding Links-->
         {% for narration in narrations %}

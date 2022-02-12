@@ -1,3 +1,4 @@
+import datetime
 from django.contrib import admin
 from django.contrib.admin.decorators import display
 from django.db.models import Count
@@ -21,6 +22,7 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
             #TODO: Update with new narration model
             # 'no_narrators': 'Missing narrators',
             'no_tags': 'Missing tags',
+            'no_translation': 'Missing russian title',
         }
         return [
             (key,
@@ -39,13 +41,16 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
         if reason == 'no_cover':
             return queryset.filter(cover_image__exact='')
         if reason == 'no_duration':
-            return queryset.filter(duration_sec__exact=None)
+            zero_duration = datetime.timedelta(seconds=0)
+            return queryset.filter(duration_sec__exact=zero_duration)
         #TODO: update querry to link narrators
         # if reason == 'no_narrators':
         #     return queryset.annotate(num_narrators=Count('narrators')).filter(
         #         num_narrators=0)
         if reason == 'no_tags':
             return queryset.annotate(num_tags=Count('tag')).filter(num_tags=0)
+        if reason == 'no_translation':
+            return queryset.filter(title_ru__exact='')
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
 
@@ -69,7 +74,8 @@ class LinkAdmin(admin.ModelAdmin):
     @display(description='narrators')
     def get_narrators(self, obj):
         if obj.narration:
-            narrators = ', '.join([str(person.name) for person in obj.narration.narrators.all()])
+            narrators = ', '.join(
+                [str(person.name) for person in obj.narration.narrators.all()])
             return narrators
         else:
             return 'None'
@@ -87,6 +93,7 @@ class IncompletePersonListFilter(admin.SimpleListFilter):
         reasons = {
             'no_description': 'Missing description',
             'no_photo': 'Missing photo',
+            'no_translation': 'Missing russian name',
         }
         return [
             (key,
@@ -104,6 +111,8 @@ class IncompletePersonListFilter(admin.SimpleListFilter):
             return queryset.filter(description__exact='')
         if reason == 'no_photo':
             return queryset.filter(photo__exact='')
+        if reason == 'no_translation':
+            return queryset.filter(name_ru__exact='')
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
 

@@ -37,8 +37,18 @@ def _verify_people_photos_valid(data: BooksData) -> None:
             ), f'For person {person.name} did not find image {photo.path}'
 
 
+def _verify_russian_translations_present(data: BooksData) -> None:
+    for person in data.people:
+        if person.name_ru == '':
+            print(f'Missing name_ru for {person.name}')
+    for book in data.books:
+        if book.title_ru == '':
+            print(f'Missing title_ru for {book.title}')
+
+
 def run(data: BooksData) -> None:
     'Validates data'
     _verify_books_covers_valid(data)
     _verify_link_type_icons_exist()
     _verify_people_photos_valid(data)
+    _verify_russian_translations_present(data)

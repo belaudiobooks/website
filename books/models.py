@@ -25,6 +25,7 @@ class Person(models.Model):
     '''
     uuid = models.UUIDField(_('Person Id'), primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(_('Person Name'), max_length=100, default='')
+    name_ru = models.CharField(_('Person Name in russian'), max_length=100, default='')
     description = models.TextField(_('Person Description'), blank=True)
     photo = models.ImageField(
         upload_to=functools.partial(_get_image_name, 'photos'), blank=True, null=True)
@@ -57,6 +58,7 @@ class Book(models.Model):
     '''
     uuid = models.UUIDField(_('Book ID'), primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(_('Book Title'), max_length=100, blank=True, default='')
+    title_ru = models.CharField(_('Book Title in russian'), max_length=100, blank=True, default = '')
     description = models.TextField(_('Book Description'))
     added_at = models.DateTimeField(_('Added at'), auto_now_add=True)
     date = models.DateField(_('Book Date'), auto_now_add=False)

@@ -16,8 +16,7 @@ COLORS = [
 def index(request):
     """Index page, starting page"""
     # query all books from DB and order by date and by tag filter
-    #TODO need to provide proper count for each section right now it sends only 6 and count is always less than 6 on the rendered page
-    promoted_books = all_books.promoted().order_by('-added_at')[:6]
+    promoted_books = all_books.promoted().order_by('-added_at')
 
     # Getting all Tags and creating querystring objects for each to pass to template
     tags = Tag.objects.all()
@@ -27,7 +26,7 @@ def index(request):
         #checking if tag is assigned to any book, we don't show tags without books assigned
         if tag.tag.exists():
             found_tag['name']=tag.name
-            found_tag['books']=all_books.filtered(tag=tag.name).order_by('-added_at')[:6]
+            found_tag['books']=all_books.filtered(tag=tag.name).order_by('-added_at')
             tags_to_render.append(found_tag.copy())
 
     context = {

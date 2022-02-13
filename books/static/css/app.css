@@ -65,9 +65,9 @@ h3 {
 }
 
 .cover {
-  width: 500px;
-  height: 500px;
-  background-size: 500px;
+  width: 275px;
+  height: 275px;
+  background-size: 275px;
   display: flex;
   flex-direction: column;
   justify-content: center;

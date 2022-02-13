@@ -11,6 +11,7 @@
 
 {% block content %}
 
+<!--Showing Promo books if any marked as Promo-->
 {% if promo_books.exists %}
     <div class="container" id="books">
         <div class="row">
@@ -34,88 +35,29 @@
     </div>
 {% endif %}
 
-{% if tag_modern.exists %}
-    <div class="container" id="books">
-        <div class="row">
-            <div class="col-10">
-                <h4>Сучасныя пiсьменнiкi</h4>
-                <p>Творы аўтараў канца 20-га – пачатку 21-га стагодзя</p>
-            </div>
-            <div class="col-2 text-end ">
-                <form action="{% url 'books' %}" method="get">
-                    <button class="btn btn-link text-decoration-none tag" name='books' value='Сучасныя'>{{tag_modern.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
-                </form>
-            </div>
-            {% for book in tag_modern %}
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                    {% include 'partials/_book.html' %}
+<!--Getting all the tags and rendering 6 books for each-->
+{% if tags_to_render %}
+    {% for tag in tags_to_render %}
+        {% with tag_name=tag.name tag_books=tag.books %}
+            <div class="container" id="books">
+                <div class="row">
+                    <div class="col-10">
+                        <h4>{{tag_name}}</h4>
+                    </div>
+                    <div class="col-2 text-end ">
+                        <form action="{% url 'books' %}" method="get">
+                            <button class="btn btn-link text-decoration-none tag" name='books' value={{tag_name}}>{{tag_books.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
+                        </form>
+                    </div>
+                    {% for book in tag_books %}
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+                            {% include 'partials/_book.html' %}
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-    </div>
-{% endif %}
-
-{% if tag_kids.exists %}
-    <div class="container" id="books">
-        <div class="row">
-            <div class="col-10">
-                <h4>Дзiцячые кнiгi</h4>
-                <p>Казкi i гiсторыi для самых маленькiх</p>
             </div>
-            <div class="col-2 text-end ">
-                <form action="{% url 'books' %}" method="get">
-                    <button class="btn btn-link text-decoration-none tag" name='books' value='Дзіцячыя'>{{tag_kids.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
-                </form>
-            </div>
-            {% for book in tag_kids %}
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                    {% include 'partials/_book.html' %}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-{% endif %}
-
-{% if tag_classic.exists %}
-    <div class="container" id="books">
-        <div class="row">
-            <div class="col-10">
-                <h4>Класiчныя творы</h4>
-                <p>Творы аўтараў да 20-га стагодзя</p>
-            </div>
-            <div class="col-2 text-end ">
-                <form action="{% url 'books' %}" method="get">
-                    <button class="btn btn-link text-decoration-none tag" name='books' value='Класічныя'>{{tag_classic.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
-                </form>
-            </div>
-            {% for book in tag_classic %}
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                    {% include 'partials/_book.html' %}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-{% endif %}
-
-{% if tag_foreign.exists %}
-    <div class="container" id="books">
-        <div class="row">
-            <div class="col-10">
-                <h4>Замежныя пiсьменнiкi</h4>
-                <p>Творы замежных аўтараў у перекладзе на беларускую мову</p>
-            </div>
-            <div class="col-2 text-end ">
-                <form action="{% url 'books' %}" method="get">
-                    <button class="btn btn-link text-decoration-none tag" name='books' value='Замежныя'>{{tag_foreign.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
-                </form>
-            </div>
-            {% for book in tag_foreign %}
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                    {% include 'partials/_book.html' %}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+        {% endwith %}
+    {% endfor %}
 {% endif %}
 
 {% endblock content %}

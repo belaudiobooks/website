@@ -18,17 +18,21 @@ def index(request):
     # query all books from DB and order by date and by tag filter
     #TODO need to provide proper count for each section right now it sends only 6 and count is always less than 6 on the rendered page
     promoted_books = all_books.promoted().order_by('-added_at')[:6]
-    tag_modern = all_books.filtered(tag='Сучасныя').order_by('-added_at')[:6]
-    tag_kids = all_books.filtered(tag='Дзіцячыя').order_by('-added_at')[:6]
-    tag_classic = all_books.filtered(tag='Класічныя').order_by('-added_at')[:6]
-    tag_foreign = all_books.filtered(tag='Замежныя').order_by('-added_at')[:6]
+
+    # Getting all Tags and creating querystring objects for each to pass to template
+    tags = Tag.objects.all()
+    found_tag = {}
+    tags_to_render = []
+    for tag in tags:
+        #checking if tag is assigned to any book, we don't show tags without books assigned
+        if tag.tag.exists():
+            found_tag['name']=tag.name
+            found_tag['books']=all_books.filtered(tag=tag.name).order_by('-added_at')[:6]
+            tags_to_render.append(found_tag.copy())
 
     context = {
         'promo_books': promoted_books,
-        'tag_modern': tag_modern,
-        'tag_kids': tag_kids,
-        'tag_classic': tag_classic,
-        'tag_foreign': tag_foreign,
+        'tags_to_render': tags_to_render,
         'colors': COLORS
     }
     
@@ -117,7 +121,8 @@ def search(request):
     keywords = request.GET.get('search')
 
     if keywords:
-        search_results = (all_books.filtered(title=keywords) | all_books.filtered(author=keywords)).distinct()
+        #Search by Book's title, russian translation of the title and books author name
+        search_results = (all_books.filtered(title=keywords) | all_books.filtered(title_ru=keywords) | all_books.filtered(author=keywords)).distinct()
 
         context = {
             'books': search_results,

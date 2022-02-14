@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load books_extras %}
 
 {% block title %}
     Беларускія аўдыякнігі
@@ -21,7 +22,7 @@
             </div>
             <div class="col-2 text-end ">
                     <form action="{% url 'books' %}" method="get">
-                        <button class="btn btn-link text-decoration-none tag" name='books' value='Прапануем паслухаць'>{{promo_books.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
+                        <button class="btn btn-link text-decoration-none tag" name='books' value='Прапануем паслухаць'>{{promo_books.count}}{{promo_books.count|by_plural:"кніга,кнігі,кніг"}} <img src="{% static 'images/right.svg' %}" alt=""></button>
                     </form>
             </div>
             
@@ -48,7 +49,7 @@
                     </div>
                     <div class="col-2 text-end ">
                         <form action="{% url 'books' %}" method="get">
-                            <button class="btn btn-link text-decoration-none tag" name='books' value={{tag_name}}>{{tag_books.count}} books <img src="{% static 'images/right.svg' %}" alt=""></button>
+                            <button class="btn btn-link text-decoration-none tag" name='books' value={{tag_name}}>{{tag_books.count}} {{tag_books.count|by_plural:"кніга,кнігі,кніг"}} <img src="{% static 'images/right.svg' %}" alt=""></button>
                         </form>
                     </div>
                     {% for book in tag_books %}

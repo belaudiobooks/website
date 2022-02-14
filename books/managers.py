@@ -33,6 +33,9 @@ class BookManager(models.Manager):
     def _handle_title(self, value: str) -> None:
         return self.filter(title__icontains=value)
 
+    def _handle_title_ru(self, value: str) -> None:
+        return self.filter(title_ru__icontains=value)
+
     def _handle_author(self, value: str) -> None:
         return self.filter(authors__name__icontains=value)
 
@@ -43,8 +46,9 @@ class BookManager(models.Manager):
         return self.filter(promoted=value)
 
     FIELD_MAPPING = {
-        "title": _handle_title,
-        "author": _handle_author,
+        'title': _handle_title,
+        'title_ru': _handle_title_ru,
+        'author': _handle_author,
         'tag': _handle_tag,
         'promoted': _handle_promoted
     }

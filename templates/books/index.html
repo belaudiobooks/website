@@ -22,7 +22,7 @@
             </div>
             <div class="col-2 text-end">
                     <form action="{% url 'books' %}" method="get">
-                        <button class="btn btn-link text-decoration-none tag-selected" name='books' value='Прапануем паслухаць'>{{promo_books.count}}{{promo_books.count|by_plural:"кніга,кнігі,кніг"}} <img src="{% static 'images/right.svg' %}" alt=""></button>
+                        <button class="btn btn-link text-decoration-none tag-selected" name='books' value='Прапануем паслухаць'>{{promo_books.count}} {{promo_books.count|by_plural:"кніга,кнігі,кніг"}} <img src="{% static 'images/right.svg' %}" alt=""></button>
                     </form>
             </div>
             

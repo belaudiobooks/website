@@ -46,11 +46,11 @@ def books(request):
     req_tag = request.GET.get('books')
 
     if req_tag:
-        tag_name=tags.filter(slug=req_tag)[0].name
-        #TODO: need to update handling of Promo, not gonna work with tag.slug request
         if req_tag == 'Прапануем паслухаць':
             books_tag = all_books.promoted()
+            tag_name = req_tag
         else:
+            tag_name=tags.filter(slug=req_tag)[0].name
             books_tag = all_books.filtered(tag=tag_name)
 
         context = {

@@ -21,7 +21,7 @@
                         {% if tag.tag.exists %}
                             <li>
                                 <form action="{% url 'books' %}" method="get">
-                                    <button class="btn btn-link text-decoration-none tag{% if tag.name in request.path %}{% endif %}" name='books' value={{ tag.name }}>{{ tag.name }}</button>
+                                    <button class="btn btn-link text-decoration-none text-start tag{% if tag.name in request.path %}{% endif %}" name='books' value={{ tag.name }}>{{ tag.name }}</button>
                                 </form>
                             </li>
                         {% endif %}

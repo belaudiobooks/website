@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="card border-light" style="max-width: 150px;">
+<div class="card border-white" style="max-width: 150px;">
     <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none">
         {% if book.cover_image %}
             <img class="card-img-top card-img-150" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
@@ -15,7 +15,7 @@
                 </div>
             </div>
         {% endif %}
-        <div class="card-body">
+        <div class="mt-4">
             <h6 class="card-title">{{ book.title }}</h6>
             <p class="card-text">
             {% for author in book.authors.all %}

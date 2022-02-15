@@ -45,9 +45,14 @@ class Tag(models.Model):
     examples of tags. Each book can and should have one or more tags.
     '''
     name = models.CharField(_('Tag'), max_length=50, default='')
+    slug = models.SlugField(_('Tag slug'), max_length = 100, allow_unicode=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.name}'
+    
+    def save(self, *args, **kwargs):
+        self.tag_slug = defaultfilters.slugify(unidecode(self.name))
+        super().save(*args, **kwargs)
 
 
 class Book(models.Model):

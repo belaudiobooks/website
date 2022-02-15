@@ -51,9 +51,16 @@
   flex: 1;
 }
 
-.tag{
+.tag-selected{
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
   color: #7879F1;
+}
+
+.tag{
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
 }

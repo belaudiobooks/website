@@ -64,6 +64,10 @@ class BookAdmin(admin.ModelAdmin):
         return ', '.join([str(person.name) for person in obj.authors.all()])
 
 
+class TagAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name', )}
+
+
 class LinkAdmin(admin.ModelAdmin):
     list_display = ('uuid', 'url_type', 'get_book', 'get_narrators', 'url')
 
@@ -131,7 +135,7 @@ class NarrationAdmin(admin.ModelAdmin):
 
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Book, BookAdmin)
-admin.site.register(Tag)
+admin.site.register(Tag, TagAdmin)
 admin.site.register(Link, LinkAdmin)
 admin.site.register(LinkType)
 admin.site.register(Narration, NarrationAdmin)

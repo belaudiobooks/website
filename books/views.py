@@ -26,6 +26,7 @@ def index(request):
         #checking if tag is assigned to any book, we don't show tags without books assigned
         if tag.tag.exists():
             found_tag['name']=tag.name
+            found_tag['slug']=tag.slug
             found_tag['books']=all_books.filtered(tag=tag.name).order_by('-added_at')
             tags_to_render.append(found_tag.copy())
 
@@ -45,14 +46,16 @@ def books(request):
     req_tag = request.GET.get('books')
 
     if req_tag:
+        tag_name=tags.filter(slug=req_tag)[0].name
+        #TODO: need to update handling of Promo, not gonna work with tag.slug request
         if req_tag == 'Прапануем паслухаць':
             books_tag = all_books.promoted()
         else:
-            books_tag = all_books.filtered(tag=req_tag)
+            books_tag = all_books.filtered(tag=tag_name)
 
         context = {
             'all_books': books_tag,
-            'tag': req_tag,
+            'tag': tag_name,
             'colors': COLORS,
             'tags': tags
         }

@@ -75,7 +75,7 @@
             {% for tag in tags %}
                 <div class="col-auto p-1">
                     <form action="{% url 'books' %}" method="get">
-                        <button class="btn btn-tag p-2" name='books' value={{tag}}>{{tag}}</button>
+                        <button class="btn btn-tag p-2" name='books' value={{tag.slug}}>{{tag}}</button>
                     </form>
                 </div>
             {% endfor %}

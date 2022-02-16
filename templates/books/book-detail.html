@@ -58,7 +58,7 @@
             </div>
         {% endif %} {% endcomment %}
         <div class="my-4">
-            <p class="fw-normal">{{ book.description}}</p>
+            <p class="fw-normal">{{ book.description|linebreaks }}</p>
         </div>
         {% comment %} <div>
             Дата <time>{{ book.date|date:'d M Y' }}</time>    

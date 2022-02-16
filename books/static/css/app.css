@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500&family=Oswald:wght@300;400&display=swap');
 
 html {
   font-family: 'Montserrat', sans-serif;
@@ -76,14 +76,15 @@ h3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 60;
+  font-size: 25px;
+  font-family: 'Oswald', sans-serif;
 }
 
 .cover.small {
   width: 150px;
   height: 150px;
   background-size: 150px;
-  font-size: 30;
+  font-size: 13px;
 }
 
 .cover>div {
@@ -103,6 +104,7 @@ h3 {
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 3%;
+  font-weight: 300;
 }
 
 .lower-half {
@@ -110,7 +112,7 @@ h3 {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  font-weight: bold;
+  font-weight: 400;
   padding-top: 3%;
   text-transform: uppercase;
 }

@@ -14,9 +14,9 @@
             {% if person.photo %}
                 <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 photo" src="{{ person.photo.url }}" alt="{{ person.name }}">
             {% endif %}
-            <p>
+            <h3>
                 {{ person.name }}
-            </p>
+            </h3>
             <p>
                 {{ person.description|linebreaks }}
             </p>

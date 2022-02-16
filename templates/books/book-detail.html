@@ -13,7 +13,9 @@
 
 {% block content %}
 <div class="container" id="books">
-    <div class="clearfix">
+    <div class="row">
+    <div class="col-4">
+        <!--Book image-->
         {% if book.cover_image %}
             <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 photo" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
         {% else %}
@@ -27,6 +29,9 @@
                 </div>
             </div>
         {% endif %}
+    </div>
+    <div class="col-8">
+        <!--Book details-->
         <h2>{{ book.title }}</h2>
         <h6>{{ book.duration }}</h6>
         <div>
@@ -37,32 +42,14 @@
                     </a> 
             {% endfor %}
         </div>                
-        {% comment %} {% if translators.exists %}
-            <div>
-                Перакла{% if translators.count > 1 %}лі{% else %}ў{% endif %}:
-                {% for translator in translators %}
-                        <a class="text-decoration-none" href="{% url 'person-detail-page' translator.slug %}">
-                        <span>{{ translator.name }}</span> 
-                        </a> 
-                {% endfor %}
-            </div> 
-        {% endif %}
-        {% if narrators.exists %}
-            <div>
-                Агучы{% if narrators.count > 1 %}лі{% else %}ў{% endif %}:
-                {% for narrator in narrators %}
-                        <a class="text-decoration-none" href="{% url 'person-detail-page' narrator.slug %}">
-                        <span>{{ narrator.name }}</span> 
-                        </a> 
-                {% endfor %}
-            </div>
-        {% endif %} {% endcomment %}
         <div class="my-4">
             <p class="fw-normal">{{ book.description|linebreaks }}</p>
         </div>
-        {% comment %} <div>
-            Дата <time>{{ book.date|date:'d M Y' }}</time>    
-        </div> {% endcomment %}
+        <div>
+            {% if book.date.exists %}
+                Дата <time>{{ book.date|date:'d M Y' }}</time> 
+            {% endif %}   
+        </div>
 
         <!--Adding Links-->
         {% for narration in narrations %}
@@ -70,7 +57,8 @@
                 {% include 'partials/_link.html' %}
             </div>
         {% endfor %}
-
+        
+        <!--Tags-->
         <div class="row my-4">
             {% for tag in tags %}
                 <div class="col-auto p-1">
@@ -81,6 +69,7 @@
             {% endfor %}
         </div>
     </div>
+</div>
 </div>
 
 

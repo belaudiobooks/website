@@ -33,7 +33,9 @@
     <div class="col-8">
         <!--Book details-->
         <h2>{{ book.title }}</h2>
-        <h6>{{ book.duration }}</h6>
+        {% if book.duration_sec %}
+            <p>{{ book.duration_sec }}</p>
+        {% endif %}
         <div>
             Аўтар{% if authors.count > 1 %}ы{% endif %}:
             {% for author in authors %}
@@ -45,11 +47,7 @@
         <div class="my-4">
             <p class="fw-normal">{{ book.description|linebreaks }}</p>
         </div>
-        <div>
-            {% if book.date.exists %}
-                Дата <time>{{ book.date|date:'d M Y' }}</time> 
-            {% endif %}   
-        </div>
+        
 
         <!--Adding Links-->
         {% for narration in narrations %}

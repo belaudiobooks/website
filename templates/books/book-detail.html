@@ -43,7 +43,17 @@
                     {{ author.name }}
                     </a> 
             {% endfor %}
-        </div>                
+        </div>
+        <div>
+            {% if translators.exists %}
+                Перакла{% if translators.count > 1 %}лі{% else %}ў{% endif %}:
+                {% for translator in translators %}
+                        <a class="text-decoration-none link-color" href="{% url 'person-detail-page' translator.slug %}">
+                        {{ translator.name }}
+                        </a> 
+                {% endfor %}
+            {% endif %}
+        </div>                 
         <div class="my-4">
             <p class="fw-normal">{{ book.description|linebreaks }}</p>
         </div>

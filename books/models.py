@@ -16,6 +16,16 @@ def _get_image_name(folder: str, instance: Union['Person', 'Book'], filename: st
     extension = os.path.splitext(filename)[1]
     return os.path.join(folder, instance.slug + extension)
 
+class Gender(models.TextChoices):
+    '''
+    Gender of a person. Needed to correctly choose forms of some words as belarusian
+    language has genders.
+    '''
+    FEMALE = 'FEMALE'
+    MALE = 'MALE'
+    # Represents person which is actually group of people. For example Dream-band "Агатка".
+    PLURAL = 'PLURAL'
+
 
 class Person(models.Model):
     '''
@@ -30,6 +40,7 @@ class Person(models.Model):
     photo = models.ImageField(
         upload_to=functools.partial(_get_image_name, 'photos'), blank=True, null=True)
     slug = models.SlugField(_('Person slug'), max_length = 100, unique=True, db_index=True, allow_unicode=True, blank=True)
+    gender = models.CharField(_('Person gender'), max_length=20, choices=Gender.choices, blank=False)
 
     def __str__(self) -> str:
         return f'{self.name}'

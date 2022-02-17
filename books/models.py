@@ -85,7 +85,11 @@ class Book(models.Model):
         # f'{self.authors.all()[0]} - {self.title}'
 
     def save(self, *args, **kwargs):
-        self.slug = defaultfilters.slugify(unidecode(self.title))
+        # Update slug only if current slug uses belarusian letters (created in admin).
+        # Otherwise don't update slug as it might be intentionally set to be different
+        # from title.
+        if self.slug == defaultfilters.slugify(self.title) or self.slug == '':
+            self.slug = defaultfilters.slugify(unidecode(self.title))
         super().save(*args, **kwargs)
 
     objects = BookManager()

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load books_extras %}
 
 {% block title %}
     {{ book.title|title }}
@@ -7,77 +8,77 @@
 
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'css/book-detail.css' %}">
-    {% comment %} <link rel="stylesheet" href="{% static 'css/books.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css_files %}
 
 {% block content %}
 <div class="container" id="books">
     <div class="row">
-    <div class="col-4">
+        
         <!--Book image-->
-        {% if book.cover_image %}
-            <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 photo" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
-        {% else %}
-            <div class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 cover d-flex justify-content-center text-center flex-column photo" style="background-image: url({{ colors|random }});background-repeat:no-repeat;">
-                <div class="col-12 pm-2 upper-half">
-                    {% for author in book.authors.all %}{{ author.name }}{% endfor %}
-                </div>
-                <div class="separator"></div>
-                <div class="col-12 lower-half pt-2">
-                    {{ book.title }}
-                </div>
-            </div>
-        {% endif %}
-    </div>
-    <div class="col-8">
-        <!--Book details-->
-        <h2>{{ book.title }}</h2>
-        {% if book.duration_sec %}
-            <p>{{ book.duration_sec }}</p>
-        {% endif %}
-        <div>
-            Аўтар{% if authors.count > 1 %}ы{% endif %}:
-            {% for author in authors %}
-                    <a class="text-decoration-none link-color" href="{% url 'person-detail-page' author.slug %}">
-                    {{ author.name }}{% if not forloop.last %},{% endif %}
-                    </a> 
-            {% endfor %}
-        </div>
-        <div>
-            {% if translators.exists %}
-                Перакла{% if translators.count > 1 %}лі{% else %}ў{% endif %}:
-                {% for translator in translators %}
-                        <a class="text-decoration-none link-color" href="{% url 'person-detail-page' translator.slug %}">
-                        {{ translator.name }}{% if not forloop.last %},{% endif %}
-                        </a> 
-                {% endfor %}
-            {% endif %}
-        </div>                 
-        <div class="my-4">
-            <p class="fw-normal">{{ book.description|linebreaks }}</p>
-        </div>
-        
+        <div class="col-4">
+            {% if book.cover_image %}
+                <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 photo" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+            {% else %}
 
-        <!--Adding Links-->
-        {% for narration in narrations %}
-            <div class="row">
-                {% include 'partials/_link.html' %}
+                <!--Custom cover for book-->
+                <div class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 cover d-flex justify-content-center text-center flex-column photo" style="background-image: url({{ colors|random }});background-repeat:no-repeat;">
+                    <div class="col-12 pm-2 upper-half">
+                        {% for author in book.authors.all %}{{ author.name }}{% endfor %}
+                    </div>
+                    <div class="separator"></div>
+                    <div class="col-12 lower-half pt-2">
+                        {{ book.title }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!--Book details-->
+        <div class="col-8">
+            
+            <!--Book Title-->
+            <h2>{{ book.title }}</h2>
+
+            <!--Book Duration-->
+            {% if book.duration_sec %}
+                <p>{{ book.duration_sec }}</p>
+            {% endif %}
+
+            <!--Authors with check on multiples and gender-->
+            <div>
+                {% include 'partials/_person.html' with persons=authors multiple='Аўтары' single='Aўтар' gender_variants="ка,"%}
             </div>
-        {% endfor %}
-        
-        <!--Tags-->
-        <div class="row my-4">
-            {% for tag in tags %}
-                <div class="col-auto p-1">
-                    <form action="{% url 'books' %}" method="get">
-                        <button class="btn btn-tag p-2" name='books' value={{tag.slug}}>{{tag}}</button>
-                    </form>
+
+            <!--Translators with check on multiples and gender-->
+            <div>
+                {% include 'partials/_person.html' with persons=translators multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
+            </div>
+            
+            <!--Book description-->
+            <div class="my-4">
+                <p class="fw-normal">{{ book.description|linebreaks }}</p>
+            </div>
+            
+            <!--Adding Links-->
+            {% for narration in narrations %}
+                <div class="row">
+                    {% include 'partials/_link.html' %}
                 </div>
             {% endfor %}
+            
+            <!--Tags-->
+            <div class="row my-4">
+                {% for tag in tags %}
+                    <div class="col-auto p-1">
+                        <form action="{% url 'books' %}" method="get">
+                            <button class="btn btn-tag p-2" name='books' value={{tag.slug}}>{{tag}}</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 

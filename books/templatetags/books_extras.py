@@ -1,6 +1,7 @@
 """Pluralization filter for books count in templates"""
 
 from atexit import register
+from nis import match
 from django import template
 
 register = template.Library()
@@ -17,5 +18,16 @@ def by_plural(value, variants):
         variant = 1
     else:
         variant = 2
+    
+    return variants[variant]
+
+@register.filter
+def gender(value, variants):
+    variants = variants.split(",")
+
+    if value and value=='FEMALE':
+        variant = 0
+    else: 
+        variant = 1
     
     return variants[variant]

@@ -3,17 +3,14 @@
 <div>
     <!--Count for many Narrators-->
     <div class="col-12 mt-5">
-        {% if narration.narrators.all.exists %}
-            Агучка: {% for narrator in narration.narrators.all %}
-                        <a class="text-decoration-none link-color" href="{% url 'person-detail-page' narrator.slug %}">
-                        {{ narrator.name }}{% if not forloop.last %},{% endif %}
-                        </a> 
-                    {% endfor %}
-        {% else %}
-        Агучка: удакладняецца...
+         <!--Narrators with check on multiples and gender-->
+        {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
+        <!--check if no name-->
+        {% if not narration.narrators.all.exists %}
+            Агучка: удакладняецца...
         {% endif %}
     </div>
-        <!--Access to the link type-->
+    <!--Access to the link type-->
     {% for link in narration.links.all %}
         <div class="col-12 mt-2">
             <a href="{{ link.url }}" class="text-decoration-none link-color d-block">

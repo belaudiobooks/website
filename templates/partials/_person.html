@@ -1,0 +1,19 @@
+{% load static %}
+{% load books_extras %}
+
+{% if persons.exists %}
+    {% if persons.count > 1 %}{{ multiple }}:
+        {% for person in persons %}
+                <a class="text-decoration-none link-color" href="{% url 'person-detail-page' person.slug %}">
+                {{ person.name }}{% if not forloop.last %},{% endif %}
+                </a> 
+        {% endfor %}
+    {% else %}
+        {% for person in persons %}
+            {{single}}{{person.gender|gender:gender_variants}}:
+            <a class="text-decoration-none link-color" href="{% url 'person-detail-page' person.slug %}">
+            {{ person.name }}{% if not forloop.last %},{% endif %}
+            </a> 
+        {% endfor %}
+    {% endif %}
+{% endif %}

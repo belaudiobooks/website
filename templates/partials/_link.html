@@ -3,17 +3,19 @@
 <div>
     <!--Count for many Narrators-->
     <div class="col-12 mt-5">
-        Агучка: {% for narrator in narration.narrators.all %}
-                    <a class="text-decoration-none" href="{% url 'person-detail-page' narrator.slug %}">
-                    <span>{{ narrator.name }}</span> 
-                    </a> 
-                {% endfor %}
+        {% if narration.narrators.all.exists %}
+            Агучка: {% for narrator in narration.narrators.all %}
+                        <a class="text-decoration-none link-color" href="{% url 'person-detail-page' narrator.slug %}">
+                        {{ narrator.name }}
+                        </a> 
+                    {% endfor %}
+        {% endif %}
     </div>
         <!--Access to the link type-->
     {% for link in narration.links.all %}
         <div class="col-12 mt-2">
-            <a href="{{ link.url }}" class="link-dark text-decoration-none">
-                <img class="mx-auto link-icon" src="{{ link.url_type.icon.url }}" alt={{ link.url_type.caption }} > {{ link.url_type.caption }}
+            <a href="{{ link.url }}" class="text-decoration-none link-color d-block">
+                <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt={{ link.url_type.caption }}>{{ link.url_type.caption }}
             </a>
         </div>
     {% endfor %}

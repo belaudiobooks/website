@@ -39,8 +39,8 @@
         <div>
             Аўтар{% if authors.count > 1 %}ы{% endif %}:
             {% for author in authors %}
-                    <a class="text-decoration-none" href="{% url 'person-detail-page' author.slug %}">
-                    <span>{{ author.name }}</span> 
+                    <a class="text-decoration-none link-color" href="{% url 'person-detail-page' author.slug %}">
+                    {{ author.name }}
                     </a> 
             {% endfor %}
         </div>                

@@ -6,7 +6,7 @@
         {% if narration.narrators.all.exists %}
             Агучка: {% for narrator in narration.narrators.all %}
                         <a class="text-decoration-none link-color" href="{% url 'person-detail-page' narrator.slug %}">
-                        {{ narrator.name }}
+                        {{ narrator.name }}{% if not forloop.last %},{% endif %}
                         </a> 
                     {% endfor %}
         {% endif %}

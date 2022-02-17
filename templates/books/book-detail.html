@@ -40,7 +40,7 @@
             Аўтар{% if authors.count > 1 %}ы{% endif %}:
             {% for author in authors %}
                     <a class="text-decoration-none link-color" href="{% url 'person-detail-page' author.slug %}">
-                    {{ author.name }}
+                    {{ author.name }}{% if not forloop.last %},{% endif %}
                     </a> 
             {% endfor %}
         </div>
@@ -49,7 +49,7 @@
                 Перакла{% if translators.count > 1 %}лі{% else %}ў{% endif %}:
                 {% for translator in translators %}
                         <a class="text-decoration-none link-color" href="{% url 'person-detail-page' translator.slug %}">
-                        {{ translator.name }}
+                        {{ translator.name }}{% if not forloop.last %},{% endif %}
                         </a> 
                 {% endfor %}
             {% endif %}

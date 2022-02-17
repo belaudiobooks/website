@@ -20,7 +20,7 @@
             <p class="card-text">
             {% for author in book.authors.all %}
                 <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none">
-                    <h7>{{ author.name }}</h7>
+                    <h7>{{ author.name }}{% if not forloop.last %},{% endif %}</h7>
                 </a>   
             {% endfor %}
             </p>

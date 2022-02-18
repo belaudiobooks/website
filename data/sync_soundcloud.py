@@ -7,9 +7,11 @@ registration but registration is closed right now.
 
 from datetime import datetime
 import json
+import os
 import re
 import requests
-from data import books
+from data import books, image
+from django.core.files import File
 
 RADIO_SVABODA_URLS = [
     'https://soundcloud.com/svaboda/sets/halina-rudnik-ptuski-pieralotnyja',
@@ -43,9 +45,17 @@ MOVA_NANOVA_URLS = [
     'https://soundcloud.com/maxim-umetsky/sets/1ozouubviyjh',
 ]
 
+PENBELARUS_URLS = [
+    'https://soundcloud.com/pencentre_by/sets/uryk-kng-z-karotkaga-spsu-prem-gedroytsya-2021',
+    'https://soundcloud.com/pencentre_by/sets/ganna-yankuta-kot-shprot-vezhavy-gadznnk',
+]
+
 
 def _sync_book(data: books.BooksData, url: str, url_type: str) -> None:
-    print(f'Processing url {url}')
+    print(f'Processing url {url}. ')
+    is_cont = input('Continue? -> ')
+    if is_cont != 'y' and is_cont != 'yes':
+        return
     resp = requests.get(url)
     resp.encoding = 'utf8'
     if resp.status_code != 200:
@@ -61,16 +71,31 @@ def _sync_book(data: books.BooksData, url: str, url_type: str) -> None:
     assert playlist is not None, f'Did not found playlist in JSON {json_data}'
     playlist_title = playlist['title']
     print(f'Playlist title is "{playlist_title}"')
-    title = input('book title? -> ')
-    while title not in playlist_title:
-        title = input('title is not found in title, again -> ')
-    author = input('author? -> ')
-    while author == '':
-        author = input('author cannot be empty, again -> ')
+    author = ''
+    title = ''
+    parts = playlist_title.split('.')
+    if len(parts) > 1:
+        author = parts[0].strip()
+        title = parts[1].strip()
+    print(f'base title: {title}')
+    new_title = input('new title? -> ')
+    if new_title != '':
+        title = new_title
+    print(f'base author: {author}')
+    new_author = input('new author? -> ')
+    if new_author != '':
+        author = new_author
     narrator = input('narrator? -> ')
-    if narrator == '' or narrator is None:
+    if narrator == 'same':
         narrator = author
-    cover = playlist['artwork_url'].replace('-large.', '-t500x500.')
+    translator = input('translator? -> ')
+    translators = []
+    if len(translator) > 0:
+        translators = translator.split(',')
+    cover = ''
+    if playlist['artwork_url'] is not None:
+        cover = playlist['artwork_url'].replace('-large.', '-t500x500.')
+    cover_book_or_author = input('cover book or author? -> ')
     narration = books.add_or_update_book(
         data,
         title=title,
@@ -78,10 +103,18 @@ def _sync_book(data: books.BooksData, url: str, url_type: str) -> None:
         if playlist['description'] is not None else '',
         authors=author.split(','),
         narrators=narrator.split(','),
-        translators=[],
-        cover_url=cover,
+        translators=translators,
+        cover_url=cover if cover_book_or_author == 'book' else '',
         duration_sec=round(playlist['duration'] / 1000))
     assert narration.book
+    author = narration.book.authors.first()
+    if cover != '' and cover_book_or_author == 'author' and (
+            author.photo is None or author.photo == ''
+            or author.photo.name is None):
+        cover_image = image.download_and_resize_image(cover, author.slug)
+        with open(cover_image, 'rb') as f:
+            author.photo.save(os.path.basename(cover_image), File(f))
+        author.save()
     narration.book.date = datetime.fromisoformat(
         playlist['created_at'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
     books.add_or_update_link(narration, url_type, url)
@@ -91,5 +124,10 @@ def run(data: books.BooksData) -> None:
     '''Run mains'''
     # for url in RADIO_SVABODA_URLS:
     #     _sync_book(data, url, 'radio_svaboda')
-    for url in MOVA_NANOVA_URLS:
-        _sync_book(data, url, 'movananova')
+    # for url in MOVA_NANOVA_URLS:
+    #     _sync_book(data, url, 'movananova')
+    start = 100
+    step = 10
+    for idx, url in enumerate(PENBELARUS_URLS):
+        if idx >= start and idx < start + step:
+            _sync_book(data, url, 'penbelarus')

@@ -14,7 +14,7 @@
     {% for link in narration.links.all %}
         <div class="col-12 mt-2">
             <a href="{{ link.url }}" class="text-decoration-none link-color d-block">
-                <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt={{ link.url_type.caption }}>{{ link.url_type.caption }}
+                <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">{{ link.url_type.caption }}
             </a>
         </div>
     {% endfor %}

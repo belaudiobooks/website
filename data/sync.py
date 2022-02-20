@@ -14,7 +14,7 @@ django.setup()
 from django.core import management
 from books.models import Book, Person
 
-from data import sync_add_translations, sync_from_json, sync_kamunikat, sync_knihi_com, sync_knizhny_voz, sync_litres, sync_mininform, sync_podcasts, sync_soundcloud, validate_data
+from data import add_durations, sync_add_translations, sync_from_json, sync_kamunikat, sync_knihi_com, sync_knizhny_voz, sync_litres, sync_mininform, sync_podcasts, sync_soundcloud, validate_data
 from data.books import BooksData
 
 
@@ -44,6 +44,7 @@ SYNC_COMMANDS: Dict[str, Callable[[BooksData], None]] = {
     'kamunikat': sync_kamunikat.run,
     'validate_data': validate_data.run,
     'add_translations': sync_add_translations.run,
+    'add_durations': add_durations.run,
 }
 
 

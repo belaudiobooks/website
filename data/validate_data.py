@@ -2,7 +2,7 @@
 Script for validating data in DB.
 '''
 from os import path
-from books.models import LinkType
+from books.models import LinkType, Narration
 
 from data.books import BooksData
 
@@ -52,3 +52,23 @@ def run(data: BooksData) -> None:
     _verify_link_type_icons_exist()
     _verify_people_photos_valid(data)
     _verify_russian_translations_present(data)
+
+
+def cleanup_orphans(data: BooksData) -> None:
+    'Removes models which do not belong to any book'
+    for person in data.people:
+        if person.books_authored.count(
+        ) == 0 and person.books_translated.count(
+        ) == 0 and person.narrations.count() == 0:
+            print(f'Deleting person {person.name} because no books.')
+            person.delete()
+    for narration in Narration.objects.all():
+        if narration.links.count() == 0:
+            print(
+                f'Deleting narration for book {narration.book.title} because no links.'
+            )
+            narration.delete()
+    for book in data.books:
+        if book.narrations.count() == 0:
+            print(f'Deleting book {book.title} because no narrations.')
+            book.delete()

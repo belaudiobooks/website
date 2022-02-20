@@ -76,7 +76,7 @@ def book_detail(request, slug):
         'book': identified_book,
         'authors': identified_book.authors.all(),
         'translators': identified_book.translators.all(),
-        'narrations': identified_book.narration.all(),
+        'narrations': identified_book.narrations.all(),
         'tags': identified_book.tag.all(),
         'colors': COLORS
         

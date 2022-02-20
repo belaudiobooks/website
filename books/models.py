@@ -78,8 +78,8 @@ class Book(models.Model):
     description = models.TextField(_('Book Description'))
     added_at = models.DateTimeField(_('Added at'), auto_now_add=True)
     date = models.DateField(_('Book Date'), auto_now_add=False)
-    authors = models.ManyToManyField(Person, related_name='authors')
-    translators = models.ManyToManyField(Person, related_name='translators', blank=True)
+    authors = models.ManyToManyField(Person, related_name='books_authored')
+    translators = models.ManyToManyField(Person, related_name='books_translated', blank=True)
     slug = models.SlugField(_('slug'), max_length = 100, unique=True, db_index=True, allow_unicode=True, blank=True)
     cover_image = models.ImageField(
         upload_to=functools.partial(_get_image_name, 'covers'), blank=True, null=True)
@@ -113,8 +113,8 @@ class Narration(models.Model):
     narrators and set of links.
     '''
     uuid = models.UUIDField(_('Narration ID'), primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    narrators = models.ManyToManyField(Person, related_name='narrators', blank=True)
-    book = models.ForeignKey(Book, related_name='narration', blank=True, null=True, on_delete=SET_NULL)
+    narrators = models.ManyToManyField(Person, related_name='narrations', blank=True)
+    book = models.ForeignKey(Book, related_name='narrations', blank=True, null=True, on_delete=SET_NULL)
 
     def __str__(self) -> str:
         return '%s read by %s' % (

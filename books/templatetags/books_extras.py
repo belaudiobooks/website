@@ -50,7 +50,3 @@ def duration(value):
         return f'{hrs} {hours} {mins} {minutes}'
     
     return f'{mins} {minutes}'
-
-
-        
-    

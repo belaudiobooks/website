@@ -16,7 +16,7 @@
     <div class="row">
 
         <!--Book image-->
-        <div class="col-4">
+        <div class="col-12 col-md-6 col-lg-4">
             {% if book.cover_image %}
                 <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 photo" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
             {% else %}
@@ -35,7 +35,7 @@
         </div>
 
         <!--Book details-->
-        <div class="col-8">
+        <div class="col-12 col-md-6 col-lg-8">
             
             <!--Book Title-->
             <h2>{{ book.title }}</h2>

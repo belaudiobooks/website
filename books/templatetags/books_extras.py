@@ -43,11 +43,11 @@ def duration(value):
     
     #check if more than 24 horus and assign correct spelling for values
     hours = by_plural(hrs,'гадзіна,гадзіны,гадін')
-    minutes = by_plural(mins,'мінута,мінуты,мінут')
+    minutes = by_plural(mins,'хвіліна,хвіліны,хвілін')
     seconds = by_plural(secs,'сякунда,сякунды,сякунд')
 
     if day:
-        days = by_plural(day,'дзень,дня,дней')
+        days = by_plural(day,'дзень,дні,дзен')
         #return values with spelling in Belarussian if more than 24 hours
         return f'{day} {days} {hrs} {hours} {mins} {minutes} {secs} {seconds}'
     

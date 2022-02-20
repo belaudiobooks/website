@@ -40,14 +40,16 @@ def duration(value):
     hrs = seconds // 3600
     mins = (seconds % 3600) // 60
 
+    minutes = by_plural(mins,'хвіліна,хвіліны,хвілін')
+
     if day:
         hrs = hrs + (day * 24)
     
-    hours = by_plural(hrs,'гадзіна,гадзіны,гадзін')
-    minutes = by_plural(mins,'хвіліна,хвіліны,хвілін')
+    if hrs:
+        hours = by_plural(hrs,'гадзіна,гадзіны,гадзін')
+        return f'{hrs} {hours} {mins} {minutes}'
     
-    #return values with spelling in Belarussian
-    return f'{hrs} {hours} {mins} {minutes}'
+    return f'{mins} {minutes}'
 
 
         

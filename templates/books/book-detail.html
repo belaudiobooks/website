@@ -14,7 +14,7 @@
 {% block content %}
 <div class="container" id="books">
     <div class="row">
-        
+
         <!--Book image-->
         <div class="col-4">
             {% if book.cover_image %}
@@ -42,7 +42,7 @@
 
             <!--Book Duration-->
             {% if book.duration_sec %}
-                <p>{{ book.duration_sec }}</p>
+                <p>{{ book.duration_sec|duration }}</p>
             {% endif %}
 
             <!--Authors with check on multiples and gender-->

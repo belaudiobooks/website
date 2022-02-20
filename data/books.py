@@ -27,6 +27,10 @@ class BooksData:
     books: List[Book]
 
 
+def _slugify(string: str) -> str:
+    return defaultfilters.slugify(unidecode(string))
+
+
 def _get_or_add_person(data: BooksData, name: str) -> Person:
     for person in data.people:
         if person.name == name:
@@ -93,12 +97,15 @@ def add_or_update_book(data: BooksData, title: str, description: str,
     merged. If the book doesn't exist - a new books is created with provided fields.'''
     book = None
     authors_full = _get_or_create_people(data, authors)
+    slug = _slugify(title)
     for existing_book in data.books:
         title_a = existing_book.title.lower()
         title_b = title.lower()
+        if slug == existing_book.slug:
+            slug = _slugify(f'{title}-{authors[0]}')
         # Try handling cases where some books might have shorten names and different
         # sources have different variations of those names.
-        if title_a.startswith(title_b) or title_b.startswith(title_a):
+        if title_a == title_b:
             existing_author = existing_book.authors.all().first()
             assert existing_author
             new_author = authors_full[0]
@@ -112,7 +119,10 @@ def add_or_update_book(data: BooksData, title: str, description: str,
                 book = existing_book
                 break
     if book is None:
-        book = Book(title=title, description=description, date=date.today())
+        book = Book(title=title,
+                    description=description,
+                    date=date.today(),
+                    slug=slug)
         book.save()
     print(book.cover_image)
     if (book.cover_image is None or book.cover_image == ''

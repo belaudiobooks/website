@@ -43,7 +43,7 @@ def duration(value):
     if day:
         hrs = hrs + (day * 24)
     
-    hours = by_plural(hrs,'гадзіна,гадзіны,гадін')
+    hours = by_plural(hrs,'гадзіна,гадзіны,гадзін')
     minutes = by_plural(mins,'хвіліна,хвіліны,хвілін')
     
     #return values with spelling in Belarussian

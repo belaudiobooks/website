@@ -36,20 +36,15 @@ def gender(value, variants):
 @register.filter
 def duration(value):
     day, seconds = value.days, value.seconds
-   
+    
     hrs = seconds // 3600
     mins = (seconds % 3600) // 60
-    # secs = seconds % 60
-    
-    #check if more than 24 horus and assign correct spelling for values
-    hours = by_plural(hrs,'гадзіна,гадзіны,гадін')
-    minutes = by_plural(mins,'хвіліна,хвіліны,хвілін')
-    # seconds = by_plural(secs,'сeкунда,сeкунды,ceкунд')
 
     if day:
-        days = by_plural(day,'дзень,дні,дзен')
-        #return values with spelling in Belarussian if more than 24 hours
-        return f'{day} {days} {hrs} {hours} {mins} {minutes}'
+        hrs = hrs + (day * 24)
+    
+    hours = by_plural(hrs,'гадзіна,гадзіны,гадін')
+    minutes = by_plural(mins,'хвіліна,хвіліны,хвілін')
     
     #return values with spelling in Belarussian
     return f'{hrs} {hours} {mins} {minutes}'

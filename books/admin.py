@@ -123,6 +123,7 @@ class IncompletePersonListFilter(admin.SimpleListFilter):
 class PersonAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', )}
     list_filter = (IncompletePersonListFilter, )
+    ordering = ['slug']
 
 
 class NarrationAdmin(admin.ModelAdmin):

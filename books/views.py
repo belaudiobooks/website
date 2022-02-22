@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 
 from .models import Book, Person, Tag
 
@@ -41,6 +42,11 @@ def index(request):
 def books(request):
     """All books page"""
     sorted_books = all_books.order('title')
+
+    paginator = Paginator(sorted_books, 16)
+    page = request.GET.get('page')
+    paged_books = paginator.get_page(page)
+
     tags = Tag.objects.all()
 
     req_tag = request.GET.get('books')
@@ -61,7 +67,7 @@ def books(request):
         }
     else:
         context = {
-            'all_books': sorted_books,
+            'all_books': paged_books,
             'colors': COLORS,
             'tags': tags
         }

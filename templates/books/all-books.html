@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load books_extras %}
 
 {% block title %}
     Ўсе аўдыякнігі
@@ -12,7 +13,7 @@
 {% endblock css_files %}
 
 {% block content %}
-{% if all_books.exists %}
+{% if all_books %}
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-3 mt-5">
@@ -41,6 +42,61 @@
                             {% include 'partials/_book.html' %}
                         </div>
                     {% endfor %}
+                    <!--Paginagion-->
+                    <div class="row">
+                        <div class="col-md-12">
+                        {% if all_books.has_other_pages %}
+                            <ul class="pagination books-text">
+                                <!--First Page Link-->
+                                {% if all_books.has_previous%}
+                                    <li class="text-end">
+                                        <a class="text-decoration-none tag-selected" href="?page=1">&laquo;</a>
+                                    </li>
+                                {% else %}
+                                    <li class="disabled text-end">
+                                        <a class="text-decoration-none" href="#">&laquo;</a>
+                                    </li>  
+                                {% endif %}
+
+                                <!--Previours Page Link-->
+                                {% if all_books.has_previous%}
+                                    <li class="text-end">
+                                        <a class="text-decoration-none tag-selected" href="?page={{all_books.previous_page_number}}">&lt;</a>
+                                    </li>
+                                {% else %}
+                                    <li class="disabled text-end">
+                                        <a class="text-decoration-none" href="#">&lt;</a>
+                                    </li>  
+                                {% endif %}
+                                
+                                <!--Current Page-->
+                                <span class="books-text">Старонка {{ all_books.number }} з {{ all_books.paginator.num_pages }}</span>
+
+                                <!--Next Page Link-->
+                                {% if all_books.has_next%}
+                                    <li class="">
+                                        <a class="text-decoration-none tag-selected" href="?page={{all_books.next_page_number}}">&gt;</a>
+                                    </li>
+                                {% else %}
+                                    <li class="disabled">
+                                        <a href="#" class="text-decoration-none">&gt;</a>
+                                    </li>  
+                                {% endif %}
+
+                                <!--Last Page Link-->
+                                {% if all_books.has_next%}
+                                    <li class="page-item">
+                                        <a class="text-decoration-none tag-selected" href="?page={{ all_books.paginator.num_pages }}">&raquo;</a>
+                                    </li>
+                                {% else %}
+                                    <li class="disabled">
+                                        <a href="#" class="text-decoration-none">&raquo;</a>
+                                    </li>  
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

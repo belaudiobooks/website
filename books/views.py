@@ -89,12 +89,12 @@ def person_detail(request, slug):
     identified_person = get_object_or_404(Person, slug=slug)
 
     # Prefetch all books in the relationships
-    related_books=Person.objects.prefetch_related('authors','translators').filter(uuid=identified_person.uuid)
+    related_books=Person.objects.prefetch_related('books_authored','books_translated').filter(uuid=identified_person.uuid)
 
     # Select books for each relationship
     for person in related_books:
-        author = person.authors.all()
-        translator = person.translators.all()
+        author = person.books_authored.all()
+        translator = person.books_translated.all()
         #TODO: need to find the way to show narrations now
         # for narration in person.narrator.all():
         #     narration
@@ -140,3 +140,6 @@ def search(request):
         }
 
     return render(request, 'books/search.html', context)
+
+def about(request):
+    return render(request, 'books/about.html')

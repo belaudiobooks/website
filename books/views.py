@@ -92,35 +92,33 @@ def book_detail(request, slug):
 
 def person_detail(request, slug):
     """Detailed book page"""
-    identified_person = get_object_or_404(Person, slug=slug)
+
+    narrated_books = []
+    # TODO: remove it later if all good
+    # identified_person = get_object_or_404(Person, slug=slug)
 
     # Prefetch all books in the relationships
-    related_books=Person.objects.prefetch_related('books_authored','books_translated').filter(uuid=identified_person.uuid)
+    person=Person.objects.prefetch_related('books_authored','books_translated','narrations').filter(slug=slug).first()
 
-    # Select books for each relationship
-    for person in related_books:
+    if person:
         author = person.books_authored.all()
         translator = person.books_translated.all()
-        #TODO: need to find the way to show narrations now
-        # for narration in person.narrator.all():
-        #     narration
+        narrations = person.narrations.all()
 
-    # TODO: need to think how to refactor queries for less SQL calls:
-    # TODO: we also need to change narrator DB access here to pass to the template
-    # authors=Person.objects.prefetch_related('authors').all()
-    # narrators=Person.objects.prefetch_related('authors').all()
-    # translators=Person.objects.prefetch_related('authors').all()
+        [narrated_books.append(item.book) for item in narrations]
 
-    context = {
-        'person': identified_person,
-        'author': author,
-        'translator': translator,
-        #TODO: Need to find the way to show Narrations now
-        # 'narrator': narrator,
-        'colors': COLORS
-    }
+        context = {
+            'person': person,
+            'author': author,
+            'translator': translator,
+            'narrations': narrated_books,
+            'colors': COLORS
+        }
 
-    return render(request, 'books/person.html', context)
+        return render(request, 'books/person.html', context)
+        
+    else:
+        pass #TODO: implement 404 page
 
 def search(request):
     """Search results"""

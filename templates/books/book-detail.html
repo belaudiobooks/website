@@ -54,6 +54,12 @@
             <div>
                 {% include 'partials/_person.html' with persons=translators multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
             </div>
+
+            {% if narrations.count == 1 %}
+                <div>
+                    {% include 'partials/_person.html' with persons=narrations.first.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
+                </div>
+            {% endif %}
             
             <!--Book description-->
             <div class="my-4">
@@ -61,11 +67,27 @@
             </div>
             
             <!--Adding Links-->
-            {% for narration in narrations %}
-                <div class="row">
-                    {% include 'partials/_link.html' %}
+            {% if narrations.count > 1 %}
+                {% for narration in narrations %}
+                    <div class="row">
+                        {% include 'partials/_link.html' %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>
+                    <div class="col-12 mt-5">
+                        Дзе паслухаць
+                    </div>
+                    <!--Access to the link type-->
+                    {% for link in narrations.first.links.all %}
+                        <div class="col-12 mt-2">
+                            <a href="{{ link.url }}" class="text-decoration-none link-color d-block">
+                                <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">{{ link.url_type.caption }}
+                            </a>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            {% endif %}
             
             <!--Tags-->
             <div class="row my-4">

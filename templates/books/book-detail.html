@@ -22,7 +22,7 @@
             {% else %}
 
                 <!--Custom cover for book-->
-                <div class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 cover d-flex justify-content-center text-center flex-column photo" style="background-image: url({{ colors|random }});background-repeat:no-repeat;">
+                <div class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 cover d-flex justify-content-center text-center flex-column photo" style="background-image: url({{ book.pk|colors }});background-repeat:no-repeat;">
                     <div class="col-12 pm-2 upper-half">
                         {% for author in book.authors.all %}{{ author.name }}{% endfor %}
                     </div>

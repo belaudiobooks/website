@@ -5,14 +5,6 @@ from .models import Book, Person, Tag
 
 
 all_books = Book.objects
-COLORS = [
-        '/static/cover_templates/cover_templates_blue.jpeg',
-        '/static/cover_templates/cover_templates_green.jpeg',
-        '/static/cover_templates/cover_templates_grey.jpeg',
-        '/static/cover_templates/cover_templates_purple.jpeg',
-        '/static/cover_templates/cover_templates_red.jpeg',
-        '/static/cover_templates/cover_templates_yellow.jpeg'
-    ]
 
 def index(request):
     """Index page, starting page"""
@@ -34,7 +26,6 @@ def index(request):
     context = {
         'promo_books': promoted_books,
         'tags_to_render': tags_to_render,
-        'colors': COLORS
     }
     
     return render(request, 'books/index.html', context)
@@ -116,7 +107,7 @@ def person_detail(request, slug):
         }
 
         return render(request, 'books/person.html', context)
-        
+
     else:
         pass #TODO: implement 404 page
 

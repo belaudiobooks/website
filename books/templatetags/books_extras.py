@@ -53,7 +53,7 @@ def duration(value):
 
 @register.filter
 def colors(value):
-    """getting quotient of the ASCII code of the first sympol of uuid, 
+    """char code of the first sympol of uuid, 
     where 0 is 0, 1-3 are 1, 4-6 are 2, 7-9 are 3, a-c are 4 and d-f are 5
     """
     first = str(value)[0]
@@ -80,6 +80,7 @@ def colors(value):
         5:'/static/cover_templates/cover_templates_yellow.jpeg'
     }
 
+    #choose the color, if key not exists choose the first one
     result = colors.setdefault(key,0)
 
     return result

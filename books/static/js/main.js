@@ -84,6 +84,9 @@ function initializeSearch() {
   );
   search.addWidgets([makeSearchBox(), makeHits(), conf]);
   search.start();
+  document.documentElement.addEventListener('click', () => {
+    document.querySelector('#autocomplete').classList.add('d-none');
+  });
 }
 
 window.addEventListener('load', () => {

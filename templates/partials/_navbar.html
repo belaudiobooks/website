@@ -57,13 +57,14 @@
     </div>
 
     <!-- Search form -->
-    <div class="col-9 col-md-3 col-lg-3">
-      <form class="d-flex" action="{% url 'search' %}" method="get">
+    <div class="col-9 col-md-3 col-lg-3 position-relative">
+      <form class="d-flex" action="{% url 'search' %}" method="get" autocomplete="off">
         <div class="input-group">
           <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, назва кнігі" aria-label="Аўтар, назва кнігі" aria-describedby="button-search" name="search" id="search">
           <button class="btn p-0 bg-white" type="submit" id="button-search"><img src="{% static 'images/FindIcon.png' %}" alt="Пошук"></button>
         </div>
       </form>
+      <div id="autocomplete" class="d-none"></div>
     </div> 
   </div>
 </nav>

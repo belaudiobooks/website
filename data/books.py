@@ -68,7 +68,7 @@ def set_photo_from_file(person: Person, path: str) -> None:
 
 def _maybe_add_narration(data: BooksData, book: Book,
                          narrators_names: List[str]) -> Narration:
-    existing_narrations = book.narration.all()
+    existing_narrations = book.narrations.all()
     narrators = _get_or_create_people(data, narrators_names)
     ids: Dict[UUID, bool] = {}
     for narrator in narrators:

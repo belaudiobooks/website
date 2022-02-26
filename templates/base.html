@@ -2,11 +2,12 @@
 
 <!DOCTYPE html>
 <html lang="by">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>   
+    <title>{% block title %}{% endblock %}</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <!-- Custom -->
@@ -14,6 +15,7 @@
     <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
     {% block css_files %}{% endblock css_files %}
 </head>
+
 <body>
     <!-- Navbar-->
     {% include 'partials/_navbar.html' %}
@@ -24,8 +26,11 @@
     <!-- Footer -->
     {% include 'partials/_footer.html' %}
 
-    {% comment %} <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script> {% endcomment %}
     <script src="{% static 'js/bootstrap.bundle.js' %} "></script>
-    {% comment %} <script src="{% static 'js/bootstrap.bundle.js.map' %} "></script> {% endcomment %}
-    {% comment %} <script src="{% static 'js/main.js' %} "></script> {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.5.1/dist/algoliasearch-lite.umd.js"
+        integrity="sha256-EXPXz4W6pQgfYY3yTpnDa3OH8/EPn16ciVsPQ/ypsjk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.8.3/dist/instantsearch.production.min.js"
+        integrity="sha256-LAGhRRdtVoD6RLo2qDQsU2mp+XVSciKRC8XPOBWmofM=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/main.js' %} "></script>
+
 </html>

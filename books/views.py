@@ -53,13 +53,11 @@ def books(request):
         context = {
             'all_books': books_tag,
             'tag': tag_name,
-            'colors': COLORS,
             'tags': tags
         }
     else:
         context = {
             'all_books': paged_books,
-            'colors': COLORS,
             'tags': tags
         }
 
@@ -75,7 +73,6 @@ def book_detail(request, slug):
         'translators': identified_book.translators.all(),
         'narrations': identified_book.narrations.all(),
         'tags': identified_book.tag.all(),
-        'colors': COLORS
         
     }
 
@@ -103,7 +100,6 @@ def person_detail(request, slug):
             'author': author,
             'translator': translator,
             'narrations': narrated_books,
-            'colors': COLORS
         }
 
         return render(request, 'books/person.html', context)
@@ -125,13 +121,11 @@ def search(request):
         context = {
             'books': search_results,
             'values': keywords,
-            'colors': COLORS
         }
 
     else:
         context = {
             'books': books,
-            'colors': COLORS
         }
 
     return render(request, 'books/search.html', context)

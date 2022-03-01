@@ -3,8 +3,8 @@ from django.core.paginator import Paginator
 
 from .models import Book, Person, Tag
 
-
 all_books = Book.objects
+
 
 def index(request):
     """Index page, starting page"""
@@ -18,17 +18,19 @@ def index(request):
     for tag in tags:
         #checking if tag is assigned to any book, we don't show tags without books assigned
         if tag.tag.exists():
-            found_tag['name']=tag.name
-            found_tag['slug']=tag.slug
-            found_tag['books']=all_books.filtered(tag=tag.name).order_by('-added_at')
+            found_tag['name'] = tag.name
+            found_tag['slug'] = tag.slug
+            found_tag['books'] = all_books.filtered(
+                tag=tag.name).order_by('-added_at')
             tags_to_render.append(found_tag.copy())
 
     context = {
         'promo_books': promoted_books,
         'tags_to_render': tags_to_render,
     }
-    
+
     return render(request, 'books/index.html', context)
+
 
 def books(request):
     """All books page"""
@@ -47,21 +49,22 @@ def books(request):
             books_tag = all_books.promoted()
             tag_name = req_tag
         else:
-            tag_name=tags.filter(slug=req_tag)[0].name
+            tag_name = tags.filter(slug=req_tag)[0].name
             books_tag = all_books.filtered(tag=tag_name)
 
         context = {
             'all_books': books_tag,
             'tag': tag_name,
-            'tags': tags
+            'tags': tags,
         }
     else:
         context = {
             'all_books': paged_books,
-            'tags': tags
+            'tags': tags,
         }
 
     return render(request, 'books/all-books.html', context)
+
 
 def book_detail(request, slug):
     """Detailed book page"""
@@ -73,10 +76,10 @@ def book_detail(request, slug):
         'translators': identified_book.translators.all(),
         'narrations': identified_book.narrations.all(),
         'tags': identified_book.tag.all(),
-        
     }
 
     return render(request, 'books/book-detail.html', context)
+
 
 def person_detail(request, slug):
     """Detailed book page"""
@@ -86,7 +89,9 @@ def person_detail(request, slug):
     # identified_person = get_object_or_404(Person, slug=slug)
 
     # Prefetch all books in the relationships
-    person=Person.objects.prefetch_related('books_authored','books_translated','narrations').filter(slug=slug).first()
+    person = Person.objects.prefetch_related(
+        'books_authored', 'books_translated',
+        'narrations').filter(slug=slug).first()
 
     if person:
         author = person.books_authored.all()
@@ -105,7 +110,8 @@ def person_detail(request, slug):
         return render(request, 'books/person.html', context)
 
     else:
-        pass #TODO: implement 404 page
+        pass  #TODO: implement 404 page
+
 
 def search(request):
     """Search results"""
@@ -116,7 +122,9 @@ def search(request):
 
     if keywords:
         #Search by Book's title, russian translation of the title and books author name
-        search_results = (all_books.filtered(title=keywords) | all_books.filtered(title_ru=keywords) | all_books.filtered(author=keywords)).distinct()
+        search_results = (all_books.filtered(title=keywords)
+                          | all_books.filtered(title_ru=keywords)
+                          | all_books.filtered(author=keywords)).distinct()
 
         context = {
             'books': search_results,
@@ -130,5 +138,18 @@ def search(request):
 
     return render(request, 'books/search.html', context)
 
+
 def about(request):
-    return render(request, 'books/about.html')
+    """About us page containing info about the website and the team."""
+    people = [
+        ('Мікіта', 'images/photo-logo.png'),
+        ('Яўген', 'images/photo-logo.png'),
+        ('Павал', 'images/photo-logo.png'),
+        ('Алесь', 'images/photo-logo.png'),
+        ('Наста', 'images/photo-logo.png'),
+        ('Алёна', 'images/photo-logo.png'),
+        ('Юра', 'images/photo-logo.png'),
+        ('Андрэй', 'images/photo-logo.png'),
+    ]
+    context = {'team_members': people}
+    return render(request, 'books/about.html', context)

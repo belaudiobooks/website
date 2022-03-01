@@ -3,8 +3,8 @@
 
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'css/books.css' %}">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/books.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css_files %}
 
 {% block content %}
@@ -13,8 +13,11 @@
         <h1>Пра нас</h1>
     </div>
     <div class="col-12">
-        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro harum cumque dicta, suscipit deserunt esse maiores voluptatem maxime omnis! Mollitia explicabo saepe delectus commodi alias suscipit ea repellendus dignissimos rem!
-            Sit amet consectetur adipisicing elit. Vel velit placeat soluta numquam enim saepe blanditiis aperiam deleniti repudiandae ducimus, nihil, error autem odio pariatur fuga ipsam et adipisci. Quod
+        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro harum cumque dicta, suscipit deserunt esse
+            maiores voluptatem maxime omnis! Mollitia explicabo saepe delectus commodi alias suscipit ea repellendus
+            dignissimos rem!
+            Sit amet consectetur adipisicing elit. Vel velit placeat soluta numquam enim saepe blanditiis aperiam
+            deleniti repudiandae ducimus, nihil, error autem odio pariatur fuga ipsam et adipisci. Quod
         </p>
     </div>
     <div class="col-12">
@@ -22,45 +25,12 @@
     </div>
 
     <div class="row">
-        <div class="card mb-2 border-white" style="max-width: 350px;">
-            <div class="row g-0">
-            <div class="col">
-                <img class="img-fluid rounded-start card-img-150" src="{% static 'images/photo-logo.png' %}" alt="Name">
-            </div>
-            <div class="col align-self-center">
-                <div class="card-body">
-                {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
-                <p class="card-text">Мiкiта Белагалазаў</p>
-                </div>
-            </div>
-            </div>
+        {% for member in team_members %}
+        <div class="col-12 col-sm-6 col-lg-3 mt-4 border-white team-member">
+            <img src="{% static member.1 %}" alt="photo">
+            <span class="ms-2">{{ member.0 }}</span>
         </div>
-        <div class="card mb-2 border-white" style="max-width: 350px;">
-            <div class="row g-0">
-            <div class="col">
-                <img class="img-fluid rounded-start card-img-150" src="{% static 'images/photo-logo.png' %}" alt="Name">
-            </div>
-            <div class="col align-self-center">
-                <div class="card-body">
-                {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
-                <p class="card-text">Яўген Кіліар</p>
-                </div>
-            </div>
-            </div>
-        </div>
-        <div class="card mb-2 border-white" style="max-width: 350px;">
-            <div class="row g-0">
-            <div class="col">
-                <img class="img-fluid rounded-start card-img-150" src="{% static 'images/photo-logo.png' %}" alt="Name">
-            </div>
-            <div class="col align-self-center">
-                <div class="card-body">
-                {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
-                <p class="card-text">Павел Ключнiк</p>
-                </div>
-            </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 

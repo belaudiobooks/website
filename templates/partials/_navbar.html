@@ -1,12 +1,12 @@
 {% load static %}
 
 <!-- Top navigation that dissapaer when scrolled -->
-<nav class="navbar" style="background-color: #7879F1;">
+<nav class="navbar pb-0 pt-1" style="background-color: #7879F1;">
   <div class="container justify-content-center text-white">
     <div class="row">
         <div class="col-md-6">
           <a href="{% url 'index' %}" class="link-dark text-decoration-none">
-            <img src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY" class="mx-auto d-block">
+            <img class="mx-auto d-block logo" src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY">
           </a>
         </div>
         <div class="col-md-6">
@@ -27,7 +27,7 @@
 </nav>
 
 <!-- Lower navigation that is always shown even when scrolled -->
-<nav class="navbar navbar-expand-md navbar-light sticky-top d-flex" style="background-color: #7879F1;">
+<nav class="navbar navbar-expand-md navbar-light sticky-top d-flex py-3" style="background-color: #7879F1;">
   <div class="container text-white">
     <div class="col-6 d-none d-md-block text-nowrap">
       <a href="{% url 'index' %}" class="text-white text-decoration-none">

@@ -89,5 +89,18 @@ Data about books, authors, narrators, translators and so on is currently stored 
     Last argument is command to run. Check `sync.py` for the list of commands.
 3. It will run maybe updates `belaudbiooks_data/data.json`. If it does - check changes and commit them.
 
+### Remote sync scripts
 
+There are 2 scripts that allow to pull or push data between JSON format (`audiobook_data` repo) and database (usually remote, postgresql running on GCP). 
 
+Pull data. Connects to database and pulls objects and media files and stores them in JSON file and corresponding media files. Usage:
+
+```shell
+BOOKS_DATA_DIR=../audiobooks_data python manage.py pull_data_from_prod --settings=booksby.sqlite_settings
+```
+
+Push data. Connects to database and pushes objects and media files from JSON file.
+
+```shell
+BOOKS_DATA_DIR=../audiobooks_data python manage.py push_data_to_prod  --settings=booksby.sqlite_settings 
+```

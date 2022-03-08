@@ -9,17 +9,12 @@ from django.conf import settings
 
 
 class Command(BaseCommand):
+    '''Initializes server from data repo and runs it using local sqlite database.'''
+
     help = 'Initializes DB in tmp file with data provided in dump and runs server on that db.'
 
     def handle(self, *args, **options):
-        db_path = settings.DATABASES['default']['NAME']
-        print(f'Using database {db_path}')
-        call_command('makemigrations')
-        call_command('migrate', 'books', 'zero')
-        call_command('migrate', 'user', 'zero')
-        call_command('migrate')
-        data_dir = os.environ['BOOKS_DATA_DIR']
-        call_command('loaddata', os.path.join(data_dir, 'data.json'))
+        call_command('init_db_with_data')
 
         superuser_pass = os.environ.get('DJANGO_SUPERUSER_PASSWORD', None)
         if superuser_pass is None:

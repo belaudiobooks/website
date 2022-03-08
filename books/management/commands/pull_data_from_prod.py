@@ -11,6 +11,8 @@ import django
 
 from books.models import Book, Link, LinkType, Narration, Person, Tag
 
+REMOTE_DB = 'remote'
+
 
 class Command(BaseCommand):
     '''Pulls data and images from production to local repo.'''
@@ -18,14 +20,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            django.db.connection.ensure_connection()
+            django.db.connections[REMOTE_DB].ensure_connection()
         except django.db.utils.OperationalError:
             print(
                 'Cannot connect to DB. Make sure you are running\n' +
                 'cloud_sql_proxy -instances="audiobooksbysite:europe-west1:' +
                 'audiobooks-prod"=tcp:5432')
             return
-        db_path = settings.DATABASES['default']['NAME']
+        db_path = settings.DATABASES[REMOTE_DB]['NAME']
         data_dir = os.environ.get('BOOKS_DATA_DIR', None)
         if data_dir is None:
             print('Must provide BOOKS_DATA_DIR variable that points to ' +
@@ -43,14 +45,14 @@ class Command(BaseCommand):
 
         print('Dumping data from DB.')
 
-        all_people = Person.objects.all().order_by('uuid')
-        all_tags = Tag.objects.all()
-        all_books = Book.objects.all().prefetch_related(
+        all_people = Person.objects.using(REMOTE_DB).all().order_by('uuid')
+        all_tags = Tag.objects.using(REMOTE_DB).all()
+        all_books = Book.objects.using(REMOTE_DB).all().prefetch_related(
             'authors', 'translators', 'tag').order_by('uuid')
-        all_narrations = Narration.objects.all().prefetch_related(
-            'narrators').order_by('uuid')
-        all_link_types = LinkType.objects.all()
-        all_links = Link.objects.all().order_by('uuid')
+        all_narrations = Narration.objects.using(
+            REMOTE_DB).all().prefetch_related('narrators').order_by('uuid')
+        all_link_types = LinkType.objects.using(REMOTE_DB).all()
+        all_links = Link.objects.using(REMOTE_DB).all().order_by('uuid')
         all_objects = list(
             chain(all_people, all_tags, all_books, all_narrations,
                   all_link_types, all_links))

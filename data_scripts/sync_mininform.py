@@ -24,7 +24,7 @@ console.log(JSON.stringify(Array.from(document.querySelectorAll('.book')).map(el
 
 import json
 import os
-from data import books
+from . import books
 
 MININFORM_JSON = os.path.join(os.path.dirname(__file__), 'mininform.json')
 

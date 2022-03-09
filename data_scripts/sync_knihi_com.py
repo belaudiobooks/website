@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List
 import bs4
 import requests
-from data import books
+from . import books
 
 
 def _open_url(url: str) -> bs4.BeautifulSoup:

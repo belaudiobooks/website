@@ -4,7 +4,7 @@ import subprocess
 from typing import List, Optional
 import bs4
 import requests
-from data import books
+from . import books
 
 MININFORM_DIRS = [
     entry for entry in os.walk('/home/nbeloglazov/audiobooks/Аудиокниги')

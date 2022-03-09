@@ -4,7 +4,7 @@ Script for validating data in DB.
 from os import path
 from books.models import LinkType, Narration
 
-from data.books import BooksData
+from data_scripts.books import BooksData
 
 
 def _verify_books_covers_valid(data: BooksData) -> None:

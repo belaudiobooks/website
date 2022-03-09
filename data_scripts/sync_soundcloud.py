@@ -10,7 +10,7 @@ import json
 import os
 import re
 import requests
-from data import books, image
+from . import books, image
 from django.core.files import File
 
 RADIO_SVABODA_URLS = [

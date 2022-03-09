@@ -11,7 +11,7 @@ import re
 from typing import List, Optional
 import requests
 import bs4
-from data import books
+from . import books
 
 # Dictionary that helps to fix some errors on LitRes data.
 REPLACEMENTS = {

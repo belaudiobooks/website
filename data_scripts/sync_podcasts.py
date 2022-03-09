@@ -7,7 +7,7 @@ import django
 import requests
 import feedparser
 
-from data.books import BooksData, add_or_update_book, add_or_update_link
+from . import books
 
 
 @dataclass
@@ -119,7 +119,7 @@ def _get_podcast_urls(title: str) -> Dict[str, str]:
     }
 
 
-def _sync_from_podcast(data: BooksData, podcast: Podcast) -> None:
+def _sync_from_podcast(data: books.BooksData, podcast: Podcast) -> None:
     rss = feedparser.parse(podcast.rss_feed)
     feed = rss['feed']
     title = feed['title']
@@ -132,14 +132,15 @@ def _sync_from_podcast(data: BooksData, podcast: Podcast) -> None:
         duration += django.utils.dateparse.parse_duration(
             episode['itunes_duration'])
 
-    narration = add_or_update_book(data,
-                                   title=title,
-                                   description=description,
-                                   authors=[author],
-                                   narrators=podcast.narrators,
-                                   translators=[],
-                                   cover_url=cover_url,
-                                   duration_sec=int(duration.total_seconds()))
+    narration = books.add_or_update_book(data,
+                                         title=title,
+                                         description=description,
+                                         authors=[author],
+                                         narrators=podcast.narrators,
+                                         translators=[],
+                                         cover_url=cover_url,
+                                         duration_sec=int(
+                                             duration.total_seconds()))
 
     links_dict = _get_podcast_urls(title)
     links_dict.update(podcast.podcasts)
@@ -147,12 +148,12 @@ def _sync_from_podcast(data: BooksData, podcast: Podcast) -> None:
         if url is None:
             print(f'URL for podcast {link_type} is missing')
         else:
-            add_or_update_link(narration=narration,
-                               url_type=link_type,
-                               url=url)
+            books.add_or_update_link(narration=narration,
+                                     url_type=link_type,
+                                     url=url)
 
 
-def run(data: BooksData) -> None:
+def run(data: books.BooksData) -> None:
     '''Run mains'''
     for podcast in PODCASTS[0:1]:
         _sync_from_podcast(data, podcast)

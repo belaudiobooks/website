@@ -4,7 +4,7 @@ manually uploaded to algolia later.
 '''
 import json
 
-from data import books
+from . import books
 
 
 def run(data: books.BooksData) -> None:

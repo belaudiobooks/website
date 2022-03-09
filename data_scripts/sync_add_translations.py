@@ -1,7 +1,7 @@
 '''Fills russian translation for books and authors names using TRANSLATIONS_STRING string'''
 
 from typing import Dict, Set
-from data import books
+from . import books
 
 TRANSLATIONS_STRING = '''Алесь Разанаў	Алесь Рязанов'''
 

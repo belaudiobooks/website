@@ -84,7 +84,7 @@ Data about books, authors, narrators, translators and so on is currently stored 
 1. Checkout belaudiobooks/data repo to separate folder, for example as `belaudbiooks_data`.
 2. Run script:
     ```shell
-    BOOKS_DATA_DIR=../audiobooks_data python -m data.sync podcasts
+    BOOKS_DATA_DIR=../audiobooks_data python -m data_scripts.sync podcasts
     ```
     Last argument is command to run. Check `sync.py` for the list of commands.
 3. It will run maybe updates `belaudbiooks_data/data.json`. If it does - check changes and commit them.

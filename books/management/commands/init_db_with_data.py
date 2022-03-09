@@ -11,7 +11,7 @@ from django.conf import settings
 class Command(BaseCommand):
     '''See help.'''
 
-    help = 'Initializes default DB using data from BOOKS_DATA_DIR.'
+    help = 'Initializes default DB using data from "data" submodule.'
 
     def handle(self, *args, **options):
         db_path = settings.DATABASES['default']['NAME']
@@ -20,6 +20,5 @@ class Command(BaseCommand):
         call_command('migrate', 'books', 'zero')
         call_command('migrate', 'user', 'zero')
         call_command('migrate')
-        data_dir = os.environ['BOOKS_DATA_DIR']
-        call_command('loaddata', os.path.join(data_dir, 'data.json'))
+        call_command('loaddata', 'data/data.json')
         print('Completed!')

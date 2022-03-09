@@ -22,15 +22,13 @@ def _initialize_db() -> None:
     management.call_command('makemigrations')
     management.call_command('migrate', 'books', 'zero')
     management.call_command('migrate')
-    data_dir = os.environ['BOOKS_DATA_DIR']
-    management.call_command('loaddata', os.path.join(data_dir, 'data.json'))
+    management.call_command('loaddata', 'data/data.json')
 
 
 def _dump_db() -> None:
-    data_dir = os.environ['BOOKS_DATA_DIR']
-    with open(os.path.join(data_dir, 'data.json'), 'w', encoding='utf8') as f:
+    with open('data/data.json', 'w', encoding='utf8') as f:
         management.call_command('dumpdata', 'books', indent=2, stdout=f)
-    management.call_command('loaddata', os.path.join(data_dir, 'data.json'))
+    management.call_command('loaddata', 'data/data.json')
 
 
 SYNC_COMMANDS: Dict[str, Callable[[BooksData], None]] = {

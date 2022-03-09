@@ -28,14 +28,9 @@ class Command(BaseCommand):
                 'audiobooks-prod"=tcp:5432')
             return
         db_path = settings.DATABASES[REMOTE_DB]['NAME']
-        data_dir = os.environ.get('BOOKS_DATA_DIR', None)
-        if data_dir is None:
-            print('Must provide BOOKS_DATA_DIR variable that points to ' +
-                  'location of audiobooks/data repo on local disk.')
-            return
         print(f'Using database {db_path}')
         for dir in ['covers', 'photos', 'icons']:
-            full_dir = os.path.join(data_dir, dir)
+            full_dir = os.path.join('data', dir)
             print(f'Pulling images to {dir}')
             subprocess.run([
                 'gsutil', '-m', 'rsync', '-d', f'gs://books_media/{dir}',
@@ -56,8 +51,7 @@ class Command(BaseCommand):
         all_objects = list(
             chain(all_people, all_tags, all_books, all_narrations,
                   all_link_types, all_links))
-        with open(os.path.join(data_dir, 'data.json'), 'w',
-                  encoding='utf8') as f:
+        with open('data/data.json', 'w', encoding='utf8') as f:
             django.core.serializers.serialize('json',
                                               all_objects,
                                               indent=2,

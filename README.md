@@ -66,41 +66,42 @@ python manage.py runserver
 ```
 
 ### Run the project with fullbooks data
-It is possible to run server using fresh temporary sqlite3 database initialized with full books data. This way you get view of production-like data. First, it requires cloning https://github.com/belaudiobooks/data repo. Let's say you cloned it as `belaudbiooks_data` repo that sits next to this repo. Then run the following command:
+It is possible to run server using fresh temporary sqlite3 database initialized with full books data. This way you get view of production-like data. First, make sure that 'data' submodule is cloned. Then run the following command:
 
 ```shell
-BOOKS_DATA_DIR=../audiobooks_data python manage.py runserver_with_tmp_db --settings=booksby.sqlite_settings
+python manage.py runserver_with_tmp_db --settings=booksby.sqlite_settings
 ```
 
 It will:
 1. Create temporary database in `/tmp` directory.
-2. Fill it with data from `../audiobooks_data` folder.
-3. Start server using `../audiobooks_data` as `MEDIA_ROOT`.
+2. Fill it with data from `data` submodule folder.
+3. Start server using `data` as `MEDIA_ROOT`.
 
 ## Books data
 
 Data about books, authors, narrators, translators and so on is currently stored in separate project: https://github.com/belaudiobooks/data. This project contains scripts that manage and update that data: synchronizing its data with external resources such as https://knizhnyvoz.by, podcasts, https://litres.ru and others. To manage data run `sync.py` script like the following
 
-1. Checkout belaudiobooks/data repo to separate folder, for example as `belaudbiooks_data`.
+1. [Clone](https://github.blog/2016-02-01-working-with-submodules/) `data` repo to separate folder, 
+    for example as `data`.
 2. Run script:
     ```shell
-    BOOKS_DATA_DIR=../audiobooks_data python -m data_scripts.sync podcasts
+    python -m data_scripts.sync podcasts
     ```
     Last argument is command to run. Check `sync.py` for the list of commands.
-3. It will run maybe updates `belaudbiooks_data/data.json`. If it does - check changes and commit them.
+3. It will run maybe updates `data/data.json`. If it does - check changes and commit them.
 
 ### Remote sync scripts
 
-There are 2 scripts that allow to pull or push data between JSON format (`audiobook_data` repo) and database (usually remote, postgresql running on GCP). 
+There are 2 scripts that allow to pull or push data between JSON format `data/data.json` and database (usually remote, postgresql running on GCP). 
 
 Pull data. Connects to database and pulls objects and media files and stores them in JSON file and corresponding media files. Usage:
 
 ```shell
-BOOKS_DATA_DIR=../audiobooks_data python manage.py pull_data_from_prod --settings=booksby.sqlite_settings
+python manage.py pull_data_from_prod --settings=booksby.sqlite_settings
 ```
 
 Push data. Connects to database and pushes objects and media files from JSON file.
 
 ```shell
-BOOKS_DATA_DIR=../audiobooks_data python manage.py push_data_to_prod  --settings=booksby.sqlite_settings 
+python manage.py push_data_to_prod  --settings=booksby.sqlite_settings 
 ```

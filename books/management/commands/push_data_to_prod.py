@@ -53,9 +53,8 @@ class Command(BaseCommand):
         print('Initializing local DB')
         call_command('init_db_with_data')
 
-        data_dir = os.environ.get('BOOKS_DATA_DIR', None)
         for dir in ['covers', 'photos', 'icons']:
-            full_dir = os.path.join(data_dir, dir)
+            full_dir = os.path.join('data', dir)
             print(f'Pushing {dir}')
             subprocess.run(
                 ['gsutil', '-m', 'rsync', full_dir, f'gs://books_media/{dir}'],

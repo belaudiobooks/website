@@ -23,5 +23,4 @@ DATABASES = {
     }
 }
 
-assert "BOOKS_DATA_DIR" in os.environ, "Provide BOOKS_DATA_DIR variable when running command. See README."
-MEDIA_ROOT = os.environ["BOOKS_DATA_DIR"]
+MEDIA_ROOT = 'data'

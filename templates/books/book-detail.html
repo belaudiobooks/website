@@ -93,9 +93,9 @@
             <div class="row my-4">
                 {% for tag in tags %}
                     <div class="col-auto p-1">
-                        <form action="{% url 'books' %}" method="get">
-                            <button class="btn btn-tag p-2" name='books' value={{tag.slug}}>{{tag}}</button>
-                        </form>
+                        <a href="{% url 'books' %}?books={{tag.slug}}" class="btn btn-tag p-2">
+                            {{tag}}
+                        </a>
                     </div>
                 {% endfor %}
             </div>

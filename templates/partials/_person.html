@@ -5,15 +5,17 @@
     {% if persons.count > 1 %}{{ multiple }}:
         {% for person in persons %}
                 <a class="text-decoration-none link-color" href="{% url 'person-detail-page' person.slug %}">
-                {{ person.name }}{% if not forloop.last %},{% endif %}
+                {{ person.name }}
                 </a> 
+                {% if not forloop.last %},{% endif %}
         {% endfor %}
     {% else %}
         {% for person in persons %}
             {{single}}{{person.gender|gender:gender_variants}}:
             <a class="text-decoration-none link-color" href="{% url 'person-detail-page' person.slug %}">
-            {{ person.name }}{% if not forloop.last %},{% endif %}
+            {{ person.name }}
             </a> 
+            {% if not forloop.last %},{% endif %}
         {% endfor %}
     {% endif %}
 {% endif %}

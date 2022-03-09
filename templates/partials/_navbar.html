@@ -4,24 +4,25 @@
 <nav class="navbar pb-0 pt-1" style="background-color: #7879F1;">
   <div class="container justify-content-center text-white">
     <div class="row">
-        <div class="col-md-6">
-          <a href="{% url 'index' %}" class="link-dark text-decoration-none">
-            <img class="mx-auto d-block logo" src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY">
-          </a>
+      <div class="col-md-6">
+        <a href="{% url 'index' %}" class="link-dark text-decoration-none">
+          <img class="mx-auto d-block logo" src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY">
+        </a>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col d-none d-md-block">
+            <p class="text-end"></p>
+          </div>
         </div>
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col d-none d-md-block">
-                    <p class="text-end"></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col d-none d-sm-block">
-                  <p>Навігатар па аўдыякнігах  на беларускай мове і беларускіх аўтараў.</p>
-                  <p>Тут вы можаце хутка знайсці як аўдыякнігі сучасных аўтараў  так і дзіцячыя альбо класічныя кнігі. Сайт не змяшчае самі кнігі,  а дае спасылцы на пляцоўкі дзе іх можна паслухаць альбо набыць.</p>
-                </div>
-            </div>
+        <div class="row">
+          <div class="col d-none d-sm-block">
+            <p>Навігатар па аўдыякнігах  на беларускай мове і беларускіх аўтараў.</p>
+            <p>Тут вы можаце хутка знайсці як аўдыякнігі сучасных аўтараў  так і дзіцячыя альбо класічныя кнігі. Сайт не
+              змяшчае самі кнігі,  а дае спасылцы на пляцоўкі дзе іх можна паслухаць альбо набыць.</p>
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </nav>
@@ -31,27 +32,28 @@
   <div class="container text-white">
     <div class="col-6 d-none d-md-block text-nowrap">
       <a href="{% url 'index' %}" class="text-white text-decoration-none">
-        <h3 class="text-center">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
+        <h3 class="text-center site-title">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
       </a>
     </div>
     <div class="col-3 col-md-3 justify-content-center">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
+
       <!-- Collapsing items to the hamburger button on mobile -->
       <div class="collapse navbar-collapse text-nowrap" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-3">
           <li class="nav-item">
-            <a class = "nav-link text-white {% if '/books' == request.path %}active{% else %}text-opacity-75{% endif %}"
-                href="{% url 'books' %}">Каталаг
+            <a class="catalog nav-link text-white {% if '/books' == request.path %}active{% else %}text-opacity-75{% endif %}"
+              href="{% url 'books' %}">Каталаг
             </a>
           </li>
           <li class="nav-item">
-            <a class = "nav-link text-white {% if '/about' == request.path %}active{% else %}text-opacity-75{% endif %}"
-                href="{% url 'about' %}">Пра нас
+            <a class="about-us nav-link text-white {% if '/about' == request.path %}active{% else %}text-opacity-75{% endif %}"
+              href="{% url 'about' %}">Пра нас
             </a>
-          </li>  
+          </li>
         </ul>
       </div>
     </div>
@@ -60,11 +62,13 @@
     <div class="col-9 col-md-3 col-lg-3 position-relative">
       <form class="d-flex" action="{% url 'search' %}" method="get" autocomplete="off">
         <div class="input-group">
-          <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, назва кнігі" aria-label="Аўтар, назва кнігі" aria-describedby="button-search" name="search" id="search">
-          <button class="btn p-0 bg-white" type="submit" id="button-search"><img src="{% static 'images/FindIcon.png' %}" alt="Пошук"></button>
+          <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, назва кнігі"
+            aria-label="Аўтар, назва кнігі" aria-describedby="button-search" name="search" id="search">
+          <button class="btn p-0 bg-white" type="submit" id="button-search"><img
+              src="{% static 'images/FindIcon.png' %}" alt="Пошук"></button>
         </div>
       </form>
       <div id="autocomplete" class="d-none"></div>
-    </div> 
+    </div>
   </div>
 </nav>

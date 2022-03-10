@@ -1,25 +1,9 @@
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.core.management import call_command
-from selenium import webdriver
 from books import models
+from tests.webdriver_test_case import WebdriverTestCase
 
 
-class HeaderAndSearchTests(StaticLiveServerTestCase):
+class HeaderAndSearchTests(WebdriverTestCase):
     '''Selenium tests for header elements including search.'''
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.driver = webdriver.Chrome()
-        cls.driver.implicitly_wait(10)
-
-    def setUp(self):
-        call_command('loaddata', 'data/data.json')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        super().tearDownClass()
 
     def get_first_book(self) -> models.Book:
         return models.Book.objects.filter(title='Ордэн белай мышы').first()

@@ -1,27 +1,15 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.core.management import call_command
-from selenium import webdriver
 from books import models
+from tests.webdriver_test_case import WebdriverTestCase
 
 
-class PersonPageTests(StaticLiveServerTestCase):
+class PersonPageTests(WebdriverTestCase):
     '''Selenium tests for person page.'''
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.driver = webdriver.Chrome()
-        cls.driver.implicitly_wait(10)
-
     def setUp(self):
-        call_command('loaddata', 'data/data.json')
+        super().setUp()
         self.person = models.Person.objects.filter(
             name='Андрэй Хадановіч').first()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        super().tearDownClass()
 
     def _get_person_url(self) -> str:
         return f'{self.live_server_url}/person/{self.person.slug}'

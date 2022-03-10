@@ -1,6 +1,8 @@
 # Audiobooks backend
 
-This project is created to allow users quickly find audioboooks that are translated to Belarusian 
+This project is created to allow users quickly find audioboooks that are translated to Belarusian
+
+![Django CI](https://github.com/belaudiobooks/website/actions/workflows/django.yml/badge.svg)
 
 ## Project structure
 * booksby - main project folder with settings and project top url setup
@@ -76,6 +78,14 @@ It will:
 1. Create temporary database in `/tmp` directory.
 2. Fill it with data from `data` submodule folder.
 3. Start server using `data` as `MEDIA_ROOT`.
+
+### Run tests
+
+To run tests you need to have chromedriver installed and available on path. Install chromedriver that matches your current chrome version from here: https://chromedriver.chromium.org/downloads. Then run tests:
+
+```shell
+python manage.py test --settings=booksby.sqlite_settings --verbosity=2
+```
 
 ## Books data
 

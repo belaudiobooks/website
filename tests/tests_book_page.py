@@ -84,3 +84,7 @@ class BookPageTests(StaticLiveServerTestCase):
         book_elem = self.driver.find_element_by_css_selector('#books')
         self.assertIn('14 гадзін 15 хвілін', book_elem.text)
         self.assertEqual(f'{self.book.title} аўдыякніга', self.driver.title)
+        description = self.driver.find_element_by_css_selector(
+            'meta[name="description"]').get_dom_attribute('content')
+        self.assertIn(self.book.title, description)
+        self.assertIn(self.book.authors.first().name, description)

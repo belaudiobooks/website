@@ -55,3 +55,6 @@ class PersonPageTests(StaticLiveServerTestCase):
     def test_page_elements(self):
         self.driver.get(self._get_person_url())
         self.assertEqual(f'{self.person.name}, аўдыякнігі', self.driver.title)
+        description = self.driver.find_element_by_css_selector(
+            'meta[name="description"]').get_dom_attribute('content')
+        self.assertIn(self.person.name, description)

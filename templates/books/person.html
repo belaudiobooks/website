@@ -2,9 +2,10 @@
 {% load static %}
 {% load books_extras %}
 
-{% block title %}
-    {{ person.name }}, аўдыякнігі
-{% endblock title %}
+{% block title %}{{ person.name }}, аўдыякнігі{% endblock title %}
+{% block description %}
+  На гэтай старонцы вы знойдзеце ўсе кнігі якія {{person.name}} напісаў, агучыў альбо пераклаў.
+{% endblock description %}
 
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'css/books.css' %}">

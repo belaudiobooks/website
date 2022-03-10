@@ -2,6 +2,9 @@
 {% load static %}
 {% load books_extras %}
 
+{% block title %}
+    {{ person.name }}, аўдыякнігі
+{% endblock title %}
 
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'css/books.css' %}">

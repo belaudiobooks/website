@@ -2,9 +2,7 @@
 {% load static %}
 {% load books_extras %}
 
-{% block title %}
-    {{ book.title|title }}
-{% endblock title %}
+{% block title %}{{ book.title | title}} аўдыякніга{% endblock title %}
 
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'css/book-detail.css' %}">

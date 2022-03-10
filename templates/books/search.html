@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Вынікі пошука{% endblock title %}
 
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'css/books.css' %}">
@@ -11,7 +12,7 @@
 
     <div class="container" id='books'>
         {% if values %}
-            <h2>Рэзалты пошука '{{ values }}'</h2>
+            <h2>Вынікі пошука '{{ values }}'</h2>
         {% endif %}
         <ul>
             {% for book in books %}

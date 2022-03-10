@@ -1,4 +1,3 @@
-import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management import call_command
 from selenium import webdriver
@@ -52,3 +51,7 @@ class PersonPageTests(StaticLiveServerTestCase):
         self.assertGreaterEqual(self.person.narrations.count(), 1)
         for narration in self.person.narrations.all():
             self._check_book_present(narration.book)
+
+    def test_page_elements(self):
+        self.driver.get(self._get_person_url())
+        self.assertEqual(f'{self.person.name}, аўдыякнігі', self.driver.title)

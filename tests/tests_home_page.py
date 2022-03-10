@@ -43,3 +43,7 @@ class HomePageTests(StaticLiveServerTestCase):
         author = book.authors.first()
         self.driver.find_element_by_link_text(author.name).click()
         self.assertIn(f'/person/{author.slug}', self.driver.current_url)
+
+    def test_page_elements(self):
+        self.driver.get(self.live_server_url)
+        self.assertEqual('Беларускія аўдыякнігі', self.driver.title)

@@ -37,7 +37,6 @@ class BookPageTests(StaticLiveServerTestCase):
                                             person: models.Person) -> None:
         self.driver.get(self._get_book_url())
         elem = self.driver.find_element_by_link_text(person.name)
-        print(elem)
         self._scroll_into_view(elem)
         elem.click()
         self.assertIn(f'/person/{person.slug}', self.driver.current_url)
@@ -83,5 +82,5 @@ class BookPageTests(StaticLiveServerTestCase):
     def test_renders_text_elements(self):
         self.driver.get(self._get_book_url())
         book_elem = self.driver.find_element_by_css_selector('#books')
-        text = book_elem.text
-        self.assertIn('14 гадзін 15 хвілін', text)
+        self.assertIn('14 гадзін 15 хвілін', book_elem.text)
+        self.assertEqual(f'{self.book.title} аўдыякніга', self.driver.title)

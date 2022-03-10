@@ -142,11 +142,11 @@ def search(request):
 def about(request):
     """About us page containing info about the website and the team."""
     people = [
-        ('Мікіта', 'images/photo-logo.png'),
+        ('Мікіта', 'images/member-mikita.jpg'),
         ('Яўген', 'images/photo-logo.png'),
         ('Павал', 'images/photo-logo.png'),
         ('Алесь', 'images/photo-logo.png'),
-        ('Наста', 'images/photo-logo.png'),
+        ('Наста', 'images/member-nasta.jpg'),
         ('Алёна', 'images/photo-logo.png'),
         ('Юра', 'images/photo-logo.png'),
         ('Андрэй', 'images/photo-logo.png'),

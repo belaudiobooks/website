@@ -1,43 +1,22 @@
-import time
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.core.management import call_command
-from selenium import webdriver
 from books import models
+from tests.webdriver_test_case import WebdriverTestCase
 
 
-class BookPageTests(StaticLiveServerTestCase):
+class BookPageTests(WebdriverTestCase):
     '''Selenium tests for book page.'''
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.driver = webdriver.Chrome()
-        cls.driver.implicitly_wait(10)
-
     def setUp(self):
-        call_command('loaddata', 'data/data.json')
+        super().setUp()
         self.book = models.Book.objects.filter(title='1984').first()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        super().tearDownClass()
 
     def _get_book_url(self) -> str:
         return f'{self.live_server_url}/books/{self.book.slug}'
-
-    def _scroll_into_view(self, elem) -> None:
-        self.driver.execute_script(
-            'arguments[0].scrollIntoView({block: "center"})', elem)
-        # Need to add sleep as scrolling doesn't finish quickly as expected_conditions
-        # don't work for some reason.
-        time.sleep(1)
 
     def _check_person_present_and_clickable(self,
                                             person: models.Person) -> None:
         self.driver.get(self._get_book_url())
         elem = self.driver.find_element_by_link_text(person.name)
-        self._scroll_into_view(elem)
+        self.scroll_into_view(elem)
         elem.click()
         self.assertIn(f'/person/{person.slug}', self.driver.current_url)
 
@@ -72,7 +51,7 @@ class BookPageTests(StaticLiveServerTestCase):
         for tag in self.book.tag.all():
             self.driver.get(self._get_book_url())
             elem = self.driver.find_element_by_link_text(tag.name)
-            self._scroll_into_view(elem)
+            self.scroll_into_view(elem)
             elem.click()
             self.assertIn(f'/books?books={tag.slug}', self.driver.current_url)
             tag_header = self.driver.find_element_by_css_selector(

@@ -147,9 +147,9 @@ def about(request):
         ('Павал', 'images/photo-logo.png'),
         ('Алесь', 'images/photo-logo.png'),
         ('Наста', 'images/member-nasta.jpg'),
-        ('Алёна', 'images/photo-logo.png'),
+        ('Алёна', 'images/member-alena.jpg'),
         ('Юра', 'images/photo-logo.png'),
-        ('Андрэй', 'images/photo-logo.png'),
+        ('Андрэй', 'images/member-andrey.jpg'),
     ]
     context = {'team_members': people}
     return render(request, 'books/about.html', context)

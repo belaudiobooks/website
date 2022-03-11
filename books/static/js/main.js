@@ -43,11 +43,12 @@ function renderHit(hit) {
  * Initializes dynamic search using Algolia.
  */
 function initializeSearch() {
+  const algoliaParams = document.querySelector('meta[name="algolia"]').dataset;
   const search = instantsearch({
-    indexName: 'data',
+    indexName: algoliaParams['index'],
     searchClient: algoliasearch(
-      '1RL4DSNIMX',
-      '4c0874dbf4fd2dc5f079657d5702da65'
+      algoliaParams['appId'],
+      algoliaParams['searchKey'],
     ),
   });
 

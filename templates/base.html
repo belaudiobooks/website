@@ -8,7 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Беларускія аўдыякнігі{% endblock %}</title>
-    <meta name="description" content="{% block description %}Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў.{% endblock %}">
+    <meta name="description"
+        content="{% block description %}Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў.{% endblock %}">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <!-- Custom -->
@@ -32,6 +33,8 @@
         integrity="sha256-EXPXz4W6pQgfYY3yTpnDa3OH8/EPn16ciVsPQ/ypsjk=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.8.3/dist/instantsearch.production.min.js"
         integrity="sha256-LAGhRRdtVoD6RLo2qDQsU2mp+XVSciKRC8XPOBWmofM=" crossorigin="anonymous"></script>
+    <meta name="algolia" data-index="{{ algolia_index }}" data-app-id="{{ algolia_application_id }}"
+        data-search-key="{{ algolia_search_key }}">
     <script src="{% static 'js/main.js' %} "></script>
 
 </html>

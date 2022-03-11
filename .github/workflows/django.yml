@@ -31,9 +31,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         cp .env.test .env
+        echo "ALGOLIA_APPLICATION_ID=${{ALGOLIA_APPLICATION_ID}}" >> $GITHUB_ENV
+        echo "ALGOLIA_MODIFY_KEY=${{ALGOLIA_MODIFY_KEY}}" >> $GITHUB_ENV
+        echo "ALGOLIA_SEARCH_KEY=${{ALGOLIA_SEARCH_KEY}}" >> $GITHUB_ENV
     - name: Create migrations
       run: |
         python manage.py makemigrations --settings=booksby.sqlite_settings
+    - name: Push data to algolia
+      run: |
+        python manage.py init_db_with_data --settings=booksby.sqlite_settings
+        python manage.py push_data_to_algolia --settings=booksby.sqlite_settings
     - name: Run Tests
       run: |
         python manage.py test --verbosity=2 --settings=booksby.sqlite_settings

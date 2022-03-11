@@ -1,5 +1,9 @@
+import time
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 class HeaderAndSearchTests(WebdriverTestCase):
@@ -24,8 +28,35 @@ class HeaderAndSearchTests(WebdriverTestCase):
         self.assertEqual(f'{self.live_server_url}/books',
                          self.driver.current_url)
 
-    def test_click_about_u(self):
+    def test_click_about_us(self):
         self.driver.get(self.live_server_url)
         self.driver.find_element_by_css_selector('.navbar .about-us').click()
         self.assertEqual(f'{self.live_server_url}/about',
                          self.driver.current_url)
+
+    def _wait_for_suggestion(self, text: str, link: str) -> None:
+        autocomplete = self.driver.find_element_by_css_selector(
+            '#autocomplete')
+        time.sleep(1)
+        element = WebDriverWait(self.driver, 10).until(
+            lambda wd: autocomplete.find_element(by=By.LINK_TEXT, value=text),
+            f'Did not see suggestion with text "{text}"')
+        self.assertEqual(link, element.get_dom_attribute('href'))
+
+    def test_client_side_search_book(self):
+        self.driver.get(self.live_server_url)
+        search = self.driver.find_element_by_css_selector('#search')
+        for query in ['людзі', 'ЛЮДИ', 'ЛюДзИ']:
+            search.clear()
+            search.send_keys(query)
+            self._wait_for_suggestion('Людзі на балоцеІ. Мележ',
+                                      '/books/liudzi-na-balotse')
+
+    def test_client_side_search_author(self):
+        self.driver.get(self.live_server_url)
+        search = self.driver.find_element_by_css_selector('#search')
+        for query in ['каратк', 'КОРОТ']:
+            search.clear()
+            search.send_keys(query)
+            self._wait_for_suggestion('Уладзімір Караткевіч',
+                                      '/person/uladzimir-karatkevich')

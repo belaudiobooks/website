@@ -99,6 +99,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'books.context_processors.algolia',
             ],
         },
     },
@@ -189,6 +190,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User model that supports e-mail instead of username
 AUTH_USER_MODEL = 'user.User'
+
+# Variables needed for Algolia search to work
+# https://www.algolia.com/
+ALGOLIA_INDEX = env('ALGOLIA_INDEX', default='dev')
+ALGOLIA_APPLICATION_ID = env('ALGOLIA_APPLICATION_ID', default='')
+ALGOLIA_SEARCH_KEY = env('ALGOLIA_SEARCH_KEY', default='')
+ALGOLIA_MODIFY_KEY = env('ALGOLIA_MODIFY_KEY', default='')
 
 # for debugging sql
 if env('ENV') == 'local':

@@ -44,7 +44,6 @@ SYNC_COMMANDS: Dict[str, Callable[[BooksData], None]] = {
     'add_translations': sync_add_translations.run,
     'add_durations': add_durations.run,
     'cleanup_orphans': validate_data.cleanup_orphans,
-    'prepare_algolia': prepare_algolia.run,
 }
 
 

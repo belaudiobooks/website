@@ -18,3 +18,4 @@ google-cloud-storage
 google-cloud-secret-manager
 beautifulsoup4
 selenium>=4.1.0<4.2.0
+algoliasearch>=2.0,<3.0

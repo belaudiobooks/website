@@ -148,7 +148,7 @@ def about(request):
         ('Алесь', 'images/photo-logo.png'),
         ('Наста', 'images/member-nasta.jpg'),
         ('Алёна', 'images/member-alena.jpg'),
-        ('Юра', 'images/photo-logo.png'),
+        ('Юра', 'images/member-jura.jpg'),
         ('Андрэй', 'images/member-andrey.jpg'),
     ]
     context = {'team_members': people}

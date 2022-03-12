@@ -143,9 +143,9 @@ def about(request):
     """About us page containing info about the website and the team."""
     people = [
         ('Мікіта', 'images/member-mikita.jpg'),
-        ('Яўген', 'images/photo-logo.png'),
-        ('Павал', 'images/photo-logo.png'),
-        ('Алесь', 'images/photo-logo.png'),
+        ('Яўген', 'images/member-jauhen.jpg'),
+        ('Павал', 'images/member-paval.jpg'),
+        ('Алесь', 'images/member-ales.jpg'),
         ('Наста', 'images/member-nasta.jpg'),
         ('Алёна', 'images/member-alena.jpg'),
         ('Юра', 'images/member-jura.jpg'),

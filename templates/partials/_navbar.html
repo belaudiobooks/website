@@ -10,14 +10,14 @@
         </a>
       </div>
       <div class="col-md-6">
-        <div class="row">
+        {% comment %} <div class="row">
           <div class="col d-none d-md-block">
-            <p class="text-end"></p>
+            <p class="text-end">test</p>
           </div>
-        </div>
-        <div class="row">
+        </div> {% endcomment %}
+        <div class="row pt-1">
           <div class="col d-none d-sm-block">
-            <p>Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў.</p>
+            <p class="title_lead">Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў.</p>
             <p>Тут вы можаце хутка знайсці як аўдыякнігі сучасных аўтараў так і дзіцячыя альбо класічныя кнігі. Сайт не
               змяшчае самі кнігі, а дае спасылцы на пляцоўкі дзе іх можна паслухаць альбо набыць.</p>
           </div>
@@ -30,12 +30,12 @@
 <!-- Lower navigation that is always shown even when scrolled -->
 <nav class="navbar navbar-expand-md navbar-light sticky-top d-flex py-3" style="background-color: #7879F1;">
   <div class="container text-white">
-    <div class="col-6 d-none d-md-block text-nowrap">
+    <div class="col-6 d-none d-lg-block text-nowrap">
       <a href="{% url 'index' %}" class="text-white text-decoration-none">
-        <h3 class="text-center site-title">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
+        <h3 class="text-center site-title m-0">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
       </a>
     </div>
-    <div class="col-3 col-md-3 justify-content-center">
+    <div class="col-3 col-md-3 justify-content-center mx-auto">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -43,7 +43,7 @@
 
       <!-- Collapsing items to the hamburger button on mobile -->
       <div class="collapse navbar-collapse text-nowrap" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-3">
+        <ul class="navbar-nav mb-2 mb-lg-0 gap-3">
           <li class="nav-item">
             <a class="catalog nav-link text-white {% if '/books' == request.path %}active{% else %}text-opacity-75{% endif %}"
               href="{% url 'books' %}">Каталаг
@@ -59,7 +59,7 @@
     </div>
 
     <!-- Search form -->
-    <div class="col-9 col-md-3 col-lg-3 position-relative">
+    <div class="col-9 col-md-6 col-lg-3 position-relative">
       <form class="d-flex" action="{% url 'search' %}" method="get" autocomplete="off">
         <div class="input-group">
           <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, назва кнігі"

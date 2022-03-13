@@ -1,4 +1,3 @@
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from tests.webdriver_test_case import WebdriverTestCase
 
 

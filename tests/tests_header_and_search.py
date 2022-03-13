@@ -9,9 +9,6 @@ from selenium.webdriver.common.by import By
 class HeaderAndSearchTests(WebdriverTestCase):
     '''Selenium tests for header elements including search.'''
 
-    def get_first_book(self) -> models.Book:
-        return models.Book.objects.filter(title='Ордэн белай мышы').first()
-
     def test_click_logo_leads_to_main_page(self):
         self.driver.get(f'{self.live_server_url}/books')
         self.driver.find_element_by_css_selector('.navbar .logo').click()

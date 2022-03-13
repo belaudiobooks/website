@@ -9,28 +9,35 @@ from algoliasearch.search_client import SearchClient
 
 from .models import Book, BookStatus, Person, Tag
 
-active_books = Book.objects.filter(status=BookStatus.ACTIVE)
+active_books = Book.objects.filter(
+    status=BookStatus.ACTIVE).prefetch_related('authors')
 
 logger = logging.getLogger(__name__)
+
+TAGS_TO_SHOW_ON_MAIN_PAGE = [
+    'Сучасная проза',
+    'Класікі беларускай літаратуры',
+    'Дзецям і школьнікам',
+]
 
 
 def index(request: HttpRequest) -> HttpResponse:
     '''Index page, starting page'''
     # Getting all Tags and creating querystring objects for each to pass to template
-    tags = Tag.objects.all()
-    found_tag = {}
     tags_to_render = []
-    for tag in tags:
-        #checking if tag is assigned to any book, we don't show tags without books assigned
-        if tag.tag.exists():
-            found_tag['name'] = tag.name
-            found_tag['slug'] = tag.slug
-            found_tag['books'] = active_books.filter(
-                tag=tag.id).order_by('-added_at')
-            tags_to_render.append(found_tag.copy())
+    for tag in Tag.objects.filter(name__in=TAGS_TO_SHOW_ON_MAIN_PAGE):
+        tags_to_render.append({
+            'name':
+            tag.name,
+            'slug':
+            tag.slug,
+            'books':
+            active_books.filter(tag=tag.id).order_by('-added_at'),
+        })
 
     context = {
         'promo_books': active_books.filter(promoted=True),
+        'recently_added_books': active_books.order_by('-added_at')[:6],
         'tags_to_render': tags_to_render,
     }
 

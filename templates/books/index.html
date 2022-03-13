@@ -8,57 +8,55 @@
 
 {% block content %}
 
-<!--Showing Promo books if any marked as Promo-->
-{% if promo_books.exists %}
-    <div class="container" id="books">
-        <div class="row">
-            <div class="col-10 mb-4">
-                <h4>Прапануем паслухаць</h4>
-                <p>Самыя папулярные кнiгi на гэты момант</p>
+<div class="container" id="books">
+    <div class="row">
+        <h4 class="col-12 mb-4">Прапануем паслухаць у сакавіку</h4>
+    </div>
+    <div class="row">
+        {% for book in promo_books %}
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+                {% include 'partials/_book.html' %}
             </div>
-            <div class="col-2 text-end">
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container" id="books">
+    <div class="row">
+        <h4 class="col-12 mb-4">Навінкі</h4>
+    </div>
+    <div class="row">
+        {% for book in recently_added_books %}
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+                {% include 'partials/_book.html' %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!--Getting all the tags and rendering 6 books for each-->
+{% for tag in tags_to_render %}
+    {% with tag_name=tag.name tag_slug=tag.slug tag_books=tag.books %}
+        <div class="container" id="books">
+            <div class="row">
+                <div class="col-7 col-sm-10 mb-4">
+                    <h4>{{tag_name}}</h4>
+                </div>
+                <div class="col-5 col-sm-2 text-end ">
                     <form action="{% url 'books' %}" method="get">
-                        <button class="btn btn-link text-decoration-none tag-selected" name='books' value='Прапануем паслухаць'>{{promo_books.count}} {{promo_books.count|by_plural:"кніга,кнігі,кніг"}} <img src="{% static 'images/right.svg' %}" alt=""></button>
+                        <button class="btn btn-link text-decoration-none tag-selected" name='books' value={{tag_slug}}>{{tag_books.count}} {{tag_books.count|by_plural:"кніга,кнігі,кніг"}} <img src="{% static 'images/right.svg' %}" alt=""></button>
                     </form>
-            </div>
-            
-                {% for book in promo_books %}
+                </div>
+                {% for book in tag_books %}
                     {% if forloop.counter <= 6 %}
                         <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
                             {% include 'partials/_book.html' %}
                         </div>
                     {% endif %}
                 {% endfor %}
-            
-        </div>
-    </div>
-{% endif %}
-
-<!--Getting all the tags and rendering 6 books for each-->
-{% if tags_to_render %}
-    {% for tag in tags_to_render %}
-        {% with tag_name=tag.name tag_slug=tag.slug tag_books=tag.books %}
-            <div class="container" id="books">
-                <div class="row">
-                    <div class="col-7 col-sm-10 mb-4">
-                        <h4>{{tag_name}}</h4>
-                    </div>
-                    <div class="col-5 col-sm-2 text-end ">
-                        <form action="{% url 'books' %}" method="get">
-                            <button class="btn btn-link text-decoration-none tag-selected" name='books' value={{tag_slug}}>{{tag_books.count}} {{tag_books.count|by_plural:"кніга,кнігі,кніг"}} <img src="{% static 'images/right.svg' %}" alt=""></button>
-                        </form>
-                    </div>
-                    {% for book in tag_books %}
-                        {% if forloop.counter <= 6 %}
-                            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                                {% include 'partials/_book.html' %}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
             </div>
-        {% endwith %}
-    {% endfor %}
-{% endif %}
+        </div>
+    {% endwith %}
+{% endfor %}
 
 {% endblock content %}

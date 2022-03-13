@@ -15,8 +15,12 @@
             <h2>Вынікі пошука '{{ values }}'</h2>
         {% endif %}
         <ul>
-            {% for book in books %}
-                {% include 'partials/_book.html' %}
+            {% for item in results %}
+                {% if item.type == 'person' %}
+                    {% include 'partials/_person_in_search.html' with person=item.object %}
+                {% else  %}
+                    {% include 'partials/_book.html' with book=item.object %}
+                {% endif %}
             {% endfor %}
         </ul>
     </div>

@@ -1,11 +1,17 @@
+import logging
+from typing import Dict, List, Union
+from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.core.management import call_command
+from algoliasearch.search_client import SearchClient
 
 from .models import Book, Person, Tag
 
 all_books = Book.objects
+
+logger = logging.getLogger(__name__)
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -117,25 +123,51 @@ def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
 
 def search(request: HttpRequest) -> HttpResponse:
     '''Search results'''
-    books = all_books.order('-added_at')
+    query = request.GET.get('query')
 
-    # keywords in search field
-    keywords = request.GET.get('search')
+    if query:
+        client = SearchClient.create(settings.ALGOLIA_APPLICATION_ID,
+                                     settings.ALGOLIA_SEARCH_KEY)
+        index = client.init_index(settings.ALGOLIA_INDEX)
+        # Response:
+        # ttps://www.algolia.com/doc/guides/building-search-ui/going-further/backend-search/in-depth/understanding-the-api-response/
+        hits = index.search(query, {'hitsPerPage': 100})['hits']
 
-    if keywords:
-        #Search by Book's title, russian translation of the title and books author name
-        search_results = (all_books.filtered(title=keywords)
-                          | all_books.filtered(title_ru=keywords)
-                          | all_books.filtered(author=keywords)).distinct()
+        # Load all models, books and people returned from algolia.
+        people_ids: List[str] = []
+        books_ids: List[str] = []
+        for hit in hits:
+            if hit['model'] == 'person':
+                people_ids.append(hit['objectID'])
+            elif hit['model'] == 'book':
+                books_ids.append(hit['objectID'])
+            else:
+                logger.warning('Got unexpected model from search %s',
+                               hit['model'],
+                               extra=hit)
+        loaded_models: Dict[str, Union[Person, Book]] = {}
+        for person in Person.objects.all().filter(uuid__in=people_ids):
+            loaded_models[str(person.uuid)] = person
+        for book in Book.objects.all().prefetch_related('authors').filter(
+                uuid__in=books_ids):
+            loaded_models[str(book.uuid)] = book
+
+        # Build search result list in the same order as returned by algolia.
+        # So that most relevant are shown first.
+        search_results = [{
+            'type': hit['model'],
+            'object': loaded_models[hit['objectID']]
+        } for hit in hits]
 
         context = {
-            'books': search_results,
-            'values': keywords,
+            'results': search_results[:50],
+            'query': query,
         }
 
     else:
         context = {
-            'books': books,
+            'results': [],
+            'query': '',
         }
 
     return render(request, 'books/search.html', context)

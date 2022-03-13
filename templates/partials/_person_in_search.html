@@ -1,0 +1,10 @@
+<div class="card border-white" style="max-width: 150px;">
+    <a href="{% url 'person-detail-page' person.slug %}" class="text-decoration-none">
+        <img class="card-img-top card-img-150"
+            src="{% if person.photo %}{{ person.photo.url }}{% else %}/static/images/person-outline.png{% endif %}"
+            alt="{{ person.name }}">
+        <div class="mt-4">
+            <h6 class="card-title">{{ person.name }}</h6>
+        </div>
+    </a>
+</div>

@@ -72,7 +72,7 @@ function initializeSearch() {
   const makeHits = instantsearch.connectors.connectHits(
     ({ results }) => {
       const autocomplete = document.querySelector('#autocomplete');
-      if (results == null || results.query === '') {
+      if (results == null || results.query === '' || results.hits.length === 0) {
         autocomplete.classList.add('d-none');
         return;
       }

@@ -66,3 +66,33 @@ class HeaderAndSearchTests(WebdriverTestCase):
             search.send_keys(query)
             self._wait_for_suggestion('Уладзімір Караткевіч',
                                       '/person/uladzimir-karatkevich')
+
+    def test_server_side_search(self):
+        self._init_algolia()
+        self.driver.get(self.live_server_url)
+        search = self.driver.find_element_by_css_selector('#search')
+        search.send_keys('караткевіч')
+        self.driver.find_element_by_css_selector('#button-search').click()
+        self.assertIn('/search', self.driver.current_url)
+        search_results = self.driver.find_elements_by_css_selector(
+            '#books .card')
+        korotkevich = models.Person.objects.prefetch_related(
+            'books_authored').filter(name='Уладзімір Караткевіч').first()
+        books = korotkevich.books_authored.all()
+        self.assertIsNotNone(korotkevich)
+        # Search should return author himself plus all his books.
+        self.assertEqual(1 + len(books), len(search_results))
+
+        # First item should be author.
+        item = search_results[0]
+        self.assertEqual(korotkevich.name, item.text.strip())
+        self.assertEqual(
+            f'/person/{korotkevich.slug}',
+            item.find_element(by=By.CSS_SELECTOR,
+                              value='a').get_dom_attribute('href'))
+
+        for book in books:
+            item = self.driver.find_element_by_css_selector(
+                f'a[href="/books/{book.slug}"] .card-title')
+            self.assertIsNotNone(item)
+            self.assertIn(book.title, item.text)

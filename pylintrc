@@ -8,3 +8,5 @@ good-names=i,
            id
 
 ignore-long-lines=^\s*(# )?<?https?://\S+>?$|^\s*(\w*\s*=\s*)?(\"|\').*(\"|\'),?\s*$
+
+load-plugins=pylint_django

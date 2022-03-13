@@ -6,7 +6,7 @@ class HomePageTests(WebdriverTestCase):
     '''Selenium tests for home-page related stuff.'''
 
     def get_first_book(self) -> models.Book:
-        return models.Book.objects.filter(title='Ордэн белай мышы').first()
+        return models.Book.objects.filter(promoted=True).first()
 
     def test_click_book_title(self):
         self.driver.get(self.live_server_url)

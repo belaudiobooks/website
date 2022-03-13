@@ -1,13 +1,15 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
+from django.core.management import call_command
 
 from .models import Book, Person, Tag
 
 all_books = Book.objects
 
 
-def index(request):
-    """Index page, starting page"""
+def index(request: HttpRequest) -> HttpResponse:
+    '''Index page, starting page'''
     # query all books from DB and order by date and by tag filter
     promoted_books = all_books.promoted().order_by('-added_at')
 
@@ -32,8 +34,8 @@ def index(request):
     return render(request, 'books/index.html', context)
 
 
-def books(request):
-    """All books page"""
+def books(request: HttpRequest) -> HttpResponse:
+    '''All books page'''
     sorted_books = all_books.order('title')
 
     paginator = Paginator(sorted_books, 16)
@@ -66,8 +68,8 @@ def books(request):
     return render(request, 'books/all-books.html', context)
 
 
-def book_detail(request, slug):
-    """Detailed book page"""
+def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
+    '''Detailed book page'''
     identified_book = get_object_or_404(Book, slug=slug)
 
     context = {
@@ -81,8 +83,8 @@ def book_detail(request, slug):
     return render(request, 'books/book-detail.html', context)
 
 
-def person_detail(request, slug):
-    """Detailed book page"""
+def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
+    '''Detailed book page'''
 
     narrated_books = []
     # TODO: remove it later if all good
@@ -113,8 +115,8 @@ def person_detail(request, slug):
         pass  #TODO: implement 404 page
 
 
-def search(request):
-    """Search results"""
+def search(request: HttpRequest) -> HttpResponse:
+    '''Search results'''
     books = all_books.order('-added_at')
 
     # keywords in search field
@@ -139,8 +141,8 @@ def search(request):
     return render(request, 'books/search.html', context)
 
 
-def about(request):
-    """About us page containing info about the website and the team."""
+def about(request: HttpRequest) -> HttpResponse:
+    '''About us page containing info about the website and the team.'''
     people = [
         ('Мікіта', 'images/member-mikita.jpg'),
         ('Яўген', 'images/member-jauhen.jpg'),
@@ -153,3 +155,12 @@ def about(request):
     ]
     context = {'team_members': people}
     return render(request, 'books/about.html', context)
+
+
+def push_data_to_algolia(request: HttpRequest) -> HttpResponse:
+    '''
+    HTTP hook that pushes all data from DB to algolia.
+    It's called hourly by an appengine job.
+    '''
+    call_command('push_data_to_algolia')
+    return HttpResponse(status=204)

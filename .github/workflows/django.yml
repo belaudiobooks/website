@@ -37,10 +37,6 @@ jobs:
     - name: Create migrations
       run: |
         python manage.py makemigrations --settings=booksby.sqlite_settings
-    - name: Push data to algolia
-      run: |
-        python manage.py init_db_with_data --settings=booksby.sqlite_settings
-        python manage.py push_data_to_algolia --settings=booksby.sqlite_settings
     - name: Run Tests
       run: |
         python manage.py test --verbosity=2 --settings=booksby.sqlite_settings

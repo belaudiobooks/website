@@ -19,9 +19,10 @@
                     {% for tag in tags %}
                         {% if tag.tag.exists %}
                             <li>
-                                <form action="{% url 'catalog-for-tag' tag.slug %}" method="get">
-                                    <button class="btn btn-link text-decoration-none text-start {% if tag.slug == request.GET.books %}tag-selected{% else %}tag{% endif %}" name='books' value={{ tag.slug }}>{{ tag.name }}</button>
-                                </form>
+                                <a class="text-decoration-none text-start tag {% if tag.id == selected_tag.id %}tag-selected{% endif %}"
+                                        href="{% url 'catalog-for-tag' tag.slug %}">
+                                    {{ tag.name }}
+                                </a>
                             </li>
                         {% endif %}
                     {% endfor %}
@@ -30,8 +31,8 @@
             <div class="col-12 col-sm-9" id="books">
                 <div class="row">
                     <div class="col-12">
-                        {% if tag %}
-                            <h4 class="tag">{{ tag }}</h4>
+                        {% if selected_tag %}
+                            <h4 class="tag">{{ selected_tag.name }}</h4>
                             <p>Ўсе кнігі выбраныя па тэгу</p>
                         {% endif %}
                     </div>

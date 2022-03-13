@@ -43,9 +43,10 @@
                     <h4>{{tag_name}}</h4>
                 </div>
                 <div class="col-5 col-sm-2 text-end ">
-                    <form action="{% url 'catalog-for-tag' tag_slug %}" method="get">
-                        <button class="btn btn-link text-decoration-none tag-selected" name='books' value={{tag_slug}}>{{tag_books.count}} {{tag_books.count|by_plural:"кніга,кнігі,кніг"}} <img src="{% static 'images/right.svg' %}" alt=""></button>
-                    </form>
+                    <a class="text-decoration-none tag-selected" href="{% url 'catalog-for-tag' tag_slug %}">{{tag_books.count}}
+                        {{tag_books.count|by_plural:"кніга,кнігі,кніг"}}
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
                 </div>
                 {% for book in tag_books %}
                     {% if forloop.counter <= 6 %}

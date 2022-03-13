@@ -7,5 +7,5 @@ class CatalogPageTests(WebdriverTestCase):
 
     def test_genre_page(self):
         tag = models.Tag.objects.filter(name='Сучасная проза').first()
-        self.driver.get(f'{self.live_server_url}/books?books={tag.slug}')
+        self.driver.get(f'{self.live_server_url}/catalog/{tag.slug}')
         self.assertEqual(tag.name, self.driver.title)

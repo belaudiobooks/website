@@ -95,7 +95,7 @@
             <div class="row my-4">
                 {% for tag in tags %}
                     <div class="col-auto p-1">
-                        <a href="{% url 'books' %}?books={{tag.slug}}" class="btn btn-tag p-2">
+                        <a href="{% url 'catalog-for-tag' tag.slug %}" class="btn btn-tag p-2">
                             {{tag}}
                         </a>
                     </div>

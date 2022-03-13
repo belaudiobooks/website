@@ -23,7 +23,7 @@ class HeaderAndSearchTests(WebdriverTestCase):
     def test_click_catalog(self):
         self.driver.get(self.live_server_url)
         self.driver.find_element_by_css_selector('.navbar .catalog').click()
-        self.assertEqual(f'{self.live_server_url}/books',
+        self.assertEqual(f'{self.live_server_url}/catalog',
                          self.driver.current_url)
 
     def test_click_about_us(self):

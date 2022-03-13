@@ -45,7 +45,7 @@
       <div class="collapse navbar-collapse text-nowrap" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0 gap-3">
           <li class="nav-item">
-            <a class="catalog nav-link text-white {% if '/books' == request.path %}active{% else %}text-opacity-75{% endif %}"
+            <a class="catalog nav-link text-white {% if '/catalog' in request.path %}active{% else %}text-opacity-75{% endif %}"
               href="{% url 'catalog-all-books' %}">Каталаг
             </a>
           </li>

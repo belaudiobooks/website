@@ -58,7 +58,7 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
         tag = tags.filter(slug=slug).first()
         context = {
             'all_books': active_books.filter(tag=tag.id),
-            'tag': tag.name,
+            'selected_tag': tag,
             'tags': tags,
         }
     else:

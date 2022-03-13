@@ -53,7 +53,7 @@ class BookPageTests(WebdriverTestCase):
             elem = self.driver.find_element_by_link_text(tag.name)
             self.scroll_into_view(elem)
             elem.click()
-            self.assertIn(f'/books?books={tag.slug}', self.driver.current_url)
+            self.assertIn(f'/catalog/{tag.slug}', self.driver.current_url)
             tag_header = self.driver.find_element_by_css_selector(
                 '#books .tag')
             self.assertEqual(tag.name, tag_header.text)

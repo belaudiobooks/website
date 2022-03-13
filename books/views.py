@@ -44,8 +44,8 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'books/index.html', context)
 
 
-def books(request: HttpRequest) -> HttpResponse:
-    '''All books page'''
+def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
+    '''Catalog page for specific tag or all books'''
     sorted_books = active_books.order_by('title')
 
     paginator = Paginator(sorted_books, 16)
@@ -54,11 +54,8 @@ def books(request: HttpRequest) -> HttpResponse:
 
     tags = Tag.objects.all()
 
-    req_tag = request.GET.get('books')
-
-    if req_tag:
-        tag = tags.filter(slug=req_tag).first()
-
+    if slug:
+        tag = tags.filter(slug=slug).first()
         context = {
             'all_books': active_books.filter(tag=tag.id),
             'tag': tag.name,

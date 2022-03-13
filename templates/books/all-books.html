@@ -19,7 +19,7 @@
                     {% for tag in tags %}
                         {% if tag.tag.exists %}
                             <li>
-                                <form action="{% url 'books' %}" method="get">
+                                <form action="{% url 'catalog-for-tag' tag.slug %}" method="get">
                                     <button class="btn btn-link text-decoration-none text-start {% if tag.slug == request.GET.books %}tag-selected{% else %}tag{% endif %}" name='books' value={{ tag.slug }}>{{ tag.name }}</button>
                                 </form>
                             </li>

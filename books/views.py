@@ -7,18 +7,15 @@ from django.core.paginator import Paginator
 from django.core.management import call_command
 from algoliasearch.search_client import SearchClient
 
-from .models import Book, Person, Tag
+from .models import Book, BookStatus, Person, Tag
 
-all_books = Book.objects
+active_books = Book.objects.filter(status=BookStatus.ACTIVE)
 
 logger = logging.getLogger(__name__)
 
 
 def index(request: HttpRequest) -> HttpResponse:
     '''Index page, starting page'''
-    # query all books from DB and order by date and by tag filter
-    promoted_books = all_books.promoted().order_by('-added_at')
-
     # Getting all Tags and creating querystring objects for each to pass to template
     tags = Tag.objects.all()
     found_tag = {}
@@ -28,12 +25,12 @@ def index(request: HttpRequest) -> HttpResponse:
         if tag.tag.exists():
             found_tag['name'] = tag.name
             found_tag['slug'] = tag.slug
-            found_tag['books'] = all_books.filtered(
-                tag=tag.name).order_by('-added_at')
+            found_tag['books'] = active_books.filter(
+                tag=tag.id).order_by('-added_at')
             tags_to_render.append(found_tag.copy())
 
     context = {
-        'promo_books': promoted_books,
+        'promo_books': active_books.filter(promoted=True),
         'tags_to_render': tags_to_render,
     }
 
@@ -42,7 +39,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def books(request: HttpRequest) -> HttpResponse:
     '''All books page'''
-    sorted_books = all_books.order('title')
+    sorted_books = active_books.order_by('title')
 
     paginator = Paginator(sorted_books, 16)
     page = request.GET.get('page')
@@ -53,16 +50,11 @@ def books(request: HttpRequest) -> HttpResponse:
     req_tag = request.GET.get('books')
 
     if req_tag:
-        if req_tag == 'Прапануем паслухаць':
-            books_tag = all_books.promoted()
-            tag_name = req_tag
-        else:
-            tag_name = tags.filter(slug=req_tag)[0].name
-            books_tag = all_books.filtered(tag=tag_name)
+        tag = tags.filter(slug=req_tag).first()
 
         context = {
-            'all_books': books_tag,
-            'tag': tag_name,
+            'all_books': active_books.filter(tag=tag.id),
+            'tag': tag.name,
             'tags': tags,
         }
     else:
@@ -92,7 +84,6 @@ def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
 def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
     '''Detailed book page'''
 
-    narrated_books = []
     # TODO: remove it later if all good
     # identified_person = get_object_or_404(Person, slug=slug)
 
@@ -102,11 +93,15 @@ def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
         'narrations').filter(slug=slug).first()
 
     if person:
-        author = person.books_authored.all()
-        translator = person.books_translated.all()
-        narrations = person.narrations.all()
+        author = person.books_authored.all().filter(status=BookStatus.ACTIVE)
+        translator = person.books_translated.all().filter(
+            status=BookStatus.ACTIVE)
+        narrations = person.narrations.all().filter()
 
-        [narrated_books.append(item.book) for item in narrations]
+        narrated_books = [
+            item.book for item in narrations
+            if item.book.status == BookStatus.ACTIVE
+        ]
 
         context = {
             'person': person,

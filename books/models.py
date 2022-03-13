@@ -65,6 +65,12 @@ class Tag(models.Model):
         self.tag_slug = defaultfilters.slugify(unidecode(self.name))
         super().save(*args, **kwargs)
 
+class BookStatus(models.TextChoices):
+    '''
+    Status of abook. By default all books are active and visible but we need to hide it sometime.
+    '''
+    ACTIVE = 'ACTIVE'
+    HIDDEN = 'HIDDEN'
 
 class Book(models.Model):
     '''
@@ -83,10 +89,11 @@ class Book(models.Model):
     slug = models.SlugField(_('slug'), max_length = 100, unique=True, db_index=True, allow_unicode=True, blank=True)
     cover_image = models.ImageField(
         upload_to=functools.partial(_get_image_name, 'covers'), blank=True, null=True)
-    tag = models.ManyToManyField(Tag, related_name='tag')
+    tag = models.ManyToManyField(Tag, related_name='tag', blank=True)
     promoted = models.BooleanField(_('Promoted'), default=False)
     annotation = models.TextField(_('Book Annotation'), blank=True)
     duration_sec = models.DurationField(_('Duration'), blank=True, null=True)
+    status = models.CharField(_('Status'), max_length=20, choices=BookStatus.choices, blank=False)
     
     def __str__(self) -> str:
         return "%s (%s)" % (

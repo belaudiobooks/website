@@ -22,7 +22,8 @@ class Command(BaseCommand):
         client = SearchClient.create(settings.ALGOLIA_APPLICATION_ID,
                                      settings.ALGOLIA_MODIFY_KEY)
 
-        # Create an index (or connect to it, if an index with the name `ALGOLIA_INDEX_NAME` already exists)
+        # Create an index (or connect to it, if an index with the name `ALGOLIA_INDEX_NAME`
+        # already exists)
         # https://www.algolia.com/doc/api-client/getting-started/instantiate-client-index/#initialize-an-index
         index = client.init_index(settings.ALGOLIA_INDEX)
 

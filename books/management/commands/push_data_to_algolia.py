@@ -2,7 +2,7 @@
 See Command desription.
 '''
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from algoliasearch.search_client import SearchClient
 from books import models
@@ -14,6 +14,9 @@ class Command(BaseCommand):
     help = 'Pushes data to algolia. Expects that algolia settings will be set.'
 
     def handle(self, *args, **options):
+        if settings.ALGOLIA_APPLICATION_ID == '' or settings.ALGOLIA_MODIFY_KEY == '':
+            raise CommandError(
+                'Algolia keys are not set. Check Algolia section in README.')
         # Start the API client
         # https://www.algolia.com/doc/api-client/getting-started/instantiate-client-index/
         client = SearchClient.create(settings.ALGOLIA_APPLICATION_ID,

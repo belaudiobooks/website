@@ -87,6 +87,18 @@ To run tests you need to have chromedriver installed and available on path. Inst
 python manage.py test --settings=booksby.sqlite_settings --verbosity=2
 ```
 
+### Algolia setup
+
+We use http://algolia.com to implement fast, fuzzy book and people search. Algolia is a cloud service where we push JSON built from books/people and then use HTTP API to search over that data. For local development algolia is not necessary unless you work on the search part. To setup algolia you need to set a few variables, check .env.dist. To get app id and API keys - ask @nbeloglazov to add you to the algolia project. 
+
+To push data to algolia you can use the following command:
+
+```shell
+python manage.py push_data_to_algolia --settings=booksby.sqlite_settings
+```
+
+Also that command can be triggered by visiting `/push_data_to_algolia` url. This is used by hourly GCP job that triggers sync with algolia. Currently we don't update algolia on every DB write.
+
 ## Books data
 
 Data about books, authors, narrators, translators and so on is currently stored in separate project: https://github.com/belaudiobooks/data. This project contains scripts that manage and update that data: synchronizing its data with external resources such as https://knizhnyvoz.by, podcasts, https://litres.ru and others. To manage data run `sync.py` script like the following

@@ -7,5 +7,6 @@ urlpatterns = [
     path('books/<slug:slug>', views.book_detail, name='book-detail-page'),
     path('person/<slug:slug>', views.person_detail, name='person-detail-page'),
     path('search', views.search, name='search'),
-    path('about', views.about, name='about')
+    path('about', views.about, name='about'),
+    path('push_data_to_algolia', views.push_data_to_algolia),
 ]

@@ -8,6 +8,16 @@ from algoliasearch.search_client import SearchClient
 from books import models
 
 
+def _person_has_active_books(person: models.Person) -> bool:
+    books = list(person.books_authored.all()) + list(
+        person.books_translated.all()) + [
+            n.book for n in person.narrations.all()
+        ]
+    active_books = filter(lambda b: b.status == models.BookStatus.ACTIVE,
+                          books)
+    return any(active_books)
+
+
 class Command(BaseCommand):
     '''See help.'''
 
@@ -28,7 +38,9 @@ class Command(BaseCommand):
         index = client.init_index(settings.ALGOLIA_INDEX)
 
         data = []
-        for book in models.Book.objects.all().prefetch_related('authors'):
+        books = models.Book.objects.filter(
+            status=models.BookStatus.ACTIVE).prefetch_related('authors')
+        for book in books:
             authors = [author.name for author in book.authors.all()]
             authors_ru = [author.name_ru for author in book.authors.all()]
             data.append({
@@ -40,7 +52,12 @@ class Command(BaseCommand):
                 'authors': authors,
                 'authors_ru': authors_ru,
             })
-        for person in models.Person.objects.all():
+        people = models.Person.objects.all().prefetch_related(
+            'books_authored', 'books_translated', 'narrations')
+        for person in people:
+            if not _person_has_active_books(person):
+                continue
+
             data.append({
                 'objectID': person.uuid,
                 'model': 'person',

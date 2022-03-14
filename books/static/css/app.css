@@ -5,6 +5,11 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+a {
+  color: #7879F1;
+  text-decoration: none;
+}
+
 .card-img-150 {
   width: 150px;
   height: 150px;

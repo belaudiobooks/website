@@ -184,7 +184,10 @@ def about(request: HttpRequest) -> HttpResponse:
         ('Юра', 'images/member-jura.jpg'),
         ('Андрэй', 'images/member-andrey.jpg'),
     ]
-    context = {'team_members': people}
+    context = {
+        'team_members': people,
+        'books_count': Book.objects.count(),
+    }
     return render(request, 'books/about.html', context)
 
 

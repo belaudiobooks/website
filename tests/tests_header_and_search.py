@@ -77,6 +77,10 @@ class HeaderAndSearchTests(WebdriverTestCase):
             'books_authored').filter(name='Уладзімір Караткевіч').first()
         books = korotkevich.books_authored.all()
         self.assertIsNotNone(korotkevich)
+        self.assertEqual(
+            f'Вынікі пошука \'караткевіч\'',
+            self.driver.find_element_by_css_selector('#searched-query').text)
+
         # Search should return author himself plus all his books.
         self.assertEqual(1 + len(books), len(search_results))
 

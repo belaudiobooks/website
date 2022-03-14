@@ -11,9 +11,7 @@
 {% block content %}
 
     <div class="container" id='books'>
-        {% if values %}
-            <h2>Вынікі пошука '{{ values }}'</h2>
-        {% endif %}
+        <h2 id="search-query">Вынікі пошука '{{ query }}'</h2>
         <ul>
             {% for item in results %}
                 {% if item.type == 'person' %}

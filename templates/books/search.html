@@ -11,7 +11,7 @@
 {% block content %}
 
     <div class="container" id='books'>
-        <h2 id="search-query">Вынікі пошука '{{ query }}'</h2>
+        <h2 id="searched-query">Вынікі пошука '{{ query }}'</h2>
         <ul>
             {% for item in results %}
                 {% if item.type == 'person' %}

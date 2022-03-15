@@ -1,22 +1,31 @@
 {% load static %}
 
 <!-- Top navigation that dissapaer when scrolled -->
-<nav class="navbar pb-0 pt-1" style="background-color: #7879F1;">
-  <div class="container justify-content-center text-white">
+<nav class="navbar navbar-expand pb-0 pt-1" style="background-color: #7879F1;">
+  <div class="container text-white justify-content-evenly">
     <div class="row">
-      <div class="col-md-6 align-self-center">
+      <div class="col-3 col-sm-4 col-md-6 align-self-center">
         <a href="{% url 'index' %}" class="link-dark text-decoration-none">
-          <img class="m-auto d-block logo" src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY">
+          <img class="img-fluid m-auto d-block logo" src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY">
         </a>
       </div>
-      <div class="col-md-6">
-        {% comment %} <div class="row">
-          <div class="col d-none d-md-block">
-            <p class="text-end">test</p>
-          </div>
-        </div> {% endcomment %}
+      <div class="col-9 col-sm-8 col-md-6 align-self-center">
+        <div class=" text-nowrap d-md-none">
+          <ul class="nav navbar-nav mb-0 justify-content-evenly">
+            <li class="nav-item">
+              <a class="nav-link text-white {% if '/catalog' in request.path %}active{% else %}text-opacity-75{% endif %}"
+                href="{% url 'catalog-all-books' %}">Каталаг
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white {% if '/about' in request.path %}active{% else %}text-opacity-75{% endif %}"
+                href="{% url 'about' %}">Пра нас
+              </a>
+            </li>
+          </ul>
+        </div>
         <div class="row pt-1">
-          <div class="col d-none d-sm-block">
+          <div class="col d-none d-md-block">
             <p class="title_lead">Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў.</p>
             <p>Тут вы можаце хутка знайсці як аўдыякнігі сучасных аўтараў так і дзіцячыя альбо класічныя кнігі. Сайт не
               змяшчае самі кнігі, а дае спасылцы на пляцоўкі дзе іх можна паслухаць альбо набыць.</p>
@@ -36,13 +45,15 @@
       </a>
     </div>
     <div class="col-3 col-md-3 justify-content-center mx-auto">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+
+      <!-- OLD humburger button for collapsed menu-->
+      {% comment %} <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </button> {% endcomment %}
 
       <!-- Collapsing items to the hamburger button on mobile -->
-      <div class="collapse navbar-collapse text-nowrap" id="navbarSupportedContent">
+      <div class="text-nowrap d-none d-md-block" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0 gap-3">
           <li class="nav-item">
             <a class="catalog nav-link text-white {% if '/catalog' in request.path %}active{% else %}text-opacity-75{% endif %}"
@@ -59,7 +70,7 @@
     </div>
 
     <!-- Search form -->
-    <div class="col-9 col-md-6 col-lg-3 position-relative">
+    <div class="col-12 col-md-6 col-lg-3 position-relative">
       <form class="d-flex" action="{% url 'search' %}" method="get" autocomplete="off">
         <div class="input-group">
           <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, назва кнігі"

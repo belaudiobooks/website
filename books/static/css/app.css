@@ -34,7 +34,7 @@ a {
 
 .logo {
   width: 130px;
-  height: 130px;
+  height: auto;
 }
 
 .title_lead {
@@ -162,4 +162,19 @@ a {
   height: 100px;
   object-fit: cover;
   border-radius: 10px;
+}
+
+@media (min-width: 576px) {
+  .collapse.dont-collapse-sm {
+    display: block;
+    height: auto !important;
+    visibility: visible;
+  }
+}
+
+.btn-genre {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 50px;
+  color: #000000;
 }

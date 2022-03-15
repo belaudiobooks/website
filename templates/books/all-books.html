@@ -14,21 +14,34 @@
 {% if all_books %}
     <div class="container">
         <div class="row">
-            <div class="col-12 col-sm-3 mt-5">
-                <ul class="list-unstyled">
-                    {% for tag in tags %}
-                        {% if tag.tag.exists %}
-                            <li>
-                                <a class="text-decoration-none text-start tag {% if tag.id == selected_tag.id %}tag-selected{% endif %}"
-                                        href="{% url 'catalog-for-tag' tag.slug %}">
-                                    {{ tag.name }}
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+
+            <!-- Tags List -->
+            <div class="col-12 col-md-3 mt-1 mt-sm-5">
+
+                <!--Buddont Genre shown only on mobile-->
+                <button class="btn hidden visible-xs d-block d-sm-none btn-genre" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGenre" aria-expanded="false" aria-controls="collapseGenre">
+                    Жанры &or;
+                </button>
+
+                
+                <div class="collapse dont-collapse-sm" id="collapseGenre">
+                    <ul class="list-unstyled">
+                        {% for tag in tags %}
+                            {% if tag.tag.exists %}
+                                <li>
+                                    <a class="text-decoration-none text-start tag {% if tag.id == selected_tag.id %}tag-selected{% endif %}"
+                                            href="{% url 'catalog-for-tag' tag.slug %}">
+                                        {{ tag.name }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-            <div class="col-12 col-sm-9" id="books">
+
+            <!--Books by Tag-->
+            <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
                 <div class="row">
                     <div class="col-12">
                         {% if selected_tag %}
@@ -41,6 +54,7 @@
                             {% include 'partials/_book.html' %}
                         </div>
                     {% endfor %}
+
                     <!--Paginagion-->
                     <div class="row">
                         <div class="col-md-12">

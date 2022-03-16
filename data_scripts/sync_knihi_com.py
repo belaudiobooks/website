@@ -2,15 +2,9 @@ from dataclasses import dataclass
 from typing import List
 import bs4
 import requests
+
+from data_scripts.util import open_url
 from . import books
-
-
-def _open_url(url: str) -> bs4.BeautifulSoup:
-    resp = requests.get(url)
-    resp.encoding = 'utf8'
-    if resp.status_code != 200:
-        raise ValueError(f'URL {url} returned {resp.status_code}')
-    return bs4.BeautifulSoup(resp.text, 'html.parser')
 
 
 @dataclass
@@ -23,7 +17,7 @@ class RawBook:
 
 
 def _get_raw_books() -> List[RawBook]:
-    list = _open_url('https://knihi.com/audyjoknihi.html').select('ul')[1]
+    list = open_url('https://knihi.com/audyjoknihi.html').select('ul')[1]
     result = []
     for item in list.children:
         if item.name is None:

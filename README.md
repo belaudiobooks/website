@@ -97,7 +97,7 @@ To push data to algolia you can use the following command:
 python manage.py push_data_to_algolia --settings=booksby.sqlite_settings
 ```
 
-Also that command can be triggered by visiting `/push_data_to_algolia` url. This is used by hourly GCP job that triggers sync with algolia. Currently we don't update algolia on every DB write.
+Also that command can be triggered by visiting `/push_data_to_algolia` url. This is used by hourly GCP job that triggers sync with algolia. Currently we don't update algolia on every DB write. The job is setup via `cron.yaml` file. To deploy it run `gcloud app deploy cron.yaml`.
 
 ## Books data
 

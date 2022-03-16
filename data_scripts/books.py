@@ -16,7 +16,7 @@ from uuid import UUID
 from unidecode import unidecode
 from django.template import defaultfilters
 from django.core.files import File
-from books.models import Book, Narration, Person, Link, LinkType
+from books.models import Book, BookStatus, Narration, Person, Link, LinkType
 from . import image
 
 
@@ -139,6 +139,7 @@ def add_or_update_book(data: BooksData, title: str, description: str,
     if description != '' and description is not None:
         book.description = description
     book.duration_sec = datetime.timedelta(seconds=duration_sec)
+    book.status = BookStatus.ACTIVE
     book.save()
     narration = _maybe_add_narration(data, book, narrators)
     return narration

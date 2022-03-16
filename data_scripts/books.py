@@ -33,7 +33,7 @@ def _slugify(string: str) -> str:
 
 def _get_or_add_person(data: BooksData, name: str) -> Person:
     for person in data.people:
-        if person.name == name:
+        if person.name.lower() == name.lower():
             return person
     person = Person(name=name)
     person.save()

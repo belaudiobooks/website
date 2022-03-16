@@ -2,15 +2,9 @@ from dataclasses import dataclass
 from typing import List, Tuple
 import bs4
 import requests
+
+from data_scripts.util import open_url
 from . import books
-
-
-def _open_url(url: str) -> bs4.BeautifulSoup:
-    resp = requests.get(url)
-    resp.encoding = 'utf8'
-    if resp.status_code != 200:
-        raise ValueError(f'URL {url} returned {resp.status_code}')
-    return bs4.BeautifulSoup(resp.text, 'html.parser')
 
 
 @dataclass
@@ -24,7 +18,7 @@ class RawBook:
 def _get_raw_books(start: int) -> List[RawBook]:
     result = []
     print(f'processing {start}')
-    items = _open_url(
+    items = open_url(
         f'https://kamunikat.org/audyjoknihi.html?pub_start={start}').select(
             '.PubItemContainer')[1:]
     for item in items:
@@ -42,7 +36,7 @@ def _get_raw_books(start: int) -> List[RawBook]:
 
 
 def _get_description_and_photo(url: str) -> Tuple[str, str]:
-    page = _open_url(url)
+    page = open_url(url)
     description = ''
     if page.select_one('.VolumeSummary p') is not None:
         description = page.select_one('.VolumeSummary p').string

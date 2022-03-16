@@ -1,0 +1,4 @@
+cron:
+- description: "hourly Algolia sync job"
+  url: /push_data_to_algolia
+  schedule: every 1 hours

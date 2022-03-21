@@ -56,7 +56,7 @@ def colors(value):
     """char code of the first sympol of uuid, 
     where 0 is 0, 1-3 are 1, 4-6 are 2, 7-9 are 3, a-c are 4 and d-f are 5
     """
-    first = str(value)[0]
+    first = str(value)[1]
     if first.isdigit():
         if int(first) == 0:
             key = 0

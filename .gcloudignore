@@ -23,3 +23,7 @@ __pycache__/
 env
 media
 ./media
+data
+data_scripts
+.venv
+.github

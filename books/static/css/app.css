@@ -178,3 +178,129 @@ a {
   line-height: 50px;
   color: #000000;
 }
+
+nav.sticky-top {
+  background-color: #7879F1;
+  top: -192px;
+}
+
+nav .container {
+  display: flex;
+  padding: 0.75rem 0;
+  flex-direction: column;
+  height: 256px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/**
+ * Navigation bar.
+ * There are 3 different configurations (mobile, tablet, desktop).
+ * All implemented using CSS so CSS is hacky.
+ * Also to implement stickiness of the search bar we need to
+ * affect its parent element (and specify top value to offset it)
+ */
+
+nav .logo-title {
+  height:100%;
+  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  padding: 0 0.75rem;
+}
+
+nav .logo-title .logo {
+  flex-grow: 1;
+}
+
+nav .logo-title .site-title {
+  margin-bottom: 5px;
+}
+
+nav .site-description {
+  width: 50%;
+}
+nav .controls {
+  display: flex;
+  width: 50%;
+  gap: 0.75rem;
+}
+
+nav .controls .buttons {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  gap: 1rem;
+}
+
+nav .controls .search-container {
+  width: 50%;
+}
+
+@media (max-width: 991.98px) {
+  nav.sticky-top {
+    top: -202px;
+  }
+  nav .container {
+    flex-direction: row;
+    height: auto;
+  }
+  nav .controls {
+    width: 100%;
+  }
+  nav .controls .buttons {
+    justify-content: space-evenly;
+    gap: 0;
+  }
+}
+
+@media (max-width: 768.98px) {
+  nav.sticky-top {
+    top: -273px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  nav.sticky-top {
+    top: -182px;
+  }
+  nav.sticky-top.main-page {
+    top: -405px;
+  }
+  nav .container {
+    flex-direction: column;
+    padding: 0 0.75rem 0.75rem 0.75rem;
+  }
+
+  nav .logo-title {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+  nav.main-page .logo-title {
+    margin-bottom: 2rem;
+  }
+  nav .logo-title .logo {
+    width: 100px;
+    height: 100px;
+  }
+  nav .site-description {
+    width: 100%;
+    display: none;
+  }
+  nav.main-page .site-description {
+    display: block;
+  }
+  nav .controls {
+    flex-direction: column;
+  }
+  nav .controls .buttons {
+    justify-content: space-evenly;
+    width: 100%;
+  }
+  nav .controls .search-container {
+    width: 100%;
+  }
+}

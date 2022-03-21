@@ -11,24 +11,23 @@ class HeaderAndSearchTests(WebdriverTestCase):
 
     def test_click_logo_leads_to_main_page(self):
         self.driver.get(f'{self.live_server_url}/books')
-        self.driver.find_element_by_css_selector('.navbar .logo').click()
+        self.driver.find_element_by_css_selector('nav .logo').click()
         self.assertEqual(f'{self.live_server_url}/', self.driver.current_url)
 
-    @unittest.skip('waiting for navbar final shape')
     def test_click_site_title_to_main_page(self):
         self.driver.get(f'{self.live_server_url}/books')
-        self.driver.find_element_by_css_selector('.navbar .site-title').click()
+        self.driver.find_element_by_css_selector('nav .site-title').click()
         self.assertEqual(f'{self.live_server_url}/', self.driver.current_url)
 
     def test_click_catalog(self):
         self.driver.get(self.live_server_url)
-        self.driver.find_element_by_css_selector('.navbar .catalog').click()
+        self.driver.find_element_by_css_selector('nav .catalog').click()
         self.assertEqual(f'{self.live_server_url}/catalog',
                          self.driver.current_url)
 
     def test_click_about_us(self):
         self.driver.get(self.live_server_url)
-        self.driver.find_element_by_css_selector('.navbar .about-us').click()
+        self.driver.find_element_by_css_selector('nav .about-us').click()
         self.assertEqual(f'{self.live_server_url}/about',
                          self.driver.current_url)
 

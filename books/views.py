@@ -55,9 +55,16 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
     tags = Tag.objects.all()
 
     if slug:
+        #get selected tag id
         tag = tags.filter(slug=slug).first()
+        #pagination for the books by tag
+        books_by_tag = active_books.filter(tag=tag.id)
+        paginator_by_tag = Paginator(books_by_tag, 16)
+        page_by_tag = request.GET.get('page')
+        paged_books_by_tag = paginator_by_tag.get_page(page_by_tag)
+
         context = {
-            'all_books': active_books.filter(tag=tag.id),
+            'all_books': paged_books_by_tag,
             'selected_tag': tag,
             'tags': tags,
         }

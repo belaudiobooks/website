@@ -19,9 +19,9 @@
         <!--Author bio section-->
         <div class="col-12 col-md-3 mt-2 mt-sm-5">
             {% if person.photo %}
-                <img class="img-fluid mx-auto mb-3 photo" src="{{ person.photo.url }}" alt="{{ person.name }}">
+                <img class="img-fluid mx-auto mb-3 photo d-block" src="{{ person.photo.url }}" alt="{{ person.name }}">
             {% endif %}
-            <h3>
+            <h3 class="text-center">
                 {{ person.name }}
             </h3>
             <p>
@@ -33,7 +33,7 @@
             {% if author.exists %}
                 <div class="row mt-3">
                     <div class="col-12">
-                            <h4>Кнігі аўтар{{person.gender|gender:"кі,а"}}</h4>
+                        <h4>Кнігі аўтар{{person.gender|gender:"кі,а"}}</h4>
                     </div>
                     {% for book in author %}
                         <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
@@ -45,37 +45,38 @@
             {% if translator.exists %}
                 <div class="row mt-3">
                     <div class="col-12">
-                            <h4>Пераклады</h4>
+                        <h4>Пераклады</h4>
                     </div>
                     {% for book in translator %}
-                        <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
-                            {% include 'partials/_book.html' %}
-                        </div>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
+                        {% include 'partials/_book.html' %}
+                    </div>
                     {% endfor %}
                 </div>
             {% endif %}
             {% if narrations %}
                 <div class="row mt-3">
                     <div class="col-12">
-                            <h4>Агучаныя кнігі</h4>
+                        <h4>Агучаныя кнігі</h4>
                     </div>
                     {% for book in narrations %}
-                        <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
-                            {% include 'partials/_book.html' %}
-                        </div>
+                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
+                        {% include 'partials/_book.html' %}
+                    </div>
                     {% endfor %}
                 </div>
             {% endif %}
-        </div>        
+        </div>
     </div>
 </div>
 
-{% comment %} 
+{% comment %}
 <div class="container" id="books">
     <div class="clearfix">
 
             {% if person.photo %}
-                <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 photo" src="{{ person.photo.url }}" alt="{{ person.name }}">
+            <img class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 photo" src="{{ person.photo.url }}"
+                alt="{{ person.name }}">
             {% endif %}
             <h3>
                 {{ person.name }}
@@ -83,45 +84,45 @@
             <p>
                 {{ person.description|linebreaks }}
             </p>
-        
+
     </div>
     {% if author.exists %}
         <div class="row mt-3">
             <div class="col-12">
-                    <h4>Кнігі аўтар{{person.gender|gender:"кі,а"}}</h4>
+                <h4>Кнігі аўтар{{person.gender|gender:"кі,а"}}</h4>
             </div>
             {% for book in author %}
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 my-4">
-                    {% include 'partials/_book.html' %}
-                </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 my-4">
+                {% include 'partials/_book.html' %}
+            </div>
             {% endfor %}
         </div>
     {% endif %}
     {% if translator.exists %}
         <div class="row mt-3">
             <div class="col-12">
-                    <h4>Пераклады</h4>
+                <h4>Пераклады</h4>
             </div>
             {% for book in translator %}
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 my-4">
-                    {% include 'partials/_book.html' %}
-                </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 my-4">
+                {% include 'partials/_book.html' %}
+            </div>
             {% endfor %}
         </div>
     {% endif %}
     {% if narrations %}
         <div class="row mt-3">
             <div class="col-12">
-                    <h4>Агучаныя кнігі</h4>
+                <h4>Агучаныя кнігі</h4>
             </div>
             {% for book in narrations %}
-                <div class="col-6 col-sm-4 col-md-3 col-lg-2 my-4">
-                    {% include 'partials/_book.html' %}
-                </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 my-4">
+                {% include 'partials/_book.html' %}
+            </div>
             {% endfor %}
         </div>
     {% endif %}
-    
+
 </div> {% endcomment %}
 
 

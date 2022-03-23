@@ -19,8 +19,12 @@ class HomePageTests(WebdriverTestCase):
     def test_click_book_cover(self):
         self.driver.get(self.live_server_url)
         book = self.get_first_book()
-        self.driver.find_element_by_css_selector(
-            f'img[alt="{book.title}"]').click()
+        cover_selector = f'img[alt="{book.title}"]'
+        if book.cover_image == '':
+            # when image is missing - find first auto-generated cover.
+            # It should match the first book.
+            cover_selector = '.cover.small'
+        self.driver.find_element_by_css_selector(cover_selector).click()
         self.assertIn(f'/books/{book.slug}', self.driver.current_url)
 
     def test_click_book_author(self):

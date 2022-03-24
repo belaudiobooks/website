@@ -90,6 +90,22 @@ function initializeSearch() {
   });
 }
 
+function readjustStickyHeader() {
+  const nav = document.querySelector('nav');
+  const search = document.querySelector('.search-container');
+  nav.style.top = `-${nav.offsetHeight - search.offsetHeight - 24}px`;
+}
+
+/**
+ * To implement stickiness of the search bar we need to specify style.top of its parent.
+ * Couldn't find a nice way that doesn't require manual adjusting.
+ */
+function initializeStickyHeader() {
+  readjustStickyHeader();
+  window.addEventListener('resize', readjustStickyHeader);
+}
+
 window.addEventListener('load', () => {
   initializeSearch();
+  initializeStickyHeader();
 });

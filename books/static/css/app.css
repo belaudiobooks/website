@@ -181,7 +181,6 @@ a {
 
 nav.sticky-top {
   background-color: #7879F1;
-  top: -192px;
 }
 
 nav .container {
@@ -241,9 +240,6 @@ nav .controls .search-container {
 }
 
 @media (max-width: 991.98px) {
-  nav.sticky-top {
-    top: -202px;
-  }
   nav .container {
     flex-direction: row;
     height: auto;
@@ -257,19 +253,7 @@ nav .controls .search-container {
   }
 }
 
-@media (max-width: 768.98px) {
-  nav.sticky-top {
-    top: -273px;
-  }
-}
-
 @media (max-width: 575.98px) {
-  nav.sticky-top {
-    top: -182px;
-  }
-  nav.sticky-top.main-page {
-    top: -405px;
-  }
   nav .container {
     flex-direction: column;
     padding: 0 0.75rem 0.75rem 0.75rem;

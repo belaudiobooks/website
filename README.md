@@ -127,3 +127,24 @@ Push data. Connects to database and pushes objects and media files from JSON fil
 ```shell
 python manage.py push_data_to_prod  --settings=booksby.sqlite_settings 
 ```
+
+## Google Cloud Setup and Deployment
+Setup was followed by this tutorial: https://cloud.google.com/python/django/appengine with the adjustment to the our application.
+
+The major issue is to setup DB as you have to use Cloud SQL Auth proxy in order to connect to the DB and do all migrations required.
+
+1. Install and initialize the Google Cloud CLI
+2. From the root app folder run
+
+```
+gcloud app deploy
+```
+
+3. Select Y to start deployment
+
+### CSS updates deployment
+There is an issue in gcloud deployment when css files change in the app. The workaround for now is to: 
+1. Delete the `ROOT/static` folder (**note:** do not delete books/static)
+2. run `gcloud app deploy`
+3. run `python manage.py collectstatic`
+4. run `gcloud app deploy` again

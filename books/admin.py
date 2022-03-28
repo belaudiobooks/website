@@ -19,8 +19,6 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
             'no_description': 'Missing description',
             'no_cover': 'Missing cover',
             'no_duration': 'Missing duration',
-            #TODO: Update with new narration model
-            # 'no_narrators': 'Missing narrators',
             'no_tags': 'Missing tags',
             'no_translation': 'Missing russian title',
         }
@@ -43,10 +41,6 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
         if reason == 'no_duration':
             zero_duration = datetime.timedelta(seconds=0)
             return queryset.filter(duration_sec__exact=zero_duration)
-        #TODO: update querry to link narrators
-        # if reason == 'no_narrators':
-        #     return queryset.annotate(num_narrators=Count('narrators')).filter(
-        #         num_narrators=0)
         if reason == 'no_tags':
             return queryset.annotate(num_tags=Count('tag')).filter(num_tags=0)
         if reason == 'no_translation':
@@ -126,8 +120,40 @@ class PersonAdmin(admin.ModelAdmin):
     ordering = ['slug']
 
 
+class NarratorsCountFilter(admin.SimpleListFilter):
+    '''Filter that shows number of narrators for narrations.'''
+    title = 'number of narrators'
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'narrators_count'
+
+    def lookups(self, request, model_admin):
+        queryset = model_admin.get_queryset(request)
+        return [(
+            count,
+            f'{count} ({self._get_books_narrators_count(queryset, count).count()})'
+        ) for count in [0, 1, 2, 3, 5, 6]]
+
+    def queryset(self, request, queryset):
+        return self._get_books_narrators_count(queryset, self.value())
+
+    def _get_books_narrators_count(self, queryset, count):
+        if count is None:
+            return queryset
+        return queryset.annotate(num_narrators=Count('narrators')).filter(
+            num_narrators=int(count))
+
+
+class LinkInlineAdmin(admin.StackedInline):
+    model = Link
+    max_num = 0
+    can_delete = False
+
+
 class NarrationAdmin(admin.ModelAdmin):
+    list_filter = (NarratorsCountFilter, )
     list_display = ('uuid', 'book', 'get_narrators')
+    inlines = [LinkInlineAdmin]
 
     @display(description='narrators')
     def get_narrators(self, obj):

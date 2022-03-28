@@ -27,3 +27,5 @@ data
 data_scripts
 .venv
 .github
+venv
+.mypy_cache

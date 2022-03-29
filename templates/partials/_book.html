@@ -16,15 +16,17 @@
                 </div>
             </div>
         {% endif %}
-        <div class="mt-4">
-            <h6 class="card-title">{{ book.title }}</h6>
-            <p class="card-text">
-            {% for author in book.authors.all %}
-                <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none">
-                    <h7>{{ author.name }}{% if not forloop.last %},{% endif %}</h7>
-                </a>   
-            {% endfor %}
-            </p>
-        </div>
     </a>
+    <div class="mt-4">
+        <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none">
+            <h6 class="card-title">{{ book.title }}</h6>
+        </a>
+        <p class="card-text">
+        {% for author in book.authors.all %}
+            <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none">
+                <h7>{{ author.name }}{% if not forloop.last %},{% endif %}</h7>
+            </a>
+        {% endfor %}
+        </p>
+    </div>
 </div>

@@ -1,5 +1,6 @@
 import logging
 from typing import Dict, List, Union
+from django import views
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -205,3 +206,7 @@ def push_data_to_algolia(request: HttpRequest) -> HttpResponse:
     '''
     call_command('push_data_to_algolia')
     return HttpResponse(status=204)
+
+
+def page_not_found(request):
+    return views.defaults.page_not_found(request, None)

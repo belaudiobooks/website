@@ -10,4 +10,5 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('about', views.about, name='about'),
     path('push_data_to_algolia', views.push_data_to_algolia),
+    path("404", views.page_not_found),
 ]

@@ -1,7 +1,9 @@
 '''Various helper template filters for books.'''
 
 from atexit import register
+from zoneinfo import ZoneInfo
 from django import template
+from datetime import datetime
 
 from books import models
 
@@ -73,3 +75,16 @@ COVER_PATTERNS = [
 def colors(book: models.Book):
     '''Returns random cover template for a book that has no cover.'''
     return COVER_PATTERNS[book.uuid.int % len(COVER_PATTERNS)]
+
+
+MONTHS = [
+    'снежня', 'лютага', 'сакавіка', 'красавіка', 'траўня', 'чэрвеня', 'ліпеня',
+    'жніўня', 'верасня', 'кастрычніка', 'лістапада', 'студзеня'
+]
+
+
+@register.simple_tag
+def books_of_the_month():
+    '''Returns text corresponding to current month.'''
+    month = datetime.now(ZoneInfo('Europe/Minsk')).month
+    return f'Кнігі {MONTHS[month - 1]}'

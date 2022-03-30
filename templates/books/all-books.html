@@ -62,22 +62,22 @@
                                 <!--First Page Link-->
                                 {% if all_books.has_previous%}
                                     <li class="text-end">
-                                        <a class="text-decoration-none tag-selected" href="?page=1">&laquo;</a>
+                                        <a class="text-decoration-none tag-selected" href="?page=1"><i class="bi bi-chevron-double-left"></i></a>
                                     </li>
                                 {% else %}
                                     <li class="disabled text-end">
-                                        <a class="text-decoration-none" href="#">&laquo;</a>
+                                        <a class="text-decoration-none" href="#"><i class="bi bi-chevron-double-left"></i></a>
                                     </li>  
                                 {% endif %}
 
                                 <!--Previours Page Link-->
                                 {% if all_books.has_previous%}
                                     <li class="text-end">
-                                        <a class="text-decoration-none tag-selected" href="?page={{all_books.previous_page_number}}">&lt;</a>
+                                        <a class="text-decoration-none tag-selected" href="?page={{all_books.previous_page_number}}"><i class="bi bi-chevron-left"></i></a>
                                     </li>
                                 {% else %}
                                     <li class="disabled text-end">
-                                        <a class="text-decoration-none" href="#">&lt;</a>
+                                        <a class="text-decoration-none" href="#"><i class="bi bi-chevron-left"></i></a>
                                     </li>  
                                 {% endif %}
                                 
@@ -87,22 +87,22 @@
                                 <!--Next Page Link-->
                                 {% if all_books.has_next%}
                                     <li class="">
-                                        <a class="text-decoration-none tag-selected" href="?page={{all_books.next_page_number}}">&gt;</a>
+                                        <a class="text-decoration-none tag-selected" href="?page={{all_books.next_page_number}}"><i class="bi bi-chevron-right"></i></a>
                                     </li>
                                 {% else %}
                                     <li class="disabled">
-                                        <a href="#" class="text-decoration-none">&gt;</a>
+                                        <a href="#" class="text-decoration-none"><i class="bi bi-chevron-right"></i></a>
                                     </li>  
                                 {% endif %}
 
                                 <!--Last Page Link-->
                                 {% if all_books.has_next%}
                                     <li class="page-item">
-                                        <a class="text-decoration-none tag-selected" href="?page={{ all_books.paginator.num_pages }}">&raquo;</a>
+                                        <a class="text-decoration-none tag-selected" href="?page={{ all_books.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a>
                                     </li>
                                 {% else %}
                                     <li class="disabled">
-                                        <a href="#" class="text-decoration-none">&raquo;</a>
+                                        <a href="#" class="text-decoration-none"><i class="bi bi-chevron-double-right"></i></a>
                                     </li>  
                                 {% endif %}
                             </ul>

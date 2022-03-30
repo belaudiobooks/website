@@ -10,7 +10,7 @@
 
 <div class="container" id="books">
     <div class="row">
-        <h4 class="col-12 mb-4">Прапануем паслухаць у сакавіку</h4>
+        <h4 class="col-12 mb-4">Кнігі сакавіка</h4>
     </div>
     <div class="row">
         {% for book in promo_books %}
@@ -43,7 +43,7 @@
                     <h4>{{tag_name}}</h4>
                 </div>
                 <div class="col-5 col-sm-2 text-end ">
-                    <a class="text-decoration-none tag-selected" href="{% url 'catalog-for-tag' tag_slug %}">{{tag_books.count}}
+                    <a class="text-decoration-none tag-selected" href="{% url 'catalog-for-tag' tag_slug %}">
                         {{tag_books.count|by_plural:"кніга,кнігі,кніг"}}
                         <i class="bi bi-chevron-right"></i>
                     </a>

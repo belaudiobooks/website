@@ -11,7 +11,7 @@
         {% endfor %}
     {% else %}
         {% for person in persons %}
-            {{single}}{{person.gender|gender:gender_variants}}:
+            {{single}}{{person|gender:gender_variants}}:
             <a class="text-decoration-none link-color" href="{% url 'person-detail-page' person.slug %}">
             {{ person.name }}
             </a> 

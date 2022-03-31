@@ -189,7 +189,7 @@ def about(request: HttpRequest) -> HttpResponse:
         ('Алесь', 'images/member-ales.jpg'),
         ('Наста', 'images/member-nasta.jpg'),
         ('Алёна', 'images/member-alena.jpg'),
-        ('Юра', 'images/member-jura.jpg'),
+        ('Юры', 'images/member-jura.jpg'),
         ('Андрэй', 'images/member-andrey.jpg'),
     ]
     context = {

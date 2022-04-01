@@ -47,12 +47,8 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
     '''Catalog page for specific tag or all books'''
-    sorted_books = active_books.order_by('title')
 
-    paginator = Paginator(sorted_books, 16)
     page = request.GET.get('page')
-    paged_books = paginator.get_page(page)
-
     tags = Tag.objects.all()
 
     if slug:
@@ -70,6 +66,9 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
             'tags': tags,
         }
     else:
+        sorted_books = active_books.order_by('-added_at')
+        paginator = Paginator(sorted_books, 16)
+        paged_books = paginator.get_page(page)
         context = {
             'all_books': paged_books,
             'tags': tags,

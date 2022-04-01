@@ -59,7 +59,7 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
         #get selected tag id
         tag = tags.filter(slug=slug).first()
         #pagination for the books by tag
-        books_by_tag = active_books.filter(tag=tag.id)
+        books_by_tag = active_books.filter(tag=tag.id).order_by('-added_at')
         paginator_by_tag = Paginator(books_by_tag, 16)
         page_by_tag = request.GET.get('page')
         paged_books_by_tag = paginator_by_tag.get_page(page_by_tag)

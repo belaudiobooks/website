@@ -52,6 +52,7 @@ class BookAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title', )}
     list_filter = (IncompleteBookListFilter, 'authors', 'title', 'promoted')
     list_display = ('title', 'get_book_authors', 'promoted')
+    list_per_page = 1000
 
     @display(description='authors')
     def get_book_authors(self, obj):
@@ -64,6 +65,7 @@ class TagAdmin(admin.ModelAdmin):
 
 class LinkAdmin(admin.ModelAdmin):
     list_display = ('uuid', 'url_type', 'get_book', 'get_narrators', 'url')
+    list_per_page = 1000
 
     @display(description='book')
     def get_book(self, obj):
@@ -118,6 +120,7 @@ class PersonAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', )}
     list_filter = (IncompletePersonListFilter, )
     ordering = ['slug']
+    list_per_page = 1000
 
 
 class NarratorsCountFilter(admin.SimpleListFilter):
@@ -146,14 +149,14 @@ class NarratorsCountFilter(admin.SimpleListFilter):
 
 class LinkInlineAdmin(admin.StackedInline):
     model = Link
-    max_num = 0
-    can_delete = False
+    can_delete = True
 
 
 class NarrationAdmin(admin.ModelAdmin):
     list_filter = (NarratorsCountFilter, )
     list_display = ('uuid', 'book', 'get_narrators')
     inlines = [LinkInlineAdmin]
+    list_per_page = 1000
 
     @display(description='narrators')
     def get_narrators(self, obj):

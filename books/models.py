@@ -81,7 +81,7 @@ class Book(models.Model):
     uuid = models.UUIDField(_('Book ID'), primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(_('Book Title'), max_length=100, blank=True, default='')
     title_ru = models.CharField(_('Book Title in russian'), max_length=100, blank=True, default = '')
-    description = models.TextField(_('Book Description'))
+    description = models.TextField(_('Book Description'), blank=True)
     added_at = models.DateTimeField(_('Added at'), auto_now_add=True)
     date = models.DateField(_('Book Date'), auto_now_add=False)
     authors = models.ManyToManyField(Person, related_name='books_authored')

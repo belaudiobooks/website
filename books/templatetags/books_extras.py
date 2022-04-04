@@ -1,9 +1,11 @@
 '''Various helper template filters for books.'''
 
 from atexit import register
+from typing import Optional
 from zoneinfo import ZoneInfo
 from django import template
 from datetime import datetime
+from django.utils import html
 
 from books import models
 
@@ -88,3 +90,25 @@ def books_of_the_month():
     '''Returns text corresponding to current month.'''
     month = datetime.now(ZoneInfo('Europe/Minsk')).month
     return f'Кнігі {MONTHS[month - 1]}'
+
+
+@register.simple_tag
+def cite_source(source: str, cls: Optional[str]):
+    '''
+    Renders citation of a source.
+
+    This tag is used to cite a photo or text when it's taken from
+    another source. For example if book description is copied from
+    another website.
+
+    The format of source string is '<name>;<url>' where <name> is
+    user-visible text.
+
+    cls is a class to attach to the rendered <p> element for styling.
+    '''
+    if source == '':
+        return ''
+    parts = source.split(';')
+    return html.format_html(
+        '<p class="citation {}">Крыніца: <a href="{}">{}</a></p>', cls,
+        parts[1], parts[0])

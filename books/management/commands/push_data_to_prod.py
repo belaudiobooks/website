@@ -50,8 +50,6 @@ class Command(BaseCommand):
                 'cloud_sql_proxy -instances="audiobooksbysite:europe-west1:' +
                 'audiobooks-prod"=tcp:5432')
             return
-        print('Initializing local DB')
-        call_command('init_db_with_data')
 
         for dir in ['covers', 'photos', 'icons']:
             full_dir = os.path.join('data', dir)
@@ -59,6 +57,9 @@ class Command(BaseCommand):
             subprocess.run(
                 ['gsutil', '-m', 'rsync', full_dir, f'gs://books_media/{dir}'],
                 check=True)
+
+        print('Initializing local DB')
+        call_command('init_db_with_data')
 
         print('Pushing data to remote DB')
         call_command('migrate', 'books', 'zero', database=REMOTE_DB)

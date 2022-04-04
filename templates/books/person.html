@@ -20,6 +20,7 @@
         <div class="col-12 col-md-3 mt-2 mt-sm-5">
             {% if person.photo %}
                 <img class="img-fluid mx-auto mb-3 photo d-block" src="{{ person.photo.url }}" alt="{{ person.name }}">
+                {% cite_source person.photo_source "cit-photo" %}
             {% endif %}
             <h3 class="text-center">
                 {{ person.name }}
@@ -27,6 +28,7 @@
             <p>
                 {{ person.description|linebreaks }}
             </p>
+            {% cite_source person.description_source "cit-description" %}
         </div>
         <!--Books section-->
         <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">

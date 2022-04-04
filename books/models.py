@@ -46,10 +46,18 @@ class Person(models.Model):
                                max_length=100,
                                default='')
     description = models.TextField(_('Person Description'), blank=True)
+    description_source = models.CharField(_('Person Description Source'),
+                                          blank=True,
+                                          max_length=500,
+                                          default='')
     photo = models.ImageField(upload_to=functools.partial(
         _get_image_name, 'photos'),
                               blank=True,
                               null=True)
+    photo_source = models.CharField(_('Photo Source'),
+                                    blank=True,
+                                    max_length=500,
+                                    default='')
     slug = models.SlugField(_('Person slug'),
                             max_length=100,
                             unique=True,
@@ -117,6 +125,10 @@ class Book(models.Model):
                                 blank=True,
                                 default='')
     description = models.TextField(_('Book Description'), blank=True)
+    description_source = models.CharField(_('Book Description Source'),
+                                          blank=True,
+                                          max_length=500,
+                                          default='')
     added_at = models.DateTimeField(_('Added at'), auto_now_add=True)
     date = models.DateField(_('Book Date'), auto_now_add=False)
     authors = models.ManyToManyField(Person, related_name='books_authored')
@@ -133,9 +145,12 @@ class Book(models.Model):
         _get_image_name, 'covers'),
                                     blank=True,
                                     null=True)
+    cover_image_source = models.CharField(_('Cover Image Source'),
+                                          blank=True,
+                                          max_length=500,
+                                          default='')
     tag = models.ManyToManyField(Tag, related_name='tag', blank=True)
     promoted = models.BooleanField(_('Promoted'), default=False)
-    annotation = models.TextField(_('Book Annotation'), blank=True)
     duration_sec = models.DurationField(_('Duration'), blank=True, null=True)
     status = models.CharField(_('Status'),
                               max_length=20,

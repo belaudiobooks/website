@@ -62,7 +62,7 @@
                                 <!--First Page Link-->
                                 {% if all_books.has_previous%}
                                     <li class="text-end">
-                                        <a class="text-decoration-none tag-selected" href="?page=1"><i class="bi bi-chevron-double-left"></i></a>
+                                        <a class="text-decoration-none tag-selected first-page" href="?page=1"><i class="bi bi-chevron-double-left"></i></a>
                                     </li>
                                 {% else %}
                                     <li class="disabled text-end">
@@ -73,7 +73,7 @@
                                 <!--Previours Page Link-->
                                 {% if all_books.has_previous%}
                                     <li class="text-end">
-                                        <a class="text-decoration-none tag-selected" href="?page={{all_books.previous_page_number}}"><i class="bi bi-chevron-left"></i></a>
+                                        <a class="text-decoration-none tag-selected prev-page" href="?page={{all_books.previous_page_number}}"><i class="bi bi-chevron-left"></i></a>
                                     </li>
                                 {% else %}
                                     <li class="disabled text-end">
@@ -87,7 +87,7 @@
                                 <!--Next Page Link-->
                                 {% if all_books.has_next%}
                                     <li class="">
-                                        <a class="text-decoration-none tag-selected" href="?page={{all_books.next_page_number}}"><i class="bi bi-chevron-right"></i></a>
+                                        <a class="text-decoration-none tag-selected next-page" href="?page={{all_books.next_page_number}}"><i class="bi bi-chevron-right"></i></a>
                                     </li>
                                 {% else %}
                                     <li class="disabled">
@@ -98,7 +98,7 @@
                                 <!--Last Page Link-->
                                 {% if all_books.has_next%}
                                     <li class="page-item">
-                                        <a class="text-decoration-none tag-selected" href="?page={{ all_books.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a>
+                                        <a class="text-decoration-none tag-selected last-page" href="?page={{ all_books.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a>
                                     </li>
                                 {% else %}
                                     <li class="disabled">

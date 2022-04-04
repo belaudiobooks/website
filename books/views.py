@@ -22,6 +22,8 @@ TAGS_TO_SHOW_ON_MAIN_PAGE = [
     'Дзецям і падлеткам',
 ]
 
+BOOKS_PER_PAGE = 16
+
 
 def index(request: HttpRequest) -> HttpResponse:
     '''Index page, starting page'''
@@ -57,7 +59,7 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
         tag = tags.filter(slug=slug).first()
         #pagination for the books by tag
         books_by_tag = active_books.filter(tag=tag.id).order_by('-added_at')
-        paginator_by_tag = Paginator(books_by_tag, 16)
+        paginator_by_tag = Paginator(books_by_tag, BOOKS_PER_PAGE)
         page_by_tag = request.GET.get('page')
         paged_books_by_tag = paginator_by_tag.get_page(page_by_tag)
 
@@ -68,7 +70,7 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
         }
     else:
         sorted_books = active_books.order_by('-added_at')
-        paginator = Paginator(sorted_books, 16)
+        paginator = Paginator(sorted_books, BOOKS_PER_PAGE)
         paged_books = paginator.get_page(page)
         context = {
             'all_books': paged_books,

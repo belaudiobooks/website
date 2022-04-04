@@ -16,8 +16,7 @@ class BookPageTests(WebdriverTestCase):
                                             person: models.Person) -> None:
         self.driver.get(self._get_book_url())
         elem = self.driver.find_element_by_link_text(person.name)
-        self.scroll_into_view(elem)
-        elem.click()
+        self.scroll_and_click(elem)
         self.assertIn(f'/person/{person.slug}', self.driver.current_url)
 
     def test_click_authors(self):
@@ -51,8 +50,7 @@ class BookPageTests(WebdriverTestCase):
         for tag in self.book.tag.all():
             self.driver.get(self._get_book_url())
             elem = self.driver.find_element_by_link_text(tag.name)
-            self.scroll_into_view(elem)
-            elem.click()
+            self.scroll_and_click(elem)
             self.assertIn(f'/catalog/{tag.slug}', self.driver.current_url)
             tag_header = self.driver.find_element_by_css_selector(
                 '#books .tag')

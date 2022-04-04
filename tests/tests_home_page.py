@@ -12,8 +12,7 @@ class HomePageTests(WebdriverTestCase):
         self.driver.get(self.live_server_url)
         book = self.get_first_book()
         title = self.driver.find_element_by_link_text(book.title)
-        self.scroll_into_view(title)
-        title.click()
+        self.scroll_and_click(title)
         self.assertIn(f'/books/{book.slug}', self.driver.current_url)
 
     def test_click_book_cover(self):
@@ -32,8 +31,7 @@ class HomePageTests(WebdriverTestCase):
         book = self.get_first_book()
         author = book.authors.first()
         author_elem = self.driver.find_element_by_link_text(author.name)
-        self.scroll_into_view(author_elem)
-        author_elem.click()
+        self.scroll_and_click(author_elem)
         self.assertIn(f'/person/{author.slug}', self.driver.current_url)
 
     def test_page_elements(self):

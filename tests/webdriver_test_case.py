@@ -24,9 +24,9 @@ class WebdriverTestCase(StaticLiveServerTestCase):
         cls.driver.quit()
         super().tearDownClass()
 
-    def scroll_into_view(self, element: WebElement) -> None:
+    def scroll_into_view(self, element: WebElement) -> WebElement:
         '''
-        Scrolls given element into view. Needed for elements 
+        Scrolls given element into view. Needed for elements
         below the fold to make them clickable.
         '''
         self.driver.execute_script(
@@ -34,3 +34,8 @@ class WebdriverTestCase(StaticLiveServerTestCase):
         # Need to add sleep as scrolling doesn't finish quickly as expected_conditions
         # don't work for some reason.
         time.sleep(1)
+        return element
+
+    def scroll_and_click(self, element: WebElement) -> None:
+        '''Scroll and clicks.'''
+        self.scroll_into_view(element).click()

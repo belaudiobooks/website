@@ -19,14 +19,14 @@ class BookManager(models.Manager):
         # promoted books
         # i.e: Book.objects.promoted(insertion_date__gte=datetime.now)
         return self.filter(promoted=True, **kwargs)
-    
+
     def handle_filter(self, field: str, value: str) -> None:
         _handler = self.FIELD_MAPPING.get(field)
         # handle filter and run the function with filter field and value:
         return _handler(self, value)
 
     def filtered(self, **kwargs) -> None:
-        [[field,value]] = kwargs.items()
+        [[field, value]] = kwargs.items()
         # validate input
         return self.handle_filter(field, value)
 
@@ -39,9 +39,9 @@ class BookManager(models.Manager):
     def _handle_author(self, value: str) -> None:
         return self.filter(authors__name__icontains=value)
 
-    def _handle_tag(self, value: str) -> None:    
+    def _handle_tag(self, value: str) -> None:
         return self.filter(tag__name__icontains=value)
-    
+
     def _handle_promoted(self, value: str) -> None:
         return self.filter(promoted=value)
 

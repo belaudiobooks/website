@@ -6,6 +6,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.core.management import call_command
+from django.urls import reverse
 from algoliasearch.search_client import SearchClient
 
 from .models import Book, BookStatus, Person, Tag
@@ -207,5 +208,36 @@ def push_data_to_algolia(request: HttpRequest) -> HttpResponse:
     return HttpResponse(status=204)
 
 
-def page_not_found(request):
+def page_not_found(request: HttpRequest):
+    '''Helper method to test 404 page rendering locally, where using real 404 shows stack trace.'''
     return views.defaults.page_not_found(request, None)
+
+
+def robots_txt(request: HttpRequest):
+    '''
+    Serve robots.txt
+    https://developers.google.com/search/docs/advanced/robots/intro?hl=en
+    '''
+    context = {
+        'host': request.get_host(),
+        'protocol': 'https' if request.is_secure() else 'http'
+    }
+    return render(request, 'robots.txt', context)
+
+
+def sitemap(request: HttpRequest):
+    '''
+    Serve sitemap in text format.
+    https://developers.google.com/search/docs/advanced/sitemaps/overview?hl=en
+    '''
+    pages: List[str] = ['/', '/about', '/catalog']
+    for book in active_books:
+        pages.append(reverse('book-detail-page', args=(book.slug, )))
+    for person in Person.objects.all():
+        pages.append(reverse('person-detail-page', args=(person.slug, )))
+    for tag in Tag.objects.all():
+        pages.append(reverse('catalog-for-tag', args=(tag.slug, )))
+    domain = 'https' if request.is_secure() else 'http'
+    domain = domain + '://' + request.get_host()
+    result = '\n'.join(domain + page for page in pages)
+    return HttpResponse(result, content_type='text/plain')

@@ -3,6 +3,14 @@
 {% load books_extras %}
 
 {% block title %}{{ book.title | title}} аўдыякніга{% endblock title %}
+{% block og_title %}{{ book.title | title}}{% endblock og_title %}
+{% block og_image %}{% spaceless %}
+    {% if book.cover_image %}
+        {{ book.cover_image.url }}
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endspaceless %}{% endblock %}
 {% block description %}
   Звесткі пра кнігу «{{book.title}}» {% for author in book.authors.all %}{{ author.name }}{% endfor %}:
   апісанне, спасылкі на розныя крыніцы дзе можна паслухаць кнігу.

@@ -3,6 +3,7 @@
 {% load books_extras %}
 
 {% block title %}{% if selected_tag %}{{ selected_tag.name }}{% else %}Усе аўдыякнігі{% endif %}{% endblock title %}
+{% block og_title %}{% if selected_tag %}{{ selected_tag.name }}{% else %}Усе аўдыякнігі{% endif %}{% endblock og_title %}
 
 {% block css_files %}
     <link rel="stylesheet" href="{% static 'css/books.css' %}">

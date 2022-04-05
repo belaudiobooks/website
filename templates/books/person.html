@@ -3,6 +3,15 @@
 {% load books_extras %}
 
 {% block title %}{{ person.name }}, аўдыякнігі{% endblock title %}
+{% block og_title %}{{ person.name }}{% endblock og_title %}
+{% block og_image %}{% spaceless %}
+    {% if person.photo %}
+        {{ person.photo.url }}
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endspaceless %}{% endblock %}
+
 {% block description %}
   На гэтай старонцы вы знойдзеце ўсе кнігі якія {{person.name}} напісаў, агучыў альбо пераклаў.
 {% endblock description %}

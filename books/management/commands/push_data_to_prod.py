@@ -2,8 +2,10 @@
 Pushes books data and images to production.
 '''
 
+import datetime
 import os
 import subprocess
+import tempfile
 from typing import Iterable
 from django.db import models
 from django.core.management.base import BaseCommand
@@ -42,6 +44,18 @@ class Command(BaseCommand):
     help = 'Pushes books data and images to production.'
 
     def handle(self, *args, **options):
+
+        last_pull_file = os.path.join(tempfile.gettempdir(),
+                                      'audiobooks_last_pull')
+        assert os.path.exists(
+            last_pull_file
+        ), f'File {last_pull_file} is missing. Make sure you ran `pull_data_from_prod` command first to ensure you do not override prod data.'
+        with open(last_pull_file, 'r', encoding='utf8') as f:
+            last_update = datetime.datetime.fromisoformat(f.read())
+            diff_min = (datetime.datetime.now() -
+                        last_update).total_seconds() / 60
+            max_diff_min = 5
+            assert max_diff_min > diff_min, f'Make sure you ran `pull_data_from_prod` within {max_diff_min} minutes. Last run was {diff_min} minutes ago.'
         try:
             django.db.connections[REMOTE_DB].ensure_connection()
         except django.db.utils.OperationalError:

@@ -5,6 +5,8 @@ Pulls data and images from production to local repo.
 from itertools import chain
 import subprocess
 import os
+import tempfile
+import datetime
 from django.core.management.base import BaseCommand
 from django.conf import settings
 import django
@@ -56,4 +58,9 @@ class Command(BaseCommand):
                                               all_objects,
                                               indent=2,
                                               stream=f)
+
+        last_pull_file = os.path.join(tempfile.gettempdir(),
+                                      'audiobooks_last_pull')
+        with open(last_pull_file, 'w', encoding='utf8') as f:
+            f.write(datetime.datetime.now().isoformat())
         print('Completed!')

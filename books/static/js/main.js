@@ -50,6 +50,15 @@ function initializeSearch() {
       algoliaParams['appId'],
       algoliaParams['searchKey'],
     ),
+    searchFunction(helper) {
+      // Don't search if query is emptry. This helps to avoid unnecessary initial
+      // search on every page load, where users don't use search in most of the 
+      // casees.
+      if (helper.state.query === '') {
+        return;
+      }
+      helper.search();
+    },
   });
 
   const makeSearchBox = instantsearch.connectors.connectSearchBox(

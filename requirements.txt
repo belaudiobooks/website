@@ -15,6 +15,7 @@ feedparser
 django-stubs>=1.9.0<1.10.0
 django-storages
 google-cloud-storage
+google-cloud-logging
 google-cloud-secret-manager
 beautifulsoup4
 selenium>=4.1.0<4.2.0

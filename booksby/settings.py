@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import environ
-from google.cloud import secretmanager
+from google.cloud import secretmanager, logging
 
 import os
 import io
@@ -181,6 +181,52 @@ else:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'books/static')
     ]
+
+    # StackDriver setup
+    client = logging.Client()
+    # Connects the logger to the root logging handler; by default
+    # this captures all logs at INFO level and higher
+    client.setup_logging()
+
+    LOGGING = {
+        'version': 1,
+        'handlers': {
+            'stackdriver': {
+                'level': 'INFO',
+                'class': 'google.cloud.logging.handlers.CloudLoggingHandler',
+                'client': client
+            }
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['stackdriver'],
+                'level': 'INFO'
+            }
+        },
+    }
+
+    #implementation of logging to file, disabling until figuring out hot to save it in root,
+    #the above implementation should log into the Cloud Logging API
+    # LOGGING = {
+    #     'version': 1,
+    #     'disable_existing_loggers': False,
+    #     'handlers': {
+    #         'file': {
+    #             'level':'ERROR',
+    #             'class':'logging.handlers.RotatingFileHandler',
+    #             'filename': 'debug.log',
+    #             'maxBytes': 1024*1024*15, # 15MB
+    #             'backupCount': 10,
+    #             },
+    #     },
+    #     'loggers': {
+    #         'django': {
+    #             'handlers': ['file'],
+    #             'level': 'ERROR',
+    #             'propagate': True,
+    #         },
+    #     },
+    # }
 
 
 # Default primary key field type

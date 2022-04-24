@@ -45,3 +45,10 @@ class PersonPageTests(WebdriverTestCase):
         description = self.driver.find_element_by_css_selector(
             'meta[name="description"]').get_dom_attribute('content')
         self.assertIn(self.person.name, description)
+
+    def test_filter_by_link_type(self):
+        # Hadanovich has few books that are on knizhny_voz. Most books are on
+        # PEN Belarus.
+        link_type = models.LinkType.objects.get(name='knizhny_voz')
+        self.driver.get(f'{self._get_person_url()}?links={link_type.name}')
+        self.assert_page_contains_only_books_of_link_type(link_type)

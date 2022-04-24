@@ -47,6 +47,18 @@ class CatalogPageTests(WebdriverTestCase):
                 status=models.BookStatus.ACTIVE).order_by('-added_at'))
         self._test_pagination(books)
 
+    def test_all_books_with_link_filter(self):
+        link_type = models.LinkType.objects.get(name='knihi_com')
+        self.driver.get(
+            f'{self.live_server_url}/catalog?links={link_type.name}')
+        self.assert_page_contains_only_books_of_link_type(link_type)
+
+        # Go to next page and make sure that filter remains.
+        self.scroll_and_click(
+            self.driver.find_element_by_css_selector('.next-page'))
+        self.assert_page_contains_only_books_of_link_type(link_type)
+        self.assertIn(f'links={link_type.name}', self.driver.current_url)
+
     def test_genre_page(self):
         tag = models.Tag.objects.filter(name='Сучасная проза').first()
         self.driver.get(f'{self.live_server_url}/catalog/{tag.slug}')
@@ -56,3 +68,17 @@ class CatalogPageTests(WebdriverTestCase):
                 tag=tag.id,
                 status=models.BookStatus.ACTIVE).order_by('-added_at'))
         self._test_pagination(books)
+
+    def test_genre_page_with_link_filter(self):
+        tag = models.Tag.objects.filter(name='Сучасная проза').first()
+        link_type = models.LinkType.objects.get(name='knihi_com')
+        self.driver.get(
+            f'{self.live_server_url}/catalog/{tag.slug}?links={link_type.name}'
+        )
+        self.assert_page_contains_only_books_of_link_type(link_type)
+
+        # Go to next page and make sure that filter remains.
+        self.scroll_and_click(
+            self.driver.find_element_by_css_selector('.next-page'))
+        self.assert_page_contains_only_books_of_link_type(link_type)
+        self.assertIn(f'links={link_type.name}', self.driver.current_url)

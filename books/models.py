@@ -73,7 +73,7 @@ class Person(models.Model):
         return f'{self.name}'
 
     def save(self, *args, **kwargs):
-        if self.slug != defaultfilters.slugify(self.slug):
+        if self.slug != defaultfilters.slugify(self.slug) or self.slug == '':
             self.slug = defaultfilters.slugify(unidecode(self.name))
         super().save(*args, **kwargs)
 
@@ -168,7 +168,7 @@ class Book(models.Model):
         # Update slug only if current slug uses belarusian letters (created in admin).
         # Otherwise don't update slug as it might be intentionally set to be different
         # from title.
-        if self.slug != defaultfilters.slugify(self.slug):
+        if self.slug != defaultfilters.slugify(self.slug) or self.slug == '':
             self.slug = defaultfilters.slugify(unidecode(self.title))
         super().save(*args, **kwargs)
 

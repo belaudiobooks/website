@@ -26,60 +26,10 @@ class Podcast:
 PODCASTS = [
     Podcast(
         rss_feed=
-        'https://storage.googleapis.com/belaudiobooks/vasil_bykau_u_tumanie/rss.xml',
+        'https://storage.googleapis.com/belaudiobooks/uladzimir_sadouski_1813/rss.xml',
         podcasts={},
-        narrators=['Андрэй Каляда'],
+        narrators=['Ірына Якавец'],
     ),
-    # Белы клык
-    Podcast(
-        rss_feed=
-        'https://storage.googleapis.com/belaudiobooks/dzek_londan_biely_klyk/rss.xml',
-        podcasts={},
-        narrators=['Андрэй Каляда']),
-    # Шляхціц Завальня
-    Podcast(
-        rss_feed=
-        'https://storage.googleapis.com/belaudiobooks/jan_barshchjeuski_shljahcic_zavalnja/rss.xml',
-        podcasts={},
-        narrators=['Андрэй Каляда']),
-    # Завеі Снежань
-    Podcast(
-        rss_feed=
-        'https://storage.googleapis.com/belaudiobooks/ivan_melezh_zavei_snezhan/rss.xml',
-        podcasts={},
-        narrators=['Валер Будзевіч']),
-    # Зямля пад белымі крыламі
-    Podcast(
-        rss_feed=
-        'https://storage.googleapis.com/belaudiobooks/uladzimir_karatkevich_zjamlja_pad_belymi_krylami/rss.xml',
-        podcasts={},
-        narrators=['Андрэй Каляда']),
-    # Подых Навальніцы
-    Podcast(
-        rss_feed=
-        'https://storage.googleapis.com/belaudiobooks/ivan_melezh_poduh_navalnicy/rss.xml',
-        podcasts={
-            # podcast.ru doesn't have google podcast url for this link for some reason
-            'google_podcast':
-            'https://podcasts.google.com/feed/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2JlbGF1ZGlvYm9va3MvaXZhbl9tZWxlemhfcG9kdWhfbmF2YWxuaWN5L3Jzcy54bWw_Y2FjaGU9YnVzdA?sa=X&ved=0CAMQ4aUDahcKEwiwg9z8mZz0AhUAAAAAHQAAAAAQNA'
-        },
-        narrators=['Валер Будзевіч']),
-    # Сэрца на далоні
-    Podcast(
-        rss_feed=
-        'https://storage.googleapis.com/belaudiobooks/ivan_shamjakin_serca_na_daloni/rss.xml',
-        podcasts={},
-        narrators=['Андрэй Каляда']),
-    # Людзі на балоце
-    Podcast(
-        rss_feed=
-        'https://storage.googleapis.com/belaudiobooks/ivan_melezh_lydzi_na_baloce/rss.xml',
-        podcasts={},
-        narrators=['Кацярына Ягорава']),
-    # Сем камянёў
-    Podcast(rss_feed='https://storage.googleapis.com/sem_kamjanjou/rss.xml',
-            podcasts={},
-            narrators=['Уладзімір Лісоўскі']),
 ]
 
 

@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.core.management import call_command
 from django.urls import reverse
+from django.db.models import query
 from algoliasearch.search_client import SearchClient
 
 from .models import Book, BookStatus, Person, Tag
@@ -23,6 +24,20 @@ TAGS_TO_SHOW_ON_MAIN_PAGE = [
 ]
 
 BOOKS_PER_PAGE = 16
+
+
+def maybe_filter_links(books_query: query.QuerySet,
+                       request: HttpRequest) -> query.QuerySet:
+    '''
+    Filters given Book query set to keep only the books that have at least one
+    link of type passed as `links` url param. For example /catalog?links=knihi_com
+    should show only books that hosted on knihi.com.
+    '''
+    links = request.GET.get('links')
+    if links is None:
+        return books_query
+    return books_query.filter(
+        narrations__links__url_type__name__in=links.split(','))
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -53,12 +68,16 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
 
     page = request.GET.get('page')
     tags = Tag.objects.all()
+    filtered_books = maybe_filter_links(active_books, request)
+    links_filter = ''
+    if request.GET.get('links'):
+        links_filter = '&links=' + request.GET.get('links')
 
     if slug:
         #get selected tag id
         tag = tags.filter(slug=slug).first()
         #pagination for the books by tag
-        books_by_tag = active_books.filter(tag=tag.id).order_by('-added_at')
+        books_by_tag = filtered_books.filter(tag=tag.id).order_by('-added_at')
         paginator_by_tag = Paginator(books_by_tag, BOOKS_PER_PAGE)
         page_by_tag = request.GET.get('page')
         paged_books_by_tag = paginator_by_tag.get_page(page_by_tag)
@@ -67,14 +86,16 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
             'all_books': paged_books_by_tag,
             'selected_tag': tag,
             'tags': tags,
+            'links_filter': links_filter,
         }
     else:
-        sorted_books = active_books.order_by('-added_at')
+        sorted_books = filtered_books.order_by('-added_at')
         paginator = Paginator(sorted_books, BOOKS_PER_PAGE)
         paged_books = paginator.get_page(page)
         context = {
             'all_books': paged_books,
             'tags': tags,
+            'links_filter': links_filter,
         }
 
     return render(request, 'books/all-books.html', context)
@@ -107,10 +128,16 @@ def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
         'narrations').filter(slug=slug).first()
 
     if person:
-        author = person.books_authored.all().filter(status=BookStatus.ACTIVE)
-        translator = person.books_translated.all().filter(
-            status=BookStatus.ACTIVE)
+        author = maybe_filter_links(
+            person.books_authored.all().filter(status=BookStatus.ACTIVE),
+            request)
+        translator = maybe_filter_links(
+            person.books_translated.all().filter(status=BookStatus.ACTIVE),
+            request)
         narrations = person.narrations.all().filter()
+        if request.GET.get('links'):
+            links = request.GET.get('links').split(',')
+            narrations = narrations.filter(links__url_type__name__in=links)
 
         narrated_books = [
             item.book for item in narrations

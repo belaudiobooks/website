@@ -18,7 +18,7 @@
         {% endif %}
     </a>
     <div class="mt-4">
-        <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none">
+        <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none" data-type="book-title">
             <h6 class="card-title">{{ book.title }}</h6>
         </a>
         <p class="card-text">

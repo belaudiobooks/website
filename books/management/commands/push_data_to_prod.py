@@ -55,7 +55,12 @@ class Command(BaseCommand):
             diff_min = (datetime.datetime.now() -
                         last_update).total_seconds() / 60
             max_diff_min = 5
-            assert max_diff_min > diff_min, f'Make sure you ran `pull_data_from_prod` within {max_diff_min} minutes. Last run was {diff_min} minutes ago.'
+            if max_diff_min < diff_min:
+                answer = input(
+                    'Last sync  was {diff_min} minutes ago. Are you sure you want to continue? yes/no\n'
+                )
+                if answer != 'yes':
+                    return
         try:
             django.db.connections[REMOTE_DB].ensure_connection()
         except django.db.utils.OperationalError:

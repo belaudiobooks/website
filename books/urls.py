@@ -13,4 +13,7 @@ urlpatterns = [
     path("404", views.page_not_found),
     path('robots.txt', views.robots_txt),
     path('sitemap.txt', views.sitemap),
+    path('posts/jak-vyklasci-audyjaknihu',
+         views.how_to_publish_audiobook,
+         name='how-to-publish-audiobook')
 ]

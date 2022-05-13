@@ -237,12 +237,12 @@ def push_data_to_algolia(request: HttpRequest) -> HttpResponse:
     return HttpResponse(status=204)
 
 
-def page_not_found(request: HttpRequest):
+def page_not_found(request: HttpRequest) -> HttpResponse:
     '''Helper method to test 404 page rendering locally, where using real 404 shows stack trace.'''
     return views.defaults.page_not_found(request, None)
 
 
-def robots_txt(request: HttpRequest):
+def robots_txt(request: HttpRequest) -> HttpResponse:
     '''
     Serve robots.txt
     https://developers.google.com/search/docs/advanced/robots/intro?hl=en
@@ -254,12 +254,13 @@ def robots_txt(request: HttpRequest):
     return render(request, 'robots.txt', context)
 
 
-def sitemap(request: HttpRequest):
+def sitemap(request: HttpRequest) -> HttpResponse:
     '''
     Serve sitemap in text format.
     https://developers.google.com/search/docs/advanced/sitemaps/overview?hl=en
     '''
     pages: List[str] = ['/', '/about', '/catalog']
+    pages.append(reverse('how-to-publish-audiobook'))
     for book in active_books:
         pages.append(reverse('book-detail-page', args=(book.slug, )))
     for person in Person.objects.all():
@@ -270,3 +271,8 @@ def sitemap(request: HttpRequest):
     domain = domain + '://' + request.get_host()
     result = '\n'.join(domain + page for page in pages)
     return HttpResponse(result, content_type='text/plain')
+
+
+def how_to_publish_audiobook(request: HttpRequest) -> HttpResponse:
+    '''Serve "How to publish audiobook" guide page.'''
+    return render(request, 'books/how-to-publish-audiobook.html', {})

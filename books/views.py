@@ -68,7 +68,7 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
 
     page = request.GET.get('page')
     tags = Tag.objects.all()
-    filtered_books = maybe_filter_links(active_books, request)
+    filtered_books = maybe_filter_links(active_books, request).distinct()
     links_filter = ''
     if request.GET.get('links'):
         links_filter = '&links=' + request.GET.get('links')

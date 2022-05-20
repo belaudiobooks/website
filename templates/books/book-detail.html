@@ -92,11 +92,13 @@
                     </div>
                     <!--Access to the link type-->
                     {% for link in narrations.first.links.all %}
+                       {% if not link.url_type.disabled %}
                         <div class="col-12 mt-2">
                             <a href="{{ link.url }}" class="text-decoration-none link-color d-block">
                                 <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">{{ link.url_type.caption }}
                             </a>
                         </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             {% endif %}

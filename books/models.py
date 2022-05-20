@@ -216,6 +216,7 @@ class LinkType(models.Model):
                                blank=True,
                                default='')
     icon = models.ImageField(upload_to='icons', blank=True, null=True)
+    disabled = models.BooleanField(_('Disabled'), default=False)
 
     def __str__(self) -> str:
         return f'{self.name}'

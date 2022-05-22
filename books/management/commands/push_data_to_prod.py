@@ -57,7 +57,7 @@ class Command(BaseCommand):
             max_diff_min = 5
             if max_diff_min < diff_min:
                 answer = input(
-                    'Last sync  was {diff_min} minutes ago. Are you sure you want to continue? yes/no\n'
+                    f'Last sync  was {diff_min} minutes ago. Are you sure you want to continue? yes/no\n'
                 )
                 if answer != 'yes':
                     return

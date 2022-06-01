@@ -147,13 +147,48 @@ class NarratorsCountFilter(admin.SimpleListFilter):
             num_narrators=int(count))
 
 
+class IncompleteLinksSetFilter(admin.SimpleListFilter):
+    '''Filter that shows narration that have incomplete links.'''
+    title = 'incomplete link set'
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'incomplete_link'
+
+    def lookups(self, request, model_admin):
+        queryset = model_admin.get_queryset(request)
+        reasons = {
+            'no_google_play': 'Missing Google Play',
+            'no_audiobooks_com': 'Missing audiobooks.com',
+        }
+        return [(
+            key,
+            f'{value} ({self._get_narrations_for_reason(queryset, key).count()})'
+        ) for key, value in reasons.items()]
+
+    def queryset(self, request, queryset):
+        return self._get_narrations_for_reason(queryset, self.value())
+
+    def _get_narrations_for_reason(self, queryset, reason):
+        if reason is None:
+            return queryset.filter()
+        # We assume that all books in stores that are present on bookmate will
+        # also be present on other stores eventually.
+        if reason == 'no_google_play':
+            return queryset.filter(links__url_type__name='bookmate').exclude(
+                links__url_type__name='google_play_books')
+        if reason == 'no_audiobooks_com':
+            return queryset.filter(links__url_type__name='bookmate').exclude(
+                links__url_type__name='audiobooks_com')
+        raise ValueError(f'unknown incomplete_reason: {reason}')
+
+
 class LinkInlineAdmin(admin.StackedInline):
     model = Link
     can_delete = True
 
 
 class NarrationAdmin(admin.ModelAdmin):
-    list_filter = (NarratorsCountFilter, )
+    list_filter = (NarratorsCountFilter, IncompleteLinksSetFilter)
     list_display = ('uuid', 'book', 'get_narrators')
     inlines = [LinkInlineAdmin]
     list_per_page = 1000

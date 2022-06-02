@@ -70,7 +70,8 @@
     <div class="row">
         {% for member in team_members %}
         <div class="col-12 col-sm-6 col-lg-3 mt-4 border-white team-member">
-            <img src="{% static member.1 %}" alt="photo">
+            <!-- <img src="{% static member.1 %}" alt="photo"> -->
+            <img src="{% static 'images/person-outline.png' %}" alt="photo">
             <span class="ms-2">{{ member.0 }}</span>
         </div>
         {% endfor %}

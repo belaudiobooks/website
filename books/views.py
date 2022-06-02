@@ -216,7 +216,7 @@ def about(request: HttpRequest) -> HttpResponse:
         ('Яўген', 'images/member-jauhen.jpg'),
         ('Павал', 'images/member-paval.jpg'),
         ('Алесь', 'images/member-ales.jpg'),
-        ('Наста', 'images/member-nasta.jpg'),
+        # ('Наста', 'images/member-nasta.jpg'),
         ('Алёна', 'images/member-alena.jpg'),
         ('Юры', 'images/member-jura.jpg'),
         ('Андрэй', 'images/member-andrey.jpg'),

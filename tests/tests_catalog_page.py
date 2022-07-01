@@ -2,6 +2,7 @@ from typing import List
 from books import models
 from books.views import BOOKS_PER_PAGE
 from tests.webdriver_test_case import WebdriverTestCase
+from selenium.webdriver.common.by import By
 
 
 class CatalogPageTests(WebdriverTestCase):
@@ -10,33 +11,33 @@ class CatalogPageTests(WebdriverTestCase):
     def _assert_page_contains_books(self, books: List[models.Book]) -> None:
         for book in books:
             self.assertIsNotNone(
-                self.driver.find_element_by_link_text(book.title))
+                self.driver.find_element(By.LINK_TEXT, book.title))
 
     def _test_pagination(self, books: List[models.Book]) -> None:
         self._assert_page_contains_books(books[:BOOKS_PER_PAGE])
 
         # Go to next page.
         self.scroll_and_click(
-            self.driver.find_element_by_css_selector('.next-page'))
+            self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
         self._assert_page_contains_books(books[BOOKS_PER_PAGE:BOOKS_PER_PAGE *
                                                2])
 
         # Go to the last page.
         self.scroll_and_click(
-            self.driver.find_element_by_css_selector('.last-page'))
+            self.driver.find_element(By.CSS_SELECTOR, '.last-page'))
         last_page_book_start = int(
             len(books) / BOOKS_PER_PAGE * BOOKS_PER_PAGE)
         self._assert_page_contains_books(books[last_page_book_start:])
 
         # Go to the page before last.
         self.scroll_and_click(
-            self.driver.find_element_by_css_selector('.prev-page'))
+            self.driver.find_element(By.CSS_SELECTOR, '.prev-page'))
         self._assert_page_contains_books(books[last_page_book_start -
                                                BOOKS_PER_PAGE:BOOKS_PER_PAGE])
 
         # Go to the first page.
         self.scroll_and_click(
-            self.driver.find_element_by_css_selector('.first-page'))
+            self.driver.find_element(By.CSS_SELECTOR, '.first-page'))
         self._assert_page_contains_books(books[0:BOOKS_PER_PAGE])
 
     def test_all_books(self):
@@ -55,7 +56,7 @@ class CatalogPageTests(WebdriverTestCase):
 
         # Go to next page and make sure that filter remains.
         self.scroll_and_click(
-            self.driver.find_element_by_css_selector('.next-page'))
+            self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
         self.assert_page_contains_only_books_of_link_type(link_type)
         self.assertIn(f'links={link_type.name}', self.driver.current_url)
 
@@ -79,6 +80,6 @@ class CatalogPageTests(WebdriverTestCase):
 
         # Go to next page and make sure that filter remains.
         self.scroll_and_click(
-            self.driver.find_element_by_css_selector('.next-page'))
+            self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
         self.assert_page_contains_only_books_of_link_type(link_type)
         self.assertIn(f'links={link_type.name}', self.driver.current_url)

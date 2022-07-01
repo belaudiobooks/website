@@ -1,5 +1,6 @@
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
+from selenium.webdriver.common.by import By
 
 
 class PersonPageTests(WebdriverTestCase):
@@ -15,7 +16,7 @@ class PersonPageTests(WebdriverTestCase):
 
     def _check_book_present(self, book: models.Book) -> None:
         found = False
-        for elem in self.driver.find_elements_by_link_text(book.title):
+        for elem in self.driver.find_elements(By.LINK_TEXT, book.title):
             found = found or elem.get_dom_attribute(
                 'href') == f'/books/{book.slug}'
         self.assertTrue(
@@ -42,7 +43,8 @@ class PersonPageTests(WebdriverTestCase):
     def test_page_elements(self):
         self.driver.get(self._get_person_url())
         self.assertEqual(f'{self.person.name}, аўдыякнігі', self.driver.title)
-        description = self.driver.find_element_by_css_selector(
+        description = self.driver.find_element(
+            By.CSS_SELECTOR,
             'meta[name="description"]').get_dom_attribute('content')
         self.assertIn(self.person.name, description)
 

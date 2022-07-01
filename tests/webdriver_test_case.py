@@ -1,6 +1,7 @@
 import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
 from books import models
@@ -49,8 +50,8 @@ class WebdriverTestCase(StaticLiveServerTestCase):
         books have at least one link of the given type. This is used for tests
         that verify filtering by link type.
         '''
-        books_links = self.driver.find_elements_by_css_selector(
-            'a[data-type="book-title"]')
+        books_links = self.driver.find_elements(By.CSS_SELECTOR,
+                                                'a[data-type="book-title"]')
         self.assertNotEqual(books_links, [])
         for book_link in books_links:
             slug = book_link.get_attribute('href').split('/')[-1]

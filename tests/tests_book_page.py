@@ -1,5 +1,6 @@
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
+from selenium.webdriver.common.by import By
 
 
 class BookPageTests(WebdriverTestCase):
@@ -15,7 +16,7 @@ class BookPageTests(WebdriverTestCase):
     def _check_person_present_and_clickable(self,
                                             person: models.Person) -> None:
         self.driver.get(self._get_book_url())
-        elem = self.driver.find_element_by_link_text(person.name)
+        elem = self.driver.find_element(By.LINK_TEXT, person.name)
         self.scroll_and_click(elem)
         self.assertIn(f'/person/{person.slug}', self.driver.current_url)
 
@@ -41,7 +42,7 @@ class BookPageTests(WebdriverTestCase):
         for narration in self.book.narrations.all():
             for link in narration.links.all():
                 caption = link.url_type.caption
-                elem = self.driver.find_element_by_link_text(caption)
+                elem = self.driver.find_element(By.LINK_TEXT, caption)
                 self.assertIsNotNone(elem)
                 self.assertEqual(link.url, elem.get_dom_attribute('href'))
 
@@ -49,19 +50,20 @@ class BookPageTests(WebdriverTestCase):
         self.assertGreaterEqual(self.book.tag.count(), 1)
         for tag in self.book.tag.all():
             self.driver.get(self._get_book_url())
-            elem = self.driver.find_element_by_link_text(tag.name)
+            elem = self.driver.find_element(By.LINK_TEXT, tag.name)
             self.scroll_and_click(elem)
             self.assertIn(f'/catalog/{tag.slug}', self.driver.current_url)
-            tag_header = self.driver.find_element_by_css_selector(
-                '#books .tag')
+            tag_header = self.driver.find_element(By.CSS_SELECTOR,
+                                                  '#books .tag')
             self.assertEqual(tag.name, tag_header.text)
 
     def test_renders_text_elements(self):
         self.driver.get(self._get_book_url())
-        book_elem = self.driver.find_element_by_css_selector('#books')
+        book_elem = self.driver.find_element(By.CSS_SELECTOR, '#books')
         self.assertIn('14 гадзін 15 хвілін', book_elem.text)
         self.assertEqual(f'{self.book.title} аўдыякніга', self.driver.title)
-        description = self.driver.find_element_by_css_selector(
+        description = self.driver.find_element(
+            By.CSS_SELECTOR,
             'meta[name="description"]').get_dom_attribute('content')
         self.assertIn(self.book.title, description)
         self.assertIn(self.book.authors.first().name, description)

@@ -1,5 +1,6 @@
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
+from selenium.webdriver.common.by import By
 
 
 class HomePageTests(WebdriverTestCase):
@@ -11,7 +12,7 @@ class HomePageTests(WebdriverTestCase):
     def test_click_book_title(self):
         self.driver.get(self.live_server_url)
         book = self.get_first_book()
-        title = self.driver.find_element_by_link_text(book.title)
+        title = self.driver.find_element(By.LINK_TEXT, book.title)
         self.scroll_and_click(title)
         self.assertIn(f'/books/{book.slug}', self.driver.current_url)
 
@@ -23,14 +24,14 @@ class HomePageTests(WebdriverTestCase):
             # when image is missing - find first auto-generated cover.
             # It should match the first book.
             cover_selector = '.cover.small'
-        self.driver.find_element_by_css_selector(cover_selector).click()
+        self.driver.find_element(By.CSS_SELECTOR, cover_selector).click()
         self.assertIn(f'/books/{book.slug}', self.driver.current_url)
 
     def test_click_book_author(self):
         self.driver.get(self.live_server_url)
         book = self.get_first_book()
         author = book.authors.first()
-        author_elem = self.driver.find_element_by_link_text(author.name)
+        author_elem = self.driver.find_element(By.LINK_TEXT, author.name)
         self.scroll_and_click(author_elem)
         self.assertIn(f'/person/{author.slug}', self.driver.current_url)
 

@@ -30,7 +30,7 @@ class Worker(Thread):
                 self.tasks.task_done()
 
 
-class BookPageTests(TransactionTestCase):
+class DataValidationTests(TransactionTestCase):
     '''Tests that validate data.'''
 
     fixtures = ['data/data.json']
@@ -104,8 +104,10 @@ class BookPageTests(TransactionTestCase):
         for link in models.Link.objects.all():  # type: models.Link
             # skip kobo as it doesn't responde to robot-like requests.
             # skip soundcloud as it responds with 429.
+            # skip litres as they return 403 when test runs from github.
             if link.url_type.name == 'rakuten_kobo' or link.url.startswith(
-                    'https://soundcloud.com'):
+                    'https://soundcloud.com'
+            ) or link.url_type.name == 'litres':
                 continue
             tasks.put((get, (link.url, ), {}))
         tasks.join()

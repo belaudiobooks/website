@@ -24,11 +24,11 @@
                     Жанры <i class="bi bi-chevron-down"></i><i class="bi bi-chevron-up"></i>
                 </button>
 
-                
+
                 <div class="collapse dont-collapse-sm" id="collapseGenre">
                     <ul class="list-unstyled">
                         {% for tag in tags %}
-                            {% if tag.tag.exists %}
+                            {% if not tag.hidden %}
                                 <li>
                                     <a class="text-decoration-none text-start tag {% if tag.id == selected_tag.id %}tag-selected{% endif %}"
                                             href="{% url 'catalog-for-tag' tag.slug %}">

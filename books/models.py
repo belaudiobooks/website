@@ -89,6 +89,8 @@ class Tag(models.Model):
                             allow_unicode=True,
                             blank=True)
 
+    hidden = models.BooleanField(_('Hidden'), default=False)
+
     def __str__(self) -> str:
         return f'{self.name}'
 
@@ -149,7 +151,7 @@ class Book(models.Model):
                                           blank=True,
                                           max_length=500,
                                           default='')
-    tag = models.ManyToManyField(Tag, related_name='tag', blank=True)
+    tag = models.ManyToManyField(Tag, related_name='books', blank=True)
     promoted = models.BooleanField(_('Promoted'), default=False)
     duration_sec = models.DurationField(_('Duration'), blank=True, null=True)
     status = models.CharField(_('Status'),

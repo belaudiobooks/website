@@ -201,10 +201,30 @@ class NarrationAdmin(admin.ModelAdmin):
     inlines = [LinkInlineAdmin]
     list_per_page = 1000
     autocomplete_fields = ['narrators', 'book']
+    change_form_template = ['admin/books/change_form_narration.html']
 
     @display(description='narrators')
     def get_narrators(self, obj):
         return ', '.join([str(person.name) for person in obj.narrators.all()])
+
+    class Media:
+        js = ('js/admin.js', )
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        # Add mapping of link types ids to their url regex to client-side.
+        # It will be used by JS to auto-detect type of a new link.
+        link_types_regexes = []
+        for link_type in LinkType.objects.all():
+            if link_type.url_regex != '':
+                link_types_regexes.append((link_type.id, link_type.url_regex))
+        extra_context['link_types_regexes'] = link_types_regexes
+        return super().change_view(
+            request,
+            object_id,
+            form_url,
+            extra_context=extra_context,
+        )
 
 
 admin.site.register(LinkType)

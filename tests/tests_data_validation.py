@@ -92,6 +92,12 @@ class DataValidationTests(TransactionTestCase):
                                 '',
                                 msg=f'Missing title_ru for {book.title}')
 
+    def test_links_match_link_type_regex(self):
+        for link in models.Link.objects.all():
+            if link.url_type.url_regex == '':
+                continue
+            self.assertRegex(link.url, link.url_type.url_regex)
+
     def test_verify_links_return_200(self):
         self.maxDiff = 10000
         session = requests.session()

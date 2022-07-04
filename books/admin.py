@@ -48,21 +48,26 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
 
+@admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title', )}
     list_filter = (IncompleteBookListFilter, 'authors', 'title', 'promoted')
     list_display = ('title', 'get_book_authors', 'promoted')
     list_per_page = 1000
+    autocomplete_fields = ['authors', 'translators']
+    search_fields = ['title']
 
     @display(description='authors')
     def get_book_authors(self, obj):
         return ', '.join([str(person.name) for person in obj.authors.all()])
 
 
+@admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', )}
 
 
+@admin.register(Link)
 class LinkAdmin(admin.ModelAdmin):
     list_display = ('uuid', 'url_type', 'get_book', 'get_narrators', 'url')
     list_per_page = 1000
@@ -116,11 +121,13 @@ class IncompletePersonListFilter(admin.SimpleListFilter):
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
 
+@admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', )}
     list_filter = (IncompletePersonListFilter, )
     ordering = ['slug']
     list_per_page = 1000
+    search_fields = ['name']
 
 
 class NarratorsCountFilter(admin.SimpleListFilter):
@@ -187,20 +194,17 @@ class LinkInlineAdmin(admin.StackedInline):
     can_delete = True
 
 
+@admin.register(Narration)
 class NarrationAdmin(admin.ModelAdmin):
     list_filter = (NarratorsCountFilter, IncompleteLinksSetFilter)
     list_display = ('uuid', 'book', 'get_narrators')
     inlines = [LinkInlineAdmin]
     list_per_page = 1000
+    autocomplete_fields = ['narrators', 'book']
 
     @display(description='narrators')
     def get_narrators(self, obj):
         return ', '.join([str(person.name) for person in obj.narrators.all()])
 
 
-admin.site.register(Person, PersonAdmin)
-admin.site.register(Book, BookAdmin)
-admin.site.register(Tag, TagAdmin)
-admin.site.register(Link, LinkAdmin)
 admin.site.register(LinkType)
-admin.site.register(Narration, NarrationAdmin)

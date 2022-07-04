@@ -1,0 +1,10 @@
+{% extends "admin/change_form.html" %}
+{% block extrahead %}
+{{ block.super }}
+<script>
+    const linkTypeRegexes = {};
+    {% for type in link_types_regexes %}
+    linkTypeRegexes['{{type.0}}'] = '{{type.1}}';
+    {% endfor %}
+</script>
+{% endblock %}

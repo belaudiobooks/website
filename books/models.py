@@ -219,6 +219,10 @@ class LinkType(models.Model):
                                default='')
     icon = models.ImageField(upload_to='icons', blank=True, null=True)
     disabled = models.BooleanField(_('Disabled'), default=False)
+    url_regex = models.CharField(_('Url regex'),
+                                 max_length=100,
+                                 blank=True,
+                                 default='')
 
     def __str__(self) -> str:
         return f'{self.name}'

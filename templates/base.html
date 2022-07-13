@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
     <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- End Meta Pixel Code -->
     {% block css_files %}{% endblock css_files %}
 </head>
 
@@ -51,5 +52,23 @@
         gtag('js', new Date());
         gtag('config', 'G-3P71ZKXZJW');
     </script>
+    {# Meta Pixel Code #}
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '613802403714353');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=613802403714353&ev=PageView&noscript=1" /></noscript>
 
 </html>

@@ -1,4 +1,5 @@
 import datetime
+from typing import Any, Dict
 from django.contrib import admin
 from django.contrib.admin.decorators import display
 from django.db.models import Count
@@ -212,6 +213,24 @@ class NarrationAdmin(admin.ModelAdmin):
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = extra_context or {}
+        self._add_link_types_regex(extra_context)
+        return super().change_view(
+            request,
+            object_id,
+            form_url,
+            extra_context=extra_context,
+        )
+
+    def add_view(self, request, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        self._add_link_types_regex(extra_context)
+        return super().add_view(
+            request,
+            form_url,
+            extra_context=extra_context,
+        )
+
+    def _add_link_types_regex(self, extra_context: Dict[str, Any]):
         # Add mapping of link types ids to their url regex to client-side.
         # It will be used by JS to auto-detect type of a new link.
         link_types_regexes = []
@@ -219,12 +238,6 @@ class NarrationAdmin(admin.ModelAdmin):
             if link_type.url_regex != '':
                 link_types_regexes.append((link_type.id, link_type.url_regex))
         extra_context['link_types_regexes'] = link_types_regexes
-        return super().change_view(
-            request,
-            object_id,
-            form_url,
-            extra_context=extra_context,
-        )
 
 
 admin.site.register(LinkType)

@@ -5,12 +5,28 @@
   <div class="container">
     <a href="{% url 'index' %}" class="link-dark text-decoration-none text-white logo-title">
       <img class="img-fluid logo" src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY">
-      <h3 class="text-center site-title">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
+      <h3 class="text-center site-title fw-bold">БЕЛАРУСКIЯ АЎДЫЯКНIГI</h3>
     </a>
     <div class="site-description text-white">
-      <p class="title_lead">Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў</p>
-      <p>Тут вы можаце хутка знайсці аўдыякнігі сучасных аўтараў, а таксама класічныя і дзіцячыя творы ў аўдыяфармаце.
-        Сайт не змяшчае кнігі, а дае спасылкі на пляцоўкі, дзе іх можна паслухаць альбо набыць.</p>
+      <p class="title_lead show-on-main">Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў</p>
+      <p class="show-on-main">Тут вы можаце хутка знайсці аўдыякнігі сучасных аўтараў, а таксама класічныя і дзіцячыя
+        творы ў аўдыяфармаце. Сайт не змяшчае кнігі, а дае спасылкі на пляцоўкі, дзе іх можна паслухаць альбо набыць.
+      </p>
+
+      <div class="d-flex align-items-center my-3">
+        Сачыце за навінамі:
+        <div class="ms-2 d-flex justify-content-around justify-content-lg-start flex-grow-1">
+          <a class="px-3" href="https://t.me/bel_audiobooks" target="_blank">
+            <img class="icon" src="{% static 'images/TelgramIcon.png' %}" alt="telegram icon">
+          </a>
+          <a class="px-3" href="https://www.facebook.com/groups/550095389434647" target="_blank">
+            <img class="icon" src="{% static 'images/FaceBook.png' %}" alt="facebook icon">
+          </a>
+          <a class="px-3" href="https://instagram.com/belaudiobooks" target="_blank">
+            <img class="icon" src="{% static 'images/InstagramIcon.png' %}" alt="instagram icon">
+          </a>
+        </div>
+      </div>
     </div>
     <div class="controls sticky-top">
       <ul class="buttons nav navbar-nav mb-0">

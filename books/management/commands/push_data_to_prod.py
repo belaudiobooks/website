@@ -3,13 +3,15 @@ Pushes books data and images to production.
 '''
 
 import datetime
+import io
 import os
 import subprocess
 import tempfile
 from typing import Iterable
-from django.db import models
+from django.db import models, connections
 from django.core.management.base import BaseCommand
 from django.core.management import call_command
+
 import django
 
 from books.models import Book, Link, LinkType, Narration, Person, Tag
@@ -115,4 +117,21 @@ class Command(BaseCommand):
 
         print('Creating links...')
         Link.objects.using(REMOTE_DB).bulk_create(Link.objects.all())
+
+        # When inserting models with auto-incerment fields corresponding
+        # sequences are not updated and stay at 1. Which means trying to create
+        # new objects will throw "not unique primary key" error. So need
+        # manually reset sequences.
+        print('Resetting sequences...')
+        output = io.StringIO()
+        call_command('sqlsequencereset',
+                     'books',
+                     stdout=output,
+                     no_color=True,
+                     database=REMOTE_DB)
+        sql = output.getvalue()
+        with connections[REMOTE_DB].cursor() as cursor:
+            cursor.execute(sql)
+        output.close()
+
         print('Completed!')

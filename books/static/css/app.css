@@ -272,8 +272,10 @@ nav .buttons .nav-item:hover {
   background-color: #6465EC;
   border-radius: 5px;
 }
-nav .buttons .nav-item {
+
+.buttons .nav-link {
   padding-right: 1rem;
+  padding-left: 1rem;
 }
 
 @media (min-width: 1200px) {

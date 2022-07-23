@@ -193,9 +193,7 @@ class Narration(models.Model):
                                        blank=True)
     book = models.ForeignKey(Book,
                              related_name='narrations',
-                             blank=True,
-                             null=True,
-                             on_delete=SET_NULL)
+                             on_delete=CASCADE)
 
     def __str__(self) -> str:
         return '%s read by %s' % (

@@ -1,10 +1,11 @@
 import logging
+import urllib.parse
 from typing import Dict, List, Union
 from django import views
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, Page
 from django.core.management import call_command
 from django.urls import reverse
 from django.db.models import query
@@ -69,35 +70,44 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
     page = request.GET.get('page')
     tags = Tag.objects.all()
     filtered_books = maybe_filter_links(active_books, request).distinct()
-    links_filter = ''
-    if request.GET.get('links'):
-        links_filter = '&links=' + request.GET.get('links')
 
+    tag = None
     if slug:
         #get selected tag id
         tag = tags.filter(slug=slug).first()
         #pagination for the books by tag
-        books_by_tag = filtered_books.filter(tag=tag.id).order_by('-added_at')
-        paginator_by_tag = Paginator(books_by_tag, BOOKS_PER_PAGE)
-        page_by_tag = request.GET.get('page')
-        paged_books_by_tag = paginator_by_tag.get_page(page_by_tag)
+        filtered_books = filtered_books.filter(tag=tag.id)
 
-        context = {
-            'all_books': paged_books_by_tag,
-            'selected_tag': tag,
-            'tags': tags,
-            'links_filter': links_filter,
-        }
-    else:
-        sorted_books = filtered_books.order_by('-added_at')
-        paginator = Paginator(sorted_books, BOOKS_PER_PAGE)
-        paged_books = paginator.get_page(page)
-        context = {
-            'all_books': paged_books,
-            'tags': tags,
-            'links_filter': links_filter,
-        }
+    sorted_books = filtered_books.order_by('-added_at')
+    paginator = Paginator(sorted_books, BOOKS_PER_PAGE)
+    paged_books: Page = paginator.get_page(page)
 
+    def related_page(page: int) -> str:
+        params = request.GET.copy()
+        if page == 1:
+            params.pop('page')
+        else:
+            params['page'] = page
+        return request.path + ('?' if len(params) > 0 else
+                               '') + params.urlencode()
+
+    related_pages = {
+        'has_other': paged_books.has_other_pages(),
+    }
+    if paged_books.has_previous():
+        related_pages['first'] = related_page(1)
+        related_pages['prev'] = related_page(
+            paged_books.previous_page_number())
+    if paged_books.has_next():
+        related_pages['last'] = related_page(paginator.num_pages)
+        related_pages['next'] = related_page(paged_books.next_page_number())
+
+    context = {
+        'books': paged_books,
+        'related_pages': related_pages,
+        'selected_tag': tag,
+        'tags': tags,
+    }
     return render(request, 'books/all-books.html', context)
 
 

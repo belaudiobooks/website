@@ -182,11 +182,13 @@ class IncompleteLinksSetFilter(admin.SimpleListFilter):
         # We assume that all books in stores that are present on bookmate will
         # also be present on other stores eventually.
         if reason == 'no_google_play':
-            return queryset.filter(links__url_type__name='bookmate').exclude(
-                links__url_type__name='google_play_books')
+            return queryset.filter(
+                links__url_type__name='rakuten_kobo').exclude(
+                    links__url_type__name='google_play_books')
         if reason == 'no_audiobooks_com':
-            return queryset.filter(links__url_type__name='bookmate').exclude(
-                links__url_type__name='audiobooks_com')
+            return queryset.filter(
+                links__url_type__name='rakuten_kobo').exclude(
+                    links__url_type__name='audiobooks_com')
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
 

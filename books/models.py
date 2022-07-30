@@ -236,7 +236,7 @@ class Link(models.Model):
                             default=uuid.uuid4,
                             editable=False,
                             unique=True)
-    url = models.URLField(_('URL'), max_length=300)
+    url = models.URLField(_('URL'), max_length=1024)
     url_type = models.ForeignKey(LinkType,
                                  related_name='link_type',
                                  null=True,

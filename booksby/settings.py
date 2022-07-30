@@ -16,7 +16,6 @@ from google.cloud import secretmanager, logging
 import os
 import io
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Set the project base directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,8 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, [])
-)
+    ALLOWED_HOSTS=(list, []))
 env_file = os.path.join(BASE_DIR, ".env")
 
 # Take environment variables from .env file
@@ -42,11 +40,13 @@ elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
     client = secretmanager.SecretManagerServiceClient()
     settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
     name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
-    payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
+    payload = client.access_secret_version(
+        name=name).payload.data.decode("UTF-8")
 
     env.read_env(io.StringIO(payload))
 else:
-    raise Exception("No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
+    raise Exception(
+        "No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
 # [END gaestd_py_django_secret_config]
 
 # False if not in os.environ because of casting above
@@ -64,14 +64,9 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'books',
-    'user'
+    'django.contrib.admin', 'django.contrib.auth',
+    'django.contrib.contenttypes', 'django.contrib.sessions',
+    'django.contrib.messages', 'django.contrib.staticfiles', 'books', 'user'
 ]
 
 MIDDLEWARE = [
@@ -82,6 +77,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'books.middleware.WwwRedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'booksby.urls'
@@ -89,9 +85,7 @@ ROOT_URLCONF = 'booksby.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates')
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,7 +101,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'booksby.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -122,25 +115,27 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -155,16 +150,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 if env('ENV') == 'local':
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'books/static')
-    ]
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'books/static')]
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -178,9 +170,7 @@ else:
     MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_BUCKET_NAME)
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'books/static')
-    ]
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'books/static')]
 
     # StackDriver setup
     client = logging.Client()
@@ -227,7 +217,6 @@ else:
     #         },
     #     },
     # }
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

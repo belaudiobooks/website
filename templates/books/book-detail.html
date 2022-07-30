@@ -47,7 +47,7 @@
 
         <!--Book details-->
         <div class="col-12 col-md-6 col-lg-8">
-            
+
             <!--Book Title-->
             <h1 class="h2">{{ book.title }}</h1>
 
@@ -71,13 +71,13 @@
                     {% include 'partials/_person.html' with persons=narrations.first.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
                 </div>
             {% endif %}
-            
+
             <!--Book description-->
             <div class="my-4">
                 <p class="fw-normal">{{ book.description|linebreaks }}</p>
                 {% cite_source book.description_source "cit-description" %}
             </div>
-            
+
             <!--Adding Links-->
             {% for narration in narrations %}
                 <div class="col-12 mt-5">
@@ -103,15 +103,17 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}
-            
+
             <!--Tags-->
             <div class="row my-4">
                 {% for tag in tags %}
+                    {% if not tag.hidden %}
                     <div class="col-auto p-1">
                         <a href="{% url 'catalog-for-tag' tag.slug %}" class="btn btn-tag p-2">
                             {{tag}}
                         </a>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

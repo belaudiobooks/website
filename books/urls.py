@@ -15,5 +15,7 @@ urlpatterns = [
     path('sitemap.txt', views.sitemap),
     path('posts/jak-vyklasci-audyjaknihu',
          views.how_to_publish_audiobook,
-         name='how-to-publish-audiobook')
+         name='how-to-publish-audiobook'),
+    path('data.json', views.get_data_json),
+    path('generate_data_json', views.generate_data_json)
 ]

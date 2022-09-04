@@ -3,12 +3,12 @@
 {% load books_extras %}
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css_files %}
 
 {% block content %}
 
-<div class="container" id="books">
+<!-- <div class="container" id="books">
     <div class="row">
         <h4 class="col-12 mb-4">{% books_of_the_month %}</h4>
     </div>
@@ -19,7 +19,7 @@
             </div>
         {% endfor %}
     </div>
-</div>
+</div> -->
 
 <div class="container" id="books">
     <div class="row">
@@ -27,37 +27,36 @@
     </div>
     <div class="row">
         {% for book in recently_added_books %}
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                {% include 'partials/_book.html' %}
-            </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+            {% include 'partials/_book.html' %}
+        </div>
         {% endfor %}
     </div>
 </div>
 
 <!--Getting all the tags and rendering 6 books for each-->
 {% for tag in tags_to_render %}
-    {% with tag_name=tag.name tag_slug=tag.slug tag_books=tag.books %}
-        <div class="container" id="books">
-            <div class="row">
-                <div class="col-7 col-sm-10 mb-4">
-                    <h4>{{tag_name}}</h4>
-                </div>
-                <div class="col-5 col-sm-2 text-end ">
-                    <a class="text-decoration-none tag-selected" href="{% url 'catalog-for-tag' tag_slug %}">
-                        {{tag_books.count|by_plural:"кніга,кнігі,кніг"}}
-                        <i class="bi bi-chevron-right"></i>
-                    </a>
-                </div>
-                {% for book in tag_books %}
-                    {% if forloop.counter <= 6 %}
-                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                            {% include 'partials/_book.html' %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+{% with tag_name=tag.name tag_slug=tag.slug tag_books=tag.books %}
+<div class="container" id="books">
+    <div class="row">
+        <div class="col-7 col-sm-10 mb-4">
+            <h4>{{tag_name}}</h4>
         </div>
-    {% endwith %}
+        <div class="col-5 col-sm-2 text-end ">
+            <a class="text-decoration-none tag-selected" href="{% url 'catalog-for-tag' tag_slug %}">
+                {{tag_books.count|by_plural:"кніга,кнігі,кніг"}}
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </div>
+        {% for book in tag_books %}
+        {% if forloop.counter <= 6 %} <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+            {% include 'partials/_book.html' %}
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+</div>
+{% endwith %}
 {% endfor %}
 
 {% endblock content %}

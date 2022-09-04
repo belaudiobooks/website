@@ -16,14 +16,14 @@
       <div class="d-flex align-items-center my-3">
         Сачыце за навінамі:
         <div class="ms-2 d-flex justify-content-around justify-content-lg-start flex-grow-1">
-          <a class="px-3" href="https://t.me/bel_audiobooks" target="_blank">
-            <img class="icon" src="{% static 'images/TelgramIcon.png' %}" alt="telegram icon">
+          <a class="icon" href="https://t.me/bel_audiobooks" target="_blank" aria-label="telegram">
+            <i class="bi bi-telegram"></i>
           </a>
-          <a class="px-3" href="https://www.facebook.com/groups/550095389434647" target="_blank">
-            <img class="icon" src="{% static 'images/FaceBook.png' %}" alt="facebook icon">
+          <a class="icon" href="https://www.facebook.com/groups/550095389434647" target="_blank" aria-label="facebook">
+            <i class="bi bi-facebook"></i>
           </a>
-          <a class="px-3" href="https://instagram.com/belaudiobooks" target="_blank">
-            <img class="icon" src="{% static 'images/InstagramIcon.png' %}" alt="instagram icon">
+          <a class="icon" href="https://instagram.com/belaudiobooks" target="_blank" aria-label="instagram">
+            <i class="bi bi-instagram"></i>
           </a>
         </div>
       </div>
@@ -46,8 +46,9 @@
           <div class="input-group">
             <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, назва кнігі"
               aria-label="Аўтар, назва кнігі" aria-describedby="button-search" name="query" id="search">
-            <button class="btn p-0 bg-white" type="submit" id="button-search"><img
-                src="{% static 'images/FindIcon.png' %}" alt="Пошук"></button>
+            <button class="btn p-0" type="submit" id="button-search">
+              <i class="bi bi-search"></i>
+            </button>
           </div>
         </form>
         <div id="autocomplete" class="d-none"></div>

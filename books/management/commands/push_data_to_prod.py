@@ -96,9 +96,6 @@ class Command(BaseCommand):
         books = Book.objects.all().prefetch_related('authors', 'tag',
                                                     'translators')
         Book.objects.using(REMOTE_DB).bulk_create(books)
-        Book.objects.using(REMOTE_DB).bulk_update(
-            Book.objects.all().prefetch_related('authors', 'tag',
-                                                'translators'), ['added_at'])
         bulk_create_manytomany_relations(Book, 'authors', 'book', 'person',
                                          books)
         bulk_create_manytomany_relations(Book, 'translators', 'book', 'person',

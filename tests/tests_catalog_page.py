@@ -45,7 +45,7 @@ class CatalogPageTests(WebdriverTestCase):
         self.assertEqual('Усе аўдыякнігі', self.driver.title)
         books = list(
             models.Book.objects.filter(
-                status=models.BookStatus.ACTIVE).order_by('-added_at'))
+                status=models.BookStatus.ACTIVE).order_by('-date'))
         self._test_pagination(books)
 
     def test_all_books_with_link_filter(self):
@@ -66,8 +66,7 @@ class CatalogPageTests(WebdriverTestCase):
         self.assertEqual(tag.name, self.driver.title)
         books = list(
             models.Book.objects.filter(
-                tag=tag.id,
-                status=models.BookStatus.ACTIVE).order_by('-added_at'))
+                tag=tag.id, status=models.BookStatus.ACTIVE).order_by('-date'))
         self._test_pagination(books)
 
     def test_genre_page_with_link_filter(self):

@@ -132,7 +132,7 @@ class Book(models.Model):
                                           max_length=500,
                                           default='')
     added_at = models.DateTimeField(_('Added at'), auto_now_add=True)
-    date = models.DateField(_('Book Date'), auto_now_add=False)
+    date = models.DateField(_('Latest Release Date'), auto_now_add=False)
     authors = models.ManyToManyField(Person, related_name='books_authored')
     translators = models.ManyToManyField(Person,
                                          related_name='books_translated',

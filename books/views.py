@@ -60,12 +60,12 @@ def index(request: HttpRequest) -> HttpResponse:
             'slug':
             tag.slug,
             'books':
-            active_books.filter(tag=tag.id).order_by('-added_at'),
+            active_books.filter(tag=tag.id).order_by('-date'),
         })
 
     context = {
         'promo_books': active_books.filter(promoted=True),
-        'recently_added_books': active_books.order_by('-added_at')[:6],
+        'recently_added_books': active_books.order_by('-date')[:6],
         'tags_to_render': tags_to_render,
     }
 
@@ -86,7 +86,7 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
         #pagination for the books by tag
         filtered_books = filtered_books.filter(tag=tag.id)
 
-    sorted_books = filtered_books.order_by('-added_at')
+    sorted_books = filtered_books.order_by('-date')
     paginator = Paginator(sorted_books, BOOKS_PER_PAGE)
     paged_books: Page = paginator.get_page(page)
 

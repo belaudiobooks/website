@@ -238,6 +238,8 @@ def about(request: HttpRequest) -> HttpResponse:
         ('Алёна', 'images/member-alena.jpg'),
         ('Юры', 'images/member-jura.jpg'),
         ('Андрэй', 'images/member-andrey.jpg'),
+        ('Вікторыя', 'images/member-andrey.jpg'),
+        ('Жэня', 'images/member-andrey.jpg'),
     ]
     context = {
         'team_members': people,

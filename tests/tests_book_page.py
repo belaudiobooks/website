@@ -67,3 +67,14 @@ class BookPageTests(WebdriverTestCase):
             'meta[name="description"]').get_dom_attribute('content')
         self.assertIn(self.book.title, description)
         self.assertIn(self.book.authors.first().name, description)
+
+    def test_free_books_have_listen_free_text(self):
+        self.driver.get(self._get_book_url())
+        header = self.driver.find_element(By.CSS_SELECTOR, '.links-header')
+        self.assertIn('Дзе паслухаць бясплатна', header.text)
+
+    def test_paid_books_have_where_to_buy_text(self):
+        book = models.Book.objects.filter(title='Шклатара').first()
+        self.driver.get(f'{self.live_server_url}/books/{book.slug}')
+        header = self.driver.find_element(By.CSS_SELECTOR, '.links-header')
+        self.assertIn('Дзе купіць', header.text)

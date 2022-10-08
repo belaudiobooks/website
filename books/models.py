@@ -194,6 +194,8 @@ class Narration(models.Model):
                              related_name='narrations',
                              on_delete=CASCADE)
 
+    paid = models.BooleanField(_('Is narration paid?'), default=False)
+
     def __str__(self) -> str:
         return '%s read by %s' % (
             self.book,

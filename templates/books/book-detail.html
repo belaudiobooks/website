@@ -80,16 +80,20 @@
 
             <!--Adding Links-->
             {% for narration in narrations %}
-                <div class="col-12 mt-5">
-                    {% if narrations.count == 1 %}
-                        Дзе паслухаць
-                    {% else %}
+                <div class="col-12 mt-5 links-header">
+                    {% if narrations.count > 1 %}
                         <!--Narrators with check on multiples and gender-->
                         {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
                         <!--check if no name-->
                         {% if not narration.narrators.all.exists %}
                             Агучка: удакладняецца...
                         {% endif %}
+                    {% endif %}
+                    <br>
+                    {% if narration.paid %}
+                        Дзе купіць
+                    {% else %}
+                        Дзе паслухаць бясплатна
                     {% endif %}
                 </div>
                 <!--Access to the link type-->

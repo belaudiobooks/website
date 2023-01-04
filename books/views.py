@@ -121,14 +121,27 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
 
 def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
     '''Detailed book page'''
-    identified_book = get_object_or_404(Book, slug=slug)
+    book = get_object_or_404(Book, slug=slug)
+
+    # Determine if all narrations for the given book are of the same
+    # language. That determine whether we show language once at the top
+    # or separately for each narration.
+    single_language = None
+    narrations = book.narrations.all()
+    if len(narrations) > 0:
+        single_language = narrations[0].language
+        for narration in narrations:
+            if narration.language != single_language:
+                single_language = None
+                break
 
     context = {
-        'book': identified_book,
-        'authors': identified_book.authors.all(),
-        'translators': identified_book.translators.all(),
-        'narrations': identified_book.narrations.all(),
-        'tags': identified_book.tag.all(),
+        'book': book,
+        'authors': book.authors.all(),
+        'translators': book.translators.all(),
+        'narrations': book.narrations.all(),
+        'tags': book.tag.all(),
+        'single_language': single_language,
     }
 
     return render(request, 'books/book-detail.html', context)

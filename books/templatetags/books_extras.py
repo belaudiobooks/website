@@ -13,7 +13,7 @@ register = template.Library()
 
 
 @register.filter
-def by_plural(value, variants):
+def by_plural(value, variants) -> str:
     '''
     Chooses correct plural version of a wordt given number.
     variants is a comma-separated list of words.
@@ -32,7 +32,7 @@ def by_plural(value, variants):
 
 
 @register.filter
-def gender(person: models.Person, variants: str):
+def gender(person: models.Person, variants: str) -> str:
     '''Choses correct ending of a gender-full word given comma-separated endings as "variants".'''
     if person.gender == 'FEMALE':
         variant = 0
@@ -43,7 +43,18 @@ def gender(person: models.Person, variants: str):
 
 
 @register.filter
-def duration(book: models.Book):
+def to_human_language(lang: str) -> str:
+    '''Converts Language enum to human readable language string.'''
+    if lang == models.Language.BELARUSIAN:
+        return 'беларуская'
+    elif lang == models.Language.RUSSIAN:
+        return 'руская'
+    else:
+        raise Exception('Uknown language ' + lang)
+
+
+@register.filter
+def duration(book: models.Book) -> str:
     '''Formats book duration using "36 hours 12 minutes" format.'''
     day = book.duration_sec.days
     seconds = book.duration_sec.seconds
@@ -74,7 +85,7 @@ COVER_PATTERNS = [
 
 
 @register.filter
-def colors(book: models.Book):
+def colors(book: models.Book) -> str:
     '''Returns random cover template for a book that has no cover.'''
     return COVER_PATTERNS[book.uuid.int % len(COVER_PATTERNS)]
 
@@ -86,7 +97,7 @@ MONTHS = [
 
 
 @register.simple_tag
-def books_of_the_month():
+def books_of_the_month() -> str:
     '''Returns text corresponding to current month.'''
     month = datetime.now(ZoneInfo('Europe/Minsk')).month
     return f'Кнігі {MONTHS[month - 1]}'

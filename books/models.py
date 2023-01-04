@@ -30,6 +30,11 @@ class Gender(models.TextChoices):
     PLURAL = 'PLURAL'
 
 
+class Language(models.TextChoices):
+    BELARUSIAN = 'BELARUSIAN'
+    RUSSIAN = 'RUSSIAN'
+
+
 class Person(models.Model):
     '''
     Model representing single person. Person can perform multiple roles, like being an
@@ -195,6 +200,11 @@ class Narration(models.Model):
                              on_delete=CASCADE)
 
     paid = models.BooleanField(_('Is narration paid?'), default=False)
+
+    language = models.CharField(_('Language'),
+                                max_length=20,
+                                choices=Language.choices,
+                                blank=False)
 
     def __str__(self) -> str:
         return '%s read by %s' % (

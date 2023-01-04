@@ -69,6 +69,20 @@ class CatalogPageTests(WebdriverTestCase):
                 tag=tag.id, status=models.BookStatus.ACTIVE).order_by('-date'))
         self._test_pagination(books)
 
+    def test_read_by_author_genre(self):
+        self.driver.get(f'{self.live_server_url}/update_read_by_author_tag')
+        tag = models.Tag.objects.filter(
+            name='Чытае аўтар').prefetch_related('books').first()
+        self.assertGreater(len(tag.books.all()), 10)
+        for book in tag.books.all()[:10]:
+            read_by_author = False
+            authors = set(book.authors.all())
+            for narration in book.narrations.all():
+                for narrator in narration.narrators.all():
+                    if narrator in authors:
+                        read_by_author = True
+            self.assertTrue(read_by_author)
+
     def test_genre_page_with_link_filter(self):
         tag = models.Tag.objects.filter(name='Сучасная проза').first()
         link_type = models.LinkType.objects.get(name='knihi_com')

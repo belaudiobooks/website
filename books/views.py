@@ -81,9 +81,9 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
 
     tag = None
     if slug:
-        #get selected tag id
+        # get selected tag id
         tag = tags.filter(slug=slug).first()
-        #pagination for the books by tag
+        # pagination for the books by tag
         filtered_books = filtered_books.filter(tag=tag.id)
 
     sorted_books = filtered_books.order_by('-date')
@@ -366,3 +366,24 @@ def get_data_json(request: HttpRequest) -> HttpResponse:
             # Allow accessing data.json from JS.
             'Access-Control-Allow-Origin': '*',
         })
+
+
+def update_read_by_author_tag(request: HttpRequest) -> HttpResponse:
+    '''
+    HTTP hook that triggers update of 'Read by author tag'.
+    '''
+    read_by_author_tag = Tag.objects.filter(slug='cytaje-autar').first()
+    if read_by_author_tag is None:
+        return HttpResponse(status=500,
+                            content='Tag cytaje-autar is missing from DB')
+    books = Book.objects.prefetch_related('tag', 'narrations').all()
+    book: Book
+    read_by_author_tag.books.clear()
+    for book in books:
+        authors = set(book.authors.all())
+        for narration in book.narrations.all():
+            for narrator in narration.narrators.all():
+                if narrator in authors:
+                    read_by_author_tag.books.add(book)
+    read_by_author_tag.save()
+    return HttpResponse(status=204)

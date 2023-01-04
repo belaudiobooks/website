@@ -17,5 +17,6 @@ urlpatterns = [
          views.how_to_publish_audiobook,
          name='how-to-publish-audiobook'),
     path('data.json', views.get_data_json),
-    path('generate_data_json', views.generate_data_json)
+    path('generate_data_json', views.generate_data_json),
+    path('update_read_by_author_tag', views.update_read_by_author_tag)
 ]

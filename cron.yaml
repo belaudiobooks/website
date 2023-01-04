@@ -5,3 +5,6 @@ cron:
 - description: "daily job to generate data.json"
   url: /generate_data_json
   schedule: every 24 hours
+- description: "hourly job to update 'Read by author' tag"
+  url: /update_read_by_author_tag
+  schedule: every 1 hours

@@ -1,7 +1,5 @@
 import json
 import logging
-import os
-import tempfile
 from typing import Dict, List, Union
 from uuid import UUID
 from django import views
@@ -19,7 +17,7 @@ from algoliasearch.search_client import SearchClient
 
 from books import serializers
 
-from .models import Book, BookStatus, LinkType, Person, Tag
+from .models import Book, BookStatus, LinkType, Person, Tag, Language
 
 active_books = Book.objects.filter(
     status=BookStatus.ACTIVE).prefetch_related('authors')
@@ -142,6 +140,7 @@ def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
         'narrations': book.narrations.all(),
         'tags': book.tag.all(),
         'single_language': single_language,
+        'show_russian_title': single_language == Language.RUSSIAN,
     }
 
     return render(request, 'books/book-detail.html', context)

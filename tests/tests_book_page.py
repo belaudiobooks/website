@@ -53,8 +53,7 @@ class BookPageTests(WebdriverTestCase):
             elem = self.driver.find_element(By.LINK_TEXT, tag.name)
             self.scroll_and_click(elem)
             self.assertIn(f'/catalog/{tag.slug}', self.driver.current_url)
-            tag_header = self.driver.find_element(By.CSS_SELECTOR,
-                                                  '#books .tag')
+            tag_header = self.driver.find_element(By.CSS_SELECTOR, '#books h1')
             self.assertEqual(tag.name, tag_header.text)
 
     def test_renders_text_elements(self):
@@ -78,3 +77,12 @@ class BookPageTests(WebdriverTestCase):
         self.driver.get(f'{self.live_server_url}/books/{book.slug}')
         header = self.driver.find_element(By.CSS_SELECTOR, '.links-header')
         self.assertIn('Дзе купіць', header.text)
+
+    def test_russian_only_books_show_both_titles(self):
+        belarusian_title = 'У вайны не жаночы твар'
+        russian_title = 'У войны не женское лицо'
+        book = models.Book.objects.filter(title=belarusian_title).first()
+        self.driver.get(f'{self.live_server_url}/books/{book.slug}')
+        body_text = self.driver.find_element(By.CSS_SELECTOR, '#books').text
+        self.assertIn(belarusian_title, body_text)
+        self.assertIn(russian_title, body_text)

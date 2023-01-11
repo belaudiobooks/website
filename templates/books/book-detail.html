@@ -50,6 +50,9 @@
 
             <!--Book Title-->
             <h1 class="h2">{{ book.title }}</h1>
+            {% if show_russian_title %}
+                <div class="mb-2">{{ book.title_ru }}</div>
+            {% endif %}
 
             <!--Book Duration-->
             {% if book.duration_sec %}

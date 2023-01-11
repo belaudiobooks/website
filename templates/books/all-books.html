@@ -43,13 +43,16 @@
         <!--Books by Tag-->
         <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 catalog-title">
                     {% if selected_tag %}
-                        <h1 class="tag">{{ selected_tag.name }}</h1>
+                        <h1>{{ selected_tag.name }}</h1>
+                        {% if selected_tag.description %}
+                            <div class="mb-3">{{ selected_tag.description }}</div>
+                        {% endif %}
                     {% endif %}
                 </div>
                 {% for book in books %}
-                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 mb-4">
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
                         {% include 'partials/_book.html' %}
                     </div>
                 {% endfor %}

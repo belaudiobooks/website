@@ -93,6 +93,7 @@ class Tag(models.Model):
                             max_length=100,
                             allow_unicode=True,
                             blank=True)
+    description = models.TextField(_('Tag Description'), blank=True)
 
     hidden = models.BooleanField(_('Hidden'), default=False)
 

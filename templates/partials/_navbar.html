@@ -1,7 +1,7 @@
 {% load static %}
 
 <!-- Top navigation that dissapaer when scrolled -->
-<nav class="sticky-top {% if request.path == '/' %}main-page{% endif %}">
+<nav class="{% if request.path == '/' %}main-page{% endif %}">
   <div class="container">
     <a href="{% url 'index' %}" class="link-dark text-decoration-none text-white logo-title">
       <img class="img-fluid logo" src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY">

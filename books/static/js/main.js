@@ -1,7 +1,7 @@
 /**
  * Given a name that consist of 1 or more parts collapses all parts
  * except for the last. For example "Jon Doe" becomes "J. Doe".
- * @param {string} name 
+ * @param {string} name
  * @returns string
  */
 function shortenName(name) {
@@ -15,7 +15,7 @@ function shortenName(name) {
 
 /**
  * Renders a search result (book or author) and returns DOM element.
- * @param {!Object} hit 
+ * @param {!Object} hit
  * @returns {!HTMLElement}
  */
 function renderHit(hit) {
@@ -52,7 +52,7 @@ function initializeSearch() {
     ),
     searchFunction(helper) {
       // Don't search if query is emptry. This helps to avoid unnecessary initial
-      // search on every page load, where users don't use search in most of the 
+      // search on every page load, where users don't use search in most of the
       // casees.
       if (helper.state.query === '') {
         return;
@@ -101,6 +101,7 @@ function initializeSearch() {
 
 function readjustStickyHeader() {
   const nav = document.querySelector('nav');
+  nav.classList.add('sticky-top');
   const search = document.querySelector('.search-container');
   nav.style.top = `-${nav.offsetHeight - search.offsetHeight - 24}px`;
 }

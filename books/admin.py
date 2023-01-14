@@ -167,6 +167,7 @@ class IncompleteLinksSetFilter(admin.SimpleListFilter):
         reasons = {
             'no_google_play': 'Missing Google Play',
             'no_audiobooks_com': 'Missing audiobooks.com',
+            'no_spotify': 'Missing Spotify',
         }
         return [(
             key,
@@ -189,6 +190,10 @@ class IncompleteLinksSetFilter(admin.SimpleListFilter):
             return queryset.filter(
                 links__url_type__name='rakuten_kobo').exclude(
                     links__url_type__name='audiobooks_com')
+        if reason == 'no_spotify':
+            return queryset.filter(
+                links__url_type__name='rakuten_kobo').exclude(
+                    links__url_type__name='spotify_podcast')
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
 
@@ -200,7 +205,7 @@ class LinkInlineAdmin(admin.StackedInline):
 @admin.register(Narration)
 class NarrationAdmin(admin.ModelAdmin):
     list_filter = (NarratorsCountFilter, IncompleteLinksSetFilter)
-    list_display = ('uuid', 'book', 'get_narrators')
+    list_display = ('uuid', 'get_narrators', 'book')
     inlines = [LinkInlineAdmin]
     list_per_page = 1000
     autocomplete_fields = ['narrators', 'book']

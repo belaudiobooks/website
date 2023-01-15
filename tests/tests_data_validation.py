@@ -1,33 +1,11 @@
 from os import path
 from typing import List
 from queue import Queue
-from threading import Thread
 from django.test import TransactionTestCase
 import requests
 
 from books import models
-
-
-class Worker(Thread):
-    ''' Thread executing tasks from a given tasks queue '''
-
-    def __init__(self, tasks):
-        Thread.__init__(self)
-        self.tasks = tasks
-        self.daemon = True
-        self.start()
-
-    def run(self):
-        while True:
-            func, args, kargs = self.tasks.get()
-            try:
-                func(*args, **kargs)
-            except Exception as exc:
-                # An exception happened in this thread
-                print(exc, args)
-            finally:
-                # Mark this task as done, whether an exception happened or not
-                self.tasks.task_done()
+from tests.worker import fetch_head_urls
 
 
 class DataValidationTests(TransactionTestCase):
@@ -99,28 +77,26 @@ class DataValidationTests(TransactionTestCase):
             self.assertRegex(link.url, link.url_type.url_regex)
 
     def test_verify_links_return_200(self):
+        # need to set maxDiff to get full list of 404 responses
         self.maxDiff = 10000
-        session = requests.session()
-        statuses: List[tuple[str, requests.Response]] = []
-        get = lambda url: statuses.append((url, session.head(url, timeout=20)))
-        tasks = Queue()
-        for _ in range(40):
-            Worker(tasks)
-
+        urls = []
         for link in models.Link.objects.all():  # type: models.Link
             # skip kobo as it doesn't responde to robot-like requests.
             # skip soundcloud as it responds with 429.
             # skip litres as they return 403 when test runs from github.
+            # skip yandex as it returns 404 for some books unavailable outside
+            # Belarus
             if link.url_type.name == 'rakuten_kobo' or link.url.startswith(
                     'https://soundcloud.com'
-            ) or link.url_type.name == 'litres':
+            ) or link.url_type.name == 'yandex_podcast' or link.url_type.name == 'litres':
                 continue
-            tasks.put((get, (link.url, ), {}))
-        tasks.join()
-        errors = []
-        for url, response in statuses:
+            urls.append(link.url)
+        errors = [
+            [status.url, status.response.status_code]
+            for status in fetch_head_urls(urls)
             # castbox returns 302.
             # all other should return 200.
-            if response.status_code != 200 and response.status_code != 302:
-                errors.append((url, response.status_code))
+            if status.response.status_code != 200
+            and status.response.status_code != 302
+        ]
         self.assertListEqual(errors, [])

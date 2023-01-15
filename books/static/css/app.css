@@ -271,12 +271,12 @@ nav .controls {
 nav .controls .buttons {
   display: flex;
   flex-direction: row;
-  width: 50%;
-  gap: 1rem;
+  width: 60%;
+  justify-content: space-between;
 }
 
 nav .controls .search-container {
-  width: 50%;
+  width: 40%;
 }
 
 nav .buttons .nav-item:hover {
@@ -285,8 +285,11 @@ nav .buttons .nav-item:hover {
 }
 
 .buttons .nav-link {
-  padding-right: 1rem;
-  padding-left: 1rem;
+  text-align: center;
+}
+
+.buttons .nav-item {
+  flex-grow: 1;
 }
 
 @media (min-width: 1200px) {
@@ -311,7 +314,10 @@ nav .buttons .nav-item:hover {
   }
   nav .controls .buttons {
     justify-content: space-evenly;
-    gap: 0;
+    width: 50%;
+  }
+  nav .controls .search-container {
+    width: 50%;
   }
 }
 

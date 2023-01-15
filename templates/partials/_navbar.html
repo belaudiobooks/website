@@ -37,6 +37,11 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="catalog nav-link text-white {% if '/articles' in request.path %}active{% else %}text-opacity-75{% endif %}"
+            href="{% url 'all-articles' %}">Артыкулы
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="about-us nav-link text-white {% if '/about' in request.path %}active{% else %}text-opacity-75{% endif %}"
             href="{% url 'about' %}">Пра нас
           </a>
@@ -45,8 +50,8 @@
       <div class="search-container col-12 col-md-6 col-lg-3 position-relative ">
         <form class="d-flex" action="{% url 'search' %}" method="get" autocomplete="off">
           <div class="input-group">
-            <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, назва кнігі"
-              aria-label="Аўтар, назва кнігі" aria-describedby="button-search" name="query" id="search">
+            <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, кніга"
+              aria-label="Аўтар, кніга" aria-describedby="button-search" name="query" id="search">
             <button class="btn p-0" type="submit" id="button-search">
               <i class="bi bi-search"></i>
             </button>

@@ -102,7 +102,7 @@ function initializeSearch() {
 function readjustStickyHeader() {
   const nav = document.querySelector('nav');
   nav.classList.add('sticky-top');
-  const search = document.querySelector('.search-container');
+  const search = nav.querySelector('.search-container');
   nav.style.top = `-${nav.offsetHeight - search.offsetHeight - 24}px`;
 }
 

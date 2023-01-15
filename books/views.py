@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import json
 import logging
 from typing import Dict, List, Union
@@ -31,6 +32,23 @@ TAGS_TO_SHOW_ON_MAIN_PAGE = [
 ]
 
 BOOKS_PER_PAGE = 16
+
+
+@dataclass
+class Article:
+    '''Data related to a single article.'''
+    # Example: 'Як выкласці аўдыякнігу'
+    title: str
+    # Example: jak-vyklasci-audyjaknihu
+    slug: str
+    # Example: how-to-publish-audiobook.html
+    template: str
+
+
+ARTICLES: List[Article] = [
+    Article('Як выкласці аўдыякнігу', 'jak-vyklasci-audyjaknihu',
+            'how-to-publish-audiobook.html')
+]
 
 
 def maybe_filter_links(books_query: query.QuerySet,
@@ -291,8 +309,9 @@ def sitemap(request: HttpRequest) -> HttpResponse:
     Serve sitemap in text format.
     https://developers.google.com/search/docs/advanced/sitemaps/overview?hl=en
     '''
-    pages: List[str] = ['/', '/about', '/catalog']
-    pages.append(reverse('how-to-publish-audiobook'))
+    pages: List[str] = ['/', '/about', '/catalog', '/articles']
+    for article in ARTICLES:
+        pages.append(reverse('single-article', args=(article.slug, )))
     for book in active_books:
         pages.append(reverse('book-detail-page', args=(book.slug, )))
     for person in Person.objects.all():
@@ -305,9 +324,17 @@ def sitemap(request: HttpRequest) -> HttpResponse:
     return HttpResponse(result, content_type='text/plain')
 
 
-def how_to_publish_audiobook(request: HttpRequest) -> HttpResponse:
-    '''Serve "How to publish audiobook" guide page.'''
-    return render(request, 'books/how-to-publish-audiobook.html', {})
+def all_articles(request: HttpRequest) -> HttpRequest:
+    '''Serves index page of all articles'''
+    return render(request, 'books/articles/all.html', {'articles': ARTICLES})
+
+
+def single_article(request: HttpRequest, slug: str) -> HttpResponse:
+    '''Serve an article'''
+    for article in ARTICLES:
+        if article.slug == slug:
+            return render(request, f'books/articles/{article.template}', {})
+    return views.defaults.page_not_found(request, None)
 
 
 DATA_JSON_FILE = 'tmp_data.json'

@@ -206,6 +206,12 @@ a {
   color: #000000;
 }
 
+.btn-tag {
+  background: #E1E1E1;
+  border-radius: 15px;
+  color: black;
+}
+
 nav.sticky-top {
   background-color: #7879F1;
 }
@@ -357,4 +363,138 @@ nav .buttons .nav-item:hover {
   nav .controls .search-container {
     width: 100%;
   }
+}
+
+.book {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+.book a {
+  text-decoration: none;
+  color: black;
+  transition: all 0.2s ease;
+  padding: 1rem;
+}
+
+.book a:hover,
+.book a:active {
+  transform: scale(1.1);
+  background-color: #390281;
+  color: white;
+}
+
+.book img {
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+  border-radius: 10%;
+}
+
+.book h3 {
+  margin: 0.25rem 0;
+}
+
+.book time {
+  color: #666666;
+  margin: 0.25rem;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.book:hover time,
+.book:active time {
+  color: white;
+}
+
+.btn-genre[aria-expanded="true"] .bi-chevron-down,
+.btn-genre[aria-expanded="false"] .bi-chevron-up {
+  display: none;
+}
+
+#books, #content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  /* width: 85%; */
+  margin: 2rem auto 2rem auto;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+#books h6{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: black;
+}
+
+#books h7{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #7879F1;
+}
+
+#books p{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+  color: #848484;
+}
+
+#books .tag {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 34px;
+}
+
+#books ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+}
+
+#books li{
+  flex: 1;
+}
+
+
+.tag {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  padding: 0.375rem 0.75rem;
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+}
+
+.catalog-title h1 {
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.tag-selected, .tag-selected i.bi::before {
+  font-weight: 600 !important;
+  font-size: 16px;
+  line-height: 20px;
+  color: #7879F1;
+}
+
+.books-text {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #8774FF;
 }

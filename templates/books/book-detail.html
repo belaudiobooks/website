@@ -16,11 +16,6 @@
   апісанне, спасылкі на розныя крыніцы дзе можна паслухаць кнігу.
 {% endblock description %}
 
-{% block css_files %}
-    <link rel="stylesheet" href="{% static 'css/book-detail.css' %}">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-{% endblock css_files %}
-
 {% block content %}
 <div class="container" id="books">
     <div class="row">
@@ -113,7 +108,7 @@
                 {% for link in narration.links.all %}
                     {% if not link.url_type.disabled %}
                         <div class="col-12 mt-2">
-                            <a href="{{ link.url }}" class="text-decoration-none link-color d-block" target="_blank">
+                            <a href="{{ link.url }}" class="text-decoration-none d-block" target="_blank">
                                 <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">{{ link.url_type.caption }}
                             </a>
                         </div>

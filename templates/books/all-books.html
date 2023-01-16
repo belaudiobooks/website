@@ -5,12 +5,6 @@
 {% block title %}{% if selected_tag %}{{ selected_tag.name }}{% else %}Усе аўдыякнігі{% endif %}{% endblock title %}
 {% block og_title %}{% if selected_tag %}{{ selected_tag.name }}{% else %}Усе аўдыякнігі{% endif %}{% endblock og_title %}
 
-{% block css_files %}
-    <link rel="stylesheet" href="{% static 'css/books.css' %}">
-    {% comment %} <link rel="stylesheet" href="{% static 'css/all-books.css' %}"> {% endcomment %}
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-{% endblock css_files %}
-
 {% block content %}
 <div class="container">
     <div class="row">

@@ -6,7 +6,7 @@
         {% for person in persons %}
                 <a class="text-decoration-none" href="{% url 'person-detail-page' person.slug %}">
                 {{ person.name }}
-                </a> 
+                </a>
                 {% if not forloop.last %},{% endif %}
         {% endfor %}
     {% else %}
@@ -14,7 +14,7 @@
             {{single}}{{person|gender:gender_variants}}:
             <a class="text-decoration-none" href="{% url 'person-detail-page' person.slug %}">
             {{ person.name }}
-            </a> 
+            </a>
             {% if not forloop.last %},{% endif %}
         {% endfor %}
     {% endif %}

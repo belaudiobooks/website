@@ -46,6 +46,13 @@ class BookSimpleSerializer(serializers.ModelSerializer):
     '''
     narrations = NarrationSimpleSerializer(many=True)
 
+    def to_representation(self, instance):
+        """Convert `username` to lowercase."""
+        ret = super().to_representation(instance)
+        if instance.duration_sec is not None:
+            ret['duration_sec'] = instance.duration_sec.total_seconds()
+        return ret
+
     class Meta:
         model = models.Book
         fields = [

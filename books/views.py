@@ -7,7 +7,7 @@ from django import views
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.cache import cache_control
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator, Page
@@ -41,13 +41,19 @@ class Article:
     title: str
     # Example: jak-vyklasci-audyjaknihu
     slug: str
+    # Example: 'Гэта артыкула пра бла-бла'
+    short_description: str
     # Example: how-to-publish-audiobook.html
     template: str
 
 
 ARTICLES: List[Article] = [
-    Article('Як выкласці аўдыякнігу', 'jak-vyklasci-audyjaknihu',
-            'how-to-publish-audiobook.html')
+    Article(
+        title='Як выкласці аўдыякнігу',
+        short_description=
+        'Гайд пра тое, як лепей распаўсюдзіць аўдыякнігу на беларускай мове.',
+        slug='jak-vyklasci-audyjaknihu',
+        template='how-to-publish-audiobook.html')
 ]
 
 
@@ -324,16 +330,19 @@ def sitemap(request: HttpRequest) -> HttpResponse:
     return HttpResponse(result, content_type='text/plain')
 
 
-def all_articles(request: HttpRequest) -> HttpRequest:
-    '''Serves index page of all articles'''
-    return render(request, 'books/articles/all.html', {'articles': ARTICLES})
+def redirect_to_first_article(request: HttpRequest) -> HttpRequest:
+    '''Redirects to the first article'''
+    return redirect(reverse('single-article', args=(ARTICLES[0].slug, )))
 
 
 def single_article(request: HttpRequest, slug: str) -> HttpResponse:
     '''Serve an article'''
     for article in ARTICLES:
         if article.slug == slug:
-            return render(request, f'books/articles/{article.template}', {})
+            return render(request, f'books/articles/{article.template}', {
+                'article': article,
+                'all_articles': ARTICLES,
+            })
     return views.defaults.page_not_found(request, None)
 
 

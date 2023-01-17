@@ -1,8 +1,5 @@
 from os import path
-from typing import List
-from queue import Queue
 from django.test import TransactionTestCase
-import requests
 
 from books import models
 from tests.worker import fetch_head_urls

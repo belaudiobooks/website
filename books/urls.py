@@ -13,7 +13,7 @@ urlpatterns = [
     path("404", views.page_not_found),
     path('robots.txt', views.robots_txt),
     path('sitemap.txt', views.sitemap),
-    path('articles', views.all_articles, name='all-articles'),
+    path('articles', views.redirect_to_first_article, name='all-articles'),
     path('articles/<slug:slug>', views.single_article, name='single-article'),
     path('data.json', views.get_data_json),
     path('generate_data_json', views.generate_data_json),

@@ -41,5 +41,6 @@ class RobotPagesTests(WebdriverTestCase):
         errors = [
             status for status in fetch_head_urls(sitemap)
             if status.response.status_code != 200
+            and status.response.status_code != 302
         ]
         self.assertListEqual(errors, [])

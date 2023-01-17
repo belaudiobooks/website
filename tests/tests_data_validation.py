@@ -45,6 +45,8 @@ class DataValidationTests(TransactionTestCase):
             self.assertNotEqual(book.narrations.count(),
                                 0,
                                 msg=f'Book {book.title} has no narrations.')
+            self.assertIsNotNone(book.duration_sec,
+                                 msg=f'Book {book.title} has no duration.')
         for narration in models.Narration.objects.all():
             self.assertNotEqual(
                 narration.links.count(),

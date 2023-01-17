@@ -470,7 +470,7 @@ nav .buttons .nav-item:hover {
 
 .tag {
   font-weight: normal;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 20px;
   color: #000000;
   padding: 0.375rem 0.75rem;
@@ -486,8 +486,6 @@ nav .buttons .nav-item:hover {
 
 .tag-selected, .tag-selected i.bi::before {
   font-weight: 600 !important;
-  font-size: 16px;
-  line-height: 20px;
   color: #7879F1;
 }
 

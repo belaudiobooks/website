@@ -191,8 +191,8 @@ a {
   border-radius: 10px;
 }
 
-@media (min-width: 576px) {
-  .collapse.dont-collapse-sm {
+@media (min-width: 768px) {
+  .collapse.dont-collapse-md {
     display: block;
     height: auto !important;
     visibility: visible;

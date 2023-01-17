@@ -1,5 +1,4 @@
 import time
-import unittest
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.support.ui import WebDriverWait

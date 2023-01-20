@@ -53,7 +53,12 @@ ARTICLES: List[Article] = [
         short_description=
         'Гайд пра тое, як лепей распаўсюдзіць аўдыякнігу на беларускай мове.',
         slug='jak-vyklasci-audyjaknihu',
-        template='how-to-publish-audiobook.html')
+        template='how-to-publish-audiobook.html'),
+    Article(title='База даных audiobooks.by',
+            short_description=
+            'Дзе знайсці і як карыстацца базай даных сайта audiobooks.by',
+            slug='baza-danych-audiobooksby',
+            template='audiobooksby-database.html')
 ]
 
 

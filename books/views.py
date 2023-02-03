@@ -58,7 +58,12 @@ ARTICLES: List[Article] = [
             short_description=
             'Дзе знайсці і як карыстацца базай даных сайта audiobooks.by',
             slug='baza-danych-audiobooksby',
-            template='audiobooksby-database.html')
+            template='audiobooksby-database.html'),
+    Article(title='Гайд па вокладках аўдыякніг',
+            short_description=
+            'Як зрабіць добрыя вокладкі аўдыякніг: фармат, памеры, змест.',
+            slug='hajd-pa-vokladkach-audyjaknih',
+            template='covers-guide.html'),
 ]
 
 

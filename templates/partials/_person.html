@@ -2,20 +2,14 @@
 {% load books_extras %}
 
 {% if persons.exists %}
-    {% if persons.count > 1 %}{{ multiple }}:
-        {% for person in persons %}
-                <a class="text-decoration-none" href="{% url 'person-detail-page' person.slug %}">
-                {{ person.name }}
-                </a>
-                {% if not forloop.last %},{% endif %}
-        {% endfor %}
-    {% else %}
-        {% for person in persons %}
-            {{single}}{{person|gender:gender_variants}}:
-            <a class="text-decoration-none" href="{% url 'person-detail-page' person.slug %}">
-            {{ person.name }}
-            </a>
-            {% if not forloop.last %},{% endif %}
-        {% endfor %}
-    {% endif %}
+{% if persons.count > 1 or persons.0.gender == "PLURAL" %}{{ multiple }}:
+{% else %}
+{{single}}{{persons.0|gender:gender_variants}}:
+{% endif %}
+{% for person in persons %}
+<a class="text-decoration-none" href="{% url 'person-detail-page' person.slug %}">
+    {{ person.name }}
+</a>
+{% if not forloop.last %},{% endif %}
+{% endfor %}
 {% endif %}

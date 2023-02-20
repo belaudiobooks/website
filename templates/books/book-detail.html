@@ -82,6 +82,10 @@
                 {% cite_source book.description_source "cit-description" %}
             </div>
 
+            {% if book.preview_url %}
+                Першую частку можна паслухаць бясплатна на <a href="{{ book.preview_url }}" target="_blank">YouTube</a>.
+            {% endif %}
+
             <!--Adding Links-->
             {% for narration in narrations %}
                 <div class="col-12 mt-5 links-header">

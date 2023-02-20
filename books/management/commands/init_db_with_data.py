@@ -38,7 +38,8 @@ class Command(BaseCommand):
         call_command('migrate', 'user', 'zero')
         call_command('migrate')
         call_command('loaddata', 'data/data.json')
-        if 'create_superuser' in options:
+        if 'create_superuser' in options and options[
+                'create_superuser'] is not None:
             superuser_pass = os.environ.get('DJANGO_SUPERUSER_PASSWORD', None)
             assert superuser_pass, 'DJANGO_SUPERUSER_PASSWORD must be set when using --create-superuser option'
             email = options['create_superuser']

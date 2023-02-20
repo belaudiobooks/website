@@ -163,6 +163,10 @@ class Book(models.Model):
                               max_length=20,
                               choices=BookStatus.choices,
                               blank=False)
+    preview_url = models.CharField(_('Preview URL'),
+                                   max_length=100,
+                                   blank=True,
+                                   default='')
 
     def __str__(self) -> str:
         return "%s (%s)" % (

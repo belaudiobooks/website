@@ -462,7 +462,7 @@ nav .buttons .nav-item:hover {
   line-height: 34px;
 }
 
-#books ul{
+#books ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -471,7 +471,11 @@ nav .buttons .nav-item:hover {
   gap: 1rem;
 }
 
-#books li{
+article li {
+  margin-bottom: 0.5rem;
+}
+
+#books li {
   flex: 1;
 }
 

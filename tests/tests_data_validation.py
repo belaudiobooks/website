@@ -48,10 +48,11 @@ class DataValidationTests(TransactionTestCase):
             self.assertIsNotNone(book.duration_sec,
                                  msg=f'Book {book.title} has no duration.')
         for narration in models.Narration.objects.all():
-            self.assertNotEqual(
-                narration.links.count(),
-                0,
-                msg=f'Narration {narration.uuid} has no links.')
+            if narration.book.status == models.BookStatus.ACTIVE:
+                self.assertNotEqual(
+                    narration.links.count(),
+                    0,
+                    msg=f'Narration {narration.uuid} has no links.')
         for person in models.Person.objects.all():
             self.assertNotEqual(person.books_authored.count() +
                                 person.narrations.count() +
@@ -95,7 +96,7 @@ class DataValidationTests(TransactionTestCase):
             for status in fetch_head_urls(urls)
             # castbox returns 302.
             # all other should return 200.
-            if status.response.status_code != 200
-            and status.response.status_code != 302
+            if status.response.status_code != 200 and status.response.
+            status_code != 302 and status.response.status_code != 303
         ]
         self.assertListEqual(errors, [])

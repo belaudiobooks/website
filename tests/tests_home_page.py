@@ -7,7 +7,8 @@ class HomePageTests(WebdriverTestCase):
     '''Selenium tests for home-page related stuff.'''
 
     def get_first_book(self) -> models.Book:
-        return models.Book.objects.order_by('-date').first()
+        return models.Book.objects.filter(
+            status=models.BookStatus.ACTIVE).order_by('-date').first()
 
     def test_click_book_title(self):
         self.driver.get(self.live_server_url)

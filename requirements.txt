@@ -18,6 +18,6 @@ google-cloud-storage
 google-cloud-logging
 google-cloud-secret-manager
 beautifulsoup4
-selenium>=4.3.0<4.4.0
+selenium>=4.8.2
 algoliasearch>=2.0,<3.0
 djangorestframework

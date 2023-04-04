@@ -13,68 +13,70 @@
 {% endspaceless %}{% endblock %}
 
 {% block description %}
-  На гэтай старонцы вы знойдзеце ўсе кнігі якія {{person.name}} напісаў, агучыў альбо пераклаў.
+    На гэтай старонцы вы знойдзеце ўсе кнігі, якія {{ person.name }} напіса{{ person|gender:"ла,ў"}}, агучы
+    {{ person|gender:"ла,ў"}} альбо перакла{{ person|gender:"ла,ў"}}.
 {% endblock description %}
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <!--Author bio section-->
-        <div class="col-12 col-md-3 mt-2 mt-sm-5">
-            {% if person.photo %}
-                <img class="img-fluid mx-auto mb-3 photo d-block" src="{{ person.photo.url }}" alt="{{ person.name }}">
-                {% cite_source person.photo_source "cit-photo" %}
-            {% endif %}
-            <h1 class="h3 text-center">
-                {{ person.name }}
-            </h1>
-            <p>
-                {{ person.description|linebreaks }}
-            </p>
-            {% cite_source person.description_source "cit-description" %}
-        </div>
-        <!--Books section-->
-        <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
-            {% if author.exists %}
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <h4>Кнігі аўтар{{person|gender:"кі,а"}}</h4>
-                    </div>
-                    {% for book in author %}
-                        <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
-                            {% include 'partials/_book.html' %}
+    <div class="container">
+        <div class="row">
+            <!--Author bio section-->
+            <div class="col-12 col-md-3 mt-2 mt-sm-5">
+                {% if person.photo %}
+                    <img class="img-fluid mx-auto mb-3 photo d-block" src="{{ person.photo.url }}"
+                         alt="{{ person.name }}">
+                    {% cite_source person.photo_source "cit-photo" %}
+                {% endif %}
+                <h1 class="h3 text-center">
+                    {{ person.name }}
+                </h1>
+                <p>
+                    {{ person.description|linebreaks }}
+                </p>
+                {% cite_source person.description_source "cit-description" %}
+            </div>
+            <!--Books section-->
+            <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
+                {% if author.exists %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h4>Кнігі аўтар{{ person|gender:"кі,а"}}</h4>
                         </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% if translator.exists %}
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <h4>Пераклады</h4>
+                        {% for book in author %}
+                            <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
+                                {% include 'partials/_book.html' %}
+                            </div>
+                        {% endfor %}
                     </div>
-                    {% for book in translator %}
-                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
-                        {% include 'partials/_book.html' %}
+                {% endif %}
+                {% if translator.exists %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h4>Пераклады</h4>
+                        </div>
+                        {% for book in translator %}
+                            <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
+                                {% include 'partials/_book.html' %}
+                            </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% if narrations %}
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <h4>Агучаныя кнігі</h4>
+                {% endif %}
+                {% if narrations %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h4>Агучаныя кнігі</h4>
+                        </div>
+                        {% for book in narrations %}
+                            <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
+                                {% include 'partials/_book.html' %}
+                            </div>
+                        {% endfor %}
                     </div>
-                    {% for book in narrations %}
-                    <div class="col-6 col-sm-5 col-md-4 col-lg-3 my-4">
-                        {% include 'partials/_book.html' %}
-                    </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
 
 
 {% endblock content %}

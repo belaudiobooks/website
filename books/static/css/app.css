@@ -447,16 +447,16 @@ nav .buttons .nav-item:hover {
   color: #7879F1;
 }
 
+#books .descr > p{
+  font-size: 16px;
+}
+
 #books p{
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
   line-height: 18px;
   color: #848484;
-}
-
-.descr > p{
-  font-size: 16px !important;
 }
 
 #books .tag {

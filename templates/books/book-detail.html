@@ -78,7 +78,7 @@
 
             <!--Book description-->
             <div class="descr my-4">
-                <p class="fw-normal">{{ book.description|linebreaks }}</p>
+                {{ book.description|linebreaks }}
                 {% cite_source book.description_source "cit-description" %}
             </div>
 
@@ -111,9 +111,12 @@
                 <!--Access to the link type-->
                 {% for link in narration.links.all %}
                     {% if not link.url_type.disabled %}
-                        <div class="col-12 mt-2">
+                        <div class="col-12 mt-2 descr">
                             <a href="{{ link.url }}" class="text-decoration-none d-block" target="_blank">
                                 <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">{{ link.url_type.caption }}
+                                {% if link.url_type.name == 'google_podcast' %}
+                                    <p>fdfgdfgdfg</p>
+                                {% endif %}
                             </a>
                         </div>
                     {% endif %}

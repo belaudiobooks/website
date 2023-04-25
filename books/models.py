@@ -124,13 +124,9 @@ class Book(models.Model):
                             default=uuid.uuid4,
                             editable=False,
                             unique=True)
-    title = models.CharField(_('Book Title'),
-                             max_length=100,
-                             blank=True,
-                             default='')
+    title = models.CharField(_('Book Title'), max_length=100, default='')
     title_ru = models.CharField(_('Book Title in russian'),
                                 max_length=100,
-                                blank=True,
                                 default='')
     description = models.TextField(_('Book Description'), blank=True)
     description_source = models.CharField(_('Book Description Source'),

@@ -3,6 +3,8 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 
 from books import models
 
@@ -19,7 +21,9 @@ class WebdriverTestCase(StaticLiveServerTestCase):
         options.add_argument('--disable-gpu')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('--headless')
-        cls.driver = webdriver.Chrome(options=options)
+        cls.driver = webdriver.Chrome(options=options,
+                                      service=ChromeService(
+                                          ChromeDriverManager().install()))
         cls.driver.implicitly_wait(10)
 
     @classmethod

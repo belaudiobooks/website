@@ -21,3 +21,4 @@ beautifulsoup4
 selenium>=4.8.2
 algoliasearch>=2.0,<3.0
 djangorestframework
+webdriver-manager

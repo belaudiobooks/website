@@ -58,6 +58,9 @@ class BookAdmin(admin.ModelAdmin):
     autocomplete_fields = ['authors', 'translators']
     search_fields = ['title']
 
+    class Media:
+        js = ('js/admin.js', )
+
     @display(description='authors')
     def get_book_authors(self, obj):
         return ', '.join([str(person.name) for person in obj.authors.all()])
@@ -129,6 +132,9 @@ class PersonAdmin(admin.ModelAdmin):
     ordering = ['slug']
     list_per_page = 1000
     search_fields = ['name']
+
+    class Media:
+        js = ('js/admin.js', )
 
 
 class NarratorsCountFilter(admin.SimpleListFilter):

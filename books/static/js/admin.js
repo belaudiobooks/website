@@ -11,4 +11,31 @@ function autoDetectLinkType() {
     });
 }
 
-window.addEventListener('load', autoDetectLinkType);
+/**
+ * We want to use only « » quotes in descriptions. Show warning when we use any other kind of
+ * quote when filling descriptions in admin.
+ */
+function showWarningOnWrongQuotes() {
+    document.body.addEventListener('change', (e) => {
+        const element = e.target;
+        if (!element.classList.contains('vLargeTextField')) return;
+        if (element.nextElementSibling
+            && element.nextElementSibling.classList.contains('errornote')) {
+            element.nextElementSibling.remove();
+        }
+        if (element.value.match(/["“”"„]/)) {
+            const error = document.createElement('p');
+            error.classList.add('errornote');
+            error.innerText = 'Text contains one of the following quotation marks: " “ ” " „ '
+                + 'We should be using only « » Please fix the text.';
+            element.after(error);
+        }
+    });
+}
+
+function main() {
+    autoDetectLinkType();
+    showWarningOnWrongQuotes();
+}
+
+window.addEventListener('load', main);

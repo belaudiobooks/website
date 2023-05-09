@@ -214,6 +214,14 @@ class Narration(models.Model):
         )
 
 
+class LinkAvailability(models.TextChoices):
+    '''
+    Enum representing where the link is available. For example it can be unavailable in Belarus.
+    '''
+    EVERYWHERE = 'EVERYWHERE'
+    UNAVAILABLE_IN_BELARUS = 'UNAVAILABLE_IN_BELARUS'
+
+
 class LinkType(models.Model):
     '''
     LinkType represents a particular source in internet where audibooks are hosted. Examples are
@@ -233,6 +241,10 @@ class LinkType(models.Model):
                                  max_length=100,
                                  blank=True,
                                  default='')
+    availability = models.CharField(_('Availability'),
+                                    max_length=50,
+                                    choices=LinkAvailability.choices,
+                                    blank=False)
 
     def __str__(self) -> str:
         return f'{self.name}'

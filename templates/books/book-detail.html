@@ -111,9 +111,13 @@
                 <!--Access to the link type-->
                 {% for link in narration.links.all %}
                     {% if not link.url_type.disabled %}
-                        <div class="col-12 mt-2">
-                            <a href="{{ link.url }}" class="text-decoration-none d-block" target="_blank">
-                                <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">{{ link.url_type.caption }}
+                        <div class="mt-2">
+                            <a href="{{ link.url }}" class="text-decoration-none d-flex align-items-center" target="_blank">
+                                <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">
+                                <div class="d-inline-block flex-grow-1">
+                                    <span>{{ link.url_type.caption }}</span>
+                                    <span class="link-type-availability">{{ link.url_type.availability | link_type_availibility }}</span>
+                                </div>
                             </a>
                         </div>
                     {% endif %}

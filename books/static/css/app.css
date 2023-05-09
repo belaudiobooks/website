@@ -521,3 +521,9 @@ article .CodeMirror {
   border: 1px solid #eee;
   height: auto;
 }
+
+.link-type-availability {
+  color: #848484;
+  display: block;
+  font-size: 15px;
+}

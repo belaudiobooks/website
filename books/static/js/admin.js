@@ -33,9 +33,55 @@ function showWarningOnWrongQuotes() {
     });
 }
 
+/**
+ * Using Apple Book API looks up audiobook by title and returns array of links if found.
+ */
+async function findAppleBooksLink(title) {
+    // API https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/Searching.html
+    const request = new URL('https://itunes.apple.com/search');
+    request.searchParams.append('media', 'audiobook');
+    request.searchParams.append('term', title);
+    request.searchParams.append('callback', 'appleCallback');
+    const result = new Promise(resolve => {
+        window.appleCallback = (data) => {
+            resolve(data.results.map(entry => entry.collectionViewUrl));
+            delete window.appleCallback
+        };
+    });
+    const script = document.createElement('script');
+    script.src = request.toString();
+    document.body.appendChild(script);
+    return result;
+}
+
+function getFirstUnfilledUrlField() {
+    for (const field of Array.from(document.querySelectorAll('.field-url input'))) {
+        if (!field.value) return field;
+    }
+    document.querySelector('.add-row a').click();
+    return getFirstUnfilledUrlField();
+}
+
+function addFindAppleBooksLinkButton() {
+    const button = document.createElement('button');
+    button.innerText = 'Find Apple Books link';
+    button.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const title = document.querySelector('#id_book option').innerText;
+        const links = await findAppleBooksLink(title.replace(/\(.*\)$/, ''));
+        for (const link of links) {
+            const field = getFirstUnfilledUrlField();
+            field.value = link;
+            field.dispatchEvent(new Event('change', { 'bubbles': true }));
+        }
+    });
+    document.querySelector('.add-row').after(button);
+}
+
 function main() {
     autoDetectLinkType();
     showWarningOnWrongQuotes();
+    addFindAppleBooksLinkButton();
 }
 
 window.addEventListener('load', main);

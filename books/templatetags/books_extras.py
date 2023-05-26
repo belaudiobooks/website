@@ -60,6 +60,8 @@ def link_type_availibility(availability: str) -> str:
         return ''
     elif availability == models.LinkAvailability.UNAVAILABLE_IN_BELARUS:
         return 'не працуе ў Беларусі'
+    elif availability == models.LinkAvailability.USA_ONLY:
+        return 'толькі ў ЗША'
     else:
         raise Exception('Uknown avalability ' + availability)
 

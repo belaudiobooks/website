@@ -220,6 +220,7 @@ class LinkAvailability(models.TextChoices):
     '''
     EVERYWHERE = 'EVERYWHERE'
     UNAVAILABLE_IN_BELARUS = 'UNAVAILABLE_IN_BELARUS'
+    USA_ONLY = 'USA_ONLY'
 
 
 class LinkType(models.Model):

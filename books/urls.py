@@ -17,5 +17,6 @@ urlpatterns = [
     path('articles/<slug:slug>', views.single_article, name='single-article'),
     path('data.json', views.get_data_json),
     path('generate_data_json', views.generate_data_json),
-    path('update_read_by_author_tag', views.update_read_by_author_tag)
+    path('update_read_by_author_tag', views.update_read_by_author_tag),
+    path('stats/birthdays', views.birthdays),
 ]

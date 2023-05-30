@@ -116,6 +116,13 @@ def books_of_the_month() -> str:
     return f'Кнігі {MONTHS[month - 1]}'
 
 
+@register.filter
+def format_date(date: datetime.date) -> str:
+    '''Formats date in a human-readable format.'''
+    month = MONTHS[date.month - 1]
+    return '%d %s %d' % (date.day, month, date.year)
+
+
 @register.simple_tag
 def cite_source(source: str, cls: Optional[str]):
     '''

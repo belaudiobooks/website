@@ -73,6 +73,10 @@ class Person(models.Model):
                               max_length=20,
                               choices=Gender.choices,
                               blank=False)
+    date_of_birth = models.DateField(_('Date of birth'),
+                                     auto_now_add=False,
+                                     blank=True,
+                                     null=True)
 
     def __str__(self) -> str:
         return f'{self.name}'

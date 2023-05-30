@@ -100,6 +100,7 @@ class IncompletePersonListFilter(admin.SimpleListFilter):
     def lookups(self, request, model_admin):
         queryset = model_admin.get_queryset(request)
         reasons = {
+            'no_date_of_birth': 'Missing date of birth',
             'no_description': 'Missing description',
             'no_photo': 'Missing photo',
             'no_translation': 'Missing russian name',
@@ -122,6 +123,8 @@ class IncompletePersonListFilter(admin.SimpleListFilter):
             return queryset.filter(photo__exact='')
         if reason == 'no_translation':
             return queryset.filter(name_ru__exact='')
+        if reason == 'no_date_of_birth':
+            return queryset.filter(date_of_birth__isnull=True)
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
 

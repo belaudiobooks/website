@@ -28,7 +28,8 @@ a {
   margin: auto;
 }
 
-#books .cit-photo, .cit-photo {
+#books .cit-photo,
+.cit-photo {
   text-align: center;
   font-size: 13px;
 }
@@ -85,6 +86,7 @@ a {
   font-style: normal;
   color: black
 }
+
 .title {
   font-style: normal;
   font-weight: bold;
@@ -144,12 +146,14 @@ a {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border-radius: 10px!important;
+  border-radius: 10px !important;
 }
 
 
 @media (min-width: 992px) and (max-width: 1200px) {
-  .card-img-150, .cover.small {
+
+  .card-img-150,
+  .cover.small {
     width: 130px;
     height: 130px;
     background-size: 130px;
@@ -254,7 +258,7 @@ nav .container {
  */
 
 nav .logo-title {
-  height:100%;
+  height: 100%;
   display: block;
   display: flex;
   flex-direction: column;
@@ -275,6 +279,7 @@ nav .logo-title .site-title {
 nav .site-description {
   width: 50%;
 }
+
 nav .controls {
   display: flex;
   align-items: center;
@@ -323,13 +328,16 @@ nav .buttons .nav-item:hover {
     flex-direction: row;
     height: auto;
   }
+
   nav .controls {
     width: 100%;
   }
+
   nav .controls .buttons {
     justify-content: space-evenly;
     width: 50%;
   }
+
   nav .controls .search-container {
     width: 50%;
   }
@@ -345,40 +353,48 @@ nav .buttons .nav-item:hover {
     width: 100%;
     margin-bottom: 0.75rem;
   }
+
   nav.main-page .logo-title {
     margin-bottom: 2rem;
   }
+
   nav .logo-title .logo {
     width: 100px;
     height: 100px;
   }
+
   nav .site-description {
     width: 100%;
   }
+
   nav .show-on-main {
     display: none;
   }
+
   nav.main-page .show-on-main {
     display: block;
   }
+
   nav .controls {
     flex-direction: column;
   }
+
   nav .controls .buttons {
     justify-content: space-evenly;
     width: 100%;
   }
+
   nav .controls .search-container {
     width: 100%;
   }
 }
 
 .book {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
 .book a {
   text-decoration: none;
@@ -422,7 +438,9 @@ nav .buttons .nav-item:hover {
   display: none;
 }
 
-#books, #content {
+#books,
+#content,
+#birthdays {
   background-color: white;
   padding: 2rem;
   border-radius: 10px;
@@ -431,7 +449,7 @@ nav .buttons .nav-item:hover {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-#books h6{
+#books h6 {
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -439,7 +457,7 @@ nav .buttons .nav-item:hover {
   color: black;
 }
 
-#books h7{
+#books h7 {
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -447,7 +465,7 @@ nav .buttons .nav-item:hover {
   color: #7879F1;
 }
 
-#books p{
+#books p {
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
@@ -496,7 +514,8 @@ article li {
   font-size: 28px;
 }
 
-.tag-selected, .tag-selected i.bi::before {
+.tag-selected,
+.tag-selected i.bi::before {
   font-weight: 600 !important;
   color: #7879F1;
 }
@@ -526,4 +545,9 @@ article .CodeMirror {
   color: #848484;
   display: block;
   font-size: 15px;
+}
+
+#birthdays .card .card-img-top {
+  width: 100px;
+  height: 100px;
 }

@@ -1,6 +1,8 @@
 from dataclasses import dataclass
+import datetime
 import json
 import logging
+import bisect
 from typing import Dict, List, Union
 from uuid import UUID
 from django import views
@@ -432,3 +434,42 @@ def update_read_by_author_tag(request: HttpRequest) -> HttpResponse:
                     read_by_author_tag.books.add(book)
     read_by_author_tag.save()
     return HttpResponse(status=204)
+
+
+def birthdays(request: HttpRequest) -> HttpResponse:
+    '''Birthday page'''
+    now = datetime.datetime.now()
+    people = list(
+        Person.objects.filter(date_of_birth__isnull=False).order_by(
+            'date_of_birth__month', 'date_of_birth__day'))
+    days = [p.date_of_birth.month * 31 + p.date_of_birth.day for p in people]
+    ind = bisect.bisect_left(days, now.month * 31 + now.day)
+    people = people[ind:] + people[:ind]
+
+    people_with_info = []
+    for person in people[:30]:
+        next_birthday = datetime.date(now.year, person.date_of_birth.month,
+                                      person.date_of_birth.day)
+        if next_birthday < now.date():
+            next_birthday = datetime.date(now.year + 1,
+                                          person.date_of_birth.month,
+                                          person.date_of_birth.day)
+        people_with_info.append({
+            'date_of_birth':
+            person.date_of_birth,
+            'person':
+            person,
+            'age':
+            now.year - person.date_of_birth.year,
+            'days_left': (next_birthday - now.date()).days,
+            'stats':
+            '%d - %d - %d' % (
+                person.books_authored.count(),
+                person.books_translated.count(),
+                person.narrations.count(),
+            ),
+        })
+    context = {
+        'people_with_info': people_with_info,
+    }
+    return render(request, 'books/stats/birthdays.html', context)

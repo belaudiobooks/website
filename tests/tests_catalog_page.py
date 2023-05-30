@@ -3,6 +3,8 @@ from books import models
 from books.views import BOOKS_PER_PAGE
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
+from urllib.parse import urlparse
 
 
 class CatalogPageTests(WebdriverTestCase):
@@ -39,6 +41,17 @@ class CatalogPageTests(WebdriverTestCase):
         self.scroll_and_click(
             self.driver.find_element(By.CSS_SELECTOR, '.first-page'))
         self._assert_page_contains_books(books[0:BOOKS_PER_PAGE])
+
+    def _get_all_books_on_page(self) -> List[models.Book]:
+        slugs = []
+        for book in self.driver.find_elements(By.CSS_SELECTOR,
+                                              '[data-type="book-title"]'):
+            link = urlparse(book.get_attribute('href'))
+            # Slug is the last part of the url.
+            slugs.append(link.path.split('/')[-1])
+        books = models.Book.objects.filter(slug__in=slugs)
+        self.assertEqual(len(slugs), len(books))
+        return books
 
     def test_all_books(self):
         self.driver.get(f'{self.live_server_url}/catalog')
@@ -96,3 +109,56 @@ class CatalogPageTests(WebdriverTestCase):
             self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
         self.assert_page_contains_only_books_of_link_type(link_type)
         self.assertIn(f'links={link_type.name}', self.driver.current_url)
+
+    def test_russian_language_filter(self):
+        self.driver.get(f'{self.live_server_url}/catalog')
+        filter = Select(
+            self.driver.find_element(By.CSS_SELECTOR, '#filter-language'))
+        self.assertListEqual([o.text for o in filter.options],
+                             ['любая', 'беларуская', 'руская'])
+        filter.select_by_visible_text('руская')
+        books = self._get_all_books_on_page()
+        self.assertGreater(len(books), 0)
+        for book in books:
+            self.assertGreater(
+                book.narrations.filter(language='RUSSIAN').count(), 0,
+                f'Book {book.title} has no russian narrations')
+
+    def test_price_filter_paid(self):
+        self.driver.get(f'{self.live_server_url}/catalog')
+        filter = Select(
+            self.driver.find_element(By.CSS_SELECTOR, '#filter-price'))
+        self.assertListEqual([o.text for o in filter.options],
+                             ['усе', 'платныя', 'бясплатныя'])
+        filter.select_by_visible_text('платныя')
+        books = self._get_all_books_on_page()
+        self.assertGreater(len(books), 0)
+        for book in books:
+            self.assertGreater(
+                book.narrations.filter(paid=True).count(), 0,
+                f'Book {book.title} has no paid narrations')
+
+        # Check that filter remains after going to the next page.
+        self.scroll_and_click(
+            self.driver.find_element(By.LINK_TEXT, 'Сучасная проза'))
+        books = self._get_all_books_on_page()
+        self.assertGreater(len(books), 0)
+        for book in books:
+            self.assertIn('Сучасная проза',
+                          [tag.name for tag in book.tag.all()],
+                          f'Book {book.title} has no tag Сучасная проза')
+            self.assertGreater(
+                book.narrations.filter(paid=True).count(), 0,
+                f'Book {book.title} has no paid narrations')
+
+    def test_price_filter_free(self):
+        self.driver.get(f'{self.live_server_url}/catalog')
+        filter = Select(
+            self.driver.find_element(By.CSS_SELECTOR, '#filter-price'))
+        filter.select_by_visible_text('бясплатныя')
+        books = self._get_all_books_on_page()
+        self.assertGreater(len(books), 0)
+        for book in books:
+            self.assertGreater(
+                book.narrations.filter(paid=False).count(), 0,
+                f'Book {book.title} has no free narrations')

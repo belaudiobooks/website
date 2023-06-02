@@ -13,29 +13,29 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Засталося дзён</th>
-                <th scope="col">Дзень народзінаў</th>
-                <th scope="col">Чалавек</th>
-                <th scope="col">Узрост</th>
-                <th scope="col">Кнігі, пераклады, агучкі</th>
+                <th scope="col" class="text-center">Засталося дзён</th>
+                <th scope="col" class="text-center">Дзень народзінаў</th>
+                <th scope="col" class="text-center">Чалавек</th>
+                <th scope="col" class="text-center">Узрост</th>
+                <th scope="col" class="text-center">Кнігі, пераклады, агучкі</th>
             </tr>
         </thead>
         <tbody>
             {% for p in people_with_info %}
             <tr>
-                <td class="fs-5 align-middle">
+                <td class="fs-5 text-center align-middle">
                     {{ p.days_left }}
                 </td>
-                <td class="fs-5 align-middle">
+                <td class="fs-5 text-center align-middle">
                     {{ p.date_of_birth | format_date }}
                 </td>
-                <td>
+                <td class="fs-5 text-center align-middle">
                     {% include 'partials/_person_in_search.html' with person=p.person %}
                 </td>
                 <td class="fs-5 text-center align-middle">
                     {{ p.age }}
                 </td>
-                <td class="fs-5 align-middle">
+                <td class="fs-5 text-center align-middle">
                     {{ p.stats }}
                 </td>
             </tr>

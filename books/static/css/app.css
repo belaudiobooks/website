@@ -551,3 +551,7 @@ article .CodeMirror {
   width: 100px;
   height: 100px;
 }
+
+#birthdays .card {
+  display: inline-block;
+}

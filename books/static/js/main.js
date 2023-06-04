@@ -115,7 +115,27 @@ function initializeStickyHeader() {
   window.addEventListener('resize', readjustStickyHeader);
 }
 
+function setQueryParamAndRefresh(name, value) {
+  const url = new URL(window.location);
+  if (value === '') {
+    url.searchParams.delete(name);
+  } else {
+    url.searchParams.set(name, value);
+  }
+  window.location.href = url.toString();
+}
+
+function initializeFilters() {
+  document.querySelector('#filter-language')?.addEventListener('change', (event) => {
+    setQueryParamAndRefresh('lang', event.target.value);
+  });
+  document.querySelector('#filter-price')?.addEventListener('change', (event) => {
+    setQueryParamAndRefresh('paid', event.target.value);
+  });
+}
+
 window.addEventListener('load', () => {
   initializeSearch();
   initializeStickyHeader();
+  initializeFilters();
 });

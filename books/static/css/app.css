@@ -555,3 +555,22 @@ article .CodeMirror {
 #birthdays .card {
   display: inline-block;
 }
+
+.filters .head {
+  color: #7879F1;
+  font-size: 18px;
+  padding: 0.6rem 0.75rem;
+  font-weight: bold;
+}
+
+.filters .head i {
+  margin-right: 0.5rem;
+}
+
+.filters .form-floating {
+  margin-top: 0.5rem;
+}
+
+.form-select {
+  cursor: pointer;
+}

@@ -3,7 +3,7 @@
 {% load books_extras %}
 
 {% block title %}{% if selected_tag %}{{ selected_tag.name }}{% else %}Усе аўдыякнігі{% endif %}{% endblock title %}
-{% block og_title %}{% if selected_tag %}{{ selected_tag.name }}{% else %}Усе аўдыякнігі{% endif %}{% endblock og_title %}
+{% block og_title %}{% if selected_tag %}{{ selected_tag.name }}{% else %}Усе аўдыякнігі{% endif %}{%endblock og_title%}
 
 {% block content %}
 <div class="container">
@@ -13,24 +13,50 @@
         <div class="col-12 col-md-3 mt-1 mt-md-5">
 
             <!--Buddont Genre shown only on mobile-->
-            <button class="btn hidden visible-xs d-block d-md-none btn-genre" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGenre" aria-expanded="false" aria-controls="collapseGenre">
-                Жанры <i class="bi bi-chevron-down"></i><i class="bi bi-chevron-up"></i>
+            <button class="btn hidden visible-xs d-block d-md-none btn-genre" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseGenre" aria-expanded="false" aria-controls="collapseGenre">
+                Жанры і фільтры<i class="bi bi-chevron-down"></i><i class="bi bi-chevron-up"></i>
             </button>
 
 
             <div class="collapse dont-collapse-md" id="collapseGenre">
                 <ul class="list-unstyled">
                     {% for tag in tags %}
-                        {% if not tag.hidden %}
-                            <li>
-                                <a class="text-decoration-none text-start tag {% if tag.id == selected_tag.id %}tag-selected{% endif %}"
-                                        href="{% url 'catalog-for-tag' tag.slug %}">
-                                    {{ tag.name }}
-                                </a>
-                            </li>
-                        {% endif %}
+                    {% if not tag.hidden %}
+                    <li>
+                        <a class="text-decoration-none text-start tag {% if tag.id == selected_tag.id %}tag-selected{% endif %}"
+                            href="{% url 'catalog-for-tag' tag.slug %}{{ query_params }}">
+                            {{ tag.name }}
+                        </a>
+                    </li>
+                    {% endif %}
                     {% endfor %}
                 </ul>
+                <div class="filters  mb-3">
+                    <span class="head">
+                        <i class="bi bi-funnel-fill"></i>Фільтры
+                    </span>
+                    <div class="form-floating">
+                        <select class="form-select" id="filter-language">
+                            {% for language in language_options %}
+                            <option value="{{ language.0 }}" {% if language.2 %}selected{% endif %}>
+                                {{ language.1 }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <label for="filter-language">Мова</label>
+                    </div>
+                    <div class="form-floating">
+                        <select class="form-select" id="filter-price">
+                            {% for price in price_options %}
+                            <option value="{{ price.0 }}" {% if price.2 %}selected{% endif %}>
+                                {{ price.1 }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <label for="filter-price">Кошт</label>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -39,81 +65,87 @@
             <div class="row">
                 <div class="col-12 catalog-title">
                     {% if selected_tag %}
-                        <h1>{{ selected_tag.name }}</h1>
-                        {% if selected_tag.description %}
-                            <div class="mb-3">{{ selected_tag.description }}</div>
-                        {% endif %}
+                    <h1>{{ selected_tag.name }}</h1>
+                    {% if selected_tag.description %}
+                    <div class="mb-3">{{ selected_tag.description }}</div>
+                    {% endif %}
                     {% endif %}
                 </div>
                 {% for book in books %}
-                    <div class="col-6 col-md-4 col-lg-3 mb-4">
-                        {% include 'partials/_book.html' %}
-                    </div>
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    {% include 'partials/_book.html' %}
+                </div>
                 {% endfor %}
 
                 <!--Paginagion-->
                 <div class="row">
                     <div class="col-md-12">
-                    {% if related_pages.has_other %}
+                        {% if related_pages.has_other %}
                         <ul class="pagination books-text">
                             <!--First Page Link-->
                             {% if related_pages.first %}
-                                <li class="text-end">
-                                    <a class="text-decoration-none tag-selected first-page" href="{{related_pages.first}}"><i class="bi bi-chevron-double-left"></i></a>
-                                </li>
+                            <li class="text-end">
+                                <a class="text-decoration-none tag-selected first-page"
+                                    href="{{related_pages.first}}"><i class="bi bi-chevron-double-left"></i></a>
+                            </li>
                             {% else %}
-                                <li class="invisible text-end">
-                                    <span class="text-decoration-none"><i class="bi bi-chevron-double-left"></i></span>
-                                </li>
+                            <li class="invisible text-end">
+                                <span class="text-decoration-none"><i class="bi bi-chevron-double-left"></i></span>
+                            </li>
                             {% endif %}
 
                             <!--Previours Page Link-->
                             {% if related_pages.prev %}
-                                <li class="text-end">
-                                    <a class="text-decoration-none tag-selected prev-page" href="{{related_pages.prev}}"><i class="bi bi-chevron-left"></i></a>
-                                </li>
+                            <li class="text-end">
+                                <a class="text-decoration-none tag-selected prev-page" href="{{related_pages.prev}}"><i
+                                        class="bi bi-chevron-left"></i></a>
+                            </li>
                             {% else %}
-                                <li class="invisible text-end">
-                                    <span class="text-decoration-none"><i class="bi bi-chevron-left"></i></span>
-                                </li>
+                            <li class="invisible text-end">
+                                <span class="text-decoration-none"><i class="bi bi-chevron-left"></i></span>
+                            </li>
                             {% endif %}
 
                             <!--Current Page-->
-                            <span class="books-text">Старонка {{ books.number }} з {{ books.paginator.num_pages }}</span>
+                            <span class="books-text">
+                                Старонка {{ books.number }} з {{ books.paginator.num_pages }}
+                            </span>
 
                             <!--Next Page Link-->
                             {% if related_pages.next %}
-                                <li class="">
-                                    <a class="text-decoration-none tag-selected next-page" href="{{related_pages.next}}""><i class="bi bi-chevron-right"></i></a>
-                                </li>
+                            <li class="">
+                                <a class="text-decoration-none tag-selected next-page"
+                                    href="{{related_pages.next}}""><i class=" bi bi-chevron-right"></i></a>
+                            </li>
                             {% else %}
-                                <li class="invisible">
-                                    <span class="text-decoration-none"><i class="bi bi-chevron-right"></i></span>
-                                </li>
+                            <li class="invisible">
+                                <span class="text-decoration-none"><i class="bi bi-chevron-right"></i></span>
+                            </li>
                             {% endif %}
 
                             <!--Last Page Link-->
                             {% if related_pages.last %}
-                                <li class="page-item">
-                                    <a class="text-decoration-none tag-selected last-page" href="{{related_pages.last}}"><i class="bi bi-chevron-double-right"></i></a>
-                                </li>
+                            <li class="page-item">
+                                <a class="text-decoration-none tag-selected last-page" href="{{related_pages.last}}"><i
+                                        class="bi bi-chevron-double-right"></i></a>
+                            </li>
                             {% else %}
-                                <li class="invisible">
-                                    <span class="text-decoration-none"><i class="bi bi-chevron-double-right"></i></span>
-                                </li>
+                            <li class="invisible">
+                                <span class="text-decoration-none"><i class="bi bi-chevron-double-right"></i></span>
+                            </li>
                             {% endif %}
                         </ul>
 
                         {% block extra_meta_tags %}
                         <link rel="canonical" href="{{request.get_raw_uri}}" />
                         {% if related_pages.prev %}
-                            <link rel="prev" href="{{request.scheme}}://{{request.get_host}}{{related_pages.prev}}" />
+                        <link rel="prev" href="{{request.scheme}}://{{request.get_host}}{{related_pages.prev}}" />
                         {% endif %}
                         {% if related_pages.next %}
-                            <link rel="next" href="{{request.scheme}}://{{request.get_host}}{{related_pages.next}}" />
+                        <link rel="next" href="{{request.scheme}}://{{request.get_host}}{{related_pages.next}}" />
                         {% endif %}
                         {% endblock extra_meta_tags %}
-                    {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

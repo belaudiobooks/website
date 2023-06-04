@@ -19,6 +19,7 @@ from django.db.models import query
 from algoliasearch.search_client import SearchClient
 
 from books import serializers
+from books.templatetags.books_extras import to_human_language
 
 from .models import Book, BookStatus, LinkType, Person, Tag, Language
 
@@ -106,7 +107,17 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'books/index.html', context)
 
 
-def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
+def get_query_params_without(request: HttpRequest, param: str) -> str:
+    '''Returns query string without given param'''
+    params = request.GET.copy()
+    if param in params:
+        params.pop(param)
+    if len(params) == 0:
+        return ''
+    return '?' + params.urlencode()
+
+
+def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
     '''Catalog page for specific tag or all books'''
 
     page = request.GET.get('page')
@@ -114,11 +125,33 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
     filtered_books = maybe_filter_links(active_books, request).distinct()
 
     tag = None
-    if slug:
+    if tag_slug:
         # get selected tag id
-        tag = tags.filter(slug=slug).first()
+        tag = tags.filter(slug=tag_slug).first()
         # pagination for the books by tag
         filtered_books = filtered_books.filter(tag=tag.id)
+
+    lang = request.GET.get('lang')
+    if lang:
+        filtered_books = filtered_books.filter(
+            narrations__language=lang.upper())
+
+    language_options = [('', 'любая', lang == None)]
+    for available_lang in Language.values:
+        language_options.append(
+            (available_lang.lower(), to_human_language(available_lang),
+             lang == available_lang.lower()))
+
+    paid = request.GET.get('paid')
+    if paid is not None:
+        filtered_books = filtered_books.filter(
+            narrations__paid=(request.GET.get('paid') == 'true'))
+
+    price_options = [
+        ('', 'усе', paid is None),
+        ('true', 'платныя', paid == 'true'),
+        ('false', 'бясплатныя', paid == 'false'),
+    ]
 
     sorted_books = filtered_books.order_by('-date')
     paginator = Paginator(sorted_books, BOOKS_PER_PAGE)
@@ -149,6 +182,9 @@ def catalog(request: HttpRequest, slug: str = '') -> HttpResponse:
         'related_pages': related_pages,
         'selected_tag': tag,
         'tags': tags,
+        'query_params': get_query_params_without(request, 'page'),
+        'language_options': language_options,
+        'price_options': price_options,
     }
     return render(request, 'books/all-books.html', context)
 

@@ -186,7 +186,7 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
         'language_options': language_options,
         'price_options': price_options,
     }
-    return render(request, 'books/all-books.html', context)
+    return render(request, 'books/catalog.html', context)
 
 
 def book_detail(request: HttpRequest, slug: str) -> HttpResponse:

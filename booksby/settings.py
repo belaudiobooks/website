@@ -66,7 +66,8 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 INSTALLED_APPS = [
     'rest_framework', 'django.contrib.admin', 'django.contrib.auth',
     'django.contrib.contenttypes', 'django.contrib.sessions',
-    'django.contrib.messages', 'django.contrib.staticfiles', 'books', 'user'
+    'django.contrib.messages', 'django.contrib.staticfiles', 'books', 'user',
+    'markdownify.apps.MarkdownifyConfig'
 ]
 
 MIDDLEWARE = [
@@ -98,6 +99,15 @@ TEMPLATES = [
         },
     },
 ]
+
+MARKDOWNIFY = {
+  "default": {
+     "WHITELIST_TAGS": ["a", "p", "h1"]
+  },
+  "book_description": {
+     "WHITELIST_TAGS": ["a"]
+  }
+}
 
 WSGI_APPLICATION = 'booksby.wsgi.application'
 

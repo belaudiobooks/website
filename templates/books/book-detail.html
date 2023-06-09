@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load books_extras %}
+{% load markdownify %}
 
 {% block title %}{{ book.title | title}} аўдыякніга{% endblock title %}
 {% block og_title %}{{ book.title | title}}{% endblock og_title %}
@@ -78,7 +79,7 @@
 
             <!--Book description-->
             <div class="my-4">
-                <p class="fw-normal">{{ book.description|linebreaks }}</p>
+                <p class="fw-normal">{{ book.description | markdownify:"book_description" | linebreaks }}</p>
                 {% cite_source book.description_source "cit-description" %}
             </div>
 

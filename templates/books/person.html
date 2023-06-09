@@ -37,7 +37,7 @@
         <!--Books section-->
         <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
             {% if author.exists %}
-                <div class="row mt-3">
+                <div class="row mt-3 mx-auto">
                     <div class="col-12">
                         <h4>Кнігі аўтар{{person|gender:"кі,а"}}</h4>
                     </div>
@@ -49,7 +49,7 @@
                 </div>
             {% endif %}
             {% if translator.exists %}
-                <div class="row mt-3">
+                <div class="row mt-3 mx-auto">
                     <div class="col-12">
                         <h4>Пераклады</h4>
                     </div>

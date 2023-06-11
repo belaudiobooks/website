@@ -518,6 +518,6 @@ def markdown_to_html(request: HttpRequest) -> HttpResponse:
     '''Markdown to HTML'''
     markdown_text = request.body.decode('utf-8')
     if not markdown_text:
-        return HttpResponse(content="Bad request", content_type='text/plain', status=400)
+        return HttpResponse(content="Request body is empty", content_type='text/plain', status=400)
     html_text = markdownify(markdown_text, custom_settings="book_description")
     return HttpResponse(content=html_text, content_type='text/html', headers={'Access-Control-Allow-Origin': '*'})

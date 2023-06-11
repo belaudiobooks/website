@@ -9,6 +9,7 @@ from django import views
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.cache import cache_control
+from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -512,14 +513,11 @@ def birthdays(request: HttpRequest) -> HttpResponse:
     return render(request, 'books/stats/birthdays.html', context)
 
 
+@require_POST
 def markdown_to_html(request: HttpRequest) -> HttpResponse:
     '''Markdown to HTML'''
-    if request.method == 'POST':
-        markdown_text = request.body.decode('utf-8')
-        if markdown_text:
-            html_text = markdownify(markdown_text, custom_settings="book_description")
-            return HttpResponse(
-                content=html_text,
-                content_type='text/html',
-                headers={'Access-Control-Allow-Origin': '*'})
-    return HttpResponse(content="Bad request", content_type='text/plain', status=400)
+    markdown_text = request.body.decode('utf-8')
+    if not markdown_text:
+        return HttpResponse(content="Bad request", content_type='text/plain', status=400)
+    html_text = markdownify(markdown_text, custom_settings="book_description")
+    return HttpResponse(content=html_text, content_type='text/html', headers={'Access-Control-Allow-Origin': '*'})

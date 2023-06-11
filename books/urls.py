@@ -19,4 +19,5 @@ urlpatterns = [
     path('generate_data_json', views.generate_data_json),
     path('update_read_by_author_tag', views.update_read_by_author_tag),
     path('stats/birthdays', views.birthdays),
+    path('markdown_preview', views.markdown_to_html)
 ]

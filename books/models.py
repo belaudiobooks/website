@@ -211,6 +211,8 @@ class Narration(models.Model):
                                 choices=Language.choices,
                                 blank=False)
 
+    duration_sec = models.DurationField(_('Duration'), blank=True, null=True)
+
     def __str__(self) -> str:
         return '%s read by %s' % (
             self.book,

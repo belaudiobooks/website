@@ -6,21 +6,21 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0002_narration_duration_sec'),
+        ('books', '0002_narration_duration'),
     ]
 
     operations = [
         migrations.RunSQL(
             """
-            UPDATE public.books_narration
-            SET duration_sec = (
+            UPDATE books_narration
+            SET duration = (
                 SELECT duration_sec
-                FROM public.books_book
+                FROM books_book
                 WHERE uuid = book_id
             )
             WHERE book_id IN (
                 SELECT book_id
-                FROM public.books_narration
+                FROM books_narration
                 GROUP BY book_id
                 HAVING COUNT(*) = 1
             );

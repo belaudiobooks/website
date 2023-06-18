@@ -116,6 +116,8 @@ venv.bak/
 app/static/
 .app/static/
 
+.idea/
+
 /static
 
 

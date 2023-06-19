@@ -39,9 +39,6 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
             return queryset.filter(description__exact='')
         if reason == 'no_cover':
             return queryset.filter(cover_image__exact='')
-        if reason == 'no_duration':
-            zero_duration = datetime.timedelta(seconds=0)
-            return queryset.filter(duration_sec__exact=zero_duration)
         if reason == 'no_tags':
             return queryset.annotate(num_tags=Count('tag')).filter(num_tags=0)
         if reason == 'no_translation':

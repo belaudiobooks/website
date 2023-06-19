@@ -29,7 +29,12 @@
   <pre>
 // run from devtools on data.json page
 const data = JSON.parse(document.body.innerText);
-data.books.reduce((a, b) => a.duration_sec > b.duration_sec ? a : b)
+data.books.reduce((a, b) =>
+    a.narrations.reduce(
+      (c, d) => c.duration > d.duration ? c : d
+    ).duration > b.narrations.reduce(
+      (e, f) => e.duration > f.duration ? e : f
+    ).duration ? a : b)
 </pre>
 
 </section>
@@ -60,7 +65,6 @@ interface Book {
   data: string;
   description: string;
   description_source: string;
-  duration_sec: number;
   slug: string;
   // list of Person.uuid
   authors: string[];
@@ -75,6 +79,7 @@ interface Narration {
   // list of Person.uuid
   narrators: string[];
   links: Links[];
+  duration: string;
 }
 
 interface Link {

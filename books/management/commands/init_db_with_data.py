@@ -44,5 +44,5 @@ class Command(BaseCommand):
             assert superuser_pass, 'DJANGO_SUPERUSER_PASSWORD must be set when using --create-superuser option'
             email = options['create_superuser']
             call_command('createsuperuser', '--no-input', email=email)
-            print(f'Create superuser {email} with pass {superuser_pass}')
+            print(f'Created superuser {email} with pass {superuser_pass}')
         print('Completed!')

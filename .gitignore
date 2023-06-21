@@ -9,12 +9,6 @@ __pycache__/
 # testing or service json files:
 *-*.json
 
-# migrations
-**/migrations/**
-# Need to have migrations folder existing so that makemigrations triggers. 
-# See https://stackoverflow.com/questions/36153748/django-makemigrations-no-changes-detected
-!**/migrations/__init__.py
-
 # Distribution / packaging
 .Python
 build/
@@ -121,6 +115,8 @@ env.bak/
 venv.bak/
 app/static/
 .app/static/
+
+.idea/
 
 /static
 

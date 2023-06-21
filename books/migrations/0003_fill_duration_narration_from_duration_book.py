@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunSQL(
+        migrations.RunSQL(sql=[
             """
             UPDATE books_narration
             SET duration = (
@@ -25,5 +25,6 @@ class Migration(migrations.Migration):
                 HAVING COUNT(*) = 1
             );
             """
-        ),
+        ],
+                          reverse_sql=[]),
     ]

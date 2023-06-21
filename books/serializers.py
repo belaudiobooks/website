@@ -35,7 +35,7 @@ class NarrationSimpleSerializer(serializers.ModelSerializer):
     links = LinkSimpleSerializer(many=True)
 
     def to_representation(self, instance):
-        """Convert `username` to lowercase."""
+        """Convert `duration` to number of seconds."""
         ret = super().to_representation(instance)
         if instance.duration is not None:
             ret['duration'] = instance.duration_sec.total_seconds()

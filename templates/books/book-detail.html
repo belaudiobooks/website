@@ -52,8 +52,8 @@
 
             <!--Book Duration-->
             {% if narrations.count == 1 %}
-                {% if narration.duration %}
-                    <p>{{ narration | duration }}</p>
+                {% if narrations.first.duration %}
+                    <p>{{ narrations.first | duration }}</p>
                 {% endif %}
             {% endif %}
 

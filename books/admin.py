@@ -178,6 +178,7 @@ class IncompleteLinksSetFilter(admin.SimpleListFilter):
             'no_audiobooks_com': 'Missing audiobooks.com',
             'no_spotify': 'Missing Spotify',
             'no_apple_books': 'Missing Apple Books',
+            'no_duration': 'Missing duration',
         }
         return [(
             key,
@@ -208,6 +209,8 @@ class IncompleteLinksSetFilter(admin.SimpleListFilter):
             return queryset.filter(
                 links__url_type__name='rakuten_kobo').exclude(
                     links__url_type__name='apple_books')
+        if reason == 'no_duration':
+            return queryset.filter(duration__isnull=True)
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
 

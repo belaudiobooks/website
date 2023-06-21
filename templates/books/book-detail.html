@@ -50,6 +50,13 @@
                 <div class="mb-2">{{ book.title_ru }}</div>
             {% endif %}
 
+            <!--Book Duration-->
+            {% if narrations.count == 1 %}
+                {% if narration.duration %}
+                    <p>{{ narration | duration }}</p>
+                {% endif %}
+            {% endif %}
+
             <!--Authors with check on multiples and gender-->
             <div>
                 {% include 'partials/_person.html' with persons=authors multiple='Аўтары' single='Aўтар' gender_variants="ка,"%}
@@ -93,9 +100,9 @@
                             Агучка: удакладняецца...
                         {% endif %}
                         <br>
-                    {% endif %}
-                    {% if narration.duration %}
-                        Працягласць: {{ narration | duration }}
+                        {% if narration.duration %}
+                            Працягласць: {{ narration | duration }}
+                        {% endif %}
                     {% endif %}
                     {% if single_language is  None %}
                         Мова: {{ narration.language | to_human_language }}

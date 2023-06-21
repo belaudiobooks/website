@@ -23,18 +23,13 @@
     ўжо існуючы сайт. Замест таго, каб парсіць старонкі audiobooks.by, мы прадстаўляем адмысловы файл.
   </p>
   <p>
-    Таксама файл можа быць выкарыстаны, каб зрабіць аналіз беларускіх аўдыякніг. Напрыклад, знайсці самую доўгую
-    аўдыякнігу:
+    Таксама файл можа быць выкарыстаны, каб зрабіць аналіз беларускіх аўдыякніг. Напрыклад, знайсці аўдыякнігу з
+    найбольшай колькасцю агучак:
   </p>
   <pre>
 // run from devtools on data.json page
 const data = JSON.parse(document.body.innerText);
-data.books.reduce((a, b) =>
-    a.narrations.reduce(
-      (c, d) => c.duration > d.duration ? c : d
-    ).duration > b.narrations.reduce(
-      (e, f) => e.duration > f.duration ? e : f
-    ).duration ? a : b)
+data.books.reduce((a, b) => a.narrations.length > b.narrations.length ? a : b);
 </pre>
 
 </section>
@@ -79,7 +74,7 @@ interface Narration {
   // list of Person.uuid
   narrators: string[];
   links: Links[];
-  duration: string;
+  duration: number;
 }
 
 interface Link {

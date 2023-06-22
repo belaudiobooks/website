@@ -38,7 +38,7 @@ class NarrationSimpleSerializer(serializers.ModelSerializer):
         """Convert `duration` to number of seconds."""
         ret = super().to_representation(instance)
         if instance.duration is not None:
-            ret['duration'] = instance.duration_sec.total_seconds()
+            ret['duration'] = instance.duration.total_seconds()
         return ret
 
     class Meta:

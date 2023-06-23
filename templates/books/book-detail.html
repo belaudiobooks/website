@@ -101,7 +101,8 @@
                         {% endif %}
                         <br>
                         {% if narration.duration %}
-                            Працягласць: {{ narration | duration }}
+                            {{ narration | duration }}
+                            <br>
                         {% endif %}
                     {% endif %}
                     {% if single_language is  None %}

@@ -67,7 +67,7 @@ def set_photo_from_file(person: Person, path: str) -> None:
 
 
 def _maybe_add_narration(data: BooksData, book: Book,
-                         narrators_names: List[str]) -> Narration:
+                         narrators_names: List[str], duration_sec: int) -> Narration:
     existing_narrations = book.narrations.all()
     narrators = _get_or_create_people(data, narrators_names)
     ids: Dict[UUID, bool] = {}
@@ -79,7 +79,8 @@ def _maybe_add_narration(data: BooksData, book: Book,
         first_narrator = narration.narrators.first()
         if first_narrator and ids.get(first_narrator.uuid, False):
             return narration
-    narration = Narration(book=book)
+    duration = datetime.timedelta(seconds=duration_sec)
+    narration = Narration(book=book, duration=duration)
     narration.save()
     narration.narrators.set(narrators)
     narration.save()
@@ -138,8 +139,7 @@ def add_or_update_book(data: BooksData, title: str, description: str,
         book.translators.set(_get_or_create_people(data, translators))
     if description != '' and description is not None:
         book.description = description
-    book.duration_sec = datetime.timedelta(seconds=duration_sec)
     book.status = BookStatus.ACTIVE
     book.save()
-    narration = _maybe_add_narration(data, book, narrators)
+    narration = _maybe_add_narration(data, book, narrators, duration_sec)
     return narration

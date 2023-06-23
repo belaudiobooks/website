@@ -51,8 +51,10 @@
             {% endif %}
 
             <!--Book Duration-->
-            {% if book.duration_sec %}
-                <p>{{ book | duration }}</p>
+            {% if narrations.count == 1 %}
+                {% if narrations.first.duration %}
+                    <p>{{ narrations.first | duration }}</p>
+                {% endif %}
             {% endif %}
 
             <!--Authors with check on multiples and gender-->
@@ -98,6 +100,9 @@
                             Агучка: удакладняецца...
                         {% endif %}
                         <br>
+                        {% if narration.duration %}
+                            Працягласць: {{ narration | duration }}
+                        {% endif %}
                     {% endif %}
                     {% if single_language is  None %}
                         Мова: {{ narration.language | to_human_language }}

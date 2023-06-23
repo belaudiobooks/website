@@ -34,9 +34,16 @@ class NarrationSimpleSerializer(serializers.ModelSerializer):
     '''
     links = LinkSimpleSerializer(many=True)
 
+    def to_representation(self, instance):
+        """Convert `duration` to number of seconds."""
+        ret = super().to_representation(instance)
+        if instance.duration is not None:
+            ret['duration'] = instance.duration.total_seconds()
+        return ret
+
     class Meta:
         model = models.Narration
-        fields = ['narrators', 'links']
+        fields = ['uuid', 'narrators', 'links', 'duration']
 
 
 class BookSimpleSerializer(serializers.ModelSerializer):
@@ -46,19 +53,12 @@ class BookSimpleSerializer(serializers.ModelSerializer):
     '''
     narrations = NarrationSimpleSerializer(many=True)
 
-    def to_representation(self, instance):
-        """Convert `username` to lowercase."""
-        ret = super().to_representation(instance)
-        if instance.duration_sec is not None:
-            ret['duration_sec'] = instance.duration_sec.total_seconds()
-        return ret
-
     class Meta:
         model = models.Book
         fields = [
             'uuid', 'title', 'description', 'description_source', 'date',
             'authors', 'translators', 'slug', 'cover_image',
-            'cover_image_source', 'tag', 'duration_sec', 'narrations'
+            'cover_image_source', 'tag', 'narrations'
         ]
 
 

@@ -71,11 +71,7 @@
                     {% endif %}
                     {% endif %}
                 </div>
-                {% for book in books %}
-                <div class="col-6 col-md-4 col-lg-3 mb-4">
-                    {% include 'partials/_book.html' %}
-                </div>
-                {% endfor %}
+                {% include 'partials/_books_list.html' with books=books%}
 
                 <!--Paginagion-->
                 <div class="row">

@@ -150,18 +150,6 @@ a {
 }
 
 
-@media (min-width: 992px) and (max-width: 1200px) {
-
-  .card-img-150,
-  .cover.small {
-    width: 130px;
-    height: 130px;
-    background-size: 130px;
-  }
-}
-
-
-
 #autocomplete {
   position: absolute;
   inset: 0px auto auto 0px;
@@ -573,4 +561,20 @@ article .CodeMirror {
 
 .form-select {
   cursor: pointer;
+}
+
+.books-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 150px);
+  grid-gap: 2rem 3rem;
+  justify-content: space-between;
+}
+
+
+@media (max-width: 991.98px) {
+
+  /** Reduce gap on smaller screens so that we can fit 3 books rather than 2 */
+  .books-list {
+    grid-gap: 2rem 0.5rem;
+  }
 }

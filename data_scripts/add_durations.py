@@ -105,10 +105,10 @@ def _get_knihi_com_duration_sec(url: str) -> int:
 def run(data: books.BooksData) -> None:
     '''See module description.'''
     for book in data.books:
-        if book.duration_sec.total_seconds() != 0:
-            continue
         print(book.narration.first().links.first())
         for narration in book.narration.all():
+            if narration.duration and narration.duration.total_seconds() != 0:
+                continue
             for link in narration.links.all():
                 found = False
                 if not found and link.url_type.name == 'mininform':
@@ -119,6 +119,6 @@ def run(data: books.BooksData) -> None:
                     found = True
                     duration = _get_mininfarm_duration_sec(link.url)
                     print(duration)
-                    book.duration_sec = datetime.timedelta(seconds=duration)
+                    narration.duration = datetime.timedelta(seconds=duration)
                     print(f'Slug is {book.slug}')
-                    book.save()
+                    narration.save()

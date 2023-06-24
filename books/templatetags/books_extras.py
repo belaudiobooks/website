@@ -67,10 +67,10 @@ def link_type_availibility(availability: str) -> str:
 
 
 @register.filter
-def duration(book: models.Book) -> str:
+def duration(narration: models.Narration) -> str:
     '''Formats book duration using "36 hours 12 minutes" format.'''
-    day = book.duration_sec.days
-    seconds = book.duration_sec.seconds
+    day = narration.duration.days
+    seconds = narration.duration.seconds
 
     hrs = seconds // 3600
     mins = (seconds % 3600) // 60

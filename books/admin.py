@@ -39,9 +39,6 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
             return queryset.filter(description__exact='')
         if reason == 'no_cover':
             return queryset.filter(cover_image__exact='')
-        if reason == 'no_duration':
-            zero_duration = datetime.timedelta(seconds=0)
-            return queryset.filter(duration_sec__exact=zero_duration)
         if reason == 'no_tags':
             return queryset.annotate(num_tags=Count('tag')).filter(num_tags=0)
         if reason == 'no_translation':
@@ -178,6 +175,7 @@ class IncompleteLinksSetFilter(admin.SimpleListFilter):
             'no_audiobooks_com': 'Missing audiobooks.com',
             'no_spotify': 'Missing Spotify',
             'no_apple_books': 'Missing Apple Books',
+            'no_duration': 'Missing duration',
         }
         return [(
             key,
@@ -208,6 +206,8 @@ class IncompleteLinksSetFilter(admin.SimpleListFilter):
             return queryset.filter(
                 links__url_type__name='rakuten_kobo').exclude(
                     links__url_type__name='apple_books')
+        if reason == 'no_duration':
+            return queryset.filter(duration__isnull=True)
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
 

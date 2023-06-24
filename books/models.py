@@ -158,7 +158,6 @@ class Book(models.Model):
                                           default='')
     tag = models.ManyToManyField(Tag, related_name='books', blank=True)
     promoted = models.BooleanField(_('Promoted'), default=False)
-    duration_sec = models.DurationField(_('Duration'), blank=True, null=True)
     status = models.CharField(_('Status'),
                               max_length=20,
                               choices=BookStatus.choices,
@@ -210,6 +209,8 @@ class Narration(models.Model):
                                 max_length=20,
                                 choices=Language.choices,
                                 blank=False)
+
+    duration = models.DurationField(_('Duration'), blank=True, null=True)
 
     def __str__(self) -> str:
         return '%s read by %s' % (

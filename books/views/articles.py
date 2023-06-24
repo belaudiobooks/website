@@ -6,7 +6,9 @@ from dataclasses import dataclass
 from typing import List
 from django import views
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse
+
 
 @dataclass
 class Article:

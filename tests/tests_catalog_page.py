@@ -1,6 +1,6 @@
 from typing import List
 from books import models
-from books.views import BOOKS_PER_PAGE
+from books.views.catalog import BOOKS_PER_PAGE
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select

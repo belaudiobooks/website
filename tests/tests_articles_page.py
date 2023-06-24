@@ -1,4 +1,4 @@
-from books import views
+from books.views import articles
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
 from django.urls import reverse
@@ -10,13 +10,13 @@ class ArticlesPageTest(WebdriverTestCase):
     def test_articles_link_redirects_to_first_article(self):
         self.driver.get(self.live_server_url)
         self.driver.find_element(By.LINK_TEXT, 'Артыкулы').click()
-        first_article = views.ARTICLES[0]
+        first_article = articles.ARTICLES[0]
         self.assertEqual(
             self.driver.find_element(By.CSS_SELECTOR, 'h1').text,
             first_article.title)
 
     def test_article_page(self):
-        article = views.ARTICLES[0]
+        article = articles.ARTICLES[0]
         self.driver.get(self.live_server_url +
                         reverse('single-article', args=(article.slug, )))
         self.assertEqual(

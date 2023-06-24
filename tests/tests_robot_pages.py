@@ -1,5 +1,6 @@
 import requests
-from books import models, views
+from books import models
+from books.views import articles
 from tests.webdriver_test_case import WebdriverTestCase
 from tests.worker import fetch_head_urls
 
@@ -33,7 +34,7 @@ class RobotPagesTests(WebdriverTestCase):
         tag = models.Tag.objects.filter(name='Сучасная проза').first()
         self.assertIn(f'{domain}/catalog/{tag.slug}', sitemap)
 
-        article = views.ARTICLES[0]
+        article = articles.ARTICLES[0]
         self.assertIn(f'{domain}/articles/{article.slug}', sitemap)
 
     def test_all_sitemap_links_return_200(self):

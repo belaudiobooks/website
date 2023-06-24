@@ -20,6 +20,7 @@ TAGS_TO_SHOW_ON_MAIN_PAGE = [
 
 BOOKS_PER_PAGE = 16
 
+
 def index(request: HttpRequest) -> HttpResponse:
     '''Index page, starting page'''
     # Getting all Tags and creating querystring objects for each to pass to template
@@ -42,6 +43,7 @@ def index(request: HttpRequest) -> HttpResponse:
     }
 
     return render(request, 'books/index.html', context)
+
 
 def get_query_params_without(request: HttpRequest, param: str) -> str:
     '''Returns query string without given param'''
@@ -91,6 +93,8 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
 
     sorted_books = filtered_books.order_by('-date')
     paginator = Paginator(sorted_books, BOOKS_PER_PAGE)
+    books_per_page = max(int(request.GET.get('limit', 0)), BOOKS_PER_PAGE)
+    paginator = Paginator(sorted_books, books_per_page)
     paged_books: Page = paginator.get_page(page)
 
     def related_page(page: int) -> str:
@@ -123,5 +127,3 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
         'price_options': price_options,
     }
     return render(request, 'books/catalog.html', context)
-
-

@@ -73,6 +73,14 @@ class CatalogPageTests(WebdriverTestCase):
         self.assert_page_contains_only_books_of_link_type(link_type)
         self.assertIn(f'links={link_type.name}', self.driver.current_url)
 
+    def test_all_books_with_custom_limit(self):
+        self.driver.get(f'{self.live_server_url}/catalog?limit=50')
+        self.assertEqual(len(self._get_all_books_on_page()), 50)
+        # Go to next page and make sure that limit remains.
+        self.scroll_and_click(
+            self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
+        self.assertEqual(len(self._get_all_books_on_page()), 50)
+
     def test_genre_page(self):
         tag = models.Tag.objects.filter(name='Сучасная проза').first()
         self.driver.get(f'{self.live_server_url}/catalog/{tag.slug}')

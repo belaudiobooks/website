@@ -185,6 +185,42 @@ class Book(models.Model):
     objects = BookManager()
 
 
+class PublisherRole(models.TextChoices):
+    '''
+    Enum represents role which play publisher for particular publication.
+    '''
+    PRINT_BOOK = 'PRINT_BOOK'
+    RECORD_BOOK = 'RECORD_BOOK'
+    PRINT_AND_RECORD_BOOK = 'PRINT_AND_RECORD_BOOK'
+
+
+class Publisher(models.Model):
+    '''
+    Publisher model.
+    '''
+    uuid = models.UUIDField(_('Publisher ID'),
+                            primary_key=True,
+                            default=uuid.uuid4,
+                            editable=False,
+                            unique=True)
+    name = models.CharField(_('Publisher Name'), max_length=100, default='')
+    url = models.URLField(_('Publisher Website'), max_length=128)
+    description = models.TextField(_('Publisher Description'), blank=True)
+
+
+class Publication(models.Model):
+    '''
+    Model join publisher and their role for particular publication.
+    '''
+    publisher = models.ForeignKey(Publisher,
+                             related_name='publications',
+                             on_delete=CASCADE)
+    role = models.CharField(_('Publisher role'),
+                              max_length=30,
+                              choices=PublisherRole.choices,
+                              blank=False)
+
+
 class Narration(models.Model):
     '''
     Narration represents particular narration of a book. It's represented through a separate model so
@@ -211,6 +247,8 @@ class Narration(models.Model):
                                 blank=False)
 
     duration = models.DurationField(_('Duration'), blank=True, null=True)
+
+    publications = models.ManyToManyField(Publication, related_name='narrations')
 
     def __str__(self) -> str:
         return '%s read by %s' % (

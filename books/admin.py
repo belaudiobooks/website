@@ -218,9 +218,11 @@ class LinkInlineAdmin(admin.StackedInline):
 
 @admin.register(Publisher)
 class PublisherAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url')
+    prepopulated_fields = {'slug': ('name',)}
+    list_display = ('name', 'slug', 'url')
     list_per_page = 1000
     search_fields = ['name']
+    ordering = ['slug']
 
 
 @admin.register(Narration)

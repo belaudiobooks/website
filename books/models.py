@@ -185,15 +185,6 @@ class Book(models.Model):
     objects = BookManager()
 
 
-class PublisherRole(models.TextChoices):
-    '''
-    Enum represents role which play publisher for particular publication.
-    '''
-    PRINT_BOOK = 'PRINT_BOOK'
-    RECORD_BOOK = 'RECORD_BOOK'
-    PRINT_AND_RECORD_BOOK = 'PRINT_AND_RECORD_BOOK'
-
-
 class Publisher(models.Model):
     '''
     Publisher model.
@@ -205,20 +196,8 @@ class Publisher(models.Model):
                             unique=True)
     name = models.CharField(_('Publisher Name'), max_length=100, default='')
     url = models.URLField(_('Publisher Website'), max_length=128)
+    icon = models.ImageField(upload_to='icons', blank=True, null=True)
     description = models.TextField(_('Publisher Description'), blank=True)
-
-
-class Publication(models.Model):
-    '''
-    Model join publisher and their role for particular publication.
-    '''
-    publisher = models.ForeignKey(Publisher,
-                             related_name='publications',
-                             on_delete=CASCADE)
-    role = models.CharField(_('Publisher role'),
-                              max_length=30,
-                              choices=PublisherRole.choices,
-                              blank=False)
 
 
 class Narration(models.Model):
@@ -248,7 +227,7 @@ class Narration(models.Model):
 
     duration = models.DurationField(_('Duration'), blank=True, null=True)
 
-    publications = models.ManyToManyField(Publication, related_name='narrations')
+    publishers = models.ManyToManyField(Publisher, related_name='narrations')
 
     def __str__(self) -> str:
         return '%s read by %s' % (

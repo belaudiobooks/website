@@ -196,8 +196,11 @@ class Publisher(models.Model):
                             unique=True)
     name = models.CharField(_('Publisher Name'), max_length=100, default='')
     url = models.URLField(_('Publisher Website'), max_length=128)
-    icon = models.ImageField(upload_to='icons', blank=True, null=True)
+    logo = models.ImageField(upload_to='icons', blank=True, null=True)
     description = models.TextField(_('Publisher Description'), blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.name}'
 
 
 class Narration(models.Model):

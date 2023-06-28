@@ -242,7 +242,7 @@ class Narration(models.Model):
 
     duration = models.DurationField(_('Duration'), blank=True, null=True)
 
-    publishers = models.ManyToManyField(Publisher, related_name='narrations')
+    publishers = models.ManyToManyField(Publisher, related_name='narrations', blank=True)
 
     def __str__(self) -> str:
         return '%s read by %s' % (

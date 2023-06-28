@@ -7,7 +7,7 @@ unidecode # for unicode slugs
 Pillow # for files upload management
 types-Pillow
 yapf
-requests>=2.27.1,<2.28.0
+requests
 types-requests
 pylint
 mypy

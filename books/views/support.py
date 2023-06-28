@@ -21,7 +21,7 @@ from algoliasearch.search_client import SearchClient
 from markdownify.templatetags.markdownify import markdownify
 
 from books import serializers
-from books.models import Book, LinkType, Person, Tag
+from books.models import Book, LinkType, Person, Tag, Publisher
 
 from .utils import active_books
 from .articles import ARTICLES
@@ -121,6 +121,8 @@ def sitemap(request: HttpRequest) -> HttpResponse:
         pages.append(reverse('person-detail-page', args=(person.slug, )))
     for tag in Tag.objects.all():
         pages.append(reverse('catalog-for-tag', args=(tag.slug, )))
+    for publisher in Publisher.objects.all():
+        pages.append(reverse('publisher-detail-page', args=(publisher.slug, )))
     domain = 'https' if request.is_secure() else 'http'
     domain = domain + '://' + request.get_host()
     result = '\n'.join(domain + page for page in pages)

@@ -2,7 +2,7 @@
 {% load static %}
 {% load books_extras %}
 
-{% block title %}{{ publisher.name }}, аўдыёкнігі{% endblock title %}
+{% block title %}{{ publisher.name }}, аўдыякнігі{% endblock title %}
 {% block og_title %}{{ publisher.name }}{% endblock og_title %}
 {% block og_image %}{% spaceless %}
     {% if publisher.logo %}
@@ -13,7 +13,7 @@
 {% endspaceless %}{% endblock %}
 
 {% block description %}
-  На гэтай старонке вы знойдзеце ўсе кнігі выданыя альбо агучаныя выдавецтвам {{publisher.name}}.
+  На гэтай старонцы вы знойдзеце ўсе кнігі выданыя альбо агучаныя выдавецтвам {{publisher.name}}.
 {% endblock description %}
 
 {% block content %}
@@ -39,10 +39,10 @@
         </div>
         <!--Books section-->
         <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
-            {% if narrations %}
+            {% if books %}
                 <div class="mt-3">
                     <h4>Кнігі выдавецтва</h4>
-                    {% include 'partials/_books_list.html' with books=narrations %}
+                    {% include 'partials/_books_list.html' with books=books %}
                 </div>
             {% endif %}
         </div>

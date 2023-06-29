@@ -12,7 +12,7 @@ def publisher_detail(request: HttpRequest, slug: str) -> HttpResponse:
     """Detailed publisher page"""
 
     publisher = get_object_or_404(Publisher, slug=slug)
-    narrations = publisher.narrations.all()
+    narrations = publisher.narrations.all().order_by('-book__date')
     books = [
         item.book for item in narrations
         if item.book.status == BookStatus.ACTIVE

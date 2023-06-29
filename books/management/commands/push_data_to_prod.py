@@ -14,7 +14,7 @@ from django.core.management import call_command
 
 import django
 
-from books.models import Book, Link, LinkType, Narration, Person, Tag
+from books.models import Book, Link, LinkType, Narration, Person, Publisher, Tag
 
 REMOTE_DB = 'remote'
 
@@ -72,7 +72,7 @@ class Command(BaseCommand):
                 'audiobooks-prod"=tcp:5432')
             return
 
-        for dir in ['covers', 'photos', 'icons']:
+        for dir in ['covers', 'photos', 'icons', 'logos']:
             full_dir = os.path.join('data', dir)
             print(f'Pushing {dir}')
             subprocess.run(
@@ -102,12 +102,18 @@ class Command(BaseCommand):
                                          books)
         bulk_create_manytomany_relations(Book, 'tag', 'book', 'tag', books)
 
+        print('Creating publishers...')
+        publishers = Publisher.objects.all()
+        Publisher.objects.using(REMOTE_DB).bulk_create(publishers)
+
         print('Creating narrations...')
         narrations = Narration.objects.all().prefetch_related(
-            'book', 'narrators')
+            'book', 'narrators', 'publishers')
         Narration.objects.using(REMOTE_DB).bulk_create(narrations)
         bulk_create_manytomany_relations(Narration, 'narrators', 'narration',
                                          'person', narrations)
+        bulk_create_manytomany_relations(Narration, 'publishers', 'narration',
+                                         'publisher', narrations)
 
         print('Creating link types...')
         LinkType.objects.using(REMOTE_DB).bulk_create(LinkType.objects.all())

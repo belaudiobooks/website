@@ -11,7 +11,7 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 import django
 
-from books.models import Book, Link, LinkType, Narration, Person, Tag
+from books.models import Book, Link, LinkType, Narration, Person, Publisher, Tag
 
 REMOTE_DB = 'remote'
 
@@ -31,7 +31,7 @@ class Command(BaseCommand):
             return
         db_path = settings.DATABASES[REMOTE_DB]['NAME']
         print(f'Using database {db_path}')
-        for dir in ['covers', 'photos', 'icons']:
+        for dir in ['covers', 'photos', 'icons', 'logos']:
             full_dir = os.path.join('data', dir)
             print(f'Pulling images to {dir}')
             subprocess.run([
@@ -47,12 +47,15 @@ class Command(BaseCommand):
         all_books = Book.objects.using(REMOTE_DB).all().prefetch_related(
             'authors', 'translators', 'tag').order_by('uuid')
         all_narrations = Narration.objects.using(
-            REMOTE_DB).all().prefetch_related('narrators').order_by('uuid')
+            REMOTE_DB).all().prefetch_related('narrators',
+                                              'publishers').order_by('uuid')
         all_link_types = LinkType.objects.using(REMOTE_DB).all()
         all_links = Link.objects.using(REMOTE_DB).all().order_by('uuid')
+        all_publishers = Publisher.objects.using(REMOTE_DB).all().order_by(
+            'uuid')
         all_objects = list(
             chain(all_people, all_tags, all_books, all_narrations,
-                  all_link_types, all_links))
+                  all_link_types, all_links, all_publishers))
         with open('data/data.json', 'w', encoding='utf8') as f:
             django.core.serializers.serialize('json',
                                               all_objects,

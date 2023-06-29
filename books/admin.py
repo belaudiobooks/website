@@ -217,7 +217,7 @@ class LinkInlineAdmin(admin.StackedInline):
 
 @admin.register(Publisher)
 class PublisherAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
+    prepopulated_fields = {'slug': ('name', )}
     list_display = ('name', 'slug', 'url')
     list_per_page = 1000
     search_fields = ['name']
@@ -230,7 +230,7 @@ class NarrationAdmin(admin.ModelAdmin):
     list_display = ('uuid', 'get_narrators', 'book')
     inlines = [LinkInlineAdmin]
     list_per_page = 1000
-    autocomplete_fields = ['narrators', 'book']
+    autocomplete_fields = ['narrators', 'book', 'publishers']
     change_form_template = ['admin/books/change_form_narration.html']
 
     @display(description='narrators')

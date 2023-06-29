@@ -6,6 +6,7 @@ import uuid
 from unidecode import unidecode
 from django.template import defaultfilters
 
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils.translation import gettext as _
@@ -57,8 +58,8 @@ class Person(models.Model):
                                           default='')
     photo = models.ImageField(upload_to=functools.partial(
         _get_image_name, 'photos'),
-                              blank=True,
-                              null=True)
+        blank=True,
+        null=True)
     photo_source = models.CharField(_('Photo Source'),
                                     blank=True,
                                     max_length=500,
@@ -150,8 +151,8 @@ class Book(models.Model):
                             blank=True)
     cover_image = models.ImageField(upload_to=functools.partial(
         _get_image_name, 'covers'),
-                                    blank=True,
-                                    null=True)
+        blank=True,
+        null=True)
     cover_image_source = models.CharField(_('Cover Image Source'),
                                           blank=True,
                                           max_length=500,
@@ -283,6 +284,9 @@ class LinkType(models.Model):
                                     max_length=50,
                                     choices=LinkAvailability.choices,
                                     blank=False)
+    weight = models.PositiveIntegerField(default=10,
+                                         validators=[MinValueValidator(1),
+                                                     MaxValueValidator(100)])
 
     def __str__(self) -> str:
         return f'{self.name}'

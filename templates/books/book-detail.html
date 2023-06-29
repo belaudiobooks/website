@@ -127,7 +127,7 @@
                     {% endif %}
                 </div>
                 <!--Access to the link type-->
-                {% for link in narration.links.all %}
+                {% for link in narration.links.all|dictsortreversed:'url_type.weight' %}
                     {% if not link.url_type.disabled %}
                         <div class="mt-2">
                             <a href="{{ link.url }}" class="text-decoration-none d-flex align-items-center" target="_blank">

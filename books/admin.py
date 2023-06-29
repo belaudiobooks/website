@@ -19,7 +19,6 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
         reasons = {
             'no_description': 'Missing description',
             'no_cover': 'Missing cover',
-            'no_duration': 'Missing duration',
             'no_tags': 'Missing tags',
             'no_translation': 'Missing russian title',
         }

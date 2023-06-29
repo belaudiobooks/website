@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load books_extras %}
+
+{% block title %}{{ publisher.name }}, аўдыякнігі{% endblock title %}
+{% block og_title %}{{ publisher.name }}{% endblock og_title %}
+{% block og_image %}{% spaceless %}
+    {% if publisher.logo %}
+        {{ publisher.logo.url }}
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endspaceless %}{% endblock %}
+
+{% block description %}
+  На гэтай старонцы вы знойдзеце ўсе кнігі выданыя альбо агучаныя выдавецтвам {{publisher.name}}.
+{% endblock description %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <!--Publisher description section-->
+        <div class="col-12 col-md-3 mt-2 mt-sm-5">
+            {% if publisher.logo %}
+                <img class="img-fluid mx-auto mb-3 photo d-block" src="{{ publisher.logo.url }}" alt="{{ publisher.name }}">
+            {% endif %}
+            <h1 class="h3 text-center">
+                {{ publisher.name }}
+            </h1>
+            {% if publisher.url %}
+            <a href="{{ publisher.url }}" class="text-decoration-none">
+                <h7>{{ publisher.url }}</h7>
+            </a>
+            {% endif %}
+            <p>
+                {{ publisher.description|linebreaks }}
+            </p>
+        </div>
+        <!--Books section-->
+        <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
+            {% if books %}
+                <div class="mt-3">
+                    <h4>Кнігі выдавецтва</h4>
+                    {% include 'partials/_books_list.html' with books=books %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

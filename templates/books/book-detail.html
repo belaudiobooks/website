@@ -73,6 +73,13 @@
                 </div>
             {% endif %}
 
+            <!--Publisher-->
+            {% if narrations.count == 1 and narrations.first.publishers.all.exists %}
+            <div>
+                Выдавецтва: {% include 'partials/_publisher.html' with publishers=narrations.first.publishers.all %}
+            </div>
+            {% endif %}
+
             {% if single_language is not None %}
             <div>
                 Мова: {{ single_language | to_human_language }}
@@ -100,6 +107,10 @@
                             Агучка: удакладняецца...
                         {% endif %}
                         <br>
+                        {% if narration.publishers.all.exists %}
+                            Выдавецтва: {% include 'partials/_publisher.html' with publishers=narration.publishers.all %}
+                            <br>
+                        {% endif %}
                         {% if narration.duration %}
                             {{ narration | duration }}
                             <br>

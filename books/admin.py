@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.admin.decorators import display
 from django.db.models import Count
 
-from .models import Person, Book, Tag, LinkType, Link, Narration
+from .models import Person, Book, Tag, LinkType, Link, Narration, Publisher
 
 
 class IncompleteBookListFilter(admin.SimpleListFilter):
@@ -213,6 +213,15 @@ class IncompleteLinksSetFilter(admin.SimpleListFilter):
 class LinkInlineAdmin(admin.StackedInline):
     model = Link
     can_delete = True
+
+
+@admin.register(Publisher)
+class PublisherAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+    list_display = ('name', 'slug', 'url')
+    list_per_page = 1000
+    search_fields = ['name']
+    ordering = ['slug']
 
 
 @admin.register(Narration)

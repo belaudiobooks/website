@@ -1,0 +1,10 @@
+{% load static %}
+
+{% if publishers.exists %}
+{% for publisher in publishers %}
+<a class="text-decoration-none" href="{% url 'publisher-detail-page' publisher.slug %}">
+    {{ publisher.name }}
+</a>
+{% if not forloop.last %},{% endif %}
+{% endfor %}
+{% endif %}

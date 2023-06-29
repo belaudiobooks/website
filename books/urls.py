@@ -1,5 +1,5 @@
 from django.urls import path
-from books.views import stats, catalog, book, person, support, articles
+from books.views import stats, catalog, book, person, support, articles, publisher
 
 urlpatterns = [
     path('', catalog.index, name='index'),
@@ -8,6 +8,7 @@ urlpatterns = [
 
     path('books/<slug:slug>', book.book_detail, name='book-detail-page'),
     path('person/<slug:slug>', person.person_detail, name='person-detail-page'),
+    path('publisher/<slug:slug>', publisher.publisher_detail, name='publisher-detail-page'),
 
     path('about', stats.about, name='about'),
     path('stats/birthdays', stats.birthdays),

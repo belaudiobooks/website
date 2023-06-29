@@ -12,7 +12,7 @@ from django.utils.translation import gettext as _
 from .managers import BookManager
 
 
-def _get_image_name(folder: str, instance: Union['Person', 'Book'],
+def _get_image_name(folder: str, instance: Union['Person', 'Book', 'Publisher'],
                     filename: str) -> str:
     '''Builds stored image file name based on the slug of the model.'''
     extension = os.path.splitext(filename)[1]
@@ -185,6 +185,36 @@ class Book(models.Model):
     objects = BookManager()
 
 
+class Publisher(models.Model):
+    '''
+    Publisher model.
+    '''
+    uuid = models.UUIDField(_('Publisher ID'),
+                            primary_key=True,
+                            default=uuid.uuid4,
+                            editable=False,
+                            unique=True)
+    name = models.CharField(_('Publisher Name'), max_length=100, default='')
+    slug = models.SlugField(_('Publisher Slug'),
+                            max_length=100,
+                            unique=True,
+                            db_index=True,
+                            allow_unicode=True,
+                            blank=True)
+    url = models.URLField(_('Publisher Website'), max_length=128)
+    logo = models.ImageField(upload_to=functools.partial(
+        _get_image_name, 'logos'), blank=True, null=True)
+    description = models.TextField(_('Publisher Description'), blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.name}'
+
+    def save(self, *args, **kwargs):
+        if self.slug != defaultfilters.slugify(self.slug) or self.slug == '':
+            self.slug = defaultfilters.slugify(unidecode(self.name))
+        super().save(*args, **kwargs)
+
+
 class Narration(models.Model):
     '''
     Narration represents particular narration of a book. It's represented through a separate model so
@@ -211,6 +241,8 @@ class Narration(models.Model):
                                 blank=False)
 
     duration = models.DurationField(_('Duration'), blank=True, null=True)
+
+    publishers = models.ManyToManyField(Publisher, related_name='narrations', blank=True)
 
     def __str__(self) -> str:
         return '%s read by %s' % (

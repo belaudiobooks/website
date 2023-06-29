@@ -63,9 +63,10 @@ class CatalogPageTests(WebdriverTestCase):
 
     def test_all_books_with_link_filter(self):
         link_type = models.LinkType.objects.get(name='knihi_com')
-        self.driver.get(
-            f'{self.live_server_url}/catalog?links={link_type.name}')
-        self.assert_page_contains_only_books_of_link_type(link_type)
+        self.driver.get(f'{self.live_server_url}/catalog')
+        filter = Select(
+            self.driver.find_element(By.CSS_SELECTOR, '#filter-links'))
+        filter.select_by_visible_text(link_type.caption)
 
         # Go to next page and make sure that filter remains.
         self.scroll_and_click(
@@ -107,10 +108,10 @@ class CatalogPageTests(WebdriverTestCase):
     def test_genre_page_with_link_filter(self):
         tag = models.Tag.objects.filter(name='Сучасная проза').first()
         link_type = models.LinkType.objects.get(name='knihi_com')
-        self.driver.get(
-            f'{self.live_server_url}/catalog/{tag.slug}?links={link_type.name}'
-        )
-        self.assert_page_contains_only_books_of_link_type(link_type)
+        self.driver.get(f'{self.live_server_url}/catalog/{tag.slug}')
+        filter = Select(
+            self.driver.find_element(By.CSS_SELECTOR, '#filter-links'))
+        filter.select_by_visible_text(link_type.caption)
 
         # Go to next page and make sure that filter remains.
         self.scroll_and_click(
@@ -123,7 +124,7 @@ class CatalogPageTests(WebdriverTestCase):
         filter = Select(
             self.driver.find_element(By.CSS_SELECTOR, '#filter-language'))
         self.assertListEqual([o.text for o in filter.options],
-                             ['любая', 'беларуская', 'руская'])
+                             ['усе', 'беларуская', 'руская'])
         filter.select_by_visible_text('руская')
         books = self._get_all_books_on_page()
         self.assertGreater(len(books), 0)

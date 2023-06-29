@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, Page
 
 from books.templatetags.books_extras import to_human_language
-from books.models import Tag, Language
+from books.models import LinkType, Tag, Language
 
 from .utils import maybe_filter_links, active_books
 
@@ -74,7 +74,7 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
         filtered_books = filtered_books.filter(
             narrations__language=lang.upper())
 
-    language_options = [('', 'любая', lang == None)]
+    language_options = [('', 'усе', lang == None)]
     for available_lang in Language.values:
         language_options.append(
             (available_lang.lower(), to_human_language(available_lang),
@@ -90,6 +90,12 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
         ('true', 'платныя', paid == 'true'),
         ('false', 'бясплатныя', paid == 'false'),
     ]
+
+    link = request.GET.get('links')
+    link_options = [('', 'усе', lang == None)]
+    for available_link in LinkType.objects.filter(disabled=False):
+        link_options.append((available_link.name, available_link.caption,
+                             link == available_link.name))
 
     sorted_books = filtered_books.order_by('-date')
     paginator = Paginator(sorted_books, BOOKS_PER_PAGE)
@@ -125,5 +131,6 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
         'query_params': get_query_params_without(request, 'page'),
         'language_options': language_options,
         'price_options': price_options,
+        'link_options': link_options,
     }
     return render(request, 'books/catalog.html', context)

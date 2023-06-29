@@ -56,6 +56,16 @@
                         </select>
                         <label for="filter-price">Кошт</label>
                     </div>
+                    <div class="form-floating">
+                        <select class="form-select" id="filter-links">
+                            {% for link in link_options %}
+                            <option value="{{ link.0 }}" {% if link.2 %}selected{% endif %}>
+                                {{ link.1 }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <label for="filter-links">Пляцоўка</label>
+                    </div>
                 </div>
             </div>
         </div>

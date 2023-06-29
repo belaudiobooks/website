@@ -132,6 +132,9 @@ function initializeFilters() {
   document.querySelector('#filter-price')?.addEventListener('change', (event) => {
     setQueryParamAndRefresh('paid', event.target.value);
   });
+  document.querySelector('#filter-links')?.addEventListener('change', (event) => {
+    setQueryParamAndRefresh('links', event.target.value);
+  });
 }
 
 window.addEventListener('load', () => {

@@ -7,6 +7,7 @@ from django.http import HttpRequest
 
 from books.models import Book, BookStatus
 
+
 def maybe_filter_links(books_query: query.QuerySet,
                        request: HttpRequest) -> query.QuerySet:
     '''
@@ -20,8 +21,8 @@ def maybe_filter_links(books_query: query.QuerySet,
     return books_query.filter(
         narrations__links__url_type__name__in=links.split(','))
 
+
 def active_books() -> query.QuerySet:
     '''Returns list of books that are active and should be visible to users.'''
     return Book.objects.filter(
         status=BookStatus.ACTIVE).prefetch_related('authors')
-    

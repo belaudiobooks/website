@@ -42,9 +42,13 @@ class BookPageTests(WebdriverTestCase):
         for narration in self.book.narrations.all():
             for link in narration.links.all():
                 caption = link.url_type.caption
-                elem = self.driver.find_element(By.LINK_TEXT, caption)
-                self.assertIsNotNone(elem)
-                self.assertEqual(link.url, elem.get_dom_attribute('href'))
+                elem = self.driver.find_elements(By.LINK_TEXT, caption)
+                found_link = False
+                for e in elem:
+                    if e.get_dom_attribute('href') == link.url:
+                        found_link = True
+                        break
+                self.assertTrue(found_link)
 
     def test_click_tags(self):
         self.assertGreaterEqual(self.book.tag.count(), 1)
@@ -79,8 +83,8 @@ class BookPageTests(WebdriverTestCase):
         self.assertIn('Дзе купіць', header.text)
 
     def test_russian_only_books_show_both_titles(self):
-        belarusian_title = 'У вайны не жаночы твар'
-        russian_title = 'У войны не женское лицо'
+        belarusian_title = 'Былы сын'
+        russian_title = 'Бывший сын'
         book = models.Book.objects.filter(title=belarusian_title).first()
         self.driver.get(f'{self.live_server_url}/books/{book.slug}')
         body_text = self.driver.find_element(By.CSS_SELECTOR, '#books').text

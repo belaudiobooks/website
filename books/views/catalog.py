@@ -93,7 +93,8 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
 
     link = request.GET.get('links')
     link_options = [('', 'усе', lang == None)]
-    for available_link in LinkType.objects.filter(disabled=False):
+    for available_link in LinkType.objects.filter(
+            disabled=False).order_by('caption'):
         link_options.append((available_link.name, available_link.caption,
                              link == available_link.name))
 

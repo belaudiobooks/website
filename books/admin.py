@@ -269,4 +269,8 @@ class NarrationAdmin(admin.ModelAdmin):
         extra_context['link_types_regexes'] = link_types_regexes
 
 
-admin.site.register(LinkType)
+@admin.register(LinkType)
+class LinkTypeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'caption', 'weight')
+    ordering = ['-weight']
+    sortable_by = ['weight']

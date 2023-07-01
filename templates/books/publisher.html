@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load books_extras %}
+{% load markdownify %}
 
 {% block title %}{{ publisher.name }}, аўдыякнігі{% endblock title %}
 {% block og_title %}{{ publisher.name }}{% endblock og_title %}
@@ -34,7 +35,7 @@
             </a>
             {% endif %}
             <p>
-                {{ publisher.description|linebreaks }}
+                {{ publisher.description | markdownify:"book_description" | linebreaks }}
             </p>
         </div>
         <!--Books section-->

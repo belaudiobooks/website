@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load books_extras %}
+{% load markdownify %}
 
 {% block title %}{{ person.name }}, аўдыякнігі{% endblock title %}
 {% block og_title %}{{ person.name }}{% endblock og_title %}
 {% block og_image %}{% spaceless %}
-    {% if person.photo %}
-        {{ person.photo.url }}
-    {% else %}
-        {{ block.super }}
-    {% endif %}
+{% if person.photo %}
+{{ person.photo.url }}
+{% else %}
+{{ block.super }}
+{% endif %}
 {% endspaceless %}{% endblock %}
 
 {% block description %}
-  На гэтай старонцы вы знойдзеце ўсе кнігі якія {{person.name}} напісаў, агучыў альбо пераклаў.
+На гэтай старонцы вы знойдзеце ўсе кнігі якія {{person.name}} напісаў, агучыў альбо пераклаў.
 {% endblock description %}
 
 {% block content %}
@@ -23,36 +24,36 @@
         <!--Author bio section-->
         <div class="col-12 col-md-3 mt-2 mt-sm-5">
             {% if person.photo %}
-                <img class="img-fluid mx-auto mb-3 photo d-block" src="{{ person.photo.url }}" alt="{{ person.name }}">
-                {% cite_source person.photo_source "cit-photo" %}
+            <img class="img-fluid mx-auto mb-3 photo d-block" src="{{ person.photo.url }}" alt="{{ person.name }}">
+            {% cite_source person.photo_source "cit-photo" %}
             {% endif %}
             <h1 class="h3 text-center">
                 {{ person.name }}
             </h1>
             <p>
-                {{ person.description|linebreaks }}
+                {{ person.description | markdownify:"book_description" | linebreaks }}
             </p>
             {% cite_source person.description_source "cit-description" %}
         </div>
         <!--Books section-->
         <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
             {% if author.exists %}
-                <div class="mt-3">
-                    <h4>Кнігі аўтар{{person|gender:"кі,а"}}</h4>
-                    {% include 'partials/_books_list.html' with books=author %}
-                </div>
+            <div class="mt-3">
+                <h4>Кнігі аўтар{{person|gender:"кі,а"}}</h4>
+                {% include 'partials/_books_list.html' with books=author %}
+            </div>
             {% endif %}
             {% if translator.exists %}
-                <div class="mt-3">
-                    <h4>Пераклады</h4>
-                    {% include 'partials/_books_list.html' with books=translator %}
-                </div>
+            <div class="mt-3">
+                <h4>Пераклады</h4>
+                {% include 'partials/_books_list.html' with books=translator %}
+            </div>
             {% endif %}
             {% if narrations %}
-                <div class="mt-3">
-                    <h4>Агучаныя кнігі</h4>
-                    {% include 'partials/_books_list.html' with books=narrations %}
-                </div>
+            <div class="mt-3">
+                <h4>Агучаныя кнігі</h4>
+                {% include 'partials/_books_list.html' with books=narrations %}
+            </div>
             {% endif %}
         </div>
     </div>

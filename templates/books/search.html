@@ -12,7 +12,11 @@
             {% for item in results %}
                 {% if item.type == 'person' %}
                     {% include 'partials/_person_in_search.html' with person=item.object %}
-                {% else  %}
+                {% endif %}
+                {% if item.type == 'publisher' %}
+                    {% include 'partials/_publisher_in_search.html' with publisher=item.object %}
+                {% endif %}
+                {% if item.type == 'book' %}
                     {% include 'partials/_book.html' with book=item.object %}
                 {% endif %}
             {% endfor %}

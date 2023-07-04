@@ -119,12 +119,15 @@
                     {% if single_language is  None %}
                         Мова: {{ narration.language | to_human_language }}
                         <br>
+                        <br>
                     {% endif %}
+                    <strong>
                     {% if narration.paid %}
                         Дзе купіць
                     {% else %}
                         Дзе паслухаць бясплатна
                     {% endif %}
+                    </strong>
                 </div>
                 <!--Access to the link type-->
                 {% for link in narration.links.all|dictsortreversed:'url_type.weight' %}

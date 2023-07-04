@@ -18,6 +18,13 @@ def _person_has_active_books(person: models.Person) -> bool:
     return any(active_books)
 
 
+def _publisher_has_active_books(publisher: models.Publisher) -> bool:
+    books = [n.book for n in publisher.narrations.all()]
+    active_books = filter(lambda b: b.status == models.BookStatus.ACTIVE,
+                          books)
+    return any(active_books)
+
+
 class Command(BaseCommand):
     '''See help.'''
 
@@ -64,6 +71,16 @@ class Command(BaseCommand):
                 'name': person.name,
                 'name_ru': person.name_ru,
                 'slug': person.slug,
+            })
+        publishers = models.Publisher.objects.all()
+        for publisher in publishers:
+            if not _publisher_has_active_books(publisher):
+                continue
+            data.append({
+                'objectID': publisher.uuid,
+                'model': 'publisher',
+                'name': publisher.name,
+                'slug': publisher.slug,
             })
         print(f'Pushing {len(data)} objects...')
         res = index.replace_all_objects(data)

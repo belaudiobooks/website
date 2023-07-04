@@ -44,22 +44,27 @@ def search(request: HttpRequest) -> HttpResponse:
         # Load all models, books and people returned from algolia.
         people_ids: List[str] = []
         books_ids: List[str] = []
+        publishers_ids: List[str] = []
         for hit in hits:
             if hit['model'] == 'person':
                 people_ids.append(hit['objectID'])
             elif hit['model'] == 'book':
                 books_ids.append(hit['objectID'])
+            elif hit['model'] == 'publisher':
+                publishers_ids.append(hit['objectID'])
             else:
                 logger.warning('Got unexpected model from search %s',
                                hit['model'],
                                extra=hit)
-        loaded_models: Dict[str, Union[Person, Book]] = {}
+        loaded_models: Dict[str, Union[Person, Book, Publisher]] = {}
         for person in Person.objects.all().filter(uuid__in=people_ids):
             loaded_models[str(person.uuid)] = person
         for book in Book.objects.all().prefetch_related('authors').filter(
                 uuid__in=books_ids):
             loaded_models[str(book.uuid)] = book
-
+        for publisher in Publisher.objects.all().filter(
+                uuid__in=publishers_ids):
+            loaded_models[str(publisher.uuid)] = publisher
         # Build search result list in the same order as returned by algolia.
         # So that most relevant are shown first.
         search_results = [{
@@ -157,7 +162,10 @@ def generate_data_json(request: HttpRequest) -> HttpResponse:
         serializers.LinkTypeSimpleSerializer(LinkType.objects.all(),
                                              many=True).data,
         'tags':
-        serializers.TagSerializer(Tag.objects.all(), many=True).data
+        serializers.TagSerializer(Tag.objects.all(), many=True).data,
+        'publishers':
+        serializers.PublisherSimpleSerializer(
+            Publisher.objects.all(), many=True).data
     }
     if default_storage.exists(DATA_JSON_FILE):
         default_storage.delete(DATA_JSON_FILE)

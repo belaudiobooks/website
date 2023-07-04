@@ -82,3 +82,14 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Tag
         fields = ['id', 'name', 'slug']
+
+
+class PublisherSimpleSerializer(serializers.ModelSerializer):
+    '''
+    Serializes Publisher to a JSON excluding certain info for usage in
+    data.json export.
+    '''
+
+    class Meta:
+        model = models.Publisher
+        fields = ['uuid', 'name', 'slug', 'url', 'logo', 'description']

@@ -32,9 +32,14 @@ function renderHit(hit) {
     authorsSpan.classList.add('authors');
     content.appendChild(authorsSpan);
     hitAnchor.href = `/books/${hit['slug']}`;
-  } else {
+  }
+  if (hit['model'] === 'person') {
     content.textContent = hit['name'];
     hitAnchor.href = `/person/${hit['slug']}`;
+  }
+  if (hit['model'] === 'publisher') {
+    content.textContent = hit['name'];
+    hitAnchor.href = `/publisher/${hit['slug']}`;
   }
   return hitAnchor;
 }

@@ -1,5 +1,6 @@
 import time
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import override_settings
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -9,6 +10,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from books import models
 
 
+@override_settings(DEBUG=True)
 class WebdriverTestCase(StaticLiveServerTestCase):
     '''Base class for all webdriver tests. Initializes webdriver and seeds DB.'''
 

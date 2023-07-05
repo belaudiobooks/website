@@ -10,7 +10,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from books import models
 
 
-@override_settings(DEBUG=True)
+# Uncomment to run tests in debug mode. Useful when server returns 500 and test fails
+# without any useful info in logs.
+# @override_settings(DEBUG=True)
 class WebdriverTestCase(StaticLiveServerTestCase):
     '''Base class for all webdriver tests. Initializes webdriver and seeds DB.'''
 

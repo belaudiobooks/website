@@ -90,3 +90,11 @@ class BookPageTests(WebdriverTestCase):
         body_text = self.driver.find_element(By.CSS_SELECTOR, '#books').text
         self.assertIn(belarusian_title, body_text)
         self.assertIn(russian_title, body_text)
+
+    def test_has_publisher_clickable_link(self):
+        book = models.Book.objects.filter(slug="voliai-abrany").first()
+        self.driver.get(f'{self.live_server_url}/books/{book.slug}')
+        publisher = models.Publisher.objects.filter(name="audiobooks.by").first()
+        elem = self.driver.find_element(By.LINK_TEXT, f"{publisher.name}")
+        self.scroll_and_click(elem)
+        self.assertIn(f'/publisher/{publisher.slug}', self.driver.current_url)

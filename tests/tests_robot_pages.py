@@ -37,6 +37,9 @@ class RobotPagesTests(WebdriverTestCase):
         article = articles.ARTICLES[0]
         self.assertIn(f'{domain}/articles/{article.slug}', sitemap)
 
+        publisher = models.Publisher.objects.filter(name="audiobooks.by").first()
+        self.assertIn(f'{domain}/publisher/{publisher.slug}', sitemap)
+
     def test_all_sitemap_links_return_200(self):
         sitemap = requests.get(self.get_sitemap_url()).text.splitlines()
         errors = [

@@ -62,6 +62,16 @@ class HeaderAndSearchTests(WebdriverTestCase):
             self._wait_for_suggestion('Уладзімір Караткевіч',
                                       '/person/uladzimir-karatkevich')
 
+    def test_client_side_search_publisher(self):
+        self._init_algolia()
+        self.driver.get(self.live_server_url)
+        search = self.driver.find_element(By.CSS_SELECTOR, '#search')
+        for query in ['audiob', 'audiobooks.by', 'AUDIOBO']:
+            search.clear()
+            search.send_keys(query)
+            self._wait_for_suggestion('audiobooks.by',
+                                      '/publisher/audiobooksby')
+
     def test_server_side_search(self):
         self._init_algolia()
         self.driver.get(self.live_server_url)

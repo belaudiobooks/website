@@ -35,8 +35,17 @@ class PublisherPageTests(WebdriverTestCase):
             By.CSS_SELECTOR,
             'meta[name="description"]').get_dom_attribute('content')
         self.assertIn(self.publisher.name, description)
-        publisher_description = self.driver.find_element(
-            By.CSS_SELECTOR,
-            '.col-12.col-md-3.mt-2.mt-sm-5').text
-        self.assertIn(self.publisher.name, publisher_description)
-        self.assertIn(self.publisher.url, publisher_description)
+        publisher_name = self.driver.find_element(
+            By.CSS_SELECTOR, '#publisher-details h1').text
+        self.assertIn(self.publisher.name, publisher_name)
+        publisher_url = self.driver.find_element(
+            By.CSS_SELECTOR, '#publisher-details a')
+        self.assertIn(self.publisher.url, publisher_url.text)
+        self.assertIn(self.publisher.url, publisher_url.get_dom_attribute('href'))
+        publisher_description = self.driver.find_elements(
+            By.CSS_SELECTOR, '#publisher-details p')
+        for paragraph in publisher_description:
+            if not paragraph.text:
+                continue
+            self.assertIn(paragraph.text, self.publisher.description)
+

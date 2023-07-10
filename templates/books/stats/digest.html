@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load books_extras %}
+
+{% block title %}Дайджэст{% endblock title %}
+{% block og_title %}Дайджэст{% endblock og_title %}
+
+{% block content %}
+<div class="container px-2" id="birthdays">
+    <div class="col-12">
+        <h1>Дайджэст рэлізаў за мінулыя 3 месяцы</h1>
+    </div>
+    {% for group in last_3_months %}
+    <h4 class="mt-5">{{ group.0.date | format_date:"m Y" }}</h4>
+    <table class="table table-striped table-responsive">
+        <tbody>
+            {% for book in group %}
+            <tr>
+                <td class="fs-5 text-left align-middle w-25">
+                    {{ book.date | format_date:"d m" }}
+                </td>
+                <td class="fs-4 text-left align-middle w-25">
+                    <a href="{% url 'book-detail-page' book.slug %}">{{ book.title }}</a>
+                </td>
+                <td class="fs-5 text-left align-middle w-25">
+                    {% for author in book.authors.all %}
+                        {{ author.name }}
+                        {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+                <td class="fs-5 text-left align-middle w-25">
+                    {% for narration in book.narrations.all %}
+                        {% for publisher in narration.publishers.all %}
+                            {{ publisher.name }}{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                        {% comment %} 
+                        Separate narrations by |. Ideally we'd show only the relevant narration that was
+                        released, but currently we don't have release dates on narration level.
+                        {% endcomment %}
+                        {% if not forloop.last %}|{% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
+</div>
+
+{% endblock content %}

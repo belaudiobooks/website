@@ -1,3 +1,6 @@
+from datetime import date, timedelta
+import tempfile
+from django.core.files.uploadedfile import SimpleUploadedFile
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
@@ -6,9 +9,79 @@ from selenium.webdriver.common.by import By
 class BookPageTests(WebdriverTestCase):
     '''Selenium tests for book page.'''
 
+    # TODO: #90 - remove once all tests switch to using fake data.
+    fixtures = []
+
     def setUp(self):
         super().setUp()
-        self.book = models.Book.objects.filter(title='1984').first()
+        self.book = models.Book.objects.create(
+            title='Першая кніга',
+            title_ru='Первая книга',
+            slug='pershaya-kniga',
+            date=date.today(),
+        )
+        author = models.Person.objects.create(
+            name='Алесь Алесявіч',
+            slug='ales-alesievich',
+        )
+        self.book.authors.set([author])
+        translator = models.Person.objects.create(
+            name='Бэла Бэлаўна',
+            slug='bela-belawna',
+        )
+        self.book.translators.set([translator])
+
+        icon_image = SimpleUploadedFile(
+            tempfile.NamedTemporaryFile(suffix=".jpg").name, b"")
+        link_type_knizhny_voz = models.LinkType.objects.create(
+            name='knizny_voz',
+            caption='Кніжны Воз',
+            icon=icon_image,
+            availability=models.LinkAvailability.EVERYWHERE,
+        )
+        link_type_kobo = models.LinkType.objects.create(
+            name='kobo',
+            caption='Kobo',
+            icon=icon_image,
+            availability=models.LinkAvailability.EVERYWHERE,
+        )
+
+        narration = models.Narration.objects.create(
+            book=self.book,
+            language=models.Language.BELARUSIAN,
+            duration=timedelta(hours=14, minutes=15),
+        )
+        narration.links.set([
+            models.Link.objects.create(
+                url='https://knizhnyvoz.com/pershaya-kniga',
+                url_type=link_type_knizhny_voz,
+            ),
+            models.Link.objects.create(
+                url='https://kobo.com/pershaya-kniga',
+                url_type=link_type_kobo,
+            ),
+        ])
+        narrator = models.Person.objects.create(
+            name='Віктар Віктаравіч',
+            slug='viktar-viktavarich',
+        )
+        narration.narrators.set([narrator])
+
+        tag_proza = models.Tag.objects.create(
+            name='проза',
+            slug='proza',
+        )
+        tag_fiction = models.Tag.objects.create(
+            name='фантастыка',
+            slug='fiction',
+        )
+        self.book.tag.set([tag_proza, tag_fiction])
+
+    def tearDown(self):
+        super().tearDown()
+        # TODO: #90 - automate deletion of temporary created icons across all tests.
+        for link_type in models.LinkType.objects.all():
+            link_type.icon.delete()
 
     def _get_book_url(self) -> str:
         return f'{self.live_server_url}/books/{self.book.slug}'
@@ -64,7 +137,7 @@ class BookPageTests(WebdriverTestCase):
         self.driver.get(self._get_book_url())
         book_elem = self.driver.find_element(By.CSS_SELECTOR, '#books')
         self.assertIn('14 гадзін 15 хвілін', book_elem.text)
-        self.assertEqual(f'{self.book.title} аўдыякніга', self.driver.title)
+        self.assertEqual(f'Першая Кніга аўдыякніга', self.driver.title)
         description = self.driver.find_element(
             By.CSS_SELECTOR,
             'meta[name="description"]').get_dom_attribute('content')
@@ -77,16 +150,20 @@ class BookPageTests(WebdriverTestCase):
         self.assertIn('Дзе паслухаць бясплатна', header.text)
 
     def test_paid_books_have_where_to_buy_text(self):
-        book = models.Book.objects.filter(title='Шклатара').first()
-        self.driver.get(f'{self.live_server_url}/books/{book.slug}')
+        narration = self.book.narrations.first()
+        narration.paid = True
+        narration.save()
+        self.driver.get(self._get_book_url())
         header = self.driver.find_element(By.CSS_SELECTOR, '.links-header')
         self.assertIn('Дзе купіць', header.text)
 
     def test_russian_only_books_show_both_titles(self):
-        belarusian_title = 'Былы сын'
-        russian_title = 'Бывший сын'
-        book = models.Book.objects.filter(title=belarusian_title).first()
-        self.driver.get(f'{self.live_server_url}/books/{book.slug}')
+        belarusian_title = 'Першая кніга'
+        russian_title = 'Первая книга'
+        narration = self.book.narrations.first()
+        narration.language = models.Language.RUSSIAN
+        narration.save()
+        self.driver.get(self._get_book_url())
         body_text = self.driver.find_element(By.CSS_SELECTOR, '#books').text
         self.assertIn(belarusian_title, body_text)
         self.assertIn(russian_title, body_text)

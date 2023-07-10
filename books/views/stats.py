@@ -1,5 +1,6 @@
 import datetime
 import bisect
+from typing import Dict, List
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
@@ -50,7 +51,6 @@ def birthdays(request: HttpRequest) -> HttpResponse:
             person,
             'age':
             now.year - person.date_of_birth.year,
-            'days_left': (next_birthday - now.date()).days,
             'stats':
             '%d - %d - %d' % (
                 person.books_authored.count(),
@@ -62,3 +62,16 @@ def birthdays(request: HttpRequest) -> HttpResponse:
         'people_with_info': people_with_info,
     }
     return render(request, 'books/stats/birthdays.html', context)
+
+def digest(request: HttpRequest) -> HttpResponse:
+    '''Digest page'''
+    books = Book.objects.order_by('-date')[:100]
+    books_by_month: Dict[int, List[Book]] = {}
+    for book in books:
+        month = book.date.year * 12 + book.date.month
+        books_by_month.setdefault(month, []).append(book)
+    last_3_months = sorted(books_by_month.items(), reverse=True)[0:3]
+    context = {
+        'last_3_months': [item[1] for item in last_3_months]
+    }
+    return render(request, 'books/stats/digest.html', context)

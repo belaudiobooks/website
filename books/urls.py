@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('about', stats.about, name='about'),
     path('stats/birthdays', stats.birthdays),
+    path('stats/digest', stats.digest),
 
     path('articles', articles.redirect_to_first_article, name='all-articles'),
     path('articles/<slug:slug>', articles.single_article, name='single-article'),

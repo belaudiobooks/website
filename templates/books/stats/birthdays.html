@@ -6,14 +6,13 @@
 {% block og_title %}Дні народзінаў{% endblock og_title %}
 
 {% block content %}
-<div class="container table-responsive" id="birthdays">
+<div class="container px-2" id="birthdays">
     <div class="col-12">
         <h1>Дні народзінаў</h1>
     </div>
-    <table class="table">
+    <table class="table table-responsive">
         <thead>
             <tr>
-                <th scope="col" class="text-center">Засталося дзён</th>
                 <th scope="col" class="text-center">Дзень народзінаў</th>
                 <th scope="col" class="text-center">Чалавек</th>
                 <th scope="col" class="text-center">Узрост</th>
@@ -24,10 +23,7 @@
             {% for p in people_with_info %}
             <tr>
                 <td class="fs-5 text-center align-middle">
-                    {{ p.days_left }}
-                </td>
-                <td class="fs-5 text-center align-middle">
-                    {{ p.date_of_birth | format_date }}
+                    {{ p.date_of_birth | format_date:"d m Y" }}
                 </td>
                 <td class="fs-5 text-center align-middle">
                     {% include 'partials/_person_in_search.html' with person=p.person %}

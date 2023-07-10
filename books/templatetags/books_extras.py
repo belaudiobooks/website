@@ -1,7 +1,7 @@
 '''Various helper template filters for books.'''
 
 from atexit import register
-from typing import Optional
+from typing import List, Optional, Tuple
 from zoneinfo import ZoneInfo
 from django import template
 from datetime import datetime
@@ -103,9 +103,19 @@ def colors(book: models.Book) -> str:
     return COVER_PATTERNS[book.uuid.int % len(COVER_PATTERNS)]
 
 
-MONTHS = [
-    'снежня', 'лютага', 'сакавіка', 'красавіка', 'траўня', 'чэрвеня', 'ліпеня',
-    'жніўня', 'верасня', 'кастрычніка', 'лістапада', 'студзеня'
+MONTHS: List[Tuple[str, str]] = [
+    ('снежань', 'снежня'),
+    ('люты', 'лютага'),
+    ('сакавік', 'сакавіка'),
+    ('красавік', 'красавіка'),
+    ('травень', 'траўня'),
+    ('чэрвень', 'чэрвеня'),
+    ('ліпень', 'ліпеня'),
+    ('жнівень', 'жніўня'),
+    ('верасень', 'верасня'),
+    ('кастрычнік', 'кастрычніка'),
+    ('лістапад', 'лістапада'),
+    ('студзень', 'студзеня'),
 ]
 
 
@@ -113,14 +123,22 @@ MONTHS = [
 def books_of_the_month() -> str:
     '''Returns text corresponding to current month.'''
     month = datetime.now(ZoneInfo('Europe/Minsk')).month
-    return f'Кнігі {MONTHS[month - 1]}'
+    return f'Кнігі {MONTHS[month - 1][0]}'
 
 
 @register.filter
-def format_date(date: datetime.date) -> str:
+def format_date(date: datetime.date, format: str) -> str:
     '''Formats date in a human-readable format.'''
-    month = MONTHS[date.month - 1]
-    return '%d %s %d' % (date.day, month, date.year)
+    contains_day = format.find('d') != -1
+    month = MONTHS[date.month -
+                   1][1] if contains_day else MONTHS[date.month - 1][0]
+    return format.replace(
+        'd', str(date.day)
+    ).replace(
+        'm', month
+    ).replace(
+        'Y', str(date.year)
+    )
 
 
 @register.simple_tag

@@ -67,6 +67,14 @@ class BookPageTests(WebdriverTestCase):
         )
         narration.narrators.set([narrator])
 
+        publisher = models.Publisher.objects.create(
+            name="audiobooks.by",
+            slug="audiobooksby",
+            url="https://audiobooks.by/about",
+            description="Мы - каманда энтузіястаў, якія любяць "
+            + "беларускую літаратуру і аўдыякнігі."
+        )
+        narration.publishers.set([publisher])
         tag_proza = models.Tag.objects.create(
             name='проза',
             slug='proza',
@@ -169,8 +177,7 @@ class BookPageTests(WebdriverTestCase):
         self.assertIn(russian_title, body_text)
 
     def test_has_publisher_clickable_link(self):
-        book = models.Book.objects.filter(slug="voliai-abrany").first()
-        self.driver.get(f'{self.live_server_url}/books/{book.slug}')
+        self.driver.get(self._get_book_url())
         publisher = models.Publisher.objects.filter(name="audiobooks.by").first()
         elem = self.driver.find_element(By.LINK_TEXT, f"{publisher.name}")
         self.scroll_and_click(elem)

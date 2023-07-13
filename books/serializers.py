@@ -43,7 +43,10 @@ class NarrationSimpleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Narration
-        fields = ['uuid', 'narrators', 'links', 'duration']
+        fields = [
+            'uuid', 'narrators', 'links', 'duration', 'publishers', 'paid',
+            'language'
+        ]
 
 
 class BookSimpleSerializer(serializers.ModelSerializer):
@@ -70,7 +73,7 @@ class LinkTypeSimpleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.LinkType
-        fields = ['id', 'name', 'caption', 'icon']
+        fields = ['id', 'name', 'caption', 'icon', 'availability']
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -81,7 +84,7 @@ class TagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Tag
-        fields = ['id', 'name', 'slug']
+        fields = ['id', 'name', 'slug', 'description']
 
 
 class PublisherSimpleSerializer(serializers.ModelSerializer):

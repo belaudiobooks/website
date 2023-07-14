@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 from books import models
+from tests import fake_data
 
 
 # Uncomment to run tests in debug mode. Useful when server returns 500 and test fails
@@ -34,6 +35,16 @@ class WebdriverTestCase(StaticLiveServerTestCase):
     def tearDownClass(cls):
         cls.driver.quit()
         super().tearDownClass()
+
+    def setUp(self):
+        super().setUp()
+        if len(self.fixtures) == 0:
+            self.fake_data = fake_data.FakeData()
+
+    def tearDown(self):
+        super().tearDown()
+        if len(self.fixtures) == 0:
+            self.fake_data.cleanup()
 
     def scroll_into_view(self, element: WebElement) -> WebElement:
         '''

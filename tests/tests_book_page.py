@@ -20,31 +20,8 @@ class BookPageTests(WebdriverTestCase):
             slug='pershaya-kniga',
             date=date.today(),
         )
-        author = models.Person.objects.create(
-            name='Алесь Алесявіч',
-            slug='ales-alesievich',
-        )
-        self.book.authors.set([author])
-        translator = models.Person.objects.create(
-            name='Бэла Бэлаўна',
-            slug='bela-belawna',
-        )
-        self.book.translators.set([translator])
-
-        icon_image = SimpleUploadedFile(
-            tempfile.NamedTemporaryFile(suffix=".jpg").name, b"")
-        link_type_knizhny_voz = models.LinkType.objects.create(
-            name='knizny_voz',
-            caption='Кніжны Воз',
-            icon=icon_image,
-            availability=models.LinkAvailability.EVERYWHERE,
-        )
-        link_type_kobo = models.LinkType.objects.create(
-            name='kobo',
-            caption='Kobo',
-            icon=icon_image,
-            availability=models.LinkAvailability.EVERYWHERE,
-        )
+        self.book.authors.set([self.fake_data.person_ales])
+        self.book.translators.set([self.fake_data.person_bela])
 
         narration = models.Narration.objects.create(
             book=self.book,
@@ -52,44 +29,22 @@ class BookPageTests(WebdriverTestCase):
             duration=timedelta(hours=14, minutes=15),
         )
         narration.links.set([
-            models.Link.objects.create(
-                url='https://knizhnyvoz.com/pershaya-kniga',
-                url_type=link_type_knizhny_voz,
-            ),
-            models.Link.objects.create(
-                url='https://kobo.com/pershaya-kniga',
-                url_type=link_type_kobo,
-            ),
+            self.fake_data.create_link(self.fake_data.link_type_knizhny_voz,
+                                       self.book),
+            self.fake_data.create_link(self.fake_data.link_type_kobo,
+                                       self.book),
         ])
-        narrator = models.Person.objects.create(
-            name='Віктар Віктаравіч',
-            slug='viktar-viktavarich',
-        )
-        narration.narrators.set([narrator])
+        narration.narrators.set([self.fake_data.person_viktar])
 
         publisher = models.Publisher.objects.create(
             name="audiobooks.by",
             slug="audiobooksby",
             url="https://audiobooks.by/about",
-            description="Мы - каманда энтузіястаў, якія любяць "
-            + "беларускую літаратуру і аўдыякнігі."
-        )
+            description="Мы - каманда энтузіястаў, якія любяць " +
+            "беларускую літаратуру і аўдыякнігі.")
         narration.publishers.set([publisher])
-        tag_proza = models.Tag.objects.create(
-            name='проза',
-            slug='proza',
-        )
-        tag_fiction = models.Tag.objects.create(
-            name='фантастыка',
-            slug='fiction',
-        )
-        self.book.tag.set([tag_proza, tag_fiction])
-
-    def tearDown(self):
-        super().tearDown()
-        # TODO: #90 - automate deletion of temporary created icons across all tests.
-        for link_type in models.LinkType.objects.all():
-            link_type.icon.delete()
+        self.book.tag.set(
+            [self.fake_data.tag_poetry, self.fake_data.tag_fiction])
 
     def _get_book_url(self) -> str:
         return f'{self.live_server_url}/books/{self.book.slug}'
@@ -178,7 +133,8 @@ class BookPageTests(WebdriverTestCase):
 
     def test_has_publisher_clickable_link(self):
         self.driver.get(self._get_book_url())
-        publisher = models.Publisher.objects.filter(name="audiobooks.by").first()
+        publisher = models.Publisher.objects.filter(
+            name="audiobooks.by").first()
         elem = self.driver.find_element(By.LINK_TEXT, f"{publisher.name}")
         self.scroll_and_click(elem)
         self.assertIn(f'/publisher/{publisher.slug}', self.driver.current_url)

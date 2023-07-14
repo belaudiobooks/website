@@ -30,12 +30,12 @@ class HeaderAndSearchTests(WebdriverTestCase):
         narration.publishers.set([self.fake_data.publisher_audiobooksby])
 
     def test_click_logo_leads_to_main_page(self):
-        self.driver.get(f'{self.live_server_url}/books')
+        self.driver.get(f'{self.live_server_url}/catalog')
         self.driver.find_element(By.CSS_SELECTOR, 'nav .logo').click()
         self.assertEqual(f'{self.live_server_url}/', self.driver.current_url)
 
     def test_click_site_title_to_main_page(self):
-        self.driver.get(f'{self.live_server_url}/books')
+        self.driver.get(f'{self.live_server_url}/catalog')
         self.driver.find_element(By.CSS_SELECTOR, 'nav .site-title').click()
         self.assertEqual(f'{self.live_server_url}/', self.driver.current_url)
 

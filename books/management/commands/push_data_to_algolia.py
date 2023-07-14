@@ -82,7 +82,9 @@ class Command(BaseCommand):
                 'name': publisher.name,
                 'slug': publisher.slug,
             })
-        print(f'Pushing {len(data)} objects...')
+        print(
+            f'Pushing {len(data)} objects to index "{settings.ALGOLIA_INDEX}"...'
+        )
         res = index.replace_all_objects(data)
         res.wait()
         print('Completed!')

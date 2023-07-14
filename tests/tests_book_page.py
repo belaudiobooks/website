@@ -1,5 +1,4 @@
 from datetime import date, timedelta
-import tempfile
 from django.core.files.uploadedfile import SimpleUploadedFile
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
@@ -36,13 +35,7 @@ class BookPageTests(WebdriverTestCase):
         ])
         narration.narrators.set([self.fake_data.person_viktar])
 
-        publisher = models.Publisher.objects.create(
-            name="audiobooks.by",
-            slug="audiobooksby",
-            url="https://audiobooks.by/about",
-            description="Мы - каманда энтузіястаў, якія любяць " +
-            "беларускую літаратуру і аўдыякнігі.")
-        narration.publishers.set([publisher])
+        narration.publishers.set([self.fake_data.publisher_audiobooksby])
         self.book.tag.set(
             [self.fake_data.tag_poetry, self.fake_data.tag_fiction])
 

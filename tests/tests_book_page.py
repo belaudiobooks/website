@@ -13,31 +13,19 @@ class BookPageTests(WebdriverTestCase):
 
     def setUp(self):
         super().setUp()
-        self.book = models.Book.objects.create(
+        self.book = self.fake_data.create_book_with_single_narration(
             title='Першая кніга',
-            title_ru='Первая книга',
-            slug='pershaya-kniga',
-            date=date.today(),
-        )
-        self.book.authors.set([self.fake_data.person_ales])
-        self.book.translators.set([self.fake_data.person_bela])
-
-        narration = models.Narration.objects.create(
-            book=self.book,
-            language=models.Language.BELARUSIAN,
+            authors=[self.fake_data.person_ales],
+            translators=[self.fake_data.person_bela],
+            narrators=[self.fake_data.person_viktar],
+            link_types=[
+                self.fake_data.link_type_knizhny_voz,
+                self.fake_data.link_type_kobo
+            ],
+            tags=[self.fake_data.tag_poetry, self.fake_data.tag_fiction],
+            publishers=[self.fake_data.publisher_audiobooksby],
             duration=timedelta(hours=14, minutes=15),
         )
-        narration.links.set([
-            self.fake_data.create_link(self.fake_data.link_type_knizhny_voz,
-                                       self.book),
-            self.fake_data.create_link(self.fake_data.link_type_kobo,
-                                       self.book),
-        ])
-        narration.narrators.set([self.fake_data.person_viktar])
-
-        narration.publishers.set([self.fake_data.publisher_audiobooksby])
-        self.book.tag.set(
-            [self.fake_data.tag_poetry, self.fake_data.tag_fiction])
 
     def _get_book_url(self) -> str:
         return f'{self.live_server_url}/books/{self.book.slug}'
@@ -114,15 +102,16 @@ class BookPageTests(WebdriverTestCase):
         self.assertIn('Дзе купіць', header.text)
 
     def test_russian_only_books_show_both_titles(self):
-        belarusian_title = 'Першая кніга'
-        russian_title = 'Первая книга'
+        self.book.title = 'Першая кніга'
+        self.book.title_ru = 'Первая книга'
+        self.book.save()
         narration = self.book.narrations.first()
         narration.language = models.Language.RUSSIAN
         narration.save()
         self.driver.get(self._get_book_url())
         body_text = self.driver.find_element(By.CSS_SELECTOR, '#books').text
-        self.assertIn(belarusian_title, body_text)
-        self.assertIn(russian_title, body_text)
+        self.assertIn('Першая кніга', body_text)
+        self.assertIn('Первая книга', body_text)
 
     def test_has_publisher_clickable_link(self):
         self.driver.get(self._get_book_url())

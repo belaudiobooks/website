@@ -1,4 +1,6 @@
+from datetime import date, timedelta
 import tempfile
+from typing import List
 from books import models
 from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -20,6 +22,10 @@ class FakeData:
         self.tag_fiction = models.Tag.objects.create(
             name='фантастыка',
             slug='fiction',
+        )
+        self.tag_read_by_author = models.Tag.objects.create(
+            name='чытае аўтар',
+            slug='cytaje-autar',
         )
 
         self.link_type_knizhny_voz = models.LinkType.objects.create(
@@ -73,3 +79,39 @@ class FakeData:
             url=f'https://{link_type.name}.com/{book.slug}',
             url_type=link_type,
         )
+
+    def create_book_with_single_narration(
+            self,
+            title: str,
+            authors: List[models.Person] = [],
+            translators: List[models.Person] = [],
+            narrators: List[models.Person] = [],
+            tags: List[models.Tag] = [],
+            link_types: List[models.LinkType] = [],
+            language: models.Language = models.Language.BELARUSIAN,
+            publishers: List[models.Publisher] = [],
+            date=date.today(),
+            duration: timedelta = timedelta(minutes=15),
+            paid: bool = False,
+    ):
+        book = models.Book.objects.create(
+            title=title,
+            title_ru=f'{title} по-русски',
+            date=date,
+            status=models.BookStatus.ACTIVE,
+        )
+        book.authors.set(authors)
+        book.translators.set(translators)
+        book.tag.set(tags)
+        narration = models.Narration.objects.create(
+            language=language,
+            duration=duration,
+            book=book,
+            paid=paid,
+        )
+        narration.narrators.set(narrators)
+        narration.publishers.set(publishers)
+        for link_type in link_types:
+            narration.links.add(self.create_link(link_type, narration.book))
+        narration.save()
+        return book

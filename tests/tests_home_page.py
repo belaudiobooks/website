@@ -6,9 +6,6 @@ from selenium.webdriver.common.by import By
 class HomePageTests(WebdriverTestCase):
     '''Selenium tests for home-page related stuff.'''
 
-    # TODO: #90 - remove once all tests switch to using fake data.
-    fixtures = []
-
     def setUp(self):
         super().setUp()
         self.books = []

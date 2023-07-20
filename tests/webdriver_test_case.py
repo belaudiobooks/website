@@ -17,8 +17,6 @@ from tests import fake_data
 class WebdriverTestCase(StaticLiveServerTestCase):
     '''Base class for all webdriver tests. Initializes webdriver and seeds DB.'''
 
-    fixtures = ['data/data.json']
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -38,13 +36,11 @@ class WebdriverTestCase(StaticLiveServerTestCase):
 
     def setUp(self):
         super().setUp()
-        if len(self.fixtures) == 0:
-            self.fake_data = fake_data.FakeData()
+        self.fake_data = fake_data.FakeData()
 
     def tearDown(self):
         super().tearDown()
-        if len(self.fixtures) == 0:
-            self.fake_data.cleanup()
+        self.fake_data.cleanup()
 
     def scroll_into_view(self, element: WebElement) -> WebElement:
         '''

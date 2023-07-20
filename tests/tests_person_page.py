@@ -6,9 +6,6 @@ from selenium.webdriver.common.by import By
 class PersonPageTests(WebdriverTestCase):
     '''Selenium tests for person page.'''
 
-    # TODO: #90 - remove once all tests switch to using fake data.
-    fixtures = []
-
     def setUp(self):
         super().setUp()
         self.person = self.fake_data.person_ales

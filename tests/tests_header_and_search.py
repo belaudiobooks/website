@@ -9,9 +9,6 @@ from selenium.webdriver.common.by import By
 class HeaderAndSearchTests(WebdriverTestCase):
     '''Selenium tests for header elements including search.'''
 
-    # TODO: #90 - remove once all tests switch to using fake data.
-    fixtures = []
-
     def setUp(self):
         super().setUp()
         self.book = models.Book.objects.create(

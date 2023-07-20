@@ -11,9 +11,6 @@ from urllib.parse import urlparse
 class CatalogPageTests(WebdriverTestCase):
     '''Selenium tests for catalog page.'''
 
-    # TODO: #90 - remove once all tests switch to using fake data.
-    fixtures = []
-
     def _assert_page_contains_books(self, books: List[models.Book]) -> None:
         titles = self._get_all_books_on_page()
         for book in books:

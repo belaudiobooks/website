@@ -6,9 +6,6 @@ from selenium.webdriver.common.by import By
 class PublisherPageTests(WebdriverTestCase):
     """Selenium tests for publisher page."""
 
-    # TODO: #90 - remove once all tests switch to using fake data.
-    fixtures = []
-
     def setUp(self):
         super().setUp()
         self.publisher = self.fake_data.publisher_audiobooksby

@@ -8,9 +8,6 @@ from selenium.webdriver.common.by import By
 class BookPageTests(WebdriverTestCase):
     '''Selenium tests for book page.'''
 
-    # TODO: #90 - remove once all tests switch to using fake data.
-    fixtures = []
-
     def setUp(self):
         super().setUp()
         self.book = self.fake_data.create_book_with_single_narration(

@@ -8,9 +8,6 @@ from tests.worker import fetch_head_urls
 class RobotPagesTests(WebdriverTestCase):
     '''Tests for various robot-related pages like robots.txt, sitemap.'''
 
-    # TODO: #90 - remove once all tests switch to using fake data.
-    fixtures = []
-
     def setUp(self):
         super().setUp()
         self.book = self.fake_data.create_book_with_single_narration(

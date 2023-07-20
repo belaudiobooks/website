@@ -93,12 +93,14 @@ class FakeData:
             date=date.today(),
             duration: timedelta = timedelta(minutes=15),
             paid: bool = False,
+            livelib_url: str = ''
     ):
         book = models.Book.objects.create(
             title=title,
             title_ru=f'{title} по-русски',
             date=date,
             status=models.BookStatus.ACTIVE,
+            livelib_url=livelib_url
         )
         book.authors.set(authors)
         book.translators.set(translators)

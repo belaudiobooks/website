@@ -86,6 +86,12 @@
             </div>
             {% endif %}
 
+            {% if book.livelib_url %}
+            <div>
+                Водгукі на <a href="{{ book.livelib_url }}" target="_blank">LiveLib</a>
+            </div>
+            {% endif %}
+
             <!--Book description-->
             <div class="my-4">
                 <p class="fw-normal">{{ book.description | markdownify:"book_description" | linebreaks }}</p>

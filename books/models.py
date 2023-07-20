@@ -167,6 +167,10 @@ class Book(models.Model):
                                    max_length=100,
                                    blank=True,
                                    default='')
+    livelib_url = models.CharField(_('LiveLib URL'),
+                                   max_length=256,
+                                   blank=True,
+                                   default='')
 
     def __str__(self) -> str:
         return "%s (%s)" % (

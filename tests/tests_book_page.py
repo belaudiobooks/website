@@ -22,6 +22,7 @@ class BookPageTests(WebdriverTestCase):
             tags=[self.fake_data.tag_poetry, self.fake_data.tag_fiction],
             publishers=[self.fake_data.publisher_audiobooksby],
             duration=timedelta(hours=14, minutes=15),
+            livelib_url='https://www.livelib.ru/book/pershaya-kniga'
         )
 
     def _get_book_url(self) -> str:
@@ -117,3 +118,8 @@ class BookPageTests(WebdriverTestCase):
         elem = self.driver.find_element(By.LINK_TEXT, f"{publisher.name}")
         self.scroll_and_click(elem)
         self.assertIn(f'/publisher/{publisher.slug}', self.driver.current_url)
+
+    def test_has_livelib_clickable_link(self):
+        self.driver.get(self._get_book_url())
+        elem = self.driver.find_element(By.LINK_TEXT, "LiveLib")
+        self.assertEqual('https://www.livelib.ru/book/pershaya-kniga', elem.get_attribute("href"))

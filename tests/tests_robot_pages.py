@@ -8,6 +8,14 @@ from tests.worker import fetch_head_urls
 class RobotPagesTests(WebdriverTestCase):
     '''Tests for various robot-related pages like robots.txt, sitemap.'''
 
+    # TODO: #90 - remove once all tests switch to using fake data.
+    fixtures = []
+
+    def setUp(self):
+        super().setUp()
+        self.book = self.fake_data.create_book_with_single_narration(
+            title='Book')
+
     def get_sitemap_url(self) -> str:
         robots = requests.get(f'{self.live_server_url}/robots.txt').text
         sitemap_url = None
@@ -17,7 +25,8 @@ class RobotPagesTests(WebdriverTestCase):
         self.assertIsNotNone(sitemap_url)
         return sitemap_url
 
-    def test_sitemap_contains_book_person_tag(self) -> None:
+    def test_sitemap_contains_book_person_tag(self):
+        article = articles.ARTICLES[0]
         domain = self.live_server_url
         sitemap = requests.get(self.get_sitemap_url()).text.splitlines()
         self.assertIn(f'{domain}/', sitemap)
@@ -25,20 +34,15 @@ class RobotPagesTests(WebdriverTestCase):
         self.assertIn(f'{domain}/about', sitemap)
         self.assertIn(f'{domain}/articles', sitemap)
 
-        person = models.Person.objects.filter(name='Андрэй Хадановіч').first()
-        self.assertIn(f'{domain}/person/{person.slug}', sitemap)
-
-        book = models.Book.objects.filter(title='Людзі на балоце').first()
-        self.assertIn(f'{domain}/books/{book.slug}', sitemap)
-
-        tag = models.Tag.objects.filter(name='Сучасная проза').first()
-        self.assertIn(f'{domain}/catalog/{tag.slug}', sitemap)
-
-        article = articles.ARTICLES[0]
+        self.assertIn(f'{domain}/person/{self.fake_data.person_ales.slug}',
+                      sitemap)
+        self.assertIn(f'{domain}/books/{self.book.slug}', sitemap)
+        self.assertIn(f'{domain}/catalog/{self.fake_data.tag_poetry.slug}',
+                      sitemap)
         self.assertIn(f'{domain}/articles/{article.slug}', sitemap)
-
-        publisher = models.Publisher.objects.filter(name="audiobooks.by").first()
-        self.assertIn(f'{domain}/publisher/{publisher.slug}', sitemap)
+        self.assertIn(
+            f'{domain}/publisher/{self.fake_data.publisher_audiobooksby.slug}',
+            sitemap)
 
     def test_all_sitemap_links_return_200(self):
         sitemap = requests.get(self.get_sitemap_url()).text.splitlines()

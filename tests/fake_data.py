@@ -67,11 +67,19 @@ class FakeData:
                 tempfile.NamedTemporaryFile(suffix=".jpg").name, b""),
             description="Мы - каманда энтузіястаў.")
 
+    def create_image(self) -> SimpleUploadedFile:
+        return SimpleUploadedFile(
+            tempfile.NamedTemporaryFile(suffix=".jpg").name, b"")
+
     def cleanup(self):
         for link_type in models.LinkType.objects.all():
             link_type.icon.delete()
         for publisher in models.Publisher.objects.all():
             publisher.logo.delete()
+        for person in models.Person.objects.all():
+            person.photo.delete()
+        for book in models.Book.objects.all():
+            book.cover_image.delete()
 
     def create_link(self, link_type: models.LinkType,
                     book: models.Book) -> models.Link:

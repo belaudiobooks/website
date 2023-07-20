@@ -6,10 +6,22 @@ from selenium.webdriver.common.by import By
 class PublisherPageTests(WebdriverTestCase):
     """Selenium tests for publisher page."""
 
+    # TODO: #90 - remove once all tests switch to using fake data.
+    fixtures = []
+
     def setUp(self):
         super().setUp()
-        self.publisher = models.Publisher.objects.filter(
-            name="audiobooks.by").first()
+        self.publisher = self.fake_data.publisher_audiobooksby
+        self.books = [
+            self.fake_data.create_book_with_single_narration(
+                title='Book 1',
+                publishers=[self.publisher],
+            ),
+            self.fake_data.create_book_with_single_narration(
+                title='Book 2',
+                publishers=[self.publisher],
+            ),
+        ]
 
     def _get_publisher_url(self) -> str:
         return f"{self.live_server_url}/publisher/{self.publisher.slug}"
@@ -24,28 +36,28 @@ class PublisherPageTests(WebdriverTestCase):
 
     def test_books_published(self):
         self.driver.get(self._get_publisher_url())
-        self.assertGreaterEqual(self.publisher.narrations.count(), 1)
-        for narration in self.publisher.narrations.all():
-            self._check_book_present(narration.book)
+        for book in self.books:
+            self._check_book_present(book)
 
     def test_page_elements(self):
         self.driver.get(self._get_publisher_url())
-        self.assertEqual(f'{self.publisher.name}, аўдыякнігі', self.driver.title)
+        self.assertEqual(f'{self.publisher.name}, аўдыякнігі',
+                         self.driver.title)
         description = self.driver.find_element(
             By.CSS_SELECTOR,
             'meta[name="description"]').get_dom_attribute('content')
         self.assertIn(self.publisher.name, description)
-        publisher_name = self.driver.find_element(
-            By.CSS_SELECTOR, '#publisher-details h1').text
+        publisher_name = self.driver.find_element(By.CSS_SELECTOR,
+                                                  '#publisher-details h1').text
         self.assertIn(self.publisher.name, publisher_name)
-        publisher_url = self.driver.find_element(
-            By.CSS_SELECTOR, '#publisher-details a')
+        publisher_url = self.driver.find_element(By.CSS_SELECTOR,
+                                                 '#publisher-details a')
         self.assertIn(self.publisher.url, publisher_url.text)
-        self.assertIn(self.publisher.url, publisher_url.get_dom_attribute('href'))
+        self.assertIn(self.publisher.url,
+                      publisher_url.get_dom_attribute('href'))
         publisher_description = self.driver.find_elements(
             By.CSS_SELECTOR, '#publisher-details p')
         for paragraph in publisher_description:
             if not paragraph.text:
                 continue
             self.assertIn(paragraph.text, self.publisher.description)
-

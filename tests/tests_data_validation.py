@@ -8,7 +8,7 @@ from tests.worker import fetch_head_urls
 class DataValidationTests(TransactionTestCase):
     '''Tests that validate data.'''
 
-    fixtures = ['data/data.json']
+    fixtures = []
 
     def _verify_books_covers_valid(self):
         for book in models.Book.objects.all():

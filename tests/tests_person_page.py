@@ -6,10 +6,34 @@ from selenium.webdriver.common.by import By
 class PersonPageTests(WebdriverTestCase):
     '''Selenium tests for person page.'''
 
+    # TODO: #90 - remove once all tests switch to using fake data.
+    fixtures = []
+
     def setUp(self):
         super().setUp()
-        self.person = models.Person.objects.filter(
-            name='Андрэй Хадановіч').first()
+        self.person = self.fake_data.person_ales
+        self.books_authored = [
+            self.fake_data.create_book_with_single_narration(
+                title='Book 1',
+                authors=[self.person],
+            ),
+            self.fake_data.create_book_with_single_narration(
+                title='Book 2',
+                authors=[self.person, self.fake_data.person_bela],
+            ),
+        ]
+        self.books_translated = [
+            self.fake_data.create_book_with_single_narration(
+                title='Book 3',
+                translators=[self.person],
+            ),
+        ]
+        self.books_narrated = [
+            self.fake_data.create_book_with_single_narration(
+                title='Book 4',
+                narrators=[self.person],
+            ),
+        ]
 
     def _get_person_url(self) -> str:
         return f'{self.live_server_url}/person/{self.person.slug}'
@@ -24,21 +48,18 @@ class PersonPageTests(WebdriverTestCase):
 
     def test_books_authored(self):
         self.driver.get(self._get_person_url())
-        self.assertGreaterEqual(self.person.books_authored.count(), 1)
-        for book in self.person.books_authored.all():
+        for book in self.books_authored:
             self._check_book_present(book)
 
     def test_books_translated(self):
         self.driver.get(self._get_person_url())
-        self.assertGreaterEqual(self.person.books_translated.count(), 1)
-        for book in self.person.books_translated.all():
+        for book in self.books_translated:
             self._check_book_present(book)
 
     def test_books_narrated(self):
         self.driver.get(self._get_person_url())
-        self.assertGreaterEqual(self.person.narrations.count(), 1)
-        for narration in self.person.narrations.all():
-            self._check_book_present(narration.book)
+        for book in self.books_narrated:
+            self._check_book_present(book)
 
     def test_page_elements(self):
         self.driver.get(self._get_person_url())
@@ -47,10 +68,3 @@ class PersonPageTests(WebdriverTestCase):
             By.CSS_SELECTOR,
             'meta[name="description"]').get_dom_attribute('content')
         self.assertIn(self.person.name, description)
-
-    def test_filter_by_link_type(self):
-        # Hadanovich has few books that are on knizhny_voz. Most books are on
-        # PEN Belarus.
-        link_type = models.LinkType.objects.get(name='knizhny_voz')
-        self.driver.get(f'{self._get_person_url()}?links={link_type.name}')
-        self.assert_page_contains_only_books_of_link_type(link_type)

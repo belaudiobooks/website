@@ -86,12 +86,6 @@
             </div>
             {% endif %}
 
-            {% if book.livelib_url %}
-            <div>
-                Водгукі на <a href="{{ book.livelib_url }}" target="_blank">LiveLib</a>
-            </div>
-            {% endif %}
-
             <!--Book description-->
             <div class="my-4">
                 <p class="fw-normal">{{ book.description | markdownify:"book_description" | linebreaks }}</p>
@@ -100,6 +94,12 @@
 
             {% if book.preview_url %}
                 Першую частку можна паслухаць бясплатна на <a href="{{ book.preview_url }}" target="_blank">YouTube</a>.
+            {% endif %}
+
+            {% if book.livelib_url %}
+            <div>
+                Водгукі на <a href="{{ book.livelib_url }}" target="_blank">LiveLib</a>
+            </div>
             {% endif %}
 
             <!--Adding Links-->

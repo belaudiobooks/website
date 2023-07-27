@@ -1,7 +1,7 @@
 <div class="card border-white" style="max-width: 150px;">
     <a href="{% url 'publisher-detail-page' publisher.slug %}" class="text-decoration-none">
         <img class="card-img-top card-img-150"
-            src="{% if publisher.logo %}{{ publisher.log.url }}{% else %}/static/images/person-outline.png{% endif %}"
+            src="{% if publisher.logo %}{{ publisher.logo.url }}{% else %}/static/images/person-outline.png{% endif %}"
             alt="{{ publisher.name }}">
         <div class="mt-4">
             <h6 class="card-title">{{ publisher.name }}</h6>

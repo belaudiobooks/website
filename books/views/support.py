@@ -65,6 +65,8 @@ def search(request: HttpRequest) -> HttpResponse:
         for publisher in Publisher.objects.all().filter(
                 uuid__in=publishers_ids):
             loaded_models[str(publisher.uuid)] = publisher
+            for book in set([narration.book for narration in publisher.narrations.all()]):
+                loaded_models[str(book.uuid)] = book
         # Build search result list in the same order as returned by algolia.
         # So that most relevant are shown first.
         search_results = [{

@@ -67,12 +67,25 @@ def search(request: HttpRequest) -> HttpResponse:
             loaded_models[str(publisher.uuid)] = publisher
             for book in set([narration.book for narration in publisher.narrations.all()]):
                 loaded_models[str(book.uuid)] = book
+
+        def _gettype(value):
+            if isinstance(value, Person):
+                return 'person'
+            elif isinstance(value, Book):
+                return 'book'
+            elif isinstance(value, Publisher):
+                return 'publisher'
+            else:
+                return 'unknown_type'
+
         # Build search result list in the same order as returned by algolia.
         # So that most relevant are shown first.
         search_results = [{
             'type': hit['model'],
-            'object': loaded_models[hit['objectID']]
+            'object': loaded_models.pop(hit['objectID'])
         } for hit in hits]
+
+        search_results.extend([{'type': _gettype(lm), 'object': lm} for lm in loaded_models.values()])
 
         context = {
             'results': search_results[:50],

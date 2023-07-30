@@ -1,4 +1,4 @@
-''' Integration with livelib mobile API.
+""" Integration with livelib mobile API.
 
 Module responsible for integration with https://livelib.ru/ mobile API
 and provides functions:
@@ -7,9 +7,8 @@ and provides functions:
 Typical usage example:
     books = search_books_with_reviews("вершы")
 
-'''
+"""
 import requests
-import urllib
 import json
 import math
 
@@ -23,6 +22,7 @@ REQUIRED_HEADERS = {
 }
 
 SEARCH_PAGE_SIZE = 100
+
 
 def _generate_session_guid():
     init_session_response = requests.get(
@@ -41,7 +41,6 @@ def _generate_session_guid():
 
 
 def _get_another_page(query_text, session_token, start_from=1):
-    query = urllib.parse.quote(query_text.lower())
     search_response = requests.get(
         url="https://www.livelib.ru/apiapp/v2.0/search/books",
         headers=REQUIRED_HEADERS,
@@ -50,7 +49,7 @@ def _get_another_page(query_text, session_token, start_from=1):
             'fields': 'author_id,author_name,avg_mark,id,count_reviews,is_work,name,pic_200,share_url(share_url),user_book_partial(book_read,rating)',
             'count': SEARCH_PAGE_SIZE,
             'start': start_from,
-            'q': query,
+            'q': query_text.lower(),
             'app_session_guid': session_token
         }
     )
@@ -79,7 +78,7 @@ def _find_books_by_title(query_text):
 
 
 def search_books_with_reviews(search_request_text):
-    '''
+    """
     Method returns result of search books having reviews on livelib.ru
     Example:
     [{
@@ -88,7 +87,7 @@ def search_books_with_reviews(search_request_text):
         "cover_image": "https://s1.livelib.ru/boocover/1001598084/200/50b7/boocover.jpg",
         "url": "https://www.livelib.ru/book/1001598084-vershy-i-paemy-sbornik-yanka-kupala"
     }]
-    '''
+    """
     results = []
     books = _find_books_by_title(search_request_text)
     for book in books:

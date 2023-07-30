@@ -1,3 +1,13 @@
+''' Integration with livelib mobile API.
+
+Module responsible for integration with https://livelib.ru/ mobile API
+and provides functions:
+    * search books with reviews by text query (book name or author name or both)
+
+Typical usage example:
+    books = search_books_with_reviews("вершы")
+
+'''
 import requests
 import urllib
 import json
@@ -12,31 +22,37 @@ REQUIRED_HEADERS = {
     "User-Agent": "LiveLib/3.24.5 (ru.livelib.LiveLib; build:3.24.5; iOS 16.5.1) Alamofire/3.24.5"
 }
 
+SEARCH_PAGE_SIZE = 100
 
 def _generate_session_guid():
     init_session_response = requests.get(
-        url="https://www.livelib.ru/apiapp/v2.0/appsessions/me?andyll=and7mpp4ss&fields=guid",
-        headers=REQUIRED_HEADERS
+        url="https://www.livelib.ru/apiapp/v2.0/appsessions/me",
+        headers=REQUIRED_HEADERS,
+        params={
+            'andyll': 'and7mpp4ss',
+            'fields': 'guid'
+        }
     )
     if init_session_response.status_code > 299:
-        raise RuntimeError(f"Filed to start new livelib session, {init_session_response.text}, " +
+        raise RuntimeError(f"Failed to start new livelib session, {init_session_response.text}, " +
                            f"response status: {init_session_response.status_code}")
     guid = json.loads(init_session_response.text).get("data").get("guid")
     return guid
 
 
-def _get_another_page(query_text, session_token=None, start_from=1, result_count=100):
-    if session_token:
-        stoken = session_token
-    else:
-        stoken = _generate_session_guid()
+def _get_another_page(query_text, session_token, start_from=1):
     query = urllib.parse.quote(query_text.lower())
     search_response = requests.get(
-        url="https://www.livelib.ru/apiapp/v2.0/search/books?andyll=and7mpp4ss&fields=author_id%2C" +
-            "author_name%2Cavg_mark%2Cid%2Ccount_reviews%2Cis_work%2Cname%2Cpic_200%2Cshare_url%28" +
-            "share_url%29%2Cuser_book_partial%28book_read%2Crating%29&"
-            f"&session_id=&count={result_count}&start={start_from}&q={query}&app_session_guid={stoken}",
-        headers=REQUIRED_HEADERS
+        url="https://www.livelib.ru/apiapp/v2.0/search/books",
+        headers=REQUIRED_HEADERS,
+        params={
+            'andyll': 'and7mpp4ss',
+            'fields': 'author_id,author_name,avg_mark,id,count_reviews,is_work,name,pic_200,share_url(share_url),user_book_partial(book_read,rating)',
+            'count': SEARCH_PAGE_SIZE,
+            'start': start_from,
+            'q': query,
+            'app_session_guid': session_token
+        }
     )
     if search_response.status_code > 299:
         raise RuntimeError(f"Filed to find book in livelib by title, {search_response.text}, " +
@@ -51,11 +67,11 @@ def _get_another_page(query_text, session_token=None, start_from=1, result_count
 def _find_books_by_title(query_text):
     session_token = _generate_session_guid()
     first_page = _get_another_page(query_text, session_token)
-    pages = math.ceil(first_page.get('count')/100)
+    pages = math.ceil(first_page.get('count') / SEARCH_PAGE_SIZE)
     if pages > 1:
         results = list(first_page.get('data'))
         for i in range(1, pages):
-            page = _get_another_page(query_text, session_token, start_from=i+1)
+            page = _get_another_page(query_text, session_token, start_from=i + 1)
             results = results + page.get('data')
         return results
     else:
@@ -63,7 +79,7 @@ def _find_books_by_title(query_text):
 
 
 def search_books_with_reviews(search_request_text):
-    """
+    '''
     Method returns result of search books having reviews on livelib.ru
     Example:
     [{
@@ -72,18 +88,17 @@ def search_books_with_reviews(search_request_text):
         "cover_image": "https://s1.livelib.ru/boocover/1001598084/200/50b7/boocover.jpg",
         "url": "https://www.livelib.ru/book/1001598084-vershy-i-paemy-sbornik-yanka-kupala"
     }]
-    """
+    '''
     results = []
     books = _find_books_by_title(search_request_text)
-    if len(books) > 0:
-        for book in books:
-            if book.get('count_reviews') and book.get('count_reviews') > 0:
-                results.append(
-                    {
-                        'name': str(book.get('name')),
-                        'author_name': bytes(book.get('author_name'), "utf_8").decode("utf_8"),
-                        'cover_image': book.get('pic_200'),
-                        'url': book.get('share_url').get('share_url')
-                    }
-                )
+    for book in books:
+        if book.get('count_reviews') and book.get('count_reviews') > 0:
+            results.append(
+                {
+                    'name': book.get('name'),
+                    'author_name': book.get('author_name'),
+                    'cover_image': book.get('pic_200'),
+                    'url': book.get('share_url').get('share_url')
+                }
+            )
     return results

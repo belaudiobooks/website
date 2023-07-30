@@ -54,11 +54,11 @@ def _get_another_page(query_text, session_token, start_from=1):
         }
     )
     if search_response.status_code > 299:
-        raise RuntimeError(f"Filed to find book in livelib by title, {search_response.text}, " +
+        raise RuntimeError(f"Failed to find book in livelib by title, {search_response.text}, " +
                            f"response status: {search_response.status_code}")
     body = json.loads(search_response.text)
     if body.get('status').get('code') > 299:
-        raise RuntimeError(f"Filed to find book in livelib by title, {body}, " +
+        raise RuntimeError(f"Failed to find book in livelib by title, {body}, " +
                            f"response status: {body.get('status').get('code')}")
     return body
 

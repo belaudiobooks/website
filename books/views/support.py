@@ -19,7 +19,7 @@ from django.core.management import call_command
 from django.urls import reverse
 from algoliasearch.search_client import SearchClient
 from markdownify.templatetags.markdownify import markdownify
-from books.clients.livelibru import search_books_with_reviews
+from books.thirdparty.livelibru import search_books_with_reviews
 
 from books import serializers
 from books.models import Book, LinkType, Person, Tag, Publisher

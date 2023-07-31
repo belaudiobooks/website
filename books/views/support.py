@@ -11,7 +11,7 @@ from django import views
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.cache import cache_control
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 from django.shortcuts import render
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -19,6 +19,7 @@ from django.core.management import call_command
 from django.urls import reverse
 from algoliasearch.search_client import SearchClient
 from markdownify.templatetags.markdownify import markdownify
+from books.thirdparty.livelibru import search_books_with_reviews
 
 from books import serializers
 from books.models import Book, LinkType, Person, Tag, Publisher
@@ -240,5 +241,19 @@ def markdown_to_html(request: HttpRequest) -> HttpResponse:
     return HttpResponse(
         content=html_text,
         content_type='text/html',
+        headers={'Access-Control-Allow-Origin': '*'}
+    )
+
+
+@require_GET
+def get_livelib_books(request: HttpRequest) -> HttpResponse:
+    query = request.GET.get('query')
+    if query:
+        books = search_books_with_reviews(query)
+    else:
+        books = []
+    return HttpResponse(
+        content=json.dumps(books, ensure_ascii=False, indent=4),
+        content_type='application/json',
         headers={'Access-Control-Allow-Origin': '*'}
     )

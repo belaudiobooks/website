@@ -28,6 +28,22 @@ function showWarningOnWrongQuotes() {
             error.classList.add('errornote');
             error.innerText = 'Text contains one of the following quotation marks: " “ ” " „ '
                 + 'We should be using only « » Please fix the text.';
+
+            // Add a button that tries to auto-fix the text.
+            const fixButton = document.createElement('button');
+            fixButton.innerText = 'Fix';
+            fixButton.classList.add('button');
+            fixButton.style = 'width: 50px; height: 25px; margin-left: 10px;';
+            fixButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                element.value = element.value
+                    .replace(/"(.*)"/g, '«$1»')
+                    .replace(/„(.*)“/g, '«$1»')
+                    .replace(/“(.*)”/g, '«$1»');
+                // Dispatch change event to trigger validation.
+                element.dispatchEvent(new Event('change', { 'bubbles': true }));
+            });
+            error.appendChild(fixButton);
             element.after(error);
         }
     });

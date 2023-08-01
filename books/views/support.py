@@ -19,7 +19,7 @@ from django.core.management import call_command
 from django.urls import reverse
 from algoliasearch.search_client import SearchClient
 from markdownify.templatetags.markdownify import markdownify
-from books.thirdparty.livelibru import search_books_with_reviews
+from books.thirdparty.livelibru import search_books_with_reviews, DataclassJSONEncoder
 
 from books import serializers
 from books.models import Book, LinkType, Person, Tag, Publisher
@@ -253,7 +253,7 @@ def get_livelib_books(request: HttpRequest) -> HttpResponse:
     else:
         books = []
     return HttpResponse(
-        content=json.dumps(books, ensure_ascii=False, indent=4),
+        content=json.dumps(books, ensure_ascii=False, indent=4, cls=DataclassJSONEncoder),
         content_type='application/json',
         headers={'Access-Control-Allow-Origin': '*'}
     )

@@ -8,6 +8,7 @@ Typical usage example:
     books = search_books_with_reviews("вершы")
 
 """
+import dataclasses
 import requests
 import json
 import math
@@ -28,6 +29,22 @@ REQUIRED_HEADERS = {
 }
 
 SEARCH_PAGE_SIZE = 100
+
+
+@dataclasses.dataclass(frozen=True)
+class Book:
+    name: str
+    author_name: str
+    cover_image: str
+    url: str
+    reviews: int
+
+
+class DataclassJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if dataclasses.is_dataclass(obj):
+            return dataclasses.asdict(obj)
+        return super().default(obj)
 
 
 def _generate_session_guid():
@@ -53,7 +70,8 @@ def _get_another_page(query_text, session_token, start_from=1):
         params={
             'andyll': 'and7mpp4ss',
             'fields':
-            'author_id,author_name,avg_mark,id,count_reviews,is_work,name,pic_200,share_url(share_url),user_book_partial(book_read,rating)',
+            'author_id,author_name,avg_mark,id,count_reviews,is_work,name,' +
+                      'pic_200,share_url(share_url),user_book_partial(book_read,rating)',
             'count': SEARCH_PAGE_SIZE,
             'start': start_from,
             'q': query_text.lower(),
@@ -87,7 +105,7 @@ def _find_books_by_title(query_text):
         return first_page.get('data')
 
 
-def search_books_with_reviews(search_request_text):
+def search_books_with_reviews(search_request_text) -> list[Book]:
     """
     Method returns result of search books on livelib.ru
     Example:
@@ -102,11 +120,14 @@ def search_books_with_reviews(search_request_text):
     results = []
     books = _find_books_by_title(search_request_text)
     for book in books:
-        results.append({
-            'name': book.get('name'),
-            'author_name': book.get('author_name'),
-            'cover_image': book.get('pic_200'),
-            'url': book.get('share_url').get('share_url'),
-            'reviews': book.get('count_reviews', 0),
-        })
+        if book.get('share_url') and book.get('share_url').get('share_url'):
+            results.append(
+                Book(
+                    name=book.get('name'),
+                    author_name=book.get('author_name'),
+                    cover_image=book.get('pic_200'),
+                    url=book.get('share_url').get('share_url'),
+                    reviews=book.get('count_reviews', 0)
+                )
+            )
     return results

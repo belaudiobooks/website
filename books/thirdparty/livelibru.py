@@ -37,6 +37,7 @@ class Book:
     author_name: str
     cover_image: str
     url: str
+    reviews: int
 
 
 class DataclassJSONEncoder(json.JSONEncoder):
@@ -119,12 +120,14 @@ def search_books_with_reviews(search_request_text):
     results = []
     books = _find_books_by_title(search_request_text)
     for book in books:
-        results.append(
-            Book(
-                name=book.get('name'),
-                author_name=book.get('author_name'),
-                cover_image=book.get('pic_200'),
-                url=book.get('share_url').get('share_url')
+        if book.get('share_url') and book.get('share_url').get('share_url'):
+            results.append(
+                Book(
+                    name=book.get('name'),
+                    author_name=book.get('author_name'),
+                    cover_image=book.get('pic_200'),
+                    url=book.get('share_url').get('share_url'),
+                    reviews=book.get('count_reviews', 0)
+                )
             )
-        )
     return results

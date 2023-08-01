@@ -105,7 +105,7 @@ def _find_books_by_title(query_text):
         return first_page.get('data')
 
 
-def search_books_with_reviews(search_request_text):
+def search_books_with_reviews(search_request_text) -> list[Book]:
     """
     Method returns result of search books on livelib.ru
     Example:

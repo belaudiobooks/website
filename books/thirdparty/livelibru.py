@@ -30,6 +30,9 @@ REQUIRED_HEADERS = {
 
 SEARCH_PAGE_SIZE = 100
 
+BOOKS = 'books'
+WORKS = 'works'
+
 
 @dataclasses.dataclass(frozen=True)
 class Book:
@@ -63,9 +66,9 @@ def _generate_session_guid():
     return guid
 
 
-def _get_another_page(query_text, session_token, start_from=1):
+def _get_another_page(query_text, object_type, session_token, start_from=1):
     search_response = requests.get(
-        url="https://www.livelib.ru/apiapp/v2.0/search/books",
+        url=f"https://www.livelib.ru/apiapp/v2.0/search/{object_type}",
         headers=REQUIRED_HEADERS,
         params={
             'andyll': 'and7mpp4ss',
@@ -89,14 +92,15 @@ def _get_another_page(query_text, session_token, start_from=1):
     return body
 
 
-def _find_books_by_title(query_text):
+def _find_by_title(query_text, object_type):
     session_token = _generate_session_guid()
-    first_page = _get_another_page(query_text, session_token)
+    first_page = _get_another_page(query_text, object_type, session_token)
     pages = math.ceil(first_page.get('count') / SEARCH_PAGE_SIZE)
     if pages > 1:
         results = list(first_page.get('data'))
         for i in range(1, pages):
             page = _get_another_page(query_text,
+                                     object_type,
                                      session_token,
                                      start_from=i + 1)
             results = results + page.get('data')
@@ -118,16 +122,17 @@ def search_books_with_reviews(search_request_text) -> list[Book]:
     }]
     """
     results = []
-    books = _find_books_by_title(search_request_text)
-    for book in books:
-        if book.get('share_url') and book.get('share_url').get('share_url'):
+    books = _find_by_title(search_request_text, BOOKS)
+    works = _find_by_title(search_request_text, WORKS)
+    for item in books + works:
+        if item.get('share_url') and item.get('share_url').get('share_url'):
             results.append(
                 Book(
-                    name=book.get('name'),
-                    author_name=book.get('author_name'),
-                    cover_image=book.get('pic_200'),
-                    url=book.get('share_url').get('share_url'),
-                    reviews=book.get('count_reviews', 0)
+                    name=item.get('name'),
+                    author_name=item.get('author_name'),
+                    cover_image=item.get('pic_200'),
+                    url=item.get('share_url').get('share_url'),
+                    reviews=item.get('count_reviews', 0)
                 )
             )
     return results

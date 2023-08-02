@@ -32,7 +32,7 @@ function showWarningOnWrongQuotes() {
             element.nextElementSibling.remove();
         }
         if (element.value.match(/["“”"„]/)) {
-            const error = createError('Text contains one of the following quotation marks: " “ ” " „ '
+            const error = createErrorElement('Text contains one of the following quotation marks: " “ ” " „ '
                 + 'We should be using only « » Please fix the text.');
 
             // Add a button that tries to auto-fix the text.

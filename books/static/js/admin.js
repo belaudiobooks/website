@@ -118,7 +118,7 @@ function addLivelibLookupButton() {
         container.innerHTML = '';
         const title = document.querySelector('#id_title').value;
         if (!title) {
-            container.appendChild(createErrorElement('Cannot search. Title is empty'));
+            container.appendChild(createErrorElement('Cannot search. "Book title" field is empty'));
             return;
         }
         const links = await (await fetch(`/api/livelib_books?query=${encodeURIComponent(title)}`)).json();

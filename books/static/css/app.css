@@ -11,6 +11,7 @@ html {
 body {
   background-color: #E1E1E1;
   font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
 }
 
 a {
@@ -31,7 +32,7 @@ a {
 #books .cit-photo,
 .cit-photo {
   text-align: center;
-  font-size: 13px;
+  font-size: 1rem;
 }
 
 .link-icon {
@@ -47,9 +48,6 @@ a {
 
 .title_lead {
   font-weight: 700;
-  /* font-size: 24px;
-  line-height: 32px; */
-  /* color: #D6CFFF; */
 }
 
 .active {
@@ -101,7 +99,7 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 25px;
+  font-size: 1.6rem;
   font-family: 'Oswald', sans-serif;
 }
 
@@ -109,7 +107,7 @@ a {
   width: 150px;
   height: 150px;
   background-size: 150px;
-  font-size: 13px;
+  font-size: 0.9rem;
 }
 
 .cover>div {
@@ -167,7 +165,6 @@ a {
   text-decoration: none;
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
   line-height: 17px;
   color: black;
   height: 60px;
@@ -181,7 +178,7 @@ a {
 #autocomplete .authors {
   margin-left: 5px;
   color: grey;
-  font-size: 12px;
+  font-size: 0.9rem;
 }
 
 .team-member img {
@@ -201,7 +198,7 @@ a {
 
 .btn-genre {
   font-weight: 400;
-  font-size: 20px;
+  font-size: 1.3rem;
   line-height: 50px;
   color: #000000;
 }
@@ -210,6 +207,7 @@ a {
   background: #E1E1E1;
   border-radius: 15px;
   color: black;
+  font-size: 1.2rem;
 }
 
 nav.sticky-top {
@@ -218,7 +216,7 @@ nav.sticky-top {
 
 #button-search {
   color: #7879F1;
-  font-size: 24px;
+  font-size: 1.5rem;
   background-color: #d9ccfe;
   width: 38px;
 }
@@ -235,6 +233,7 @@ nav .container {
   height: 296px;
   flex-wrap: wrap;
   justify-content: space-between;
+  font-size: 1rem;
 }
 
 /**
@@ -440,24 +439,22 @@ nav .buttons .nav-item:hover {
 #books h6 {
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
   line-height: 17px;
   color: black;
+  font-size: 1rem;
 }
 
 #books h7 {
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
-  line-height: 15px;
+  line-height: 1;
+  font-size: 0.9rem;
   color: #7879F1;
 }
 
 #books p {
   font-style: normal;
   font-weight: normal;
-  font-size: 15px;
-  line-height: 18px;
   color: #848484;
 }
 
@@ -488,7 +485,7 @@ article li {
 
 .tag {
   font-weight: normal;
-  font-size: 18px;
+  font-size: 1.2rem;
   line-height: 20px;
   color: #000000;
   padding: 0.6rem 0.75rem;
@@ -499,7 +496,7 @@ article li {
 
 .catalog-title h1 {
   font-weight: 600;
-  font-size: 28px;
+  font-size: 1.6rem;
 }
 
 .tag-selected,
@@ -511,7 +508,6 @@ article li {
 .books-text {
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
   line-height: 20px;
   color: #8774FF;
 }
@@ -532,7 +528,6 @@ article .CodeMirror {
 .link-type-availability {
   color: #848484;
   display: block;
-  font-size: 15px;
 }
 
 #birthdays .card .card-img-top {
@@ -546,7 +541,7 @@ article .CodeMirror {
 
 .filters .head {
   color: #7879F1;
-  font-size: 18px;
+  font-size: 1.2rem;
   padding: 0.6rem 0.75rem;
   font-weight: bold;
 }

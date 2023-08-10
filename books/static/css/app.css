@@ -573,3 +573,7 @@ article .CodeMirror {
     grid-gap: 2rem 0.5rem;
   }
 }
+
+hr {
+  margin: 2rem 0;
+}

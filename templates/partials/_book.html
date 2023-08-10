@@ -21,10 +21,10 @@
         <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none" data-test="book-title">
             <h6 class="card-title">{{ book.title }}</h6>
         </a>
-        <p class="card-text">
+        <p class="card-text author">
         {% for author in book.authors.all %}
-            <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none">
-                <h7>{{ author.name }}{% if not forloop.last %},{% endif %}</h7>
+            <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none fw-bolder">
+                {{ author.name }}{% if not forloop.last %},{% endif %}
             </a>
         {% endfor %}
         </p>

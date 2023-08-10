@@ -444,18 +444,13 @@ nav .buttons .nav-item:hover {
   font-size: 1rem;
 }
 
-#books h7 {
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
+#books .card .author {
   font-size: 0.9rem;
-  color: #7879F1;
 }
 
 #books p {
   font-style: normal;
   font-weight: normal;
-  color: #848484;
 }
 
 #books .tag {

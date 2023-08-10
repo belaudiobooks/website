@@ -34,6 +34,7 @@ def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
         'tags': book.tag.all(),
         'single_language': single_language,
         'show_russian_title': single_language == Language.RUSSIAN,
+        'single_narration': len(narrations) == 1,
     }
 
     return render(request, 'books/book-detail.html', context)

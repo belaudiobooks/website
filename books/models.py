@@ -13,7 +13,8 @@ from django.utils.translation import gettext as _
 from .managers import BookManager
 
 
-def _get_image_name(folder: str, instance: Union['Person', 'Book', 'Publisher'],
+def _get_image_name(folder: str, instance: Union['Person', 'Book',
+                                                 'Publisher'],
                     filename: str) -> str:
     '''Builds stored image file name based on the slug of the model.'''
     extension = os.path.splitext(filename)[1]
@@ -58,8 +59,8 @@ class Person(models.Model):
                                           default='')
     photo = models.ImageField(upload_to=functools.partial(
         _get_image_name, 'photos'),
-        blank=True,
-        null=True)
+                              blank=True,
+                              null=True)
     photo_source = models.CharField(_('Photo Source'),
                                     blank=True,
                                     max_length=500,
@@ -151,8 +152,8 @@ class Book(models.Model):
                             blank=True)
     cover_image = models.ImageField(upload_to=functools.partial(
         _get_image_name, 'covers'),
-        blank=True,
-        null=True)
+                                    blank=True,
+                                    null=True)
     cover_image_source = models.CharField(_('Cover Image Source'),
                                           blank=True,
                                           max_length=500,
@@ -208,7 +209,9 @@ class Publisher(models.Model):
                             blank=True)
     url = models.URLField(_('Publisher Website'), max_length=128)
     logo = models.ImageField(upload_to=functools.partial(
-        _get_image_name, 'logos'), blank=True, null=True)
+        _get_image_name, 'logos'),
+                             blank=True,
+                             null=True)
     description = models.TextField(_('Publisher Description'), blank=True)
 
     def __str__(self) -> str:
@@ -247,7 +250,11 @@ class Narration(models.Model):
 
     duration = models.DurationField(_('Duration'), blank=True, null=True)
 
-    publishers = models.ManyToManyField(Publisher, related_name='narrations', blank=True)
+    publishers = models.ManyToManyField(Publisher,
+                                        related_name='narrations',
+                                        blank=True)
+
+    description = models.TextField(_('Narration Description'), blank=True)
 
     def __str__(self) -> str:
         return '%s read by %s' % (
@@ -288,9 +295,9 @@ class LinkType(models.Model):
                                     max_length=50,
                                     choices=LinkAvailability.choices,
                                     blank=False)
-    weight = models.PositiveIntegerField(default=10,
-                                         validators=[MinValueValidator(1),
-                                                     MaxValueValidator(100)])
+    weight = models.PositiveIntegerField(
+        default=10, validators=[MinValueValidator(1),
+                                MaxValueValidator(100)])
 
     def __str__(self) -> str:
         return f'{self.name}'

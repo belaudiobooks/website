@@ -51,7 +51,7 @@
             {% endif %}
 
             <!--Book Duration-->
-            {% if narrations.count == 1 %}
+            {% if single_narration %}
                 {% if narrations.first.duration %}
                     <p class="text-secondary">{{ narrations.first | duration }}</p>
                 {% endif %}
@@ -67,14 +67,14 @@
                 {% include 'partials/_person.html' with persons=translators multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
             </div>
 
-            {% if narrations.count == 1 %}
+            {% if single_narration %}
                 <div data-test="narrators">
                     {% include 'partials/_person.html' with persons=narrations.first.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
                 </div>
             {% endif %}
 
             <!--Publisher-->
-            {% if narrations.count == 1 and narrations.first.publishers.all.exists %}
+            {% if single_narration and narrations.first.publishers.all.exists %}
             <div>
                 Выдавецтва: {% include 'partials/_publisher.html' with publishers=narrations.first.publishers.all %}
             </div>
@@ -89,6 +89,11 @@
             <!--Book description-->
             <div class="my-4">
                 <p class="fw-normal">{{ book.description | markdownify:"book_description" | linebreaks }}</p>
+                {% if single_narration %}
+                    {% if narrations.first.description %}
+                        <p class="fw-normal">{{ narrations.first.description | markdownify:"book_description" | linebreaks }}</p>
+                    {% endif %}
+                {% endif %}
                 {% cite_source book.description_source "cit-description" %}
             </div>
 
@@ -105,7 +110,7 @@
             <!--Adding Links-->
             {% for narration in narrations %}
                 <div class="col-12 mt-5 links-header">
-                    {% if narrations.count > 1 %}
+                    {% if not single_narration %}
                         <div data-test="narrators">
                             <!--Narrators with check on multiples and gender-->
                             {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
@@ -125,7 +130,9 @@
                     {% endif %}
                     {% if single_language is  None %}
                         <div>Мова: {{ narration.language | to_human_language }}</div>
-                        <br>
+                    {% endif %}
+                    {% if narration.description %}
+                        <p class="fw-normal">{{ narration.description | markdownify:"book_description" | linebreaks }}</p>
                     {% endif %}
                     <strong>
                     {% if narration.paid %}

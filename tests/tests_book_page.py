@@ -22,8 +22,7 @@ class BookPageTests(WebdriverTestCase):
             tags=[self.fake_data.tag_poetry, self.fake_data.tag_fiction],
             publishers=[self.fake_data.publisher_audiobooksby],
             duration=timedelta(hours=14, minutes=15),
-            livelib_url='https://www.livelib.ru/book/pershaya-kniga'
-        )
+            livelib_url='https://www.livelib.ru/book/pershaya-kniga')
 
     def _get_book_url(self) -> str:
         return f'{self.live_server_url}/books/{self.book.slug}'
@@ -122,4 +121,47 @@ class BookPageTests(WebdriverTestCase):
     def test_has_livelib_clickable_link(self):
         self.driver.get(self._get_book_url())
         elem = self.driver.find_element(By.LINK_TEXT, "LiveLib")
-        self.assertEqual('https://www.livelib.ru/book/pershaya-kniga', elem.get_attribute("href"))
+        self.assertEqual('https://www.livelib.ru/book/pershaya-kniga',
+                         elem.get_attribute("href"))
+
+    def _create_narration(self, language: models.Language,
+                          number_of_links: int,
+                          narrator: models.Person) -> models.Narration:
+        narration = models.Narration(language=language,
+                                     book=self.book,
+                                     paid=False)
+        narration.save()
+        for i in range(number_of_links):
+            narration.links.add(
+                models.Link.objects.create(
+                    url=f'https://example.com/{self.book.slug}_{narrator.slug}',
+                    url_type=self.fake_data.link_type_kobo,
+                ))
+        narration.narrators.set([narrator])
+        return narration
+
+    def test_multiple_narrations_ordered_correctly(self):
+        # Book has 3 narrations.
+        # Narration 1: RU, 2 links
+        # Narration 2: BY, 0 links
+        # Narration 3: BY, 1 link
+        # Expected order is: 3, 2, 1.
+        self.book.narrations.all().delete()
+        self.book.narrations.set([
+            self._create_narration(models.Language.RUSSIAN, 2,
+                                   self.fake_data.person_ales),
+            self._create_narration(models.Language.BELARUSIAN, 0,
+                                   self.fake_data.person_bela),
+            self._create_narration(models.Language.BELARUSIAN, 1,
+                                   self.fake_data.person_viktar),
+        ])
+        self.driver.get(self._get_book_url())
+        narrators_sections = self.driver.find_elements(
+            By.CSS_SELECTOR, '[data-test="narrators"]')
+        self.assertEqual(3, len(narrators_sections))
+        self.assertIn(self.fake_data.person_viktar.name,
+                      narrators_sections[0].text)
+        self.assertIn(self.fake_data.person_bela.name,
+                      narrators_sections[1].text)
+        self.assertIn(self.fake_data.person_ales.name,
+                      narrators_sections[2].text)

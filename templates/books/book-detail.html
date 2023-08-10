@@ -58,17 +58,17 @@
             {% endif %}
 
             <!--Authors with check on multiples and gender-->
-            <div>
+            <div data-test="authors">
                 {% include 'partials/_person.html' with persons=authors multiple='Аўтары' single='Aўтар' gender_variants="ка,"%}
             </div>
 
             <!--Translators with check on multiples and gender-->
-            <div>
+            <div data-test="translators">
                 {% include 'partials/_person.html' with persons=translators multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
             </div>
 
             {% if narrations.count == 1 %}
-                <div>
+                <div data-test="narrators">
                     {% include 'partials/_person.html' with persons=narrations.first.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
                 </div>
             {% endif %}
@@ -106,25 +106,25 @@
             {% for narration in narrations %}
                 <div class="col-12 mt-5 links-header">
                     {% if narrations.count > 1 %}
-                        <!--Narrators with check on multiples and gender-->
-                        {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
-                        <!--check if no name-->
-                        {% if not narration.narrators.all.exists %}
-                            Агучка: удакладняецца...
-                        {% endif %}
-                        <br>
+                        <div data-test="narrators">
+                            <!--Narrators with check on multiples and gender-->
+                            {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
+                            <!--check if no name-->
+                            {% if not narration.narrators.all.exists %}
+                                Агучка: удакладняецца...
+                            {% endif %}
+                        </div>
                         {% if narration.publishers.all.exists %}
-                            Выдавецтва: {% include 'partials/_publisher.html' with publishers=narration.publishers.all %}
-                            <br>
+                            <div>
+                                Выдавецтва: {% include 'partials/_publisher.html' with publishers=narration.publishers.all %}
+                            </div>
                         {% endif %}
                         {% if narration.duration %}
-                            {{ narration | duration }}
-                            <br>
+                            <div>{{ narration | duration }}</div>
                         {% endif %}
                     {% endif %}
                     {% if single_language is  None %}
-                        Мова: {{ narration.language | to_human_language }}
-                        <br>
+                        <div>Мова: {{ narration.language | to_human_language }}</div>
                         <br>
                     {% endif %}
                     <strong>

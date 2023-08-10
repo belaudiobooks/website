@@ -9,6 +9,7 @@ from books.models import BookStatus, Person
 
 from .utils import maybe_filter_links
 
+
 def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
     '''Detailed book page'''
 
@@ -19,12 +20,12 @@ def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
 
     if person:
         author = maybe_filter_links(
-            person.books_authored.all().filter(status=BookStatus.ACTIVE),
-            request)
+            person.books_authored.order_by('-date').filter(
+                status=BookStatus.ACTIVE), request)
         translator = maybe_filter_links(
-            person.books_translated.all().filter(status=BookStatus.ACTIVE),
-            request)
-        narrations = person.narrations.all().filter()
+            person.books_translated.order_by('-date').filter(
+                status=BookStatus.ACTIVE), request)
+        narrations = person.narrations.order_by('-book__date').filter()
         if request.GET.get('links'):
             links = request.GET.get('links').split(',')
             narrations = narrations.filter(links__url_type__name__in=links)
@@ -45,4 +46,3 @@ def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
 
     else:
         pass  #TODO: implement 404 page
-

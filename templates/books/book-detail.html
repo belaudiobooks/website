@@ -109,8 +109,10 @@
 
             <!--Adding Links-->
             {% for narration in narrations %}
-                <div class="col-12 mt-5 links-header">
+                {% if not single_narration %} <hr> {% endif %}
+                <div class="col-12 links-header">
                     {% if not single_narration %}
+                        <h3>Агучка {{ forloop.counter }}</h3>
                         <div data-test="narrators">
                             <!--Narrators with check on multiples and gender-->
                             {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}

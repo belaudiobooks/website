@@ -87,12 +87,10 @@
             {% endif %}
 
             <!--Book description-->
-            <div class="my-4">
-                <p class="fw-normal">{{ book.description | markdownify:"book_description" | linebreaks }}</p>
+            <div class="my-4" data-test="book-description">
+                {{ book.description | markdownify:"book_description" | linebreaks }}
                 {% if single_narration %}
-                    {% if narrations.first.description %}
-                        <p class="fw-normal">{{ narrations.first.description | markdownify:"book_description" | linebreaks }}</p>
-                    {% endif %}
+                    {{ narrations.first.description | markdownify:"book_description" | linebreaks }}
                 {% endif %}
                 {% cite_source book.description_source "cit-description" %}
             </div>
@@ -102,7 +100,7 @@
             {% endif %}
 
             {% if book.livelib_url %}
-            <div>
+            <div class="mb-4">
                 Водгукі на <a href="{{ book.livelib_url }}" target="_blank">LiveLib</a>
             </div>
             {% endif %}
@@ -133,8 +131,10 @@
                     {% if single_language is  None %}
                         <div>Мова: {{ narration.language | to_human_language }}</div>
                     {% endif %}
-                    {% if narration.description %}
-                        <p class="fw-normal">{{ narration.description | markdownify:"book_description" | linebreaks }}</p>
+                    {% if not single_narration %}
+                        <div class="my-4" data-test="narration-description">
+                            {{ narration.description | markdownify:"book_description" | linebreaks }}
+                        </div>
                     {% endif %}
                     <strong>
                     {% if narration.paid %}

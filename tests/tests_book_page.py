@@ -165,3 +165,45 @@ class BookPageTests(WebdriverTestCase):
                       narrators_sections[1].text)
         self.assertIn(self.fake_data.person_ales.name,
                       narrators_sections[2].text)
+
+    def test_book_description_merged_with_narration_when_single_narration(
+            self):
+        self.book.description = 'Book description'
+        self.book.save()
+        narration = self.book.narrations.first()
+        narration.description = 'Narration description'
+        narration.save()
+
+        self.driver.get(self._get_book_url())
+
+        description = self.driver.find_element(
+            By.CSS_SELECTOR, '[data-test="book-description"]').text
+        self.assertIn(self.book.description, description)
+        self.assertIn(narration.description, description)
+
+    def test_book_description_separate_from_narration_when_multiple(self):
+        self.book.description = 'Book description'
+        self.book.save()
+        narration1 = self.book.narrations.first()
+        narration1.description = 'Narration one description'
+        narration1.save()
+        narration2 = models.Narration.objects.create(
+            book=self.book,
+            language=models.Language.BELARUSIAN,
+            paid=False,
+            description='Narration two description',
+        )
+
+        self.driver.get(self._get_book_url())
+
+        description = self.driver.find_element(
+            By.CSS_SELECTOR, '[data-test="book-description"]').text
+        self.assertIn(self.book.description, description)
+        self.assertNotIn(narration1.description, description)
+        self.assertNotIn(narration2.description, description)
+
+        narration_descriptions = self.driver.find_elements(
+            By.CSS_SELECTOR, '[data-test="narration-description"]')
+        self.assertEqual(2, len(narration_descriptions))
+        self.assertIn(narration1.description, narration_descriptions[0].text)
+        self.assertIn(narration2.description, narration_descriptions[1].text)

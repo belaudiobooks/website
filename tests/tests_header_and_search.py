@@ -58,7 +58,7 @@ class HeaderAndSearchTests(WebdriverTestCase):
         self.assertEqual(link, element.get_dom_attribute('href'))
 
     def _init_algolia(self) -> None:
-        self.driver.get(f'{self.live_server_url}/push_data_to_algolia')
+        self.driver.get(f'{self.live_server_url}/job/push_data_to_algolia')
 
     def test_client_side_search_book(self):
         self._init_algolia()

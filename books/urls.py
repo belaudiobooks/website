@@ -19,13 +19,13 @@ urlpatterns = [
          articles.single_article,
          name='single-article'),
     path('search', support.search, name='search'),
-    path('push_data_to_algolia', support.push_data_to_algolia),
     path("404", support.page_not_found),
     path('robots.txt', support.robots_txt),
     path('sitemap.txt', support.sitemap),
     path('data.json', support.get_data_json),
-    path('generate_data_json', support.generate_data_json),
-    path('update_read_by_author_tag', support.update_read_by_author_tag),
+    path('job/push_data_to_algolia', support.push_data_to_algolia),
+    path('job/generate_data_json', support.generate_data_json),
+    path('job/update_read_by_author_tag', support.update_read_by_author_tag),
     path('api/markdown_preview', support.markdown_to_html),
     path('api/livelib_books', support.get_livelib_books)
 ]

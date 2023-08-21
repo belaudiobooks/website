@@ -1,10 +1,10 @@
 cron:
 - description: "hourly Algolia sync job"
-  url: /push_data_to_algolia
+  url: /job/push_data_to_algolia
   schedule: every 1 hours
 - description: "daily job to generate data.json"
-  url: /generate_data_json
+  url: /job/generate_data_json
   schedule: every 24 hours
 - description: "hourly job to update 'Read by author' tag"
-  url: /update_read_by_author_tag
+  url: /job/update_read_by_author_tag
   schedule: every 1 hours

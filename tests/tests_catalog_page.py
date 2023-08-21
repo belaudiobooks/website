@@ -165,7 +165,8 @@ class CatalogPageTests(WebdriverTestCase):
             title='By someone else',
             narrators=[self.fake_data.person_bela],
         )
-        self.driver.get(f'{self.live_server_url}/update_read_by_author_tag')
+        self.driver.get(
+            f'{self.live_server_url}/job/update_read_by_author_tag')
         self.driver.get(f'{self.live_server_url}/catalog')
         self.driver.find_element(
             By.LINK_TEXT, self.fake_data.tag_read_by_author.name).click()

@@ -21,14 +21,14 @@ from algoliasearch.search_client import SearchClient
 from markdownify.templatetags.markdownify import markdownify
 from books.thirdparty.livelibru import search_books_with_reviews, DataclassJSONEncoder
 
-from books import serializers
+from books import serializers, image_cache
 from books.models import Book, LinkType, Person, Tag, Publisher
 
 from .utils import active_books
 from .articles import ARTICLES
 
-
 logger = logging.getLogger(__name__)
+
 
 def search(request: HttpRequest) -> HttpResponse:
     '''Search results'''
@@ -66,7 +66,8 @@ def search(request: HttpRequest) -> HttpResponse:
         for publisher in Publisher.objects.all().filter(
                 uuid__in=publishers_ids):
             loaded_models[str(publisher.uuid)] = publisher
-            for book in set([narration.book for narration in publisher.narrations.all()]):
+            for book in set(
+                [narration.book for narration in publisher.narrations.all()]):
                 loaded_models[str(book.uuid)] = book
 
         def _gettype(value):
@@ -86,7 +87,10 @@ def search(request: HttpRequest) -> HttpResponse:
             'object': loaded_models.pop(hit['objectID'])
         } for hit in hits]
 
-        search_results.extend([{'type': _gettype(lm), 'object': lm} for lm in loaded_models.values()])
+        search_results.extend([{
+            'type': _gettype(lm),
+            'object': lm
+        } for lm in loaded_models.values()])
 
         context = {
             'results': search_results[:50],
@@ -180,8 +184,8 @@ def generate_data_json(request: HttpRequest) -> HttpResponse:
         'tags':
         serializers.TagSerializer(Tag.objects.all(), many=True).data,
         'publishers':
-        serializers.PublisherSimpleSerializer(
-            Publisher.objects.all(), many=True).data
+        serializers.PublisherSimpleSerializer(Publisher.objects.all(),
+                                              many=True).data
     }
     if default_storage.exists(DATA_JSON_FILE):
         default_storage.delete(DATA_JSON_FILE)
@@ -236,13 +240,13 @@ def markdown_to_html(request: HttpRequest) -> HttpResponse:
     '''Markdown to HTML'''
     markdown_text = request.body.decode('utf-8')
     if not markdown_text:
-        return HttpResponse(content="Request body is empty", content_type='text/plain', status=400)
+        return HttpResponse(content="Request body is empty",
+                            content_type='text/plain',
+                            status=400)
     html_text = markdownify(markdown_text, custom_settings="book_description")
-    return HttpResponse(
-        content=html_text,
-        content_type='text/html',
-        headers={'Access-Control-Allow-Origin': '*'}
-    )
+    return HttpResponse(content=html_text,
+                        content_type='text/html',
+                        headers={'Access-Control-Allow-Origin': '*'})
 
 
 @require_GET
@@ -252,8 +256,17 @@ def get_livelib_books(request: HttpRequest) -> HttpResponse:
         books = search_books_with_reviews(query)
     else:
         books = []
-    return HttpResponse(
-        content=json.dumps(books, ensure_ascii=False, indent=4, cls=DataclassJSONEncoder),
-        content_type='application/json',
-        headers={'Access-Control-Allow-Origin': '*'}
-    )
+    return HttpResponse(content=json.dumps(books,
+                                           ensure_ascii=False,
+                                           indent=4,
+                                           cls=DataclassJSONEncoder),
+                        content_type='application/json',
+                        headers={'Access-Control-Allow-Origin': '*'})
+
+
+def sync_image_cache(request: HttpRequest) -> HttpResponse:
+    '''
+    HTTP hook that triggers sync of image cache.
+    '''
+    image_cache.sync_cache()
+    return HttpResponse(status=204)

@@ -26,6 +26,7 @@ urlpatterns = [
     path('job/push_data_to_algolia', support.push_data_to_algolia),
     path('job/generate_data_json', support.generate_data_json),
     path('job/update_read_by_author_tag', support.update_read_by_author_tag),
+    path('job/sync_image_cache', support.sync_image_cache),
     path('api/markdown_preview', support.markdown_to_html),
     path('api/livelib_books', support.get_livelib_books)
 ]

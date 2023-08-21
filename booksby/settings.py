@@ -101,12 +101,12 @@ TEMPLATES = [
 ]
 
 MARKDOWNIFY = {
-  "default": {
-     "WHITELIST_TAGS": ["a", "p", "h1"]
-  },
-  "book_description": {
-     "WHITELIST_TAGS": ["a"]
-  }
+    "default": {
+        "WHITELIST_TAGS": ["a", "p", "h1"]
+    },
+    "book_description": {
+        "WHITELIST_TAGS": ["a"]
+    }
 }
 
 WSGI_APPLICATION = 'booksby.wsgi.application'
@@ -261,3 +261,10 @@ if env('ENV') == 'local':
             },
         }
     }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "booksby-cache",
+    }
+}

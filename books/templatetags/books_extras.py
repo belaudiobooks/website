@@ -7,7 +7,7 @@ from django import template
 from datetime import datetime
 from django.utils import html
 
-from books import models
+from books import models, image_cache
 
 register = template.Library()
 
@@ -130,15 +130,10 @@ def books_of_the_month() -> str:
 def format_date(date: datetime.date, format: str) -> str:
     '''Formats date in a human-readable format.'''
     contains_day = format.find('d') != -1
-    month = MONTHS[date.month -
-                   1][1] if contains_day else MONTHS[date.month - 1][0]
-    return format.replace(
-        'd', str(date.day)
-    ).replace(
-        'm', month
-    ).replace(
-        'Y', str(date.year)
-    )
+    month = MONTHS[date.month - 1][1] if contains_day else MONTHS[date.month -
+                                                                  1][0]
+    return format.replace('d', str(date.day)).replace('m', month).replace(
+        'Y', str(date.year))
 
 
 @register.simple_tag
@@ -161,3 +156,13 @@ def cite_source(source: str, cls: Optional[str]):
     return html.format_html(
         '<p class="citation {}">Крыніца: <a href="{}">{}</a></p>', cls,
         parts[1], parts[0])
+
+
+@register.filter
+def resized_image(source: str, size: int) -> str:
+    '''
+    Returns URL of resized image.
+
+    If image is not resized yet, returns original URL.
+    '''
+    return image_cache.get_image_for_size(source, size)

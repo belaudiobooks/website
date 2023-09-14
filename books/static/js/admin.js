@@ -43,9 +43,9 @@ function showWarningOnWrongQuotes() {
             fixButton.addEventListener('click', (e) => {
                 e.preventDefault();
                 element.value = element.value
-                    .replace(/"(.*)"/g, '«$1»')
-                    .replace(/„(.*)“/g, '«$1»')
-                    .replace(/“(.*)”/g, '«$1»');
+                    .replace(/"(.*?)"/g, '«$1»')
+                    .replace(/„(.*?)“/g, '«$1»')
+                    .replace(/“(.*?)”/g, '«$1»');
                 // Dispatch change event to trigger validation.
                 element.dispatchEvent(new Event('change', { 'bubbles': true }));
             });

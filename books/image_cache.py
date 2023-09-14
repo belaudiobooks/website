@@ -23,6 +23,10 @@ def sync_cache():
     """
     sizes: dict[str, dict[int, str]] = {}
     for folder in FOLDERS:
+        if not default_storage.exists(folder):
+            # It might happen when running `python manage.py collectstatic`.
+            # In that case `media` folder doesn't exist and this function fails.
+            continue
         files: list[str] = default_storage.listdir(folder)[1]
         for file_name in files:
             parts = path.basename(file_name).split('.')

@@ -2,8 +2,8 @@ import functools
 import os
 from typing import Union
 import uuid
+import belorthography
 
-from unidecode import unidecode
 from django.template import defaultfilters
 
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -12,6 +12,8 @@ from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils.translation import gettext as _
 from .managers import BookManager
 
+def lacinify(text: str) -> str:
+    return belorthography.convert(text, belorthography.Case.CYR_NAR, belorthography.Case.LAT_NO_DIACTRIC)
 
 def _get_image_name(folder: str, instance: Union['Person', 'Book',
                                                  'Publisher'],
@@ -85,7 +87,7 @@ class Person(models.Model):
 
     def save(self, *args, **kwargs):
         if self.slug != defaultfilters.slugify(self.slug) or self.slug == '':
-            self.slug = defaultfilters.slugify(unidecode(self.name))
+            self.slug = defaultfilters.slugify(lacinify(self.name))
         super().save(*args, **kwargs)
 
 
@@ -107,7 +109,7 @@ class Tag(models.Model):
         return f'{self.name}'
 
     def save(self, *args, **kwargs):
-        self.tag_slug = defaultfilters.slugify(unidecode(self.name))
+        self.tag_slug = defaultfilters.slugify(lacinify(self.name))
         super().save(*args, **kwargs)
 
 
@@ -185,7 +187,7 @@ class Book(models.Model):
         # Otherwise don't update slug as it might be intentionally set to be different
         # from title.
         if self.slug != defaultfilters.slugify(self.slug) or self.slug == '':
-            self.slug = defaultfilters.slugify(unidecode(self.title))
+            self.slug = defaultfilters.slugify(lacinify(self.title))
         super().save(*args, **kwargs)
 
     objects = BookManager()
@@ -219,7 +221,7 @@ class Publisher(models.Model):
 
     def save(self, *args, **kwargs):
         if self.slug != defaultfilters.slugify(self.slug) or self.slug == '':
-            self.slug = defaultfilters.slugify(unidecode(self.name))
+            self.slug = defaultfilters.slugify(lacinify(self.name))
         super().save(*args, **kwargs)
 
 

@@ -3,7 +3,6 @@ Django>=3.2.9,<3.3.0
 django-environ
 psycopg2>=2.9.2,<2.10.0 #only run it in EC2 - Mac M1 don't need it
 psycopg2-binary
-unidecode # for unicode slugs
 Pillow # for files upload management
 types-Pillow
 yapf
@@ -23,3 +22,4 @@ algoliasearch>=2.0,<3.0
 djangorestframework
 webdriver-manager
 django-markdownify
+belorthography

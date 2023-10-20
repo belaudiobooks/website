@@ -79,6 +79,9 @@ function initializeSearch() {
           clear();
         }
       });
+      // Dispatch input event in case user already typed something in the search
+      // while the page was loading.
+      search.dispatchEvent(new Event('input'));
     });
   const conf = instantsearch.widgets.configure({
     hitsPerPage: 4,
@@ -99,6 +102,7 @@ function initializeSearch() {
   );
   search.addWidgets([makeSearchBox(), makeHits(), conf]);
   search.start();
+  // Hide search result div when user clicks outside of it.
   document.documentElement.addEventListener('click', () => {
     document.querySelector('#autocomplete').classList.add('d-none');
   });

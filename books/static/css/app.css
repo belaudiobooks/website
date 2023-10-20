@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500&family=Oswald:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200..700&display=swap');
 
 html {
   /**
@@ -100,7 +100,6 @@ a {
   justify-content: center;
   align-items: center;
   font-size: 1.6rem;
-  font-family: 'Oswald', sans-serif;
 }
 
 .cover.small {
@@ -406,18 +405,6 @@ nav .buttons .nav-item:hover {
 
 .book h3 {
   margin: 0.25rem 0;
-}
-
-.book time {
-  color: #666666;
-  margin: 0.25rem;
-  font-style: italic;
-  font-size: 0.85rem;
-}
-
-.book:hover time,
-.book:active time {
-  color: white;
 }
 
 .btn-genre[aria-expanded="true"] .bi-chevron-down,

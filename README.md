@@ -114,7 +114,7 @@ Data about books, authors, narrators, translators and so on is currently stored 
 
 ### Remote sync scripts
 
-There are 2 scripts that allow to pull or push data between JSON format `data/data.json` and database (usually remote, postgresql running on GCP). 
+There are 2 scripts that allow to pull or push data between JSON format `data/data.json` and database (usually remote, postgresql running on GCP).
 
 Pull data. Connects to database and pulls objects and media files and stores them in JSON file and corresponding media files. Usage:
 
@@ -125,7 +125,7 @@ python manage.py pull_data_from_prod --settings=booksby.sqlite_settings
 Push data. Connects to database and pushes objects and media files from JSON file.
 
 ```shell
-python manage.py push_data_to_prod  --settings=booksby.sqlite_settings 
+python manage.py push_data_to_prod  --settings=booksby.sqlite_settings
 ```
 
 ## Google Cloud Setup and Deployment
@@ -137,10 +137,12 @@ The major issue is to setup DB as you have to use Cloud SQL Auth proxy in order 
 2. From the root app folder run
 
 ```
-gcloud app deploy
+gcloud app deploy --verbosity=info --no-promote
 ```
 
 3. Select Y to start deployment
+
+4. Verify that new version is working correctly and migrate traffic to the new version using https://console.cloud.google.com/appengine/versions
 
 ### CSS updates deployment
 There is an issue in gcloud deployment when css files change in the app. The workaround for now is to: 
@@ -148,3 +150,15 @@ There is an issue in gcloud deployment when css files change in the app. The wor
 2. run `gcloud app deploy`
 3. run `python manage.py collectstatic`
 4. run `gcloud app deploy` again
+
+## Image resizing
+
+Book, photos and other images uploaded in size 500x500px. This is too big for catalog view where we show 150x150px covers. In order to reduce bandwidth images are automatically scaled down upon upload. Scaled down versions are used on pages like catalog. Here is the process:
+
+1. When admin uploads an image it is saved in Google Cloud Storage Bucket.
+
+2. It triggers a [Cloud Function](https://cloud.google.com/functions/docs/concepts/overview) which creates resized versions of image in bucket. See [functions/main.py](functions/main.py) for the function. Trigger is done using [Cloud Storage triggers](https://cloud.google.com/functions/docs/calling/storage). [Deployed functions](https://console.cloud.google.com/functions/list).
+
+3. Upon finishing the function publishes a message to `image-resize-done` topic on [PubSub](https://cloud.google.com/pubsub/docs). [Deployed PubSub](https://console.cloud.google.com/cloudpubsub/topic/list).
+
+4. The message is pushed to the deployed website on `/job/sync_image_cache` endpoint. This forces the site to update its in-memory cache and build a mapping of original image names to the scaled-down versions.

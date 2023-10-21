@@ -1,6 +1,6 @@
 '''
-Views that are not visible to user. It can be API methods or webmaster 
-methods such as sitemap or robots.txt. 
+Views that are not visible to user. It can be API methods or webmaster
+methods such as sitemap or robots.txt.
 '''
 
 import json
@@ -12,6 +12,7 @@ from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import require_POST, require_GET
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -264,9 +265,11 @@ def get_livelib_books(request: HttpRequest) -> HttpResponse:
                         headers={'Access-Control-Allow-Origin': '*'})
 
 
+@csrf_exempt
 def sync_image_cache(request: HttpRequest) -> HttpResponse:
     '''
     HTTP hook that triggers sync of image cache.
     '''
-    image_cache.sync_cache()
-    return HttpResponse(status=204)
+    sizes = image_cache.sync_cache()
+    return HttpResponse(content=json.dumps(sizes, indent=4),
+                        content_type='application/json')

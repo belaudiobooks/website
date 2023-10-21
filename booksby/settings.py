@@ -194,7 +194,7 @@ else:
             'stackdriver': {
                 'level': 'INFO',
                 'class': 'google.cloud.logging.handlers.CloudLoggingHandler',
-                'client': client
+                'client': client,
             }
         },
         'loggers': {
@@ -252,14 +252,27 @@ if env('ENV') == 'local':
             'console': {
                 'level': 'DEBUG',
                 'class': 'logging.StreamHandler',
+                'formatter': 'verbose',
             }
         },
-        'loggers': {
-            'django.db.backends': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-            },
-        }
+        'formatters': {
+            'verbose': {
+                'format':
+                '%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
+                'datefmt': '%Y-%m-%d %H:%M:%S',
+            }
+        },
+        'root': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        # Uncomment to log all SQL queries
+        # 'loggers': {
+        #     'django.db.backends': {
+        #         'handlers': ['console'],
+        #         'level': 'DEBUG',
+        #     },
+        # }
     }
 
 CACHES = {

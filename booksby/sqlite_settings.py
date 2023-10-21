@@ -24,4 +24,3 @@ DATABASES = {
 }
 
 MEDIA_ROOT = 'data'
-LOGGING = {}

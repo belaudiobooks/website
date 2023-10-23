@@ -155,10 +155,8 @@ There is an issue in gcloud deployment when css files change in the app. The wor
 
 Book, photos and other images uploaded in size 500x500px. This is too big for catalog view where we show 150x150px covers. In order to reduce bandwidth images are automatically scaled down upon upload. Scaled down versions are used on pages like catalog. Here is the process:
 
-1. When admin uploads an image it is saved in Google Cloud Storage Bucket.
+1. Upon Book object modification in Book.save() we trigger a [Cloud Function](https://cloud.google.com/functions/docs/concepts/overview) using http request.
 
-2. It triggers a [Cloud Function](https://cloud.google.com/functions/docs/concepts/overview) which creates resized versions of image in bucket. See [functions/main.py](functions/main.py) for the function. Trigger is done using [Cloud Storage triggers](https://cloud.google.com/functions/docs/calling/storage). [Deployed functions](https://console.cloud.google.com/functions/list).
+2. The function creates resized versions of all images. It skips already resized images so it should affect only newly added or updated image. See [functions/main.py](functions/main.py) for the function. [Deployed functions](https://console.cloud.google.com/functions/list).
 
-3. Upon finishing the function publishes a message to `image-resize-done` topic on [PubSub](https://cloud.google.com/pubsub/docs). [Deployed PubSub](https://console.cloud.google.com/cloudpubsub/topic/list).
-
-4. The message is pushed to the deployed website on `/job/sync_image_cache` endpoint. This forces the site to update its in-memory cache and build a mapping of original image names to the scaled-down versions.
+3. Upon finishing the function triggers `/job/sync_image_cache` endpoint on the website. This forces the site to update its in-memory cache and build a mapping of original image names to the scaled-down versions.

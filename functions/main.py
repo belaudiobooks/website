@@ -1,19 +1,20 @@
 import io
 import os
 import tempfile
+import time
 import functions_framework
 import environ
 import logging
-from cloudevents.http import CloudEvent
 
-from google.cloud import secretmanager, storage, pubsub_v1
+from google.cloud import secretmanager, storage
+import requests
 from wand.image import Image
 
 # Number of images to process in one run. This can be set as
 # runtime variable from Google Cloud Console without the need to
 # update code.
 NUMBER_OF_IMAGES_TO_PROCESS = int(
-    os.environ.get('NUMBER_OF_IMAGES_TO_PROCESS', '1'))
+    os.environ.get('NUMBER_OF_IMAGES_TO_PROCESS', '10000'))
 
 # If set to true, the function will not upload resized images to the bucket.
 # Useful to test logic without actually doing any modifications.
@@ -24,7 +25,7 @@ DRY_RUN = os.environ.get('DRY_RUN', 'false').lower() == 'true'
 FOLDERS_TO_PROCESS = set(['covers'])
 
 # List of various sizes to generate.
-SIZES_TO_GENERATE = [150]
+SIZES_TO_GENERATE = [150, 300]
 
 # Metadata field stored on the resized image. It contains CRC32C checksum of the original
 # image. This is used to ensure that the original image wasn't changed. If it was -
@@ -34,7 +35,7 @@ ORIGINAL_IMAGE_CRC32C = 'original_image_crc32c'
 logging.basicConfig(
     format=
     '%(asctime)s,%(msecs)03d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
-    datefmt='%Y-%m-%d:%H:%M:%S',
+    datefmt='%Y-%m-%d %H:%M:%S',
     level=logging.INFO)
 
 
@@ -69,14 +70,15 @@ def generate_resized_image_name(original_file: str, size: int) -> str:
     return f'{parts[0]}.s{size}.{parts[1]}'
 
 
-def resize_image(name: str, blobs: dict[str, storage.Blob],
-                 bucket: storage.Bucket, temp_file: str):
-    logging.info(f'Resizing {name}')
+def resize_image(name: str, blobs: dict[str,
+                                        storage.Blob], bucket: storage.Bucket,
+                 temp_file: str, used_images: set[str]):
     temp_resized_file = temp_file + '.resized'
     downloaded = False
     original_image = blobs[name]
     for size in SIZES_TO_GENERATE:
         resized_name = generate_resized_image_name(name, size)
+        used_images.add(resized_name)
         # Check if the resized image already exists and its has CRC32C matching
         # the original image.
         if resized_name in blobs and blobs[
@@ -107,11 +109,30 @@ def resize_image(name: str, blobs: dict[str, storage.Blob],
             }
             resized_blob.content_type = original_image.content_type
             resized_blob.update()
+            time.sleep(0.5)
             logging.info('  Uploaded')
 
 
-@functions_framework.cloud_event
-def resize_images(cloud_event: CloudEvent):
+def delete_unused_resized_images(blobs: dict[str, storage.Blob],
+                                 used_images: set[str]):
+    logging.info('Deleting unused images')
+    for ind, blob in enumerate(blobs.values()):
+        name = blob.name
+        # Skip images without ORIGINAL_IMAGE_CRC32C because they
+        # are not resized images.
+        if blob.metadata is None or blob.metadata[
+                ORIGINAL_IMAGE_CRC32C] is None or name in used_images:
+            continue
+        if DRY_RUN:
+            logging.info(f'{ind}/{len(blobs)} DRY_RUN: not deleting {name}')
+        else:
+            logging.info(f'{ind}/{len(blobs)} Deleting {name}')
+            blob.delete()
+            time.sleep(0.5)
+
+
+@functions_framework.http
+def resize_images(request):
     """Resizes images in the storage bucket.
 
     This function is triggered upon changes in the storage bucket. It goes through
@@ -132,17 +153,23 @@ def resize_images(cloud_event: CloudEvent):
     _, temp_file = tempfile.mkstemp()
 
     images_left = NUMBER_OF_IMAGES_TO_PROCESS
-    for name in blobs.keys():
-        if is_original_image(name):
-            resize_image(name, blobs, bucket, temp_file)
-            images_left -= 1
-            if images_left == 0:
-                break
+    used_images = set()
+    original_images = [
+        name for name in blobs.keys() if is_original_image(name)
+    ]
+    for ind, name in enumerate(original_images):
+        logging.info(f'{ind}/{len(original_images)} Resizing {name}')
+        resize_image(name, blobs, bucket, temp_file, used_images)
+        images_left -= 1
+        if images_left == 0:
+            break
 
-    publisher = pubsub_v1.PublisherClient()
-    # The `topic_path` method creates a fully qualified identifier
-    # in the form `projects/{project_id}/topics/{topic_id}`
-    topic_path = publisher.topic_path(project_id, 'image-resize-done')
-    publisher.publish(topic_path, b'done')
+    delete_unused_resized_images(blobs, used_images)
+
+    website_url = os.environ.get("WEBSITE_URL")
+    if website_url is not None:
+        logging.info(f'Pinging {website_url}')
+        requests.get(f'{website_url}/job/sync_image_cache')
 
     logging.info('Finished resizing images')
+    return "ok"

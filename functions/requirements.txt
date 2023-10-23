@@ -4,3 +4,4 @@ google-cloud-secret-manager
 google-cloud-pubsub
 Wand
 django-environ
+requests

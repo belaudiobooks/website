@@ -12,6 +12,8 @@ from os import path
 from django.core.cache import cache
 from django.core.files.storage import default_storage
 from django.conf import settings
+import requests
+import threading
 
 # Process only covers for now. We don't have pages where we display
 # multiple photos or publisher logos.
@@ -61,3 +63,22 @@ def get_image_for_size(filename: str, size: int) -> str:
         logging.warning(f'Image {filename} missing size {size}.')
         return filename
     return sizes[filename][size]
+
+
+def trigger_image_resizing():
+    """
+    Triggers image resizing cloud function. This function should be called after
+    images are changed (e.g. after model was updated).
+    """
+    if settings.RESIZE_IMAGES_URL == '':
+        logging.info('RESIZE_IMAGES_URL is not set. Skipping image resize.')
+    else:
+        logging.info(
+            f'Book saved. Calling resize image function on {settings.RESIZE_IMAGES_URL}'
+        )
+
+        def send_request():
+            requests.get(settings.RESIZE_IMAGES_URL)
+            logging.info('Resizing finished')
+
+        threading.Thread(target=send_request).start()

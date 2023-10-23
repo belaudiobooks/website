@@ -6,14 +6,20 @@ import belorthography
 
 from django.template import defaultfilters
 
+from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils.translation import gettext as _
+
 from .managers import BookManager
+from books import image_cache
+
 
 def lacinify(text: str) -> str:
-    return belorthography.convert(text, belorthography.Case.CYR_NAR, belorthography.Case.LAT_NO_DIACTRIC)
+    return belorthography.convert(text, belorthography.Case.CYR_NAR,
+                                  belorthography.Case.LAT_NO_DIACTRIC)
+
 
 def _get_image_name(folder: str, instance: Union['Person', 'Book',
                                                  'Publisher'],
@@ -189,6 +195,7 @@ class Book(models.Model):
         if self.slug != defaultfilters.slugify(self.slug) or self.slug == '':
             self.slug = defaultfilters.slugify(lacinify(self.title))
         super().save(*args, **kwargs)
+        image_cache.trigger_image_resizing()
 
     objects = BookManager()
 

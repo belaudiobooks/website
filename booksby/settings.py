@@ -242,6 +242,7 @@ ALGOLIA_INDEX = env('ALGOLIA_INDEX', default='dev')
 ALGOLIA_APPLICATION_ID = env('ALGOLIA_APPLICATION_ID', default='')
 ALGOLIA_SEARCH_KEY = env('ALGOLIA_SEARCH_KEY', default='')
 ALGOLIA_MODIFY_KEY = env('ALGOLIA_MODIFY_KEY', default='')
+RESIZE_IMAGES_URL = env('RESIZE_IMAGES_URL', default='')
 
 # for debugging sql
 if env('ENV') == 'local':

@@ -27,7 +27,7 @@ def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
                 break
 
     some_narration_has_cover = any(
-        [narration.cover_image.name != '' for narration in narrations])
+        [narration.cover_image for narration in narrations])
 
     context = {
         'book': book,

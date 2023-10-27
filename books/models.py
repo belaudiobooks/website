@@ -27,6 +27,8 @@ def _get_image_name(folder: str, instance: Union['Person', 'Book', 'Publisher',
     '''Builds stored image file name based on the slug of the model.'''
     slug = isinstance(instance,
                       Narration) and instance.book.slug or instance.slug
+    if isinstance(instance, Narration):
+        slug += '-' + str(uuid.uuid4())
     extension = os.path.splitext(filename)[1]
     return os.path.join(folder, slug + extension)
 

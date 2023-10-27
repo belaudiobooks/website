@@ -3,20 +3,22 @@
 
 <div class="card border-white" style="max-width: 150px;">
     <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none">
-        {% if book.cover_image %}
-            <img class="card-img-top card-img-150" src="{{ book.cover_image.url | resized_image:300}}"
-                 alt="{{ book.title }}">
-        {% else %}
-            <div class="cover small d-flex justify-content-center text-center flex-column card-img-150 card-img-top" style="background-image: url({{ book | colors }});background-repeat:no-repeat;">
-                <div class="col-12 pm-2 upper-half">
-                    {% for author in book.authors.all %}{{ author.name }}{% endfor %}
+        {% with cover=book|book_cover_for_preview %}
+            {% if cover %}
+                <img class="card-img-top card-img-150" src="{{ cover.url | resized_image:300}}"
+                    alt="{{ book.title }}">
+            {% else %}
+                <div class="cover small d-flex justify-content-center text-center flex-column card-img-150 card-img-top" style="background-image: url({{ book | colors }});background-repeat:no-repeat;">
+                    <div class="col-12 pm-2 upper-half">
+                        {% for author in book.authors.all %}{{ author.name }}{% endfor %}
+                    </div>
+                    <div class="separator"></div>
+                    <div class="col-12 lower-half pt-2">
+                        {{ book.title }}
+                    </div>
                 </div>
-                <div class="separator"></div>
-                <div class="col-12 lower-half pt-2">
-                    {{ book.title }}
-                </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        {% endwith %}
     </a>
     <div class="mt-4">
         <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none" data-test="book-title">

@@ -230,7 +230,7 @@ class NarrationAdmin(admin.ModelAdmin):
     list_display = ('uuid', 'get_narrators', 'book')
     inlines = [LinkInlineAdmin]
     list_per_page = 1000
-    autocomplete_fields = ['narrators', 'book', 'publishers']
+    autocomplete_fields = ['narrators', 'book', 'publishers', 'translators']
     change_form_template = ['admin/books/change_form_narration.html']
 
     @display(description='narrators')

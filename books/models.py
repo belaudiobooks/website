@@ -21,12 +21,14 @@ def lacinify(text: str) -> str:
                                   belorthography.Case.LAT_NO_DIACTRIC)
 
 
-def _get_image_name(folder: str, instance: Union['Person', 'Book',
-                                                 'Publisher'],
+def _get_image_name(folder: str, instance: Union['Person', 'Book', 'Publisher',
+                                                 'Narration'],
                     filename: str) -> str:
     '''Builds stored image file name based on the slug of the model.'''
+    slug = isinstance(instance,
+                      Narration) and instance.book.slug or instance.slug
     extension = os.path.splitext(filename)[1]
-    return os.path.join(folder, instance.slug + extension)
+    return os.path.join(folder, slug + extension)
 
 
 class Gender(models.TextChoices):
@@ -246,6 +248,9 @@ class Narration(models.Model):
     narrators = models.ManyToManyField(Person,
                                        related_name='narrations',
                                        blank=True)
+    translators = models.ManyToManyField(Person,
+                                         related_name='narrations_translated',
+                                         blank=True)
     book = models.ForeignKey(Book,
                              related_name='narrations',
                              on_delete=CASCADE)
@@ -264,6 +269,13 @@ class Narration(models.Model):
                                         blank=True)
 
     description = models.TextField(_('Narration Description'), blank=True)
+
+    cover_image = models.ImageField(upload_to=functools.partial(
+        _get_image_name, 'covers'),
+                                    blank=True,
+                                    null=True)
+
+    date = models.DateField(_('Release Date'), auto_now_add=False, null=True)
 
     def __str__(self) -> str:
         return '%s read by %s' % (

@@ -22,22 +22,24 @@
     <div class="row">
 
         <!--Book image-->
-        <div class="col-12 col-md-6 col-lg-4">
-            {% if book.cover_image %}
-                <img class="col-md-6 mb-3 mx-auto photo" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
-                {% cite_source book.cover_image_source "cit-photo" %}
-            {% else %}
+        <div class="col-12 col-md-6 col-lg-4" data-test="book-cover">
+            {% if show_book_cover %}
+                {% if book.cover_image %}
+                    <img class="col-md-6 mb-3 mx-auto photo" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+                    {% cite_source book.cover_image_source "cit-photo" %}
+                {% else %}
 
-                <!--Custom cover for book-->
-                <div class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 cover d-flex justify-content-center text-center flex-column photo" style="background-image: url({{ book | colors }});background-repeat:no-repeat;">
-                    <div class="col-12 pm-2 upper-half">
-                        {% for author in book.authors.all %}{{ author.name }}{% endfor %}
+                    <!--Custom cover for book-->
+                    <div class="col-md-6 float-md-start mb-3 mx-4 ms-md-3 cover d-flex justify-content-center text-center flex-column photo" style="background-image: url({{ book | colors }});background-repeat:no-repeat;">
+                        <div class="col-12 pm-2 upper-half">
+                            {% for author in book.authors.all %}{{ author.name }}{% endfor %}
+                        </div>
+                        <div class="separator"></div>
+                        <div class="col-12 lower-half pt-2">
+                            {{ book.title }}
+                        </div>
                     </div>
-                    <div class="separator"></div>
-                    <div class="col-12 lower-half pt-2">
-                        {{ book.title }}
-                    </div>
-                </div>
+                {% endif %}
             {% endif %}
         </div>
 
@@ -104,62 +106,80 @@
                 Водгукі на <a href="{{ book.livelib_url }}" target="_blank">LiveLib</a>
             </div>
             {% endif %}
+        </div>
 
-            <!--Adding Links-->
-            {% for narration in narrations %}
-                {% if not single_narration %} <hr> {% endif %}
-                <div class="col-12 links-header">
-                    {% if not single_narration %}
-                        <h3>Агучка {{ forloop.counter }}</h3>
-                        <div data-test="narrators">
-                            <!--Narrators with check on multiples and gender-->
-                            {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
-                            <!--check if no name-->
-                            {% if not narration.narrators.all.exists %}
-                                Агучка: удакладняецца...
-                            {% endif %}
+    <!--Adding Links-->
+    {% for narration in narrations %}
+        {% if not single_narration %} <hr> {% endif %}
+
+        <!--Book image-->
+        <div class="col-12 col-md-6 col-lg-4" data-test="narration-cover">
+            {% if not show_book_cover and narration.cover_image %}
+                <img class="col-md-6 mb-3 mx-auto photo" src="{{ narration.cover_image.url }}" alt="{{ book.title }}">
+                {% cite_source narration.cover_image_source "cit-photo" %}
+            {% endif %}
+        </div>
+        <!--Book details-->
+        <div class="col-12 col-md-6 col-lg-8">
+            <div class="col-12 links-header">
+                {% if not single_narration %}
+                    <h3>Агучка {{ forloop.counter }}</h3>
+                    <div data-test="translators">
+                        {% include 'partials/_person.html' with persons=narration.translators.all multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
+                    </div>
+                    <div data-test="narrators">
+                        <!--Narrators with check on multiples and gender-->
+                        {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
+                        <!--check if no name-->
+                        {% if not narration.narrators.all.exists %}
+                            Агучка: удакладняецца...
+                        {% endif %}
+                    </div>
+                    {% if narration.publishers.all.exists %}
+                        <div>
+                            Выдавецтва: {% include 'partials/_publisher.html' with publishers=narration.publishers.all %}
                         </div>
-                        {% if narration.publishers.all.exists %}
-                            <div>
-                                Выдавецтва: {% include 'partials/_publisher.html' with publishers=narration.publishers.all %}
+                    {% endif %}
+                    {% if narration.duration %}
+                        <div>{{ narration | duration }}</div>
+                    {% endif %}
+                {% endif %}
+                {% if single_language is  None %}
+                    <div>Мова: {{ narration.language | to_human_language }}</div>
+                {% endif %}
+                {% if not single_narration %}
+                    <div class="my-4" data-test="narration-description">
+                        {{ narration.description | markdownify:"book_description" | linebreaks }}
+                    </div>
+                {% endif %}
+                <strong>
+                {% if narration.paid %}
+                    Дзе купіць
+                {% else %}
+                    Дзе паслухаць бясплатна
+                {% endif %}
+                </strong>
+            </div>
+            <!--Access to the link type-->
+            {% for link in narration.links.all|dictsortreversed:'url_type.weight' %}
+                {% if not link.url_type.disabled %}
+                    <div class="mt-2">
+                        <a href="{{ link.url }}" class="text-decoration-none d-flex align-items-center" target="_blank">
+                            <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">
+                            <div class="d-inline-block flex-grow-1">
+                                <span>{{ link.url_type.caption }}</span>
+                                <span class="link-type-availability">{{ link.url_type.availability | link_type_availibility }}</span>
                             </div>
-                        {% endif %}
-                        {% if narration.duration %}
-                            <div>{{ narration | duration }}</div>
-                        {% endif %}
-                    {% endif %}
-                    {% if single_language is  None %}
-                        <div>Мова: {{ narration.language | to_human_language }}</div>
-                    {% endif %}
-                    {% if not single_narration %}
-                        <div class="my-4" data-test="narration-description">
-                            {{ narration.description | markdownify:"book_description" | linebreaks }}
-                        </div>
-                    {% endif %}
-                    <strong>
-                    {% if narration.paid %}
-                        Дзе купіць
-                    {% else %}
-                        Дзе паслухаць бясплатна
-                    {% endif %}
-                    </strong>
-                </div>
-                <!--Access to the link type-->
-                {% for link in narration.links.all|dictsortreversed:'url_type.weight' %}
-                    {% if not link.url_type.disabled %}
-                        <div class="mt-2">
-                            <a href="{{ link.url }}" class="text-decoration-none d-flex align-items-center" target="_blank">
-                                <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">
-                                <div class="d-inline-block flex-grow-1">
-                                    <span>{{ link.url_type.caption }}</span>
-                                    <span class="link-type-availability">{{ link.url_type.availability | link_type_availibility }}</span>
-                                </div>
-                            </a>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                        </a>
+                    </div>
+                {% endif %}
             {% endfor %}
+            </div>
+     {% endfor %}
 
+
+     <div class="col-12 col-md-6 col-lg-4"></div>
+     <div class="col-12 col-md-6 col-lg-8">
             <!--Tags-->
             <div class="row my-4">
                 {% for tag in tags %}

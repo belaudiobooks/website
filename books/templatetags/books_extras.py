@@ -6,6 +6,7 @@ from zoneinfo import ZoneInfo
 from django import template
 from datetime import datetime
 from django.utils import html
+from django.db.models import ImageField
 
 from books import models, image_cache
 
@@ -166,3 +167,14 @@ def resized_image(source: str, size: int) -> str:
     If image is not resized yet, returns original URL.
     '''
     return image_cache.get_image_for_size(source, size)
+
+
+@register.filter
+def book_cover_for_preview(book: models.Book) -> Optional[ImageField]:
+    '''Returns cover that should be displayed for a book in preview.'''
+    if book.cover_image.name != '':
+        return book.cover_image
+    for narration in book.narrations.order_by('-date'):
+        if narration.cover_image.name != '':
+            return narration.cover_image
+    return None

@@ -77,3 +77,10 @@ class WebdriverTestCase(StaticLiveServerTestCase):
                 narrations, [],
                 f'Book {book.title} does not have links of type {link_type.name}'
             )
+
+    def count_elements(self, selector: str) -> int:
+        '''Returns number of elements matching given selector.'''
+        self.driver.implicitly_wait(0)
+        res = len(self.driver.find_elements(By.CSS_SELECTOR, selector))
+        self.driver.implicitly_wait(10)
+        return res

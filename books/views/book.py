@@ -26,6 +26,9 @@ def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
                 single_language = None
                 break
 
+    some_narration_has_cover = any(
+        [narration.cover_image.name != '' for narration in narrations])
+
     context = {
         'book': book,
         'authors': book.authors.all(),
@@ -35,6 +38,7 @@ def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
         'single_language': single_language,
         'show_russian_title': single_language == Language.RUSSIAN,
         'single_narration': len(narrations) == 1,
+        'show_book_cover': not some_narration_has_cover,
     }
 
     return render(request, 'books/book-detail.html', context)

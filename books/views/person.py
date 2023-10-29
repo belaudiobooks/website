@@ -19,10 +19,10 @@ def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
         'narrations').filter(slug=slug).first()
 
     if person:
-        author = maybe_filter_links(
+        authored_books = maybe_filter_links(
             person.books_authored.order_by('-date').filter(
                 status=BookStatus.ACTIVE), request)
-        translator = maybe_filter_links(
+        translated_books = maybe_filter_links(
             person.books_translated.order_by('-date').filter(
                 status=BookStatus.ACTIVE), request)
         narrations = person.narrations.order_by('-book__date').filter()
@@ -37,9 +37,9 @@ def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
 
         context = {
             'person': person,
-            'author': author,
-            'translator': translator,
-            'narrations': narrated_books,
+            'authored_books': authored_books,
+            'translated_books': translated_books,
+            'narrated_books': narrated_books,
         }
 
         return render(request, 'books/person.html', context)

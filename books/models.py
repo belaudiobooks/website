@@ -277,6 +277,11 @@ class Narration(models.Model):
                                     blank=True,
                                     null=True)
 
+    cover_image_source = models.CharField(_('Cover Source'),
+                                          blank=True,
+                                          max_length=500,
+                                          default='')
+
     date = models.DateField(_('Release Date'), auto_now_add=False, null=True)
 
     def __str__(self) -> str:

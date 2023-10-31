@@ -4,18 +4,20 @@
 
 {% block content %}
 
-<!-- <div class="container" id="books">
+{% comment %}
+<div class="container" id="books">
     <div class="row">
         <h4 class="col-12 mb-4">{% books_of_the_month %}</h4>
     </div>
     <div class="row">
         {% for book in promo_books %}
             <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                {% include 'partials/_book.html' %}
+                {% include 'partials/_book_preview.html' %}
             </div>
         {% endfor %}
     </div>
-</div> -->
+</div>
+{% endcomment %}
 
 <div class="container" id="books">
     <div class="row">
@@ -24,7 +26,7 @@
     <div class="row">
         {% for book in recently_added_books %}
         <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-            {% include 'partials/_book.html' %}
+            {% include 'partials/_book_preview.html' with book=book show_latest_narration=True %}
         </div>
         {% endfor %}
     </div>
@@ -46,7 +48,7 @@
         </div>
         {% for book in tag_books %}
         {% if forloop.counter <= 6 %} <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-            {% include 'partials/_book.html' %}
+            {% include 'partials/_book_preview.html' with book=book show_latest_narration=True %}
     </div>
     {% endif %}
     {% endfor %}

@@ -3,46 +3,41 @@ Views that display information about a particular person.
 '''
 
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.db.models import Prefetch, query
 
-from books.models import BookStatus, Person
+from books.models import BookStatus, Person, Narration, Book
 
 from .utils import maybe_filter_links
+
+
+def get_active_books(books: query.QuerySet,
+                     request: HttpRequest) -> query.QuerySet:
+    narrations_by_date = Prefetch('narrations',
+                                  queryset=Narration.objects.order_by('date'))
+    active_books = books.order_by('-date').prefetch_related(
+        narrations_by_date).filter(status=BookStatus.ACTIVE)
+    return maybe_filter_links(active_books, request)
 
 
 def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
     '''Detailed book page'''
 
     # Prefetch all books in the relationships
-    person = Person.objects.prefetch_related(
-        'books_authored', 'books_translated',
-        'narrations').filter(slug=slug).first()
+    person = get_object_or_404(
+        Person.objects.prefetch_related('books_authored', 'books_translated',
+                                        'narrations'),
+        slug=slug,
+    )
 
-    if person:
-        authored_books = maybe_filter_links(
-            person.books_authored.order_by('-date').filter(
-                status=BookStatus.ACTIVE), request)
-        translated_books = maybe_filter_links(
-            person.books_translated.order_by('-date').filter(
-                status=BookStatus.ACTIVE), request)
-        narrations = person.narrations.order_by('-book__date').filter()
-        if request.GET.get('links'):
-            links = request.GET.get('links').split(',')
-            narrations = narrations.filter(links__url_type__name__in=links)
+    narration_ids = person.narrations.values_list('uuid', flat=True)
+    narrated_books = Book.objects.filter(narrations__uuid__in=narration_ids)
 
-        narrated_books = [
-            item.book for item in narrations
-            if item.book.status == BookStatus.ACTIVE
-        ]
+    context = {
+        'person': person,
+        'authored_books': get_active_books(person.books_authored, request),
+        'translated_books': get_active_books(person.books_translated, request),
+        'narrated_books': get_active_books(narrated_books, request),
+    }
 
-        context = {
-            'person': person,
-            'authored_books': authored_books,
-            'translated_books': translated_books,
-            'narrated_books': narrated_books,
-        }
-
-        return render(request, 'books/person.html', context)
-
-    else:
-        pass  #TODO: implement 404 page
+    return render(request, 'books/person.html', context)

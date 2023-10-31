@@ -51,7 +51,7 @@ def to_human_language(lang: str) -> str:
     elif lang == models.Language.RUSSIAN:
         return 'руская'
     else:
-        raise Exception('Uknown language ' + lang)
+        raise ValueError('Uknown language ' + lang)
 
 
 @register.filter
@@ -64,7 +64,7 @@ def link_type_availibility(availability: str) -> str:
     elif availability == models.LinkAvailability.USA_ONLY:
         return 'толькі ў ЗША'
     else:
-        raise Exception('Uknown avalability ' + availability)
+        raise ValueError('Uknown avalability ' + availability)
 
 
 @register.filter
@@ -99,9 +99,9 @@ COVER_PATTERNS = [
 
 
 @register.filter
-def colors(book: models.Book) -> str:
+def colors(book: models.Book, ind=0) -> str:
     '''Returns random cover template for a book that has no cover.'''
-    return COVER_PATTERNS[book.uuid.int % len(COVER_PATTERNS)]
+    return COVER_PATTERNS[(book.uuid.int + ind) % len(COVER_PATTERNS)]
 
 
 MONTHS: List[Tuple[str, str]] = [
@@ -174,7 +174,25 @@ def book_cover_for_preview(book: models.Book) -> Optional[ImageField]:
     '''Returns cover that should be displayed for a book in preview.'''
     if book.cover_image.name != '':
         return book.cover_image
-    for narration in book.narrations.order_by('-date'):
-        if narration.cover_image.name != '':
-            return narration.cover_image
-    return None
+    if book.narrations.count() == 0:
+        return None
+    return book.narrations.order_by('-date').first().cover_image
+
+
+OVERLAP_COVER_OFFSET = 20
+
+
+@register.filter
+def cover_offset(ind: int) -> int:
+    '''Returns offset of a cover given its index in the list of narrations.'''
+    return (ind - 1) * OVERLAP_COVER_OFFSET
+
+
+@register.filter
+def overlapping_cover_scale(book: models.Book) -> float:
+    '''Returns scale of a cover that should be used when displaying preview with multiple narrations.
+
+    When there are multiple narrations - we show them overlapped and but they need to fit 150x150px box.
+    Thus we need to scale them down.
+    '''
+    return 1 - (book.narrations.count() - 1) * OVERLAP_COVER_OFFSET / 150

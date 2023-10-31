@@ -17,7 +17,7 @@
                     {% include 'partials/_publisher_in_search.html' with publisher=item.object %}
                 {% endif %}
                 {% if item.type == 'book' %}
-                    {% include 'partials/_book.html' with book=item.object %}
+                    {% include 'partials/_book_preview.html' with book=item.object %}
                 {% endif %}
             {% endfor %}
         </ul>

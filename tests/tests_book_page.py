@@ -209,38 +209,23 @@ class BookPageTests(WebdriverTestCase):
         self.assertIn(narration2.description, narration_descriptions[1].text)
 
     def test_covers_rendered_correctly(self):
-        self.book.cover_image = self.fake_data.create_image()
-        self.book.save()
-        narration1 = self.book.narrations.first()
+        self.driver.get(self._get_book_url())
+
+        # When book has a single narration - only book cover is displayed.
+        self.assertEquals(
+            1, self.count_elements('[data-test="book-cover"] .photo'))
+        self.assertEquals(
+            0, self.count_elements('[data-test="narration-cover"] .photo'))
+
+        # When a book has two or more narrations - we display covers per narration.
         narration2 = models.Narration.objects.create(
             book=self.book,
             language=models.Language.BELARUSIAN,
             paid=False,
         )
-
         self.driver.get(self._get_book_url())
 
         self.assertEquals(
-            1, self.count_elements('[data-test="book-cover"] img.photo'))
+            0, self.count_elements('[data-test="book-cover"] .photo'))
         self.assertEquals(
-            0, self.count_elements('[data-test="narration-cover"] img.photo'))
-
-        # Add image to the first narration. Now cover on narration level should be rendered.
-        narration1.cover_image = self.fake_data.create_image()
-        narration1.save()
-        self.driver.get(self._get_book_url())
-
-        self.assertEquals(
-            0, self.count_elements('[data-test="book-cover"] img.photo'))
-        self.assertEquals(
-            1, self.count_elements('[data-test="narration-cover"] img.photo'))
-
-        # Add image to the second narration. Now cover on both narrations should be rendered.
-        narration2.cover_image = self.fake_data.create_image()
-        narration2.save()
-        self.driver.get(self._get_book_url())
-
-        self.assertEquals(
-            0, self.count_elements('[data-test="book-cover"] img.photo'))
-        self.assertEquals(
-            2, self.count_elements('[data-test="narration-cover"] img.photo'))
+            2, self.count_elements('[data-test="narration-cover"] .photo'))

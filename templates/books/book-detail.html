@@ -23,7 +23,7 @@
 
         <!--Book image-->
         <div class="col-12 col-md-6 col-lg-4" data-test="book-cover">
-            {% if show_book_cover %}
+            {% if single_narration %}
                 {% if book.cover_image %}
                     <img class="col-md-6 mb-3 mx-auto photo" src="{{ book.cover_image.url }}" alt="{{ book.title }}">
                     {% cite_source book.cover_image_source "cit-photo" %}
@@ -114,9 +114,23 @@
 
         <!--Book image-->
         <div class="col-12 col-md-6 col-lg-4" data-test="narration-cover">
-            {% if not show_book_cover and narration.cover_image %}
-                <img class="col-md-6 mb-3 mx-auto photo" src="{{ narration.cover_image.url }}" alt="{{ book.title }}">
-                {% cite_source narration.cover_image_source "cit-photo" %}
+            {% if not single_narration %}
+                {% if  narration.cover_image %}
+                    <img class="col-md-6 mb-3 mx-auto photo" src="{{ narration.cover_image.url }}" alt="{{ book.title }}">
+                    {% cite_source narration.cover_image_source "cit-photo" %}
+                {% else %}
+                    <!--Custom cover for book-->
+                    <div class="col-md-6 mb-3 mx-auto cover d-flex justify-content-center text-center flex-column photo"
+                         style="background-image: url({{ book | colors:forloop.counter0 }});background-repeat:no-repeat;">
+                        <div class="col-12 pm-2 upper-half">
+                            {% for author in book.authors.all %}{{ author.name }}{% endfor %}
+                        </div>
+                        <div class="separator"></div>
+                        <div class="col-12 lower-half pt-2">
+                            {{ book.title }}
+                        </div>
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
         <!--Book details-->

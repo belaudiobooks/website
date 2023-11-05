@@ -8,15 +8,6 @@ from tests.worker import fetch_head_urls
 class DataValidationTests(TransactionTestCase):
     '''Tests that validate data.'''
 
-    def _verify_books_covers_valid(self):
-        for book in models.Book.objects.all():
-            cover = book.cover_image
-            if cover.name == '':
-                continue
-            assert path.exists(
-                cover.path
-            ), f'For book {book.title} did not find image {cover.path}'
-
     def _verify_link_type_icons_exist(self):
         for link_type in models.LinkType.objects.all():
             icon_path = link_type.icon.path
@@ -34,7 +25,6 @@ class DataValidationTests(TransactionTestCase):
             ), f'For person {person.name} did not find image {photo.path}'
 
     def test_files_present(self):
-        self._verify_books_covers_valid()
         self._verify_link_type_icons_exist()
         self._verify_people_photos_valid()
 

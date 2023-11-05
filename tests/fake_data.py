@@ -78,8 +78,8 @@ class FakeData:
             publisher.logo.delete()
         for person in models.Person.objects.all():
             person.photo.delete()
-        for book in models.Book.objects.all():
-            book.cover_image.delete()
+        for narration in models.Narration.objects.all():
+            narration.cover_image.delete()
 
     def create_link(self, link_type: models.LinkType,
                     book: models.Book) -> models.Link:

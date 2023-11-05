@@ -14,8 +14,9 @@ class HomePageTests(WebdriverTestCase):
                 title=f'Book {i}',
                 authors=[self.fake_data.person_ales],
             )
-            book.cover_image = self.fake_data.create_image()
-            book.save()
+            narration = book.narrations.first()
+            narration.cover_image = self.fake_data.create_image()
+            narration.save()
             self.books.append(book)
 
     def get_first_book(self) -> models.Book:
@@ -33,10 +34,10 @@ class HomePageTests(WebdriverTestCase):
         self.driver.get(self.live_server_url)
         book = self.books[0]
         cover_selector = f'img[alt="{book.title}"]'
-        if book.cover_image == '':
+        if book.narrations.first().cover_image == '':
             # when image is missing - find first auto-generated cover.
             # It should match the first book.
-            cover_selector = '.cover.small'
+            cover_selector = '.cover-small'
         self.driver.find_element(By.CSS_SELECTOR, cover_selector).click()
         self.assertIn(f'/books/{book.slug}', self.driver.current_url)
 

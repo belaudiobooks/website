@@ -162,14 +162,6 @@ class Book(models.Model):
                             db_index=True,
                             allow_unicode=True,
                             blank=True)
-    cover_image = models.ImageField(upload_to=functools.partial(
-        _get_image_name, 'covers'),
-                                    blank=True,
-                                    null=True)
-    cover_image_source = models.CharField(_('Cover Image Source'),
-                                          blank=True,
-                                          max_length=500,
-                                          default='')
     tag = models.ManyToManyField(Tag, related_name='books', blank=True)
     promoted = models.BooleanField(_('Promoted'), default=False)
     status = models.CharField(_('Status'),
@@ -199,7 +191,6 @@ class Book(models.Model):
         if self.slug != defaultfilters.slugify(self.slug) or self.slug == '':
             self.slug = defaultfilters.slugify(lacinify(self.title))
         super().save(*args, **kwargs)
-        image_cache.trigger_image_resizing()
 
     objects = BookManager()
 
@@ -289,6 +280,10 @@ class Narration(models.Model):
             self.book,
             ', '.join(narrator.name for narrator in self.narrators.all()),
         )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        image_cache.trigger_image_resizing()
 
 
 class LinkAvailability(models.TextChoices):

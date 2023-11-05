@@ -177,10 +177,10 @@ def resized_image(source: str, type: str) -> str:
 @register.filter
 def book_cover_for_preview(book: models.Book) -> Optional[ImageField]:
     '''Returns cover that should be displayed for a book in preview.'''
-    if book.cover_image.name != '':
-        return book.cover_image
     if book.narrations.count() == 0:
         return None
+    if book.narrations.count() == 1:
+        return book.narrations.first().cover_image
     return book.narrations.order_by('-date').first().cover_image
 
 

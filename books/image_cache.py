@@ -46,6 +46,9 @@ def sync_cache() -> dict[str, dict[int, str]]:
     cache.set('image_cache', sizes, timeout=None)
     return sizes
 
+def warn_in_production(message: str):
+    if not settings.DEBUG:
+        logging.warning(message)
 
 def get_image_for_size(filename: str, size: int) -> str:
     """
@@ -54,13 +57,13 @@ def get_image_for_size(filename: str, size: int) -> str:
     """
     sizes: dict[str, dict[int, str]] = cache.get('image_cache')
     if sizes is None:
-        logging.warning('Image cache is empty.')
+        warn_in_production('Image cache is empty.')
         return filename
     if filename not in sizes:
-        logging.warning(f'Image {filename} missing size {size}.')
+        warn_in_production(f'Image {filename} missing size {size}.')
         return filename
     if size not in sizes[filename]:
-        logging.warning(f'Image {filename} missing size {size}.')
+        warn_in_production(f'Image {filename} missing size {size}.')
         return filename
     return sizes[filename][size]
 
@@ -71,7 +74,7 @@ def trigger_image_resizing():
     images are changed (e.g. after model was updated).
     """
     if settings.RESIZE_IMAGES_URL == '':
-        logging.info('RESIZE_IMAGES_URL is not set. Skipping image resize.')
+        warn_in_production('RESIZE_IMAGES_URL is not set. Skipping image resize.')
     else:
         logging.info(
             f'Book saved. Calling resize image function on {settings.RESIZE_IMAGES_URL}'

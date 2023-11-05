@@ -6,8 +6,8 @@
 {% block title %}{{ book.title | title}} аўдыякніга{% endblock title %}
 {% block og_title %}{{ book.title | title}}{% endblock og_title %}
 {% block og_image %}{% spaceless %}
-    {% if book.cover_image %}
-        {{ book.cover_image.url }}
+    {% if book.narrations.all|length == 1 and book.narrations.first.cover_image %}
+        {{ book.narrations.first.cover_image.url }}
     {% else %}
         {{ block.super }}
     {% endif %}
@@ -24,7 +24,7 @@
         <!--Book image-->
         <div class="col-12 col-md-6 col-lg-4" data-test="book-cover">
             {% if single_narration %}
-                {% include 'partials/_cover.html' with book=book image=book.cover_image image_source=book.cover_image_source ind=0 type="large" %}
+                {% include 'partials/_cover.html' with book=book image=book.narrations.first.cover_image image_source=book.narrations.first.cover_image_source ind=0 type="large" %}
             {% endif %}
         </div>
 

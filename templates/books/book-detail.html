@@ -24,7 +24,7 @@
         <!--Book image-->
         <div class="col-12 col-md-6 col-lg-4" data-test="book-cover">
             {% if single_narration %}
-                {% include 'partials/_cover.html' with book=book image=book.narrations.first.cover_image image_source=book.narrations.first.cover_image_source ind=0 type="large" %}
+                {% include 'partials/_cover.html' with narration=book.narrations.first type="large" ind=0 %}
             {% endif %}
         </div>
 
@@ -100,7 +100,7 @@
         <!--Book image-->
         <div class="col-12 col-md-6 col-lg-4" data-test="narration-cover">
             {% if not single_narration %}
-                {% include 'partials/_cover.html' with book=book image=narration.cover_image image_source=narration.cover_image_source ind=0 type="large" %}
+                {% include 'partials/_cover.html' with narration=narration type="large" ind=forloop.counter0 %}
             {% endif %}
         </div>
         <!--Book details-->

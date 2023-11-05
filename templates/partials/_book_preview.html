@@ -4,7 +4,7 @@
 <div class="card border-white" style="max-width: 150px;">
     <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none">
         {% if book.narrations.all|length == 1 or show_latest_narration %}
-            {% include 'partials/_cover.html' with book=book image=book|book_cover_for_preview ind=0 type="small" %}
+            {% include 'partials/_cover.html' with narration=book|narration_for_prevview type="small" ind=0 %}
         {% else %}
             <div class="position-relative card-img-150">
             {% with scale=book|overlapping_cover_scale%}
@@ -12,7 +12,7 @@
                 {% with offset=forloop.counter|cover_offset %}
                 <div class="position-absolute"
                      style="left: {{offset}}px; top: {{offset}}px; transform: scale({{scale}}); transform-origin: top left;">
-                    {% include 'partials/_cover.html' with book=book image=narration.cover_image ind=forloop.counter0 type="small" %}
+                    {% include 'partials/_cover.html' with narration=narration type="small" ind=forloop.counter0 %}
                 </div>
                 {% endwith %}
             {% endfor %}

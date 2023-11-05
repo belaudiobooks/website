@@ -1,22 +1,25 @@
 {% load static %}
 {% load books_extras %}
 
-{% if image %}
-    <img class="mx-auto d-block cover-{{type}}" src="{{ image.url | resized_image:type }}" alt="{{ book.title }}"
-    >
-    {% cite_source image_source "cit-photo" %}
+{% if narration.cover_image %}
+    <img class="mx-auto d-block cover-{{type}}"
+         src="{{ narration.cover_image.url | resized_image:type }}"
+         alt="{{ narration.book.title }}">
+    {% if type == "large" %}
+        {% cite_source narration.image_source "cit-photo" %}
+    {% endif %}
 {% else %}
     <!--Custom cover for book-->
     <div class="mx-auto cover-{{type}} d-flex justify-content-center text-center flex-column"
          style="background-repeat: no-repeat;
-                background-image: url({{ book | colors:ind }});
+                background-image: url({{ narration.book | colors:ind }});
                 color: black;">
         <div class="col-12 pm-2 upper-half">
-            {% for author in book.authors.all %}{{ author.name }}{% endfor %}
+            {% for author in narration.book.authors.all %}{{ author.name }}{% endfor %}
         </div>
         <div class="separator"></div>
         <div class="col-12 lower-half pt-2">
-            {{ book.title }}
+            {{ narration.book.title }}
         </div>
     </div>
 {% endif %}

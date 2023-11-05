@@ -213,9 +213,9 @@ class BookPageTests(WebdriverTestCase):
 
         # When book has a single narration - only book cover is displayed.
         self.assertEquals(
-            1, self.count_elements('[data-test="book-cover"] .photo'))
+            1, self.count_elements('[data-test="book-cover"] .cover-large'))
         self.assertEquals(
-            0, self.count_elements('[data-test="narration-cover"] .photo'))
+            0, self.count_elements('[data-test="narration-cover"] .cover-large'))
 
         # When a book has two or more narrations - we display covers per narration.
         narration2 = models.Narration.objects.create(
@@ -226,6 +226,6 @@ class BookPageTests(WebdriverTestCase):
         self.driver.get(self._get_book_url())
 
         self.assertEquals(
-            0, self.count_elements('[data-test="book-cover"] .photo'))
+            0, self.count_elements('[data-test="book-cover"] .cover-large'))
         self.assertEquals(
-            2, self.count_elements('[data-test="narration-cover"] .photo'))
+            2, self.count_elements('[data-test="narration-cover"] .cover-large'))

@@ -155,18 +155,23 @@ def cite_source(source: str, cls: Optional[str]):
         return ''
     parts = source.split(';')
     return html.format_html(
-        '<p class="citation {}">Крыніца: <a href="{}">{}</a></p>', cls,
+        '<p class="mt-3 citation {}">Крыніца: <a href="{}">{}</a></p>', cls,
         parts[1], parts[0])
 
 
 @register.filter
-def resized_image(source: str, size: int) -> str:
+def resized_image(source: str, type: str) -> str:
     '''
     Returns URL of resized image.
 
     If image is not resized yet, returns original URL.
     '''
-    return image_cache.get_image_for_size(source, size)
+    if type == 'small':
+        return image_cache.get_image_for_size(source, 300)
+    elif type == 'large':
+        return source
+    else:
+        raise ValueError('Unknown image type ' + type)
 
 
 @register.filter

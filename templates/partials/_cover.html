@@ -2,7 +2,7 @@
 {% load books_extras %}
 
 {% if image %}
-    <img class="mx-auto cover-{{type}}" src="{{ image.url | resized_image:type }}" alt="{{ book.title }}"
+    <img class="mx-auto d-block cover-{{type}}" src="{{ image.url | resized_image:type }}" alt="{{ book.title }}"
     >
     {% cite_source image_source "cit-photo" %}
 {% else %}

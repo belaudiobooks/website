@@ -50,21 +50,18 @@ interface Data {
   people: Person[];
   link_types: LinkType[];
   tags: Tag[];
+  publisers: Publisher[];
 }
 
 interface Book {
   uuid: string;
   title: string;
-  cover_image: string|null;
-  cover_image_source: string;
   data: string;
   description: string;
   description_source: string;
   slug: string;
   // list of Person.uuid
   authors: string[];
-  // list of Person.uuid
-  translators: string[];
   narrations: Narrations[];
   // list of Tag.id
   tags: number[];
@@ -73,8 +70,14 @@ interface Book {
 interface Narration {
   // list of Person.uuid
   narrators: string[];
+  data: string;
   links: Links[];
   duration: number;
+  cover_image: string|null;
+  cover_image_source: string;
+  // list of Person.uuid
+  translators: string[];
+  description: string;
 }
 
 interface Link {
@@ -105,6 +108,15 @@ interface Tag {
   id: number;
   name: string;
   slug: string;
+}
+
+interface Publisher {
+  uuid: string;
+  name: string;
+  slug: string;
+  description: string;
+  logo: string;
+  url string;
 }
     </pre>
 </section>

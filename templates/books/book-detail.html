@@ -46,12 +46,12 @@
 
             <!--Authors with check on multiples and gender-->
             <div data-test="authors">
-                {% include 'partials/_person.html' with persons=authors multiple='Аўтары' single='Aўтар' gender_variants="ка,"%}
+                {% include 'partials/_person.html' with persons=book.authors.all multiple='Аўтары' single='Aўтар' gender_variants="ка,"%}
             </div>
 
             <!--Translators with check on multiples and gender-->
             <div data-test="translators">
-                {% include 'partials/_person.html' with persons=translators multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
+                {% include 'partials/_person.html' with persons=book.narrations.first.translators.all multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
             </div>
 
             {% if single_narration %}

@@ -111,7 +111,6 @@ class FakeData:
             livelib_url=livelib_url
         )
         book.authors.set(authors)
-        book.translators.set(translators)
         book.tag.set(tags)
         narration = models.Narration.objects.create(
             language=language,
@@ -120,6 +119,7 @@ class FakeData:
             paid=paid,
         )
         narration.narrators.set(narrators)
+        narration.translators.set(translators)
         narration.publishers.set(publishers)
         for link_type in link_types:
             narration.links.add(self.create_link(link_type, narration.book))

@@ -25,8 +25,7 @@ def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
 
     # Prefetch all books in the relationships
     person = get_object_or_404(
-        Person.objects.prefetch_related('books_authored', 'books_translated',
-                                        'narrations'),
+        Person.objects.prefetch_related('books_authored', 'narrations', 'narrations_translated'),
         slug=slug,
     )
 
@@ -34,12 +33,8 @@ def person_detail(request: HttpRequest, slug: str) -> HttpResponse:
     narrated_books = Book.objects.filter(narrations__uuid__in=narration_ids)
 
     narrations_translated_ids = person.narrations_translated.values_list('uuid', flat=True)
-    translated_books_ids = Book.objects.filter(
-        narrations__uuid__in=narrations_translated_ids).values_list('uuid', flat=True)
-    translated_books_ids = translated_books_ids.union(
-        person.books_translated.values_list('uuid', flat=True))
-    translated_books = get_active_books(
-        Book.objects.filter(uuid__in=translated_books_ids), request)
+    translated_books = Book.objects.filter(
+        narrations__uuid__in=narrations_translated_ids)
 
     context = {
         'person': person,

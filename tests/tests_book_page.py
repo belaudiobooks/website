@@ -71,17 +71,14 @@ class BookPageTests(WebdriverTestCase):
 
     def test_elements_rendered_in_book_section_with_single_narration(self):
         self.driver.get(self._get_book_url())
-        self.assertGreaterEqual(self.book.authors.count(), 1)
+        narration = self.book.narrations.first()
         self._check_persons_present_and_clickable(self.book, self.book.authors.all())
-        self._check_persons_present_and_clickable(self.book, self.book.translators.all())
-        self._check_persons_present_and_clickable(
-            self.book, self.book.narrations.first().narrators.all())
-        self._check_narration_links_present(
-            self.book.narrations.first(), self.book.narrations.first())
+        self._check_persons_present_and_clickable(self.book, narration.translators.all())
+        self._check_persons_present_and_clickable(self.book, narration.narrators.all())
+        self._check_narration_links_present(narration, narration)
 
     def test_elements_rendered_per_narration_with_multiple_narrations(self):
         nar1 = self.book.narrations.first()
-        nar1.translators.set(self.book.translators.all())
 
         nar2_narrator = models.Person.objects.create(
             name='Nar 2',

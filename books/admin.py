@@ -18,7 +18,6 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
         queryset = model_admin.get_queryset(request)
         reasons = {
             'no_description': 'Missing description',
-            'no_cover': 'Missing cover',
             'no_tags': 'Missing tags',
             'no_translation': 'Missing russian title',
         }
@@ -36,8 +35,6 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
             return queryset
         if reason == 'no_description':
             return queryset.filter(description__exact='')
-        if reason == 'no_cover':
-            return queryset.filter(cover_image__exact='')
         if reason == 'no_tags':
             return queryset.annotate(num_tags=Count('tag')).filter(num_tags=0)
         if reason == 'no_translation':
@@ -51,7 +48,7 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = (IncompleteBookListFilter, 'authors', 'title', 'promoted')
     list_display = ('title', 'get_book_authors', 'promoted')
     list_per_page = 1000
-    autocomplete_fields = ['authors', 'translators']
+    autocomplete_fields = ['authors']
     search_fields = ['title']
 
     class Media:

@@ -1,5 +1,7 @@
-from datetime import date, timedelta
-from django.core.files.uploadedfile import SimpleUploadedFile
+from datetime import timedelta
+from typing import Union
+from collections.abc import Sequence
+from selenium.webdriver.remote.webelement import WebElement
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
@@ -24,45 +26,94 @@ class BookPageTests(WebdriverTestCase):
             duration=timedelta(hours=14, minutes=15),
             livelib_url='https://www.livelib.ru/book/pershaya-kniga')
 
+    def _get_section(self, book_or_narration: Union[models.Book, models.Narration]) -> WebElement:
+        if isinstance(book_or_narration, models.Book):
+            return self.driver.find_element(By.CSS_SELECTOR, '[data-test="book-section"]')
+        else:
+            selector = f'[data-test="narration-section"][data-narration-id="{book_or_narration.uuid}"]'
+            return self.driver.find_element(By.CSS_SELECTOR, selector)
+
     def _get_book_url(self) -> str:
         return f'{self.live_server_url}/books/{self.book.slug}'
 
-    def _check_person_present_and_clickable(self,
-                                            person: models.Person) -> None:
-        self.driver.get(self._get_book_url())
-        elem = self.driver.find_element(By.LINK_TEXT, person.name)
-        self.scroll_and_click(elem)
-        self.assertIn(f'/person/{person.slug}', self.driver.current_url)
+    def _check_persons_present_and_clickable(self,
+                                            expected_section: Union[models.Book, models.Narration],
+                                            persons: Sequence[models.Person]) -> None:
+        section = self._get_section(expected_section)
+        self.assertGreaterEqual(len(persons), 1)
+        for person in persons:
+            elem = section.find_element(By.LINK_TEXT, person.name)
+            self.assertEquals(f'/person/{person.slug}', elem.get_dom_attribute('href'))
 
-    def test_click_authors(self):
+    def _check_narration_links_present(self, expected_section: Union[models.Book, models.Narration],
+                                       narration: models.Narration):
+        section = self._get_section(expected_section)
+        for link in narration.links.all():
+            caption = link.url_type.caption
+            elem = section.find_element(By.LINK_TEXT, caption)
+            self.assertEquals(link.url, elem.get_dom_attribute('href'))
+
+    def _create_narration(self, language: models.Language,
+                          number_of_links: int,
+                          narrator: models.Person) -> models.Narration:
+        narration = models.Narration(language=language,
+                                     book=self.book,
+                                     paid=False)
+        narration.save()
+        for i in range(number_of_links):
+            narration.links.add(
+                models.Link.objects.create(
+                    url=f'https://example.com/{self.book.slug}_{narrator.slug}',
+                    url_type=self.fake_data.link_type_kobo,
+                ))
+        narration.narrators.set([narrator])
+        return narration
+
+    def test_elements_rendered_in_book_section_with_single_narration(self):
+        self.driver.get(self._get_book_url())
         self.assertGreaterEqual(self.book.authors.count(), 1)
-        for author in self.book.authors.all():
-            self._check_person_present_and_clickable(author)
+        self._check_persons_present_and_clickable(self.book, self.book.authors.all())
+        self._check_persons_present_and_clickable(self.book, self.book.translators.all())
+        self._check_persons_present_and_clickable(
+            self.book, self.book.narrations.first().narrators.all())
+        self._check_narration_links_present(
+            self.book.narrations.first(), self.book.narrations.first())
 
-    def test_click_translators(self):
-        self.assertGreaterEqual(self.book.translators.count(), 1)
-        for translator in self.book.translators.all():
-            self._check_person_present_and_clickable(translator)
+    def test_elements_rendered_per_narration_with_multiple_narrations(self):
+        nar1 = self.book.narrations.first()
+        nar1.translators.set(self.book.translators.all())
 
-    def test_click_narrators(self):
-        self.assertGreaterEqual(self.book.narrations.count(), 1)
-        for narration in self.book.narrations.all():
-            for narrator in narration.narrators.all():
-                self._check_person_present_and_clickable(narrator)
+        nar2_narrator = models.Person.objects.create(
+            name='Nar 2',
+            name_ru='Nar 2',
+            slug='nar-2',
+        )
+        nar2_translator = models.Person.objects.create(
+            name='Tran 2',
+            name_ru='Tran 2',
+            slug='tran-2',
+        )
+        nar2 = self._create_narration(
+            language=models.Language.BELARUSIAN, 
+            number_of_links=1,
+            narrator=nar2_narrator
+        )
+        nar2.translators.set([nar2_translator])
+        nar2.save()
 
-    def test_has_narration_links(self):
-        self.assertGreaterEqual(self.book.narrations.count(), 1)
         self.driver.get(self._get_book_url())
-        for narration in self.book.narrations.all():
-            for link in narration.links.all():
-                caption = link.url_type.caption
-                elem = self.driver.find_elements(By.LINK_TEXT, caption)
-                found_link = False
-                for e in elem:
-                    if e.get_dom_attribute('href') == link.url:
-                        found_link = True
-                        break
-                self.assertTrue(found_link)
+
+        self._check_persons_present_and_clickable(self.book, self.book.authors.all())
+
+        # Verify that narrators, translators and links rendered in first narration section.
+        self._check_persons_present_and_clickable(nar1, nar1.narrators.all())
+        self._check_persons_present_and_clickable(nar1, nar1.translators.all())
+        self._check_narration_links_present(nar1, nar1)
+
+        # Verify that narrators, translators and links rendered in second narration section.
+        self._check_persons_present_and_clickable(nar2, nar2.narrators.all())
+        self._check_persons_present_and_clickable(nar2, nar2.translators.all())
+        self._check_narration_links_present(nar2, nar2)
 
     def test_click_tags(self):
         self.assertGreaterEqual(self.book.tag.count(), 1)
@@ -123,22 +174,6 @@ class BookPageTests(WebdriverTestCase):
         elem = self.driver.find_element(By.LINK_TEXT, "LiveLib")
         self.assertEqual('https://www.livelib.ru/book/pershaya-kniga',
                          elem.get_attribute("href"))
-
-    def _create_narration(self, language: models.Language,
-                          number_of_links: int,
-                          narrator: models.Person) -> models.Narration:
-        narration = models.Narration(language=language,
-                                     book=self.book,
-                                     paid=False)
-        narration.save()
-        for i in range(number_of_links):
-            narration.links.add(
-                models.Link.objects.create(
-                    url=f'https://example.com/{self.book.slug}_{narrator.slug}',
-                    url_type=self.fake_data.link_type_kobo,
-                ))
-        narration.narrators.set([narrator])
-        return narration
 
     def test_multiple_narrations_ordered_correctly(self):
         # Book has 3 narrations.

@@ -288,3 +288,8 @@ CACHES = {
         "LOCATION": "booksby-cache",
     }
 }
+
+DEBUG_TOOLBAR_CONFIG = {
+    # Comment the line below to enable debug toolbar.
+    'SHOW_TOOLBAR_CALLBACK': lambda r: False,
+}

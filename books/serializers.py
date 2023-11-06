@@ -45,7 +45,8 @@ class NarrationSimpleSerializer(serializers.ModelSerializer):
         model = models.Narration
         fields = [
             'uuid', 'narrators', 'links', 'duration', 'publishers', 'paid',
-            'language'
+            'language', 'translators', 'cover_image', 'cover_image_source', 'date',
+            'description',
         ]
 
 
@@ -60,8 +61,7 @@ class BookSimpleSerializer(serializers.ModelSerializer):
         model = models.Book
         fields = [
             'uuid', 'title', 'description', 'description_source', 'date',
-            'authors', 'translators', 'slug', 'cover_image',
-            'cover_image_source', 'tag', 'narrations'
+            'authors', 'slug', 'tag', 'narrations'
         ]
 
 

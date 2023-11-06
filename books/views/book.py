@@ -28,8 +28,6 @@ def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
 
     context = {
         'book': book,
-        'authors': book.authors.all(),
-        'translators': book.translators.all(),
         'narrations': narrations,
         'tags': book.tag.all(),
         'single_language': single_language,

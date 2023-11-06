@@ -1,91 +1,109 @@
-from os import path
-from django.test import TransactionTestCase
+from tests.fake_data import FakeData
+from tests.webdriver_test_case import WebdriverTestCase
 
 from books import models
 from tests.worker import fetch_head_urls
+import requests
 
 
-class DataValidationTests(TransactionTestCase):
+class DataValidationTests(WebdriverTestCase):
     '''Tests that validate data.'''
 
-    def _verify_link_type_icons_exist(self):
-        for link_type in models.LinkType.objects.all():
-            icon_path = link_type.icon.path
-            assert path.exists(
-                icon_path
-            ), f'For link type {link_type.name} did not find icon {icon_path}'
+    def test_data_json_generates(self):
+        self.maxDiff = None
+        fake_data: FakeData = self.fake_data
+        publisher = fake_data.publisher_audiobooksby
+        book = fake_data.create_book_with_single_narration(
+            title='Book 1',
+            authors=[fake_data.person_ales],
+            narrators=[fake_data.person_bela],
+            translators=[fake_data.person_viktar],
+            publishers=[publisher],
+            link_types=[fake_data.link_type_kobo],
+            date='2023-11-06',
+            tags=[fake_data.tag_fiction],
+        )
+        book.description = 'Book description'
+        book.save()
 
-    def _verify_people_photos_valid(self):
-        for person in models.Person.objects.all():
-            photo = person.photo
-            if photo.name == '':
-                continue
-            assert path.exists(
-                photo.path
-            ), f'For person {person.name} did not find image {photo.path}'
+        narration = book.narrations.first()
+        narration.description = 'Narration description'
+        narration.date = '2023-11-07'
+        narration.save()
 
-    def test_files_present(self):
-        self._verify_link_type_icons_exist()
-        self._verify_people_photos_valid()
+        fake_data.person_ales.description = 'Ales description'
+        fake_data.person_ales.save()
 
-    def test_data_complete(self):
-        for book in models.Book.objects.all():
-            self.assertNotEqual(book.narrations.count(),
-                                0,
-                                msg=f'Book {book.title} has no narrations.')
-        for narration in models.Narration.objects.all():
-            if narration.book.status == models.BookStatus.ACTIVE:
-                self.assertNotEqual(
-                    narration.links.count(),
-                    0,
-                    msg=f'Narration {narration.uuid} has no links.')
-        for person in models.Person.objects.all():
-            self.assertNotEqual(person.books_authored.count() +
-                                person.narrations.count() +
-                                person.books_translated.count(),
-                                0,
-                                msg=f'Person {person.name} has no books.')
+        response = requests.get(f'{self.live_server_url}/job/generate_data_json', timeout=20)
+        self.assertEquals(204, response.status_code)
 
-    def test_russian_translations_present(self):
-        for person in models.Person.objects.all():
-            self.assertNotEqual(person.name_ru,
-                                '',
-                                msg=f'Missing name_ru for {person.name}')
-        for book in models.Book.objects.all():
-            self.assertNotEqual(book.title_ru,
-                                '',
-                                msg=f'Missing title_ru for {book.title}')
-
-    def test_links_match_link_type_regex(self):
-        for link in models.Link.objects.all():
-            if link.url_type.url_regex == '':
-                continue
-            self.assertRegex(link.url, link.url_type.url_regex)
-
-    # Disable tests as it often breaks CI. We should implement
-    # 200 checks as automatic regular job that can notify as when
-    # something is broken. And use prod database for checks.
-    def disabled_test_verify_links_return_200(self):
-        # need to set maxDiff to get full list of 404 responses
-        self.maxDiff = 10000
-        urls = []
-        for link in models.Link.objects.all():  # type: models.Link
-            # skip kobo as it doesn't responde to robot-like requests.
-            # skip soundcloud as it responds with 429.
-            # skip litres as they return 403 when test runs from github.
-            # skip yandex as it returns 404 for some books unavailable outside
-            # Belarus
-            if link.url_type.name == 'rakuten_kobo' or link.url.startswith(
-                    'https://soundcloud.com'
-            ) or link.url_type.name == 'yandex_podcast' or link.url_type.name == 'litres':
-                continue
-            urls.append(link.url)
-        errors = [
-            [status.url, status.response.status_code]
-            for status in fetch_head_urls(urls)
-            # castbox returns 302.
-            # all other should return 200.
-            if status.response.status_code != 200 and status.response.
-            status_code != 302 and status.response.status_code != 303
-        ]
-        self.assertListEqual(errors, [])
+        response = requests.get(f'{self.live_server_url}/data.json', timeout=20)
+        self.assertEquals(200, response.status_code)
+        self.assertEquals( \
+            {'books': [{'authors': [str(fake_data.person_ales.uuid)],
+                        'date': '2023-11-06',
+                        'description': 'Book description',
+                        'description_source': '',
+                        'narrations': [{'cover_image': None,
+                                        'description': 'Narration description',
+                                        'cover_image_source': '',
+                                        'date': '2023-11-07',
+                                        'duration': 900.0,
+                                        'language': 'BELARUSIAN',
+                                        'links': [{'url': 'https://kobo.com/book-1',
+                                                   'url_type': 2}],
+                                        'narrators': [str(fake_data.person_bela.uuid)],
+                                        'paid': False,
+                                        'publishers': [str(publisher.uuid)],
+                                        'translators': [str(fake_data.person_viktar.uuid)],
+                                        'uuid': str(book.narrations.first().uuid)}],
+                        'slug': 'book-1',
+                        'tag': [2],
+                        'title': 'Book 1',
+                        'uuid': str(book.uuid)}],
+            'link_types': [{'availability': 'EVERYWHERE',
+                            'caption': 'Кніжны Воз',
+                            'icon': fake_data.link_type_knizhny_voz.icon.url,
+                            'id': 1,
+                            'name': 'knizny_voz'},
+                            {'availability': 'EVERYWHERE',
+                            'caption': 'Kobo',
+                            'icon': fake_data.link_type_kobo.icon.url,
+                            'id': 2,
+                            'name': 'kobo'}],
+            'people': [{'description': 'Ales description',
+                        'description_source': '',
+                        'gender': 'MALE',
+                        'name': 'Алесь Алесявіч',
+                        'photo': None,
+                        'photo_source': '',
+                        'slug': 'ales-alesievich',
+                        'uuid': str(fake_data.person_ales.uuid)},
+                        {'description': '',
+                        'description_source': '',
+                        'gender': 'FEMALE',
+                        'name': 'Бэла Бэлаўна',
+                        'photo': None,
+                        'photo_source': '',
+                        'slug': 'bela-belawna',
+                        'uuid': str(fake_data.person_bela.uuid)},
+                        {'description': '',
+                        'description_source': '',
+                        'gender': 'MALE',
+                        'name': 'Віктар Віктаравіч',
+                        'photo': None,
+                        'photo_source': '',
+                        'slug': 'viktar-viktavarich',
+                        'uuid': str(fake_data.person_viktar.uuid)}],
+            'publishers': [{'description': 'Мы - каманда энтузіястаў.',
+                            'logo': publisher.logo.url,
+                            'name': 'audiobooks.by',
+                            'slug': 'audiobooksby',
+                            'url': 'https://audiobooks.by/about',
+                            'uuid': str(publisher.uuid)}],
+            'tags': [{'description': '', 'id': 1, 'name': 'паэзія', 'slug': 'poezia'},
+                    {'description': '', 'id': 2, 'name': 'фантастыка', 'slug': 'fiction'},
+                    {'description': '',
+                        'id': 3,
+                        'name': 'чытае аўтар',
+                        'slug': 'cytaje-autar'}]}, response.json())

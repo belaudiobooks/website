@@ -47,16 +47,19 @@ class FakeData:
             name='Алесь Алесявіч',
             name_ru='Александр Алесевич',
             slug='ales-alesievich',
+            gender=models.Gender.MALE,
         )
         self.person_bela = models.Person.objects.create(
             name='Бэла Бэлаўна',
             name_ru='Белла Беловна',
             slug='bela-belawna',
+            gender=models.Gender.FEMALE,
         )
         self.person_viktar = models.Person.objects.create(
             name='Віктар Віктаравіч',
             name_ru='Виктор Викторович',
             slug='viktar-viktavarich',
+            gender=models.Gender.MALE,
         )
 
         self.publisher_audiobooksby = models.Publisher.objects.create(

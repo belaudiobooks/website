@@ -9,10 +9,9 @@ from books import models
 
 
 def _person_has_active_books(person: models.Person) -> bool:
-    books = list(person.books_authored.all()) + list(
-        person.books_translated.all()) + [
-            n.book for n in person.narrations.all()
-        ]
+    books = list(person.books_authored.all())
+    related_narrations = person.narrations.all().union(person.narrations_translated.all())
+    books += [n.book for n in related_narrations]
     active_books = filter(lambda b: b.status == models.BookStatus.ACTIVE,
                           books)
     return any(active_books)
@@ -60,7 +59,7 @@ class Command(BaseCommand):
                 'authors_ru': authors_ru,
             })
         people = models.Person.objects.all().prefetch_related(
-            'books_authored', 'books_translated', 'narrations')
+            'books_authored', 'narrations_translated', 'narrations')
         for person in people:
             if not _person_has_active_books(person):
                 continue

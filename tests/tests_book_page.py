@@ -94,7 +94,7 @@ class BookPageTests(WebdriverTestCase):
             slug='tran-2',
         )
         nar2 = self._create_narration(
-            language=models.Language.BELARUSIAN, 
+            language=models.Language.BELARUSIAN,
             number_of_links=1,
             narrator=nar2_narrator
         )

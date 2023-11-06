@@ -38,19 +38,19 @@
         <!--Books section-->
         <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
             {% if authored_books.exists %}
-            <div class="mt-3">
+            <div class="mt-3" data-test="books-authored">
                 <h4>Кнігі аўтар{{person|gender:"кі,а"}}</h4>
                 {% include 'partials/_books_list.html' with books=authored_books %}
             </div>
             {% endif %}
             {% if translated_books.exists %}
-            <div class="mt-3">
+            <div class="mt-3" data-test="books-translated">
                 <h4>Пераклады</h4>
                 {% include 'partials/_books_list.html' with books=translated_books %}
             </div>
             {% endif %}
             {% if narrated_books %}
-            <div class="mt-3">
+            <div class="mt-3" data-test="books-narrated">
                 <h4>Агучаныя кнігі</h4>
                 {% include 'partials/_books_list.html' with books=narrated_books %}
             </div>

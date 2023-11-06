@@ -9,54 +9,49 @@ class PersonPageTests(WebdriverTestCase):
     def setUp(self):
         super().setUp()
         self.person = self.fake_data.person_ales
-        self.books_authored = [
-            self.fake_data.create_book_with_single_narration(
-                title='Book 1',
-                authors=[self.person],
-            ),
-            self.fake_data.create_book_with_single_narration(
-                title='Book 2',
-                authors=[self.person, self.fake_data.person_bela],
-            ),
-        ]
-        self.books_translated = [
-            self.fake_data.create_book_with_single_narration(
-                title='Book 3',
-                translators=[self.person],
-            ),
-        ]
-        self.books_narrated = [
-            self.fake_data.create_book_with_single_narration(
-                title='Book 4',
-                narrators=[self.person],
-            ),
-        ]
 
     def _get_person_url(self) -> str:
         return f'{self.live_server_url}/person/{self.person.slug}'
 
-    def _check_book_present(self, book: models.Book) -> None:
-        found = False
-        for elem in self.driver.find_elements(By.LINK_TEXT, book.title):
-            found = found or elem.get_dom_attribute(
-                'href') == f'/books/{book.slug}'
-        self.assertTrue(
-            found, f'Did not find link for book {book.title} {book.slug}')
+    def _check_books_present(self, section_name: str, books: list[models.Book]):
+        section = self.driver.find_element(By.CSS_SELECTOR, f'[data-test="{section_name}"]')
+        self.assertGreater(len(books), 0)
+        for book in books:
+            books_links = section.find_elements(By.LINK_TEXT, book.title)
+            self.assertEquals(
+                1, len(books_links), f'Book "{book.title}" not found or found more than once')
+            self.assertEquals(f'/books/{book.slug}', books_links[0].get_dom_attribute('href'))
 
-    def test_books_authored(self):
-        self.driver.get(self._get_person_url())
-        for book in self.books_authored:
-            self._check_book_present(book)
+    def test_shows_correct_books(self):
+        book_authored_1 = self.fake_data.create_book_with_single_narration(
+            title='Book 1',
+            authors=[self.person],
+        )
+        book_authored_2 = self.fake_data.create_book_with_single_narration(
+            title='Book 2',
+            authors=[self.person, self.fake_data.person_bela],
+        )
 
-    def test_books_translated(self):
-        self.driver.get(self._get_person_url())
-        for book in self.books_translated:
-            self._check_book_present(book)
+        book_translated_1 = self.fake_data.create_book_with_single_narration(
+                title='Book 3',
+                translators=[self.person],
+        )
+        book_translated_2 = self.fake_data.create_book_with_single_narration(
+                title='Book 4',
+        )
+        book_translated_2.narrations.first().translators.add(self.person)
 
-    def test_books_narrated(self):
+        book_narrated = self.fake_data.create_book_with_single_narration(
+                title='Book 5',
+                narrators=[self.person],
+        )
+        nar2 = book_narrated.narrations.create()
+        nar2.narrators.add(self.person)
+
         self.driver.get(self._get_person_url())
-        for book in self.books_narrated:
-            self._check_book_present(book)
+        self._check_books_present('books-authored', [book_authored_1, book_authored_2])
+        self._check_books_present('books-translated', [book_translated_1, book_translated_2])
+        self._check_books_present('books-narrated', [book_narrated])
 
     def test_page_elements(self):
         self.driver.get(self._get_person_url())

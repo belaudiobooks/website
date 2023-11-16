@@ -46,8 +46,7 @@ class PersonPageTests(WebdriverTestCase):
                 title='Book 5',
                 narrators=[self.person],
         )
-        nar2 = book_narrated.narrations.create()
-        nar2.date = date.today()
+        nar2 = book_narrated.narrations.create(date = date.today())
         nar2.narrators.add(self.person)
         nar2.save()
 

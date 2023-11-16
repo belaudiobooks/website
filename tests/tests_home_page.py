@@ -68,6 +68,7 @@ class HomePageTests(WebdriverTestCase):
         b2_nar2 = models.Narration.objects.create(
             book=b2,
             language=models.Language.BELARUSIAN,
+            date=date.today(),
         )
         set_date(b2_nar2, 16)
 
@@ -76,6 +77,7 @@ class HomePageTests(WebdriverTestCase):
         b3_nar2 = models.Narration.objects.create(
             book=b3,
             language=models.Language.BELARUSIAN,
+            date=date.today(),
         )
         set_date(b3_nar2, 12)
 

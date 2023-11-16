@@ -22,6 +22,7 @@ class HeaderAndSearchTests(WebdriverTestCase):
             book=self.book,
             language=models.Language.BELARUSIAN,
             duration=timedelta(hours=14, minutes=15),
+            date=date.today(),
         )
         narration.publishers.set([self.fake_data.publisher_audiobooksby])
 

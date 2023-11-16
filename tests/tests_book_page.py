@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import date, timedelta
 from typing import Union
 from collections.abc import Sequence
 from selenium.webdriver.remote.webelement import WebElement
@@ -58,7 +58,8 @@ class BookPageTests(WebdriverTestCase):
                           narrator: models.Person) -> models.Narration:
         narration = models.Narration(language=language,
                                      book=self.book,
-                                     paid=False)
+                                     paid=False,
+                                     date=date.today())
         narration.save()
         for i in range(number_of_links):
             narration.links.add(
@@ -224,6 +225,7 @@ class BookPageTests(WebdriverTestCase):
             language=models.Language.BELARUSIAN,
             paid=False,
             description='Narration two description',
+            date=date.today(),
         )
 
         self.driver.get(self._get_book_url())
@@ -254,6 +256,7 @@ class BookPageTests(WebdriverTestCase):
             book=self.book,
             language=models.Language.BELARUSIAN,
             paid=False,
+            date=date.today(),
         )
         self.driver.get(self._get_book_url())
 

@@ -25,7 +25,6 @@ from books.thirdparty.livelibru import search_books_with_reviews, DataclassJSONE
 from books import serializers, image_cache
 from books.models import Book, LinkType, Person, Tag, Publisher
 
-from .utils import active_books
 from .articles import ARTICLES
 
 logger = logging.getLogger(__name__)
@@ -141,7 +140,7 @@ def sitemap(request: HttpRequest) -> HttpResponse:
     pages: List[str] = ['/', '/about', '/catalog', '/articles']
     for article in ARTICLES:
         pages.append(reverse('single-article', args=(article.slug, )))
-    for book in active_books():
+    for book in Book.objects.active_books_ordered_by_date():
         pages.append(reverse('book-detail-page', args=(book.slug, )))
     for person in Person.objects.all():
         pages.append(reverse('person-detail-page', args=(person.slug, )))

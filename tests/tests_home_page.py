@@ -1,3 +1,4 @@
+from datetime import date
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
@@ -11,7 +12,7 @@ class HomePageTests(WebdriverTestCase):
         self.books = []
         for i in range(6):
             book = self.fake_data.create_book_with_single_narration(
-                title=f'Book {i}',
+                title=f'Book {i + 1}',
                 authors=[self.fake_data.person_ales],
             )
             narration = book.narrations.first()
@@ -20,8 +21,7 @@ class HomePageTests(WebdriverTestCase):
             self.books.append(book)
 
     def get_first_book(self) -> models.Book:
-        return models.Book.objects.filter(
-            status=models.BookStatus.ACTIVE).order_by('-date').first()
+        return models.Book.objects.active_books_ordered_by_date().first()
 
     def test_click_book_title(self):
         self.driver.get(self.live_server_url)
@@ -52,3 +52,52 @@ class HomePageTests(WebdriverTestCase):
     def test_page_elements(self):
         self.driver.get(self.live_server_url)
         self.assertEqual('Беларускія аўдыякнігі', self.driver.title)
+
+    def test_order_is_correct(self):
+        b1, b2, b3, b4, b5, b6 = self.books
+
+        def set_date(narration: models.Narration, day: int):
+            narration.date = date.fromisoformat(f'2020-01-{day}')
+            narration.save()
+
+        # b1 = [Jan 15]
+        set_date(b1.narrations.first(), 15)
+
+        # b2 = [Jan 13, Jan 16]
+        set_date(b2.narrations.first(), 13)
+        b2_nar2 = models.Narration.objects.create(
+            book=b2,
+            language=models.Language.BELARUSIAN,
+        )
+        set_date(b2_nar2, 16)
+
+        # b3 = [Jan 17, Jan 12]
+        set_date(b3.narrations.first(), 17)
+        b3_nar2 = models.Narration.objects.create(
+            book=b3,
+            language=models.Language.BELARUSIAN,
+        )
+        set_date(b3_nar2, 12)
+
+        # b4 = [Jan 11]
+        set_date(b4.narrations.first(), 11)
+
+        # b5 = [Jan 18]
+        set_date(b5.narrations.first(), 18)
+
+        # b6 = [Jan 10]
+        set_date(b6.narrations.first(), 10)
+
+        self.driver.get(self.live_server_url)
+
+        title_elements = self.driver.find_elements(
+            By.CSS_SELECTOR, '[data-test="latest-books"] [data-test="book-title"]')
+        titles = [elem.text for elem in title_elements]
+        self.assertEqual(titles, [
+            b5.title,
+            b3.title,
+            b2.title,
+            b1.title,
+            b4.title,
+            b6.title,
+        ])

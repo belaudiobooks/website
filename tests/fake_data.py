@@ -120,6 +120,7 @@ class FakeData:
             duration=duration,
             book=book,
             paid=paid,
+            date=date,
         )
         narration.narrators.set(narrators)
         narration.translators.set(translators)

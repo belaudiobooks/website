@@ -12,7 +12,6 @@ from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils.translation import gettext as _
 
-from .managers import BookManager
 from books import image_cache
 
 
@@ -129,6 +128,18 @@ class BookStatus(models.TextChoices):
     '''
     ACTIVE = 'ACTIVE'
     HIDDEN = 'HIDDEN'
+
+
+class BookManager(models.Manager):
+    def active_books_ordered_by_date(self) -> models.QuerySet:
+        return (
+            self
+            .prefetch_related('authors')
+            .filter(status=BookStatus.ACTIVE)
+            # We order by nartation date. Books with the most recent narrations go first.
+            .annotate(recent_annotation=models.Max('narrations__date'))
+            .order_by('-recent_annotation')
+        )
 
 
 class Book(models.Model):

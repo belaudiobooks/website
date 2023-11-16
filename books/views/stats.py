@@ -65,7 +65,7 @@ def birthdays(request: HttpRequest) -> HttpResponse:
 
 def digest(request: HttpRequest) -> HttpResponse:
     '''Digest page'''
-    books = Book.objects.order_by('-date')[:100]
+    books = Book.objects.active_books_ordered_by_date()[:100]
     books_by_month: Dict[int, List[Book]] = {}
     for book in books:
         month = book.date.year * 12 + book.date.month

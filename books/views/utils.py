@@ -2,7 +2,7 @@
 Utility functions and constants used by multiple views.
 '''
 
-from django.db.models import query
+from django.db.models import query, Max
 from django.http import HttpRequest
 
 from books.models import Book, BookStatus
@@ -20,9 +20,3 @@ def maybe_filter_links(books_query: query.QuerySet,
         return books_query
     return books_query.filter(
         narrations__links__url_type__name__in=links.split(','))
-
-
-def active_books() -> query.QuerySet:
-    '''Returns list of books that are active and should be visible to users.'''
-    return Book.objects.filter(
-        status=BookStatus.ACTIVE).prefetch_related('authors')

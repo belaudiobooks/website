@@ -8,9 +8,9 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, Page
 
 from books.templatetags.books_extras import to_human_language
-from books.models import LinkType, Tag, Language
+from books.models import LinkType, Tag, Language, Book
 
-from .utils import maybe_filter_links, active_books
+from .utils import maybe_filter_links
 
 TAGS_TO_SHOW_ON_MAIN_PAGE = [
     'Сучасная проза',
@@ -25,7 +25,7 @@ def index(request: HttpRequest) -> HttpResponse:
     '''Index page, starting page'''
     # Getting all Tags and creating querystring objects for each to pass to template
     tags_to_render = []
-    books = active_books()
+    books = Book.objects.active_books_ordered_by_date()
     for tag in Tag.objects.filter(name__in=TAGS_TO_SHOW_ON_MAIN_PAGE):
         tags_to_render.append({
             'name':
@@ -33,12 +33,11 @@ def index(request: HttpRequest) -> HttpResponse:
             'slug':
             tag.slug,
             'books':
-            books.filter(tag=tag.id).order_by('-date'),
+            books.filter(tag=tag.id),
         })
 
     context = {
-        'promo_books': books.filter(promoted=True),
-        'recently_added_books': books.order_by('-date')[:6],
+        'recently_added_books': books[:6],
         'tags_to_render': tags_to_render,
     }
 
@@ -60,7 +59,8 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
 
     page = request.GET.get('page')
     tags = Tag.objects.all()
-    filtered_books = maybe_filter_links(active_books(), request).distinct()
+    filtered_books = maybe_filter_links(
+        Book.objects.active_books_ordered_by_date(), request).distinct()
 
     tag = None
     if tag_slug:
@@ -98,10 +98,9 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
         link_options.append((available_link.name, available_link.caption,
                              link == available_link.name))
 
-    sorted_books = filtered_books.order_by('-date')
-    paginator = Paginator(sorted_books, BOOKS_PER_PAGE)
+    paginator = Paginator(filtered_books, BOOKS_PER_PAGE)
     books_per_page = max(int(request.GET.get('limit', 0)), BOOKS_PER_PAGE)
-    paginator = Paginator(sorted_books, books_per_page)
+    paginator = Paginator(filtered_books, books_per_page)
     paged_books: Page = paginator.get_page(page)
 
     def related_page(page: int) -> str:

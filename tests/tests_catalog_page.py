@@ -75,9 +75,7 @@ class CatalogPageTests(WebdriverTestCase):
             )
         self.driver.get(f'{self.live_server_url}/catalog')
         self.assertEqual('Усе аўдыякнігі', self.driver.title)
-        books = list(
-            models.Book.objects.filter(
-                status=models.BookStatus.ACTIVE).order_by('-date'))
+        books = list(models.Book.objects.active_books_ordered_by_date())
         self._test_pagination(books)
 
     def test_all_books_with_link_filter(self):

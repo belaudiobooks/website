@@ -24,6 +24,7 @@ from books.thirdparty.livelibru import search_books_with_reviews, DataclassJSONE
 
 from books import serializers, image_cache
 from books.models import Book, LinkType, Person, Tag, Publisher
+from books.views.utils import BookForPreview
 
 from .articles import ARTICLES
 
@@ -57,12 +58,12 @@ def search(request: HttpRequest) -> HttpResponse:
                 logger.warning('Got unexpected model from search %s',
                                hit['model'],
                                extra=hit)
-        loaded_models: Dict[str, Union[Person, Book, Publisher]] = {}
+        loaded_models: Dict[str, Union[Person, BookForPreview, Publisher]] = {}
         for person in Person.objects.all().filter(uuid__in=people_ids):
             loaded_models[str(person.uuid)] = person
         for book in Book.objects.all().prefetch_related('authors').filter(
                 uuid__in=books_ids):
-            loaded_models[str(book.uuid)] = book
+            loaded_models[str(book.uuid)] = BookForPreview.with_all_narrations(book)
         for publisher in Publisher.objects.all().filter(
                 uuid__in=publishers_ids):
             loaded_models[str(publisher.uuid)] = publisher

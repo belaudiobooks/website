@@ -99,9 +99,9 @@ COVER_PATTERNS = [
 
 
 @register.filter
-def colors(book: models.Book, ind=0) -> str:
-    '''Returns random cover template for a book that has no cover.'''
-    return COVER_PATTERNS[(book.uuid.int + ind) % len(COVER_PATTERNS)]
+def colors(narration: models.Narration, ind=0) -> str:
+    '''Returns random cover template for a narration that has no cover.'''
+    return COVER_PATTERNS[(narration.book.uuid.int + ind) % len(COVER_PATTERNS)]
 
 
 MONTHS: List[Tuple[str, str]] = [

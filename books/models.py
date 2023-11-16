@@ -280,7 +280,7 @@ class Narration(models.Model):
                                           max_length=500,
                                           default='')
 
-    date = models.DateField(_('Release Date'), auto_now_add=False, null=True)
+    date = models.DateField(_('Release Date'), auto_now_add=False, null=False)
 
     def __str__(self) -> str:
         return '%s read by %s' % (

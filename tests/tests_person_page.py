@@ -1,3 +1,4 @@
+from datetime import date
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
@@ -46,7 +47,9 @@ class PersonPageTests(WebdriverTestCase):
                 narrators=[self.person],
         )
         nar2 = book_narrated.narrations.create()
+        nar2.date = date.today()
         nar2.narrators.add(self.person)
+        nar2.save()
 
         self.driver.get(self._get_person_url())
         self._check_books_present('books-authored', [book_authored_1, book_authored_2])

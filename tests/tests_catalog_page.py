@@ -190,6 +190,7 @@ class CatalogPageTests(WebdriverTestCase):
             book=book_both_languages,
             language=models.Language.RUSSIAN,
             duration=timedelta(minutes=15),
+            date=date.today(),
         )
         self.driver.get(f'{self.live_server_url}/catalog')
 
@@ -231,6 +232,7 @@ class CatalogPageTests(WebdriverTestCase):
             book=book_both,
             paid=False,
             duration=timedelta(minutes=15),
+            date=date.today(),
         )
         self.driver.get(f'{self.live_server_url}/catalog')
 

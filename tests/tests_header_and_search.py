@@ -15,7 +15,6 @@ class HeaderAndSearchTests(WebdriverTestCase):
             title='Кніга пра каханне',
             title_ru='Книга о любви',
             slug='kniga-pra-kakhanne',
-            date=date.today(),
             status=models.BookStatus.ACTIVE,
         )
         self.book.authors.set([self.fake_data.person_ales])

@@ -2,11 +2,40 @@
 Utility functions and constants used by multiple views.
 '''
 
-from django.db.models import query, Max
+from dataclasses import dataclass
+from collections.abc import Sequence
+from django.db.models import query
 from django.http import HttpRequest
 
-from books.models import Book, BookStatus
+from books import models
 
+@dataclass
+class BookForPreview:
+    """Class containing necessary information to render a book preview."""
+    book: models.Book
+    narrations: Sequence[models.Narration]
+
+    def __post_init__(self):
+        self.narrations = sorted(self.narrations, key=lambda n: n.date)
+
+    @staticmethod
+    def with_all_narrations(book: models.Book) -> 'BookForPreview':
+        return BookForPreview(book, book.narrations.all())
+
+    @staticmethod
+    def with_latest_narration(book: models.Book) -> 'BookForPreview':
+        preview = BookForPreview(book, book.narrations.all())
+        return BookForPreview(book, preview.narrations[-1:])
+
+    @staticmethod
+    def with_narrations_from_narrator(book: models.Book, narrator: models.Person) -> 'BookForPreview':
+        narrations = book.narrations.filter(narrators__in=[narrator])
+        return BookForPreview(book, narrations)
+
+    @staticmethod
+    def with_narrations_from_translator(book: models.Book, translator: models.Person) -> 'BookForPreview':
+        narrations = book.narrations.filter(translators__in=[translator])
+        return BookForPreview(book, narrations)
 
 def maybe_filter_links(books_query: query.QuerySet,
                        request: HttpRequest) -> query.QuerySet:

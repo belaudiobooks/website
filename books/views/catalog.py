@@ -2,6 +2,7 @@
 Views that provide information about collection of books. Usually this is 
 a catalog of books of particular genre.
 '''
+from collections.abc import Iterable
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
@@ -10,7 +11,7 @@ from django.core.paginator import Paginator, Page
 from books.templatetags.books_extras import to_human_language
 from books.models import LinkType, Tag, Language, Book
 
-from .utils import maybe_filter_links
+from .utils import maybe_filter_links, BookForPreview
 
 TAGS_TO_SHOW_ON_MAIN_PAGE = [
     'Сучасная проза',
@@ -19,6 +20,13 @@ TAGS_TO_SHOW_ON_MAIN_PAGE = [
 ]
 
 BOOKS_PER_PAGE = 16
+
+def to_books_preview(books: Iterable[Book]) -> Iterable[BookForPreview]:
+    return [BookForPreview(book, book.narrations.all()) for book in books]
+
+def with_latest_narrations(books: Iterable[Book]) -> Iterable[BookForPreview]:
+    with_all_narrations = to_books_preview(books)
+    return [BookForPreview(book.book, book.narrations[-1:]) for book in with_all_narrations]
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -33,11 +41,11 @@ def index(request: HttpRequest) -> HttpResponse:
             'slug':
             tag.slug,
             'books':
-            books.filter(tag=tag.id),
+            with_latest_narrations(books.filter(tag=tag.id)[:6]),
         })
 
     context = {
-        'recently_added_books': books[:6],
+        'recently_added_books': with_latest_narrations(books[:6]),
         'tags_to_render': tags_to_render,
     }
 
@@ -124,7 +132,7 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
         related_pages['next'] = related_page(paged_books.next_page_number())
 
     context = {
-        'books': paged_books,
+        'books': to_books_preview(paged_books),
         'related_pages': related_pages,
         'selected_tag': tag,
         'tags': tags,

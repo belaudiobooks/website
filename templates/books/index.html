@@ -26,7 +26,7 @@
     <div class="row">
         {% for book in recently_added_books %}
         <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-            {% include 'partials/_book_preview.html' with book=book show_latest_narration=True %}
+            {% include 'partials/_book_preview.html' with book_for_preview=book %}
         </div>
         {% endfor %}
     </div>
@@ -42,15 +42,14 @@
         </div>
         <div class="col-5 col-sm-2 text-end ">
             <a class="text-decoration-none tag-selected" href="{% url 'catalog-for-tag' tag_slug %}">
-                {{tag_books.count|by_plural:"кніга,кнігі,кніг"}}
+                {{tag_books|length|by_plural:"кніга,кнігі,кніг"}}
                 <i class="bi bi-chevron-right"></i>
             </a>
         </div>
         {% for book in tag_books %}
-        {% if forloop.counter <= 6 %} <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-            {% include 'partials/_book_preview.html' with book=book show_latest_narration=True %}
-    </div>
-    {% endif %}
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+            {% include 'partials/_book_preview.html' with book_for_preview=book %}
+        </div>
     {% endfor %}
 </div>
 </div>

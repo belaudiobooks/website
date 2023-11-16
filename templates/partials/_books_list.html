@@ -1,5 +1,5 @@
 <div class="my-4 books-list">
     {% for book in books %}
-    {% include 'partials/_book_preview.html' %}
+    {% include 'partials/_book_preview.html' with book_for_preview=book %}
     {% endfor %}
 </div>

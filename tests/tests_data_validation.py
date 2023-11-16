@@ -41,7 +41,6 @@ class DataValidationTests(WebdriverTestCase):
         self.assertEquals(200, response.status_code)
         self.assertEquals( \
             {'books': [{'authors': [str(fake_data.person_ales.uuid)],
-                        'date': '2023-11-06',
                         'description': 'Book description',
                         'description_source': '',
                         'narrations': [{'cover_image': None,

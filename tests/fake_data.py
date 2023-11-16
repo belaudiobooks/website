@@ -109,7 +109,6 @@ class FakeData:
         book = models.Book.objects.create(
             title=title,
             title_ru=f'{title} по-русски',
-            date=date,
             status=models.BookStatus.ACTIVE,
             livelib_url=livelib_url
         )

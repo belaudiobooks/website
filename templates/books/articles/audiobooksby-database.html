@@ -56,7 +56,6 @@ interface Data {
 interface Book {
   uuid: string;
   title: string;
-  data: string;
   description: string;
   description_source: string;
   slug: string;
@@ -70,7 +69,7 @@ interface Book {
 interface Narration {
   // list of Person.uuid
   narrators: string[];
-  data: string;
+  date: string;
   links: Links[];
   duration: number;
   cover_image: string|null;

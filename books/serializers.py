@@ -60,7 +60,7 @@ class BookSimpleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Book
         fields = [
-            'uuid', 'title', 'description', 'description_source', 'date',
+            'uuid', 'title', 'description', 'description_source',
             'authors', 'slug', 'tag', 'narrations'
         ]
 

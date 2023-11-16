@@ -162,7 +162,6 @@ class Book(models.Model):
                                           blank=True,
                                           max_length=500,
                                           default='')
-    date = models.DateField(_('Latest Release Date'), auto_now_add=False)
     authors = models.ManyToManyField(Person, related_name='books_authored')
     slug = models.SlugField(_('slug'),
                             max_length=100,

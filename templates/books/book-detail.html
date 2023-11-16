@@ -49,12 +49,12 @@
                 {% include 'partials/_person.html' with persons=book.authors.all multiple='Аўтары' single='Aўтар' gender_variants="ка,"%}
             </div>
 
-            <!--Translators with check on multiples and gender-->
-            <div data-test="translators">
-                {% include 'partials/_person.html' with persons=book.narrations.first.translators.all multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
-            </div>
-
             {% if single_narration %}
+                <!--Translators with check on multiples and gender-->
+                <div data-test="translators">
+                    {% include 'partials/_person.html' with persons=book.narrations.first.translators.all multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
+                </div>
+
                 <div data-test="narrators">
                     {% include 'partials/_person.html' with persons=narrations.first.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
                 </div>

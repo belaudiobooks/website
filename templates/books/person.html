@@ -22,7 +22,7 @@
 <div class="container">
     <div class="row">
         <!--Author bio section-->
-        <div class="col-12 col-md-3 mt-2 mt-sm-5">
+        <div class="col-12 col-md-3 mt-2 mt-sm-5" data-test="bio">
             {% if person.photo %}
             <img class="img-fluid mx-auto mb-3 photo d-block" src="{{ person.photo.url }}" alt="{{ person.name }}">
             {% cite_source person.photo_source "cit-photo" %}

@@ -264,3 +264,24 @@ class BookPageTests(WebdriverTestCase):
             0, self.count_elements('[data-test="book-cover"] .cover-large'))
         self.assertEquals(
             2, self.count_elements('[data-test="narration-cover"] .cover-large'))
+
+    def test_cover_source_rendered_correctly(self):
+        narration = self.book.narrations.first()
+        narration.cover_image = self.fake_data.create_image()
+        narration.save()
+
+        # No citation should be rendered by default, when cover_image_source is not set.
+        self.driver.get(self._get_book_url())
+        self.assertEquals(0, self.count_elements('[data-test="book-cover"] .citation'))
+
+        narration.cover_image_source = 'YouTube;https://www.youtube.com/watch?v=123'
+        narration.save()
+
+        self.driver.get(self._get_book_url())
+        self.assertEquals(1, self.count_elements('[data-test="book-cover"] .citation'))
+        source_element = self.driver.find_element(
+            By.CSS_SELECTOR, '[data-test="book-cover"] .citation')
+        self.assertEquals('Крыніца: YouTube', source_element.text)
+        self.assertEquals(
+            'https://www.youtube.com/watch?v=123',
+            source_element.find_element(By.CSS_SELECTOR, 'a').get_dom_attribute('href'))

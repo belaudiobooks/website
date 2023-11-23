@@ -6,7 +6,7 @@
          src="{{ narration.cover_image.url | resized_image:type }}"
          alt="{{ narration.book.title }}">
     {% if type == "large" %}
-        {% cite_source narration.image_source "cit-photo" %}
+        {% cite_source narration.cover_image_source "cit-photo" %}
     {% endif %}
 {% else %}
     <!--Custom cover for book-->

@@ -62,3 +62,23 @@ class PersonPageTests(WebdriverTestCase):
             By.CSS_SELECTOR,
             'meta[name="description"]').get_dom_attribute('content')
         self.assertIn(self.person.name, description)
+
+    def test_photo_source_rendered_correctly(self):
+        self.person.photo = self.fake_data.create_image()
+        self.person.save()
+
+        # No citation should be rendered by default, when photo_source is not set.
+        self.driver.get(self._get_person_url())
+        self.assertEquals(0, self.count_elements('[data-test="bio"] .citation'))
+
+        self.person.photo_source = 'YouTube;https://www.youtube.com/watch?v=123'
+        self.person.save()
+
+        self.driver.get(self._get_person_url())
+        self.assertEquals(1, self.count_elements('[data-test="bio"] .citation'))
+        source_element = self.driver.find_element(
+            By.CSS_SELECTOR, '[data-test="bio"] .citation')
+        self.assertEquals('Крыніца: YouTube', source_element.text)
+        self.assertEquals(
+            'https://www.youtube.com/watch?v=123',
+            source_element.find_element(By.CSS_SELECTOR, 'a').get_dom_attribute('href'))

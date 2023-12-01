@@ -35,14 +35,14 @@
 <!--Getting all the tags and rendering 6 books for each-->
 {% for tag in tags_to_render %}
 {% with tag_name=tag.name tag_slug=tag.slug tag_books=tag.books %}
-<div class="container" id="books">
+<div class="container" id="books" data-test="tag-{{tag.slug}}">
     <div class="row">
         <div class="col-7 col-sm-10 mb-4">
             <h4>{{tag_name}}</h4>
         </div>
         <div class="col-5 col-sm-2 text-end ">
             <a class="text-decoration-none tag-selected" href="{% url 'catalog-for-tag' tag_slug %}">
-                {{tag_books|length|by_plural:"кніга,кнігі,кніг"}}
+                {{tag.total_books|by_plural:"кніга,кнігі,кніг"}}
                 <i class="bi bi-chevron-right"></i>
             </a>
         </div>

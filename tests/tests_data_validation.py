@@ -21,7 +21,7 @@ class DataValidationTests(WebdriverTestCase):
             publishers=[publisher],
             link_types=[fake_data.link_type_kobo],
             date='2023-11-06',
-            tags=[fake_data.tag_fiction],
+            tags=[fake_data.tag_classics],
         )
         book.description = 'Book description'
         book.save()
@@ -57,7 +57,7 @@ class DataValidationTests(WebdriverTestCase):
                                         'translators': [str(fake_data.person_viktar.uuid)],
                                         'uuid': str(book.narrations.first().uuid)}],
                         'slug': 'book-1',
-                        'tag': [fake_data.tag_fiction.pk],
+                        'tag': [fake_data.tag_classics.pk],
                         'title': 'Book 1',
                         'uuid': str(book.uuid)}],
             'link_types': [{'availability': 'EVERYWHERE',
@@ -102,14 +102,14 @@ class DataValidationTests(WebdriverTestCase):
                             'uuid': str(publisher.uuid)}],
             'tags': [{
                 'description': '',
-                'id': fake_data.tag_poetry.pk,
-                'name': 'паэзія',
-                'slug': 'poezia'
+                'id': fake_data.tag_classics.pk,
+                'name': 'Класікі беларускай літаратуры',
+                'slug': 'classics'
             }, {
                 'description': '',
-                'id': fake_data.tag_fiction.pk,
-                'name': 'фантастыка',
-                'slug': 'fiction'
+                'id': fake_data.tag_contemporary.pk,
+                'name': 'Сучасная проза',
+                'slug': 'contemporary'
             }, {
                 'description': '',
                 'id': fake_data.tag_read_by_author.pk,

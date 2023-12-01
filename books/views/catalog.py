@@ -22,9 +22,12 @@ TAGS_TO_SHOW_ON_MAIN_PAGE = [
 BOOKS_PER_PAGE = 16
 
 def to_books_preview(books: Iterable[Book]) -> Iterable[BookForPreview]:
+    '''Converts list of books to BookForPreviews where for each book all narrations are shown.'''
     return [BookForPreview(book, book.narrations.all()) for book in books]
 
-def with_latest_narrations(books: Iterable[Book]) -> Iterable[BookForPreview]:
+def with_latest_narration(books: Iterable[Book]) -> Iterable[BookForPreview]:
+    '''Converts list of books to BookForPreviews where for each book only the latest
+    narration is shown.'''
     with_all_narrations = to_books_preview(books)
     return [BookForPreview(book.book, book.narrations[-1:]) for book in with_all_narrations]
 
@@ -41,11 +44,12 @@ def index(request: HttpRequest) -> HttpResponse:
             'slug':
             tag.slug,
             'books':
-            with_latest_narrations(books.filter(tag=tag.id)[:6]),
+            with_latest_narration(books.filter(tag=tag.id)[:6]),
+            'total_books': books.filter(tag=tag.id).count(),
         })
 
     context = {
-        'recently_added_books': with_latest_narrations(books[:6]),
+        'recently_added_books': with_latest_narration(books[:6]),
         'tags_to_render': tags_to_render,
     }
 

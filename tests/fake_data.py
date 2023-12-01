@@ -14,14 +14,13 @@ class FakeData:
 
     def __init__(self):
         """Initialize fake data."""
-
-        self.tag_poetry = models.Tag.objects.create(
-            name='паэзія',
-            slug='poezia',
+        self.tag_classics = models.Tag.objects.create(
+            name='Класікі беларускай літаратуры',
+            slug='classics',
         )
-        self.tag_fiction = models.Tag.objects.create(
-            name='фантастыка',
-            slug='fiction',
+        self.tag_contemporary = models.Tag.objects.create(
+            name='Сучасная проза',
+            slug='contemporary',
         )
         self.tag_read_by_author = models.Tag.objects.create(
             name='чытае аўтар',

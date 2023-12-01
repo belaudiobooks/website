@@ -34,7 +34,7 @@ class RobotPagesTests(WebdriverTestCase):
         self.assertIn(f'{domain}/person/{self.fake_data.person_ales.slug}',
                       sitemap)
         self.assertIn(f'{domain}/books/{self.book.slug}', sitemap)
-        self.assertIn(f'{domain}/catalog/{self.fake_data.tag_poetry.slug}',
+        self.assertIn(f'{domain}/catalog/{self.fake_data.tag_classics.slug}',
                       sitemap)
         self.assertIn(f'{domain}/articles/{article.slug}', sitemap)
         self.assertIn(

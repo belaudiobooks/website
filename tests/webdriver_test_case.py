@@ -1,4 +1,5 @@
 import time
+from typing import Optional
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
 from selenium import webdriver
@@ -78,9 +79,9 @@ class WebdriverTestCase(StaticLiveServerTestCase):
                 f'Book {book.title} does not have links of type {link_type.name}'
             )
 
-    def count_elements(self, selector: str) -> int:
+    def count_elements(self, selector: str, el: Optional[WebElement] = None) -> int:
         '''Returns number of elements matching given selector.'''
         self.driver.implicitly_wait(0)
-        res = len(self.driver.find_elements(By.CSS_SELECTOR, selector))
+        res = len((el or self.driver).find_elements(By.CSS_SELECTOR, selector))
         self.driver.implicitly_wait(10)
         return res

@@ -21,7 +21,7 @@ class BookPageTests(WebdriverTestCase):
                 self.fake_data.link_type_knizhny_voz,
                 self.fake_data.link_type_kobo
             ],
-            tags=[self.fake_data.tag_poetry, self.fake_data.tag_fiction],
+            tags=[self.fake_data.tag_classics, self.fake_data.tag_classics],
             publishers=[self.fake_data.publisher_audiobooksby],
             duration=timedelta(hours=14, minutes=15),
             livelib_url='https://www.livelib.ru/book/pershaya-kniga')

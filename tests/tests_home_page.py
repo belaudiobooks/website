@@ -53,6 +53,36 @@ class HomePageTests(WebdriverTestCase):
         self.driver.get(self.live_server_url)
         self.assertEqual('Беларускія аўдыякнігі', self.driver.title)
 
+    def assert_genre_section_correct(self, tag: models.Tag, expected_more_books_text: str):
+        section = self.driver.find_element(
+            By.CSS_SELECTOR, f'[data-test="tag-{tag.slug}"]')
+        self.assertEquals(self.count_elements('.card', section), 6)
+        more_books = section.find_element(By.CSS_SELECTOR, '.tag-selected')
+        self.assertEquals(more_books.text, expected_more_books_text)
+        self.assertIn(f'/catalog/{tag.slug}', more_books.get_attribute('href'))
+
+    def test_book_count_for_genre_is_correct(self):
+        for i in range(10):
+            book = self.fake_data.create_book_with_single_narration(
+                title=f'Book Contemp {i + 1}',
+                authors=[self.fake_data.person_ales],
+                tags=[self.fake_data.tag_contemporary],
+            )
+            book.save()
+        for i in range(21):
+            book = self.fake_data.create_book_with_single_narration(
+                title=f'Book Classic {i + 1}',
+                authors=[self.fake_data.person_ales],
+                tags = [self.fake_data.tag_classics],
+            )
+            book.save()
+
+        self.driver.get(self.live_server_url)
+
+        self.assert_genre_section_correct(self.fake_data.tag_contemporary, '10 кніг')
+        self.assert_genre_section_correct(self.fake_data.tag_classics, '21 кніга')
+
+
     def test_order_is_correct(self):
         b1, b2, b3, b4, b5, b6 = self.books
 

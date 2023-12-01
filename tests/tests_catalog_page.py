@@ -87,14 +87,14 @@ class CatalogPageTests(WebdriverTestCase):
                     f'Kobo book {i}',
                     link_types=[self.fake_data.link_type_kobo],
                     date=d,
-                    tags=[self.fake_data.tag_poetry],
+                    tags=[self.fake_data.tag_classics],
                 ))
             books_knizhny_voz.append(
                 self.fake_data.create_book_with_single_narration(
                     f'Knizhny voz book {i}',
                     link_types=[self.fake_data.link_type_knizhny_voz],
                     date=d,
-                    tags=[self.fake_data.tag_poetry],
+                    tags=[self.fake_data.tag_classics],
                 ))
 
         self.driver.get(f'{self.live_server_url}/catalog')
@@ -115,7 +115,7 @@ class CatalogPageTests(WebdriverTestCase):
 
         # Go to genre page and make sure that filter remains.
         self.driver.find_element(By.LINK_TEXT,
-                                 self.fake_data.tag_poetry.name).click()
+                                 self.fake_data.tag_classics.name).click()
         self._assert_page_contains_books(books_kobo[:BOOKS_PER_PAGE])
 
     def test_all_books_with_custom_limit(self):
@@ -139,18 +139,18 @@ class CatalogPageTests(WebdriverTestCase):
                 self.fake_data.create_book_with_single_narration(
                     f'Паэзія {i}',
                     date=d,
-                    tags=[self.fake_data.tag_poetry],
+                    tags=[self.fake_data.tag_classics],
                 ))
             books_fiction.append(
                 self.fake_data.create_book_with_single_narration(
                     f'Мастацкая {i}',
                     date=d,
-                    tags=[self.fake_data.tag_fiction],
+                    tags=[self.fake_data.tag_contemporary],
                 ))
         self.driver.get(f'{self.live_server_url}/catalog')
         self.driver.find_element(By.LINK_TEXT,
-                                 self.fake_data.tag_poetry.name).click()
-        self.assertEqual(self.fake_data.tag_poetry.name, self.driver.title)
+                                 self.fake_data.tag_classics.name).click()
+        self.assertEqual(self.fake_data.tag_classics.name, self.driver.title)
         self._test_pagination(books_poetry)
 
     def test_read_by_author_genre(self):
@@ -174,12 +174,12 @@ class CatalogPageTests(WebdriverTestCase):
     def test_language_filter(self):
         book_belarusian = self.fake_data.create_book_with_single_narration(
             title='Belarusian',
-            tags=[self.fake_data.tag_poetry],
+            tags=[self.fake_data.tag_classics],
             language=models.Language.BELARUSIAN,
         )
         book_russian = self.fake_data.create_book_with_single_narration(
             title='Russian',
-            tags=[self.fake_data.tag_poetry],
+            tags=[self.fake_data.tag_classics],
             language=models.Language.RUSSIAN,
         )
         book_both_languages = self.fake_data.create_book_with_single_narration(
@@ -209,19 +209,19 @@ class CatalogPageTests(WebdriverTestCase):
 
         # Ensure that language filter remains when navigating to other pages.
         self.driver.find_element(By.LINK_TEXT,
-                                 self.fake_data.tag_poetry.name).click()
+                                 self.fake_data.tag_classics.name).click()
         self._assert_page_contains_books([book_russian])
         self._assert_page_does_not_contain_books([book_belarusian])
 
     def test_price_filter(self):
         book_paid = self.fake_data.create_book_with_single_narration(
             title='Paid',
-            tags=[self.fake_data.tag_poetry],
+            tags=[self.fake_data.tag_classics],
             paid=True,
         )
         book_free = self.fake_data.create_book_with_single_narration(
             title='Free',
-            tags=[self.fake_data.tag_poetry],
+            tags=[self.fake_data.tag_classics],
             paid=False,
         )
         book_both = self.fake_data.create_book_with_single_narration(
@@ -249,6 +249,6 @@ class CatalogPageTests(WebdriverTestCase):
 
         # Ensure that price filter remains when navigating to other pages.
         self.driver.find_element(By.LINK_TEXT,
-                                 self.fake_data.tag_poetry.name).click()
+                                 self.fake_data.tag_classics.name).click()
         self._assert_page_contains_books([book_free])
         self._assert_page_does_not_contain_books([book_paid, book_both])

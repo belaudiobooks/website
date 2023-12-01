@@ -5,6 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from books.models import Book, Person
+from books.views.utils import BookForPreview
 
 def about(request: HttpRequest) -> HttpResponse:
     '''About us page containing info about the website and the team.'''
@@ -66,10 +67,12 @@ def birthdays(request: HttpRequest) -> HttpResponse:
 def digest(request: HttpRequest) -> HttpResponse:
     '''Digest page'''
     books = Book.objects.active_books_ordered_by_date()[:100]
-    books_by_month: Dict[int, List[Book]] = {}
+    books_by_month: Dict[int, List[BookForPreview]] = {}
     for book in books:
-        month = book.date.year * 12 + book.date.month
-        books_by_month.setdefault(month, []).append(book)
+        book_preview = BookForPreview.with_latest_narration(book)
+        date = book_preview.narrations[0].date
+        month = date.year * 12 + date.month
+        books_by_month.setdefault(month, []).append(book_preview)
     last_3_months = sorted(books_by_month.items(), reverse=True)[0:3]
     context = {
         'last_3_months': [item[1] for item in last_3_months]

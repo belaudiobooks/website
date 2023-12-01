@@ -47,7 +47,6 @@ class BookAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title', )}
     list_filter = (IncompleteBookListFilter, 'authors', 'title', 'promoted')
     list_display = ('title', 'get_book_authors', 'promoted')
-    list_per_page = 1000
     autocomplete_fields = ['authors']
     search_fields = ['title']
 
@@ -67,7 +66,6 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Link)
 class LinkAdmin(admin.ModelAdmin):
     list_display = ('uuid', 'url_type', 'get_book', 'get_narrators', 'url')
-    list_per_page = 1000
 
     @display(description='book')
     def get_book(self, obj):
@@ -126,7 +124,6 @@ class PersonAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', )}
     list_filter = (IncompletePersonListFilter, )
     ordering = ['slug']
-    list_per_page = 1000
     search_fields = ['name']
 
     class Media:
@@ -216,7 +213,6 @@ class LinkInlineAdmin(admin.StackedInline):
 class PublisherAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', )}
     list_display = ('name', 'slug', 'url')
-    list_per_page = 1000
     search_fields = ['name']
     ordering = ['slug']
 
@@ -224,9 +220,8 @@ class PublisherAdmin(admin.ModelAdmin):
 @admin.register(Narration)
 class NarrationAdmin(admin.ModelAdmin):
     list_filter = (NarratorsCountFilter, IncompleteLinksSetFilter)
-    list_display = ('uuid', 'get_narrators', 'book')
+    list_display = ('book', 'get_narrators')
     inlines = [LinkInlineAdmin]
-    list_per_page = 1000
     autocomplete_fields = ['narrators', 'book', 'publishers', 'translators']
     change_form_template = ['admin/books/change_form_narration.html']
 

@@ -137,6 +137,7 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
 
     context = {
         'books': to_books_preview(paged_books),
+        'paginator': paged_books,
         'related_pages': related_pages,
         'selected_tag': tag,
         'tags': tags,

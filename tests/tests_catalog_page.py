@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+import math
 from typing import List, Set
 from books import models
 from books.views.catalog import BOOKS_PER_PAGE
@@ -23,13 +24,20 @@ class CatalogPageTests(WebdriverTestCase):
             self.assertNotIn(book.title, titles)
 
     def _test_pagination(self, books: List[models.Book]) -> None:
+        total_pages = math.ceil(len(books) / BOOKS_PER_PAGE)
         self._assert_page_contains_books(books[:BOOKS_PER_PAGE])
+        self.assertIn(
+            f'Старонка 1 з {total_pages}',
+            self.driver.find_element(By.CSS_SELECTOR, '.pagination').text)
 
         # Go to next page.
         self.scroll_and_click(
             self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
         self._assert_page_contains_books(books[BOOKS_PER_PAGE:BOOKS_PER_PAGE *
                                                2])
+        self.assertIn(
+            f'Старонка 2 з {total_pages}',
+            self.driver.find_element(By.CSS_SELECTOR, '.pagination').text)
 
         # Go to the last page.
         self.scroll_and_click(
@@ -37,12 +45,18 @@ class CatalogPageTests(WebdriverTestCase):
         last_page_book_start = int(
             len(books) / BOOKS_PER_PAGE * BOOKS_PER_PAGE)
         self._assert_page_contains_books(books[last_page_book_start:])
+        self.assertIn(
+            f'Старонка {total_pages} з {total_pages}',
+            self.driver.find_element(By.CSS_SELECTOR, '.pagination').text)
 
         # Go to the page before last.
         self.scroll_and_click(
             self.driver.find_element(By.CSS_SELECTOR, '.prev-page'))
         self._assert_page_contains_books(books[last_page_book_start -
                                                BOOKS_PER_PAGE:BOOKS_PER_PAGE])
+        self.assertIn(
+            f'Старонка {total_pages - 1} з {total_pages}',
+            self.driver.find_element(By.CSS_SELECTOR, '.pagination').text)
 
         # Go to the first page.
         self.scroll_and_click(

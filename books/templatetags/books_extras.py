@@ -155,7 +155,7 @@ def cite_source(source: str, cls: Optional[str]):
         return ''
     parts = source.split(';')
     return html.format_html(
-        '<p class="mt-3 citation {}">Крыніца: <a href="{}">{}</a></p>', cls,
+        '<p class="mb-3 citation {}">Крыніца: <a href="{}">{}</a></p>', cls,
         parts[1], parts[0])
 
 

@@ -2,7 +2,7 @@
 {% load books_extras %}
 
 {% if narration.cover_image %}
-    <img class="mx-auto d-block cover-{{type}}"
+    <img class="mx-auto mb-3 d-block cover-{{type}}"
          src="{{ narration.cover_image.url | resized_image:type }}"
          alt="{{ narration.book.title }}">
     {% if type == "large" %}
@@ -10,7 +10,7 @@
     {% endif %}
 {% else %}
     <!--Custom cover for book-->
-    <div class="mx-auto cover-{{type}} d-flex justify-content-center text-center flex-column"
+    <div class="mx-auto mb-3 cover-{{type}} d-flex justify-content-center text-center flex-column"
          style="background-repeat: no-repeat;
                 background-image: url({{ narration | colors:ind }});
                 color: black;">

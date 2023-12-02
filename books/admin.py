@@ -41,6 +41,15 @@ class IncompleteBookListFilter(admin.SimpleListFilter):
             return queryset.filter(title_ru__exact='')
         raise ValueError(f'unknown incomplete_reason: {reason}')
 
+class NarrationInlineAdmin(admin.StackedInline):
+    model = Narration
+    fields = ['narrators']
+    readonly_fields = ['narrators']
+    show_change_link = True
+    can_delete = False
+
+    def has_add_permission(self, request, obj=None):
+        return False
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
@@ -48,7 +57,8 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = (IncompleteBookListFilter, 'authors', 'title', 'promoted')
     list_display = ('title', 'get_book_authors', 'promoted')
     autocomplete_fields = ['authors']
-    search_fields = ['title']
+    search_fields = ['title', 'authors__name']
+    inlines = [NarrationInlineAdmin]
 
     class Media:
         js = ('js/admin.js', )
@@ -207,6 +217,7 @@ class IncompleteLinksSetFilter(admin.SimpleListFilter):
 class LinkInlineAdmin(admin.StackedInline):
     model = Link
     can_delete = True
+    classes = ['narration-links']
 
 
 @admin.register(Publisher)
@@ -224,6 +235,7 @@ class NarrationAdmin(admin.ModelAdmin):
     inlines = [LinkInlineAdmin]
     autocomplete_fields = ['narrators', 'book', 'publishers', 'translators']
     change_form_template = ['admin/books/change_form_narration.html']
+    search_fields = ['book__title', 'narrators__name', 'book__authors__name']
 
     @display(description='narrators')
     def get_narrators(self, obj):

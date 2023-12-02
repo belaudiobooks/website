@@ -97,7 +97,7 @@ function addFindAppleBooksLinkButton() {
             field.dispatchEvent(new Event('change', { 'bubbles': true }));
         }
     });
-    document.querySelector('.add-row')?.after(button);
+    document.querySelector('.narration-links .add-row')?.after(button);
 }
 
 /**

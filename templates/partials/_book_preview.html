@@ -27,7 +27,7 @@
         </a>
         <p class="card-text author mb-0">
         {% if book.authors.all|length > 2 %}
-            {% for author in book.authors.all[:2] %}
+            {% for author in book.authors.all|slice:":2" %}
                 <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none fw-bolder">
                     {{ author.name }},
                 </a>

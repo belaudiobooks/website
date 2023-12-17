@@ -26,22 +26,16 @@
             <h6 class="card-title">{{ book.title }}</h6>
         </a>
         <p class="card-text author mb-0">
-        {% if book.authors.all|length > 2 %}
             {% for author in book.authors.all|slice:":2" %}
                 <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none fw-bolder">
                     {{ author.name }}{% if not forloop.last %},{% endif %}
                 </a>
             {% endfor %}
+            {% if book.authors.all|length > 2 %}
                 <a href="{% url 'book-detail-page' book.slug %}" class="text-decoration-none fw-bolder">
                     і інш.
                 </a>
-        {% else %}
-            {% for author in book.authors.all %}
-                <a href="{% url 'person-detail-page' author.slug %}" class="text-decoration-none fw-bolder">
-                    {{ author.name }}{% if not forloop.last %},{% endif %}
-                </a>
-            {% endfor %}
-        {% endif %}
+            {% endif %}
         </p>
         {% if narrations|length > 1 %}
         <span style="font-size: 0.9rem">({{ narrations|length }} агучкі)</span>

@@ -22,5 +22,5 @@ algoliasearch>=2.0,<3.0
 djangorestframework
 webdriver-manager
 django-markdownify
-belorthography
+belorthography>=1.0.0
 django-debug-toolbar

@@ -16,8 +16,8 @@ from books import image_cache
 
 
 def lacinify(text: str) -> str:
-    return belorthography.convert(text, belorthography.Case.CYR_NAR,
-                                  belorthography.Case.LAT_NO_DIACTRIC)
+    return belorthography.convert(text, belorthography.Orthography.OFFICIAL,
+                                  belorthography.Orthography.LATIN_NO_DIACTRIC)
 
 
 def _get_image_name(folder: str, instance: Union['Person', 'Book', 'Publisher',

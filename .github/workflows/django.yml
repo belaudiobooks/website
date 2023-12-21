@@ -36,6 +36,7 @@ jobs:
         echo "ALGOLIA_SEARCH_KEY=${{ secrets.ALGOLIA_SEARCH_KEY }}" >> $GITHUB_ENV
     - name: Create migrations
       run: |
+        mkdir media
         python manage.py makemigrations
     - name: Run Tests
       run: |

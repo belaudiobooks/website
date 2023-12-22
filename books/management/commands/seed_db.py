@@ -251,8 +251,6 @@ class Command(BaseCommand):
                 os.remove(db_path)
         print(f'Creating database {db_path}')
         call_command('makemigrations')
-        call_command('migrate', 'books', 'zero')
-        call_command('migrate', 'user', 'zero')
         call_command('migrate')
         fill_with_data()
         seed_media_dir()

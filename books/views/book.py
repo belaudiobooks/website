@@ -17,8 +17,9 @@ def book_detail(request: HttpRequest, slug: str) -> HttpResponse:
     # language. That determine whether we show language once at the top
     # or separately for each narration.
     single_language = None
-    narrations = book.narrations.annotate(links_count=Count('links')).order_by(
-        'language', '-links_count').all()
+    # Order narrations - first Belarusian then Russian. Within each
+    # language show newer narrations first.
+    narrations = book.narrations.order_by('language', '-date').all()
     if len(narrations) > 0:
         single_language = narrations[0].language
         for narration in narrations:

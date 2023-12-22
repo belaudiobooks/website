@@ -54,19 +54,18 @@ class BookPageTests(WebdriverTestCase):
             self.assertEquals(link.url, elem.get_dom_attribute('href'))
 
     def _create_narration(self, language: models.Language,
-                          number_of_links: int,
-                          narrator: models.Person) -> models.Narration:
+                          narrator: models.Person,
+                          date: date=date.today()) -> models.Narration:
         narration = models.Narration(language=language,
                                      book=self.book,
                                      paid=False,
-                                     date=date.today())
+                                     date=date)
         narration.save()
-        for i in range(number_of_links):
-            narration.links.add(
-                models.Link.objects.create(
-                    url=f'https://example.com/{self.book.slug}_{narrator.slug}',
-                    url_type=self.fake_data.link_type_kobo,
-                ))
+        narration.links.add(
+            models.Link.objects.create(
+                url=f'https://example.com/{self.book.slug}_{narrator.slug}',
+                url_type=self.fake_data.link_type_kobo,
+            ))
         narration.narrators.set([narrator])
         return narration
 
@@ -93,7 +92,6 @@ class BookPageTests(WebdriverTestCase):
         )
         nar2 = self._create_narration(
             language=models.Language.BELARUSIAN,
-            number_of_links=1,
             narrator=nar2_narrator
         )
         nar2.translators.set([nar2_translator])
@@ -175,18 +173,21 @@ class BookPageTests(WebdriverTestCase):
 
     def test_multiple_narrations_ordered_correctly(self):
         # Book has 3 narrations.
-        # Narration 1: RU, 2 links
-        # Narration 2: BY, 0 links
-        # Narration 3: BY, 1 link
+        # Narration 1: RU, Jan 3
+        # Narration 2: BY, Jan 1
+        # Narration 3: BY, Jan 2
         # Expected order is: 3, 2, 1.
         self.book.narrations.all().delete()
         self.book.narrations.set([
-            self._create_narration(models.Language.RUSSIAN, 2,
-                                   self.fake_data.person_ales),
-            self._create_narration(models.Language.BELARUSIAN, 0,
-                                   self.fake_data.person_bela),
-            self._create_narration(models.Language.BELARUSIAN, 1,
-                                   self.fake_data.person_viktar),
+            self._create_narration(models.Language.RUSSIAN,
+                                   self.fake_data.person_ales,
+                                   date=date(2020, 1, 3)),
+            self._create_narration(models.Language.BELARUSIAN,
+                                   self.fake_data.person_bela,
+                                   date=date(2020, 1, 1)),
+            self._create_narration(models.Language.BELARUSIAN,
+                                   self.fake_data.person_viktar,
+                                   date=date(2020, 1, 2)),
         ])
         self.driver.get(self._get_book_url())
         narrators_sections = self.driver.find_elements(

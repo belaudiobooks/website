@@ -9,7 +9,7 @@ from typing import List
 from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.conf import settings
-from books.models import Book, BookStatus, Narration, Person, Publisher, Tag, Link, LinkType, Gender, Language
+from books.models import Book, BookStatus, Narration, Person, Publisher, Tag, Link, LinkType, LinkAvailability, Gender, Language
 from django.contrib.auth import get_user_model
 
 
@@ -25,7 +25,8 @@ def create_book_with_single_narration(
         date=date.today(),
         duration: timedelta = timedelta(hours=1, minutes=15),
         paid: bool = False,
-        livelib_url: str = ''
+        livelib_url: str = '',
+        cover_image: str = '',
 ):
     book = Book.objects.create(
         title=title,
@@ -42,12 +43,15 @@ def create_book_with_single_narration(
         book=book,
         paid=paid,
         date=date,
+        cover_image=cover_image,
     )
     narration.narrators.set(narrators)
     narration.translators.set(translators)
     narration.publishers.set(publishers)
     for link_type in link_types:
-        narration.links.add(create_link(link_type, narration.book))
+        narration.links.add(
+            Link.objects.create(url=f'http://{link_type.name}.com', url_type=link_type)
+        )
     narration.save()
     return book
 
@@ -55,6 +59,35 @@ def fill_with_data():
     tag_proza = Tag.objects.create(name='Сучасная проза', slug='proza')
     tag_classics = Tag.objects.create(name='Класікі беларускай літаратуры', slug='classics')
     tag_children = Tag.objects.create(name='Дзецям і падлеткам', slug='children')
+
+    link_type_kobo = LinkType.objects.create(
+        name='kobo',
+        caption='Kobo',
+        icon='icons/kobo.jpg',
+        weight=10,
+        availability=LinkAvailability.EVERYWHERE,
+    )
+    link_type_knizhny_voz = LinkType.objects.create(
+        name='knizhny_voz',
+        caption='Кніжны Воз',
+        icon='icons/knizhny_voz.png',
+        weight=9,
+        availability=LinkAvailability.EVERYWHERE
+    )
+    link_type_google_play = LinkType.objects.create(
+        name='google_play_books',
+        caption='Google Play Books',
+        icon='icons/google_play_books.png',
+        weight=8,
+        availability=LinkAvailability.UNAVAILABLE_IN_BELARUS,
+    )
+    link_type_spotify_audiobooks = LinkType.objects.create(
+        name='spotify_audiobooks',
+        caption='Spotify Audiobooks',
+        icon='icons/spotify_audiobooks.png',
+        weight=7,
+        availability=LinkAvailability.USA_ONLY,
+    )
 
     publisher_audiobooksby = Publisher.objects.create(
         name='adubiobooks.by',
@@ -93,6 +126,9 @@ def fill_with_data():
             authors=[person_adam],
             narrators=[person_bahdana],
             publishers=[publisher_audiobooksby],
+            link_types=[link_type_kobo],
+            date=date.today()-timedelta(days=i),
+            cover_image=f'covers/proza_{i+1}.png',
         )
         create_book_with_single_narration(
             title=f'Дзіцячая кніга {i + 1}',
@@ -100,13 +136,75 @@ def fill_with_data():
             authors=[person_bahdana],
             narrators=[person_valer],
             publishers=[publisher_knizhny_voz],
+            link_types=[link_type_knizhny_voz],
+            date=date.today()-timedelta(days=i),
+            cover_image=f'covers/kids_{i+1}.png',
         )
         create_book_with_single_narration(
             title=f'Класіка {i + 1}',
             tags=[tag_classics],
             authors=[person_valer],
             narrators=[person_adam],
+            date=date.today()-timedelta(days=i),
+            link_types=[link_type_kobo],
         )
+
+    # create book with as much data as possible
+    megabook = Book.objects.create(
+        title='Мегакніга',
+        title_ru=f'Мегакнига по-русски',
+        description=f'Кніга ў якой сабраны ўсе магчымыя дадзеныя',
+        description_source='Github;https://github.com/belaudiobooks/website',
+        status=BookStatus.ACTIVE,
+        livelib_url='https://www.livelib.ru/book/1000000000',
+        preview_url='https://youtube.com',
+    )
+    megabook.authors.set([person_adam, person_bahdana, person_valer])
+    megabook.tag.set([tag_proza, tag_classics, tag_children])
+    megabook_nar_1 = Narration.objects.create(
+        language=Language.BELARUSIAN,
+        duration=timedelta(hours=1, minutes=15),
+        book=megabook,
+        paid=True,
+        date=date.today()+timedelta(days=1),
+        description='Апісанне першай агучкі',
+        cover_image='covers/megabook_1.png',
+        cover_image_source='ChatGPT;https://chat.openai.com',
+    )
+    megabook_nar_1.narrators.set([person_adam, person_bahdana, person_valer])
+    megabook_nar_1.translators.set([person_adam, person_bahdana, person_valer])
+    megabook_nar_1.links.set([
+        Link.objects.create(url='http://kobo.com', url_type=link_type_kobo),
+        Link.objects.create(url='http://knizhnyvoz.com', url_type=link_type_knizhny_voz),
+        Link.objects.create(url='http://google.com', url_type=link_type_google_play),
+        Link.objects.create(url='http://spotify.com', url_type=link_type_spotify_audiobooks),
+    ])
+    megabook_nar_2 = Narration.objects.create(
+        language=Language.BELARUSIAN,
+        duration=timedelta(hours=2, minutes=15),
+        book=megabook,
+        paid=False,
+        date=date.today(),
+        cover_image='covers/megabook_2.png',
+    )
+    megabook_nar_2.narrators.set([person_adam, person_bahdana, person_valer])
+    megabook_nar_2.translators.set([person_adam])
+    megabook_nar_2.links.set([
+        Link.objects.create(url='http://kobo.com', url_type=link_type_kobo),
+        Link.objects.create(url='http://knizhnyvoz.com', url_type=link_type_knizhny_voz),
+    ])
+    megabook_nar_3 = Narration.objects.create(
+        language=Language.RUSSIAN,
+        duration=timedelta(hours=3, minutes=15),
+        book=megabook,
+        paid=False,
+        date=date.today(),
+    )
+    megabook_nar_3.links.set([
+        Link.objects.create(url='http://google.com', url_type=link_type_google_play),
+        Link.objects.create(url='http://spotify.com', url_type=link_type_spotify_audiobooks),
+    ])
+
 
 def seed_media_dir():
     if os.path.exists(settings.MEDIA_ROOT):

@@ -297,3 +297,17 @@ class BookPageTests(WebdriverTestCase):
         # No citation should be rendered by default, when cover_image_source is not set.
         self.driver.get(self._get_book_url())
         self.assertEquals(0, self.count_elements('[data-test="book-cover"] .citation'))
+
+    def test_slug_generation(self):
+        book1 = models.Book.objects.create(
+            title='Казкі',
+        )
+        self.assertEquals('kazki', book1.slug)
+        book2 = models.Book.objects.create(
+            title='Казкі',
+        )
+        self.assertEquals('kazki-2', book2.slug)
+        book3 = models.Book.objects.create(
+            title='Казкі',
+        )
+        self.assertEquals('kazki-3', book3.slug)

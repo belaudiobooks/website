@@ -145,6 +145,21 @@ class CatalogPageTests(WebdriverTestCase):
             self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
         self.assertEqual(len(self._get_all_books_on_page()), 50)
 
+    def test_limit_of_author_list_on_book_preview(self):
+        self.fake_data.create_book_with_single_narration(f'Кніга A', authors=[
+            self.fake_data.person_ales,
+            self.fake_data.person_bela,
+            self.fake_data.person_viktar,
+            self.fake_data.person_volha
+        ])
+        self.driver.get(f'{self.live_server_url}/catalog')
+        authors_list = set([
+            a.text for a in self.driver.find_elements(
+                By.CSS_SELECTOR, '[class="card-text author mb-0"] a')
+        ])
+        self.assertEqual(len(authors_list), 3)
+        self.assertIn('і інш.', authors_list)
+
     def test_genre_page(self):
         books_poetry = []
         books_fiction = []

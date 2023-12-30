@@ -60,6 +60,12 @@ class FakeData:
             slug='viktar-viktavarich',
             gender=models.Gender.MALE,
         )
+        self.person_volha = models.Person.objects.create(
+            name='Вольга Янаўна',
+            name_ru='Ольга Яновна',
+            slug='volha-yanayna',
+            gender=models.Gender.FEMALE,
+        )
 
         self.publisher_audiobooksby = models.Publisher.objects.create(
             name="audiobooks.by",

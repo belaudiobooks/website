@@ -151,7 +151,7 @@ def cite_source(source: str, cls: Optional[str]):
 
     cls is a class to attach to the rendered <p> element for styling.
     '''
-    if source == '':
+    if source == '' or source.count(';') != 1:
         return ''
     parts = source.split(';')
     return html.format_html(

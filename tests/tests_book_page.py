@@ -286,3 +286,14 @@ class BookPageTests(WebdriverTestCase):
         self.assertEquals(
             'https://www.youtube.com/watch?v=123',
             source_element.find_element(By.CSS_SELECTOR, 'a').get_dom_attribute('href'))
+
+    def test_invalid_cover_source_doesnt_crash_site(self):
+        narration = self.book.narrations.first()
+        narration.cover_image = self.fake_data.create_image()
+        # Source uses semicolon instead of comma.
+        narration.cover_image_source = 'YouTube,https://www.youtube.com/watch?v=123'
+        narration.save()
+
+        # No citation should be rendered by default, when cover_image_source is not set.
+        self.driver.get(self._get_book_url())
+        self.assertEquals(0, self.count_elements('[data-test="book-cover"] .citation'))

@@ -6,8 +6,7 @@ import belorthography
 
 from django.template import defaultfilters
 
-from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils.translation import gettext as _
@@ -67,7 +66,13 @@ class Person(models.Model):
     description_source = models.CharField(_('Person Description Source'),
                                           blank=True,
                                           max_length=500,
-                                          default='')
+                                          default='',
+                                          validators=[
+                                            RegexValidator(
+                                                regex='^[^;]+;[^;]+$',
+                                                message='Source must have format "caption;url"',
+                                            ),
+                                          ])
     photo = models.ImageField(upload_to=functools.partial(
         _get_image_name, 'photos'),
                               blank=True,
@@ -75,7 +80,13 @@ class Person(models.Model):
     photo_source = models.CharField(_('Photo Source'),
                                     blank=True,
                                     max_length=500,
-                                    default='')
+                                    default='',
+                                    validators=[
+                                        RegexValidator(
+                                            regex='^[^;]+;[^;]+$',
+                                            message='Source must have format "caption;url"',
+                                        ),
+                                    ])
     slug = models.SlugField(_('Person slug'),
                             max_length=100,
                             unique=True,
@@ -161,7 +172,13 @@ class Book(models.Model):
     description_source = models.CharField(_('Book Description Source'),
                                           blank=True,
                                           max_length=500,
-                                          default='')
+                                          default='',
+                                          validators=[
+                                            RegexValidator(
+                                                regex='^[^;]+;[^;]+$',
+                                                message='Source must have format "caption;url"',
+                                            ),
+                                          ])
     authors = models.ManyToManyField(Person, related_name='books_authored')
     slug = models.SlugField(_('slug'),
                             max_length=100,
@@ -278,7 +295,13 @@ class Narration(models.Model):
     cover_image_source = models.CharField(_('Cover Source'),
                                           blank=True,
                                           max_length=500,
-                                          default='')
+                                          default='',
+                                          validators=[
+                                            RegexValidator(
+                                                regex='^[^;]+;[^;]+$',
+                                                message='Source must have format "caption;url"',
+                                            ),
+                                          ])
 
     date = models.DateField(_('Release Date'), auto_now_add=False, null=False)
 

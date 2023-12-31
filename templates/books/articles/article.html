@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load books_extras %}
+{% load i18n %}
 
-{% block title %}{{ article.title }}{% endblock title %}
+{% block title %}{% dtranslate article.title %}{% endblock title %}
 {% block og_title %}{{ article.title }}{% endblock og_title %}
 
 {% block description %}{{ article.short_description }}{% endblock description %}
@@ -14,7 +15,7 @@
 
             <button class="btn hidden visible-xs d-block d-md-none btn-genre" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseGenre" aria-expanded="false" aria-controls="collapseGenre">
-                Артыкулы <i class="bi bi-chevron-down"></i><i class="bi bi-chevron-up"></i>
+                {% translate "Артыкулы" %} <i class="bi bi-chevron-down"></i><i class="bi bi-chevron-up"></i>
             </button>
 
 
@@ -24,7 +25,7 @@
                     <li>
                         <a class="text-decoration-none text-start tag {% if article_in_list.title == article.title %}tag-selected{% endif %}"
                             href="{% url 'single-article' article_in_list.slug %}">
-                            {{ article_in_list.title }}
+                            {% dtranslate article_in_list.title %}
                         </a>
                     </li>
                     {% endfor %}
@@ -33,7 +34,7 @@
         </div>
 
         <article class="col-12 col-md-9 mt-1 mt-md-5" id="content">
-            <h1>{{ article.title }}</h1>
+            <h1>{% dtranslate article.title %}</h1>
 
             {% block article_content %}{% endblock article_content %}
         </article>

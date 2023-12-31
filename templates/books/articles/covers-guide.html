@@ -1,33 +1,36 @@
 {% extends 'books/articles/article.html' %}
 {% load static %}
 {% block article_content %}
+{% load i18n %}
 
 <ul>
-    <li><a href="#square-format">Квадратны фармат</a>
-    <li><a href="#min-size">Памер мінімум 1400х1400 пікселяў</a>
-    <li><a href="#title-and-author">Назва твора і аўтар</a>
-    <li><a href="#narrator-and-translator">Выканаўца і перакладчык</a>
+    <li><a href="#square-format">{% translate "Квадратны фармат" %}</a>
+    <li><a href="#min-size">{% translate "Памер мінімум 1400х1400 пікселяў" %}</a>
+    <li><a href="#title-and-author">{% translate "Назва твора і аўтар" %}</a>
+    <li><a href="#narrator-and-translator">{% translate "Выканаўца і перакладчык" %}</a>
 </ul>
 
-<p>
+<p>{% blocktranslate %}
     Аўдыякнігі адрозніваюцца ад папяровых кніг: яны спажываюцца праз электронныя прылады, па большасці з тэлефонаў —
     карыстальнікі ўзаемадзейнічаюць з кнігамі выключна праз сайты альбо мабільныя праграмы. Таму і патрабаванні для
     вокладак аўдыякніг адрозніваюцца ад правіл афармлення вокладак папяровых кніг. Мы падрыхтавалі гэтыя правілы
     перадусім дзеля ўласнага карыстання, але будзем радыя, калі яны будуць карысныя іншым праектам.
-</p>
+{% endblocktranslate %}</p>
 
 <section id="square-format">
-    <h2>Квадратны фармат</h2>
+    <h2>{% translate "Квадратны фармат" %}</h2>
 
-    <p>Квадратныя вокладкі — стандарт аўдыякніжнай індустрыі. Усе буйныя сайты і мабільныя праграмы выкарыстоўваюць
+    <p>{% blocktranslate %}
+        Квадратныя вокладкі — стандарт аўдыякніжнай індустрыі. Усе буйныя сайты і мабільныя праграмы выкарыстоўваюць
         менавіта такі фармат.
-    </p>
+    {% endblocktranslate %}</p>
 </section>
 
 <section id="min-size">
-    <h2>Памер мінімум 1400х1400 пікселяў</h2>
+    <h2>{% translate "Памер мінімум 1400х1400 пікселяў" %}</h2>
 
-    <p>Вокладка павінна быць у высокай якасці. Многія платформы патрабуюць вокладку ў памеры 2400х2400 пікселяў —
+    <p>{% blocktranslate %}
+        Вокладка павінна быць у высокай якасці. Многія платформы патрабуюць вокладку ў памеры 2400х2400 пікселяў —
         напрыклад, <a href="https://my.findawayvoices.com/docs/Technical_Requirements_for_Assets.pdf">FindawayVoices</a>
         ці <a
             href="https://help.acx.com/s/article/what-are-the-specifications-for-creating-the-cover-art-associated-to-my-audiobook">Audible</a>.
@@ -35,45 +38,47 @@
         вокладкі 1400х1400. У выпадку, калі аўдыякніга выкладаецца на Apple падкасты, <a
             href="https://podcasters.apple.com/support/896-artwork-requirements">Apple патрабуе</a> памер мінімум
         1400х1400 пікселяў.
-    </p>
+    {% endblocktranslate %}</p>
 </section>
 
 <section id="title-and-author">
-    <h2>Назва твора і аўтар</h2>
+    <h2>{% translate "Назва твора і аўтар" %}</h2>
 
-    <p>На вокладцы павінны быць назва твора і аўтар. Яны мусяць добра чытацца, нават калі вокладка будзе паказана ў
+    <p>{% blocktranslate %}
+        На вокладцы павінны быць назва твора і аўтар. Яны мусяць добра чытацца, нават калі вокладка будзе паказана ў
         памеры 150х150 пікселей: у каталогах аўдыякніг вокладкі паказаны ў даволі маленькім памеры — таму калі тэкст на
         вокладцы невялікі, яго немагчыма будзе прачытаць у каталозе.
-    </p>
-    <strong>Прыклады</strong>
+    {% endblocktranslate %}</p>
+    <strong>{% translate "Прыклады" %}</strong>
 
-    <p class="mb-2 mt-3">Вокладкі з дробным тэкстам, які складана прачытаць:</p>
+    <p class="mb-2 mt-3">{% translate "Вокладкі з дробным тэкстам, які складана прачытаць:" %}</p>
     <img class="card-img-150 me-4 mb-4" src="{% get_media_prefix %}covers/padarozhzhy-beniamina-iii.png">
     <img class="card-img-150 me-4 mb-4" src="{% get_media_prefix %}covers/liubits-noch-prava-patsukou.jpg">
     <img class="card-img-150 me-4 mb-4" src="{% get_media_prefix %}covers/byu-u-pana-verabeika-gavarushchy.jpg">
 
-    <p class="mb-2">Вокладкі з вялікім, чытабельным тэкстам:</p>
+    <p class="mb-2">{% translate "Вокладкі з вялікім, чытабельным тэкстам:" %}</p>
     <img class="card-img-150 me-4 mb-4" src="{% get_media_prefix %}covers/noch-tsmoka.jpg">
     <img class="card-img-150 me-4 mb-4" src="{% get_media_prefix %}covers/pratses.png">
     <img class="card-img-150 me-4 mb-4" src="{% get_media_prefix %}covers/shliakh-drobnai-svolachy.jpg">
 </section>
 
 <section id="narrator-and-translator">
-    <h2>Выканаўца і перакладчык</h2>
+    <h2>{% translate "Выканаўца і перакладчык" %}</h2>
 
-    <p>Голас — важная частка кожнай аўдыякнігі. Менавіта голас выканаўцы часта становіцца прычынай, па якой слухачу
+    <p>{% blocktranslate %}
+        Голас — важная частка кожнай аўдыякнігі. Менавіта голас выканаўцы часта становіцца прычынай, па якой слухачу
         падабаецца (ці не падабаецца) кніга. Таму пажадана, каб вокладка змяшчала імя выканаўцы. Асабліва гэта актуальна
         для беларускай прасторы, дзе пакуль ня так шмат актораў агучкі: аматары аўдыякніг могуць лёгка пазнаваць знаёмыя
         галасы і нават абіраць аўдыякнігі, аддаючы перавагу таму ці іншаму выканаўцу.
-    </p>
-    <p>
+    {% endblocktranslate %}</p>
+    <p>{% blocktranslate %}
         Калі кніга з’яўляецца перакладам — пажадана дадаць імя перакладчыка на вокладку. Праца перакладчыка — складаны
         творчы працэс, у кнізе мы чуем менавіта адаптацыю перакладчыка, а не арыгінальныя слова аўтара. Варта паважаць
         працу перакладчыка. У апошнія гады ідзе рух у гэты бок: напрыклад, можна пачытаць артыкул <a
             href="https://pechorin.net/articles/view/pochiemu-imia-pierievodchika-dolzhno-byt-ukazano-na-oblozhkie-knighi">“Почему
             имя
             переводчика должно быть указано на обложке книги”</a> от The Guardian.
-    </p>
+    {% endblocktranslate %}</p>
 </section>
 
 {% endblock article_content %}

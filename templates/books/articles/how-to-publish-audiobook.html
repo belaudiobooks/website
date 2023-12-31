@@ -1,6 +1,8 @@
 {% extends 'books/articles/article.html' %}
 {% block article_content %}
+{% load i18n %}
 
+{% blocktranslate %}
 <p>Гэты гайд распавядае пра тое, як лепей распаўсюдзіць аўдыякнігу на беларускай мове.</p>
 
 <p>Калі ў вас ужо ёсць запісаная кніга, мажліва, вы думаеце, у якім фармаце яе лепей прапанаваць шырокай публіцы?
@@ -227,4 +229,5 @@
         contact@audiobooks.by.
     </p>
 </section>
+{% endblocktranslate %}
 {% endblock article_content %}

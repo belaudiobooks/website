@@ -1,31 +1,32 @@
 {% extends 'books/articles/article.html' %}
 {% block article_content %}
+{% load i18n %}
 
 <ul>
-  <li><a href="#why-data-json">Навошта data.json?</a>
-  <li><a href="#schema">Схема data.json</a>
-  <li><a href="#conditions">Умовы карыстання</a>
+  <li><a href="#why-data-json">{% translate "Навошта data.json?" %}</a>
+  <li><a href="#schema">{% translate "Схема data.json" %}</a>
+  <li><a href="#conditions">{% translate "Умовы карыстання" %}</a>
 </ul>
 
-<p>
+<p>{% blocktranslate %}
   audiobooks.by - самы поўны каталог беларускіх аўдыякніг. У дадатак да зручнага вэб-інтэрфейса наш каталог кніг можна
   атрымаць у структураваным <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON"
     target="_blank">JSON</a> фармаце па спасылцы:
-</p>
+{% endblocktranslate %}</p>
 
 <a href="https://audiobooks.by/data.json" target="_blank">https://audiobooks.by/data.json</a>
 
 <section id="why-data-json">
-  <h2>Навошта data.json?</h2>
+  <h2>{% translate "Навошта data.json?" %}</h2>
 
-  <p>
+  <p>{% blocktranslate %}
     data.json будзе карысны, калі вы хочаце стварыць свой уласны сайт ці праграму, альбо інтэграваць аўдыякнігі ва
     ўжо існуючы сайт. Замест таго, каб парсіць старонкі audiobooks.by, мы прадстаўляем адмысловы файл.
-  </p>
-  <p>
+  {% endblocktranslate %}</p>
+  <p>{% blocktranslate %}
     Таксама файл можа быць выкарыстаны, каб зрабіць аналіз беларускіх аўдыякніг. Напрыклад, знайсці аўдыякнігу з
     найбольшай колькасцю агучак:
-  </p>
+  {% endblocktranslate %}</p>
   <pre>
 // run from devtools on data.json page
 const data = JSON.parse(document.body.innerText);
@@ -36,12 +37,12 @@ data.books.reduce((a, b) => a.narrations.length > b.narrations.length ? a : b);
 
 
 <section id="schema">
-  <h2>Схема data.json</h2>
+  <h2>{% translate "Схема data.json" %}</h2>
 
-  <p>
+  <p>{% blocktranslate %}
     Ніжэй мы апісваем схему файла з дапамогай TypeScript сінтаксіса. Але майце на ўвазе, што бягучая схема можа не
     супадаць з тым, што ніжэй. Таму самы надзейны спосаб — гэта адкрыць data.json і паглядзець.
-  </p>
+  {% endblocktranslate %}</p>
 
 
   <pre>
@@ -121,18 +122,18 @@ interface Publisher {
 </section>
 
 <section id="conditions">
-  <h2>Умовы выкарыстання</h2>
+  <h2>{% translate "Умовы выкарыстання" %}</h2>
 
-  <p>
+  <p>{% blocktranslate %}
     Пры выкарыстанні data.json спасылацца на audiobooks.by не абавязкова, але пажадана. Нам будзе прыемна ведаць,
     што плён нашай працы карысны іншым.
-  </p>
-  <p>
+  {% endblocktranslate %}</p>
+  <p>{% blocktranslate %}
     data.json аднаўляецца штогадзінна.
-  </p>
-  <p>
+  {% endblocktranslate %}</p>
+  <p>{% blocktranslate %}
     Калі ёсць пытанні — пішыце на contact@audiobooks.by.
-  </p>
+  {% endblocktranslate %}</p>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.11/codemirror.min.js"
   integrity="sha512-rdFIN28+neM8H8zNsjRClhJb1fIYby2YCNmoqwnqBDEvZgpcp7MJiX8Wd+Oi6KcJOMOuvGztjrsI59rly9BsVQ=="

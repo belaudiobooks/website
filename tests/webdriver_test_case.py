@@ -39,6 +39,7 @@ class WebdriverTestCase(StaticLiveServerTestCase):
     def setUp(self):
         super().setUp()
         self.fake_data = fake_data.FakeData()
+        self.driver.delete_all_cookies()
 
     def tearDown(self):
         super().tearDown()

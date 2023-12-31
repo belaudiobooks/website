@@ -214,7 +214,7 @@ class Book(models.Model):
         # from title.
         if self.slug != defaultfilters.slugify(self.slug) or self.slug == '':
             self.slug = defaultfilters.slugify(lacinify(self.title))
-        if Book.objects.filter(slug=self.slug).count() > 0:
+        if Book.objects.filter(slug=self.slug).exclude(uuid=self.uuid).count() > 0:
             for i in range(2, 100):
                 new_slug = f'{self.slug}-{i}'
                 if Book.objects.filter(slug=new_slug).count(

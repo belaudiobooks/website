@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load books_extras %}
+{% load i18n %}
 
 {% block content %}
 
@@ -21,7 +22,7 @@
 
 <div class="container" id="books" data-test="latest-books">
     <div class="row">
-        <h4 class="col-12 mb-4">Навінкі</h4>
+        <h4 class="col-12 mb-4">{% translate 'Навінкі' %}</h4>
     </div>
     <div class="row">
         {% for book in recently_added_books %}
@@ -38,11 +39,11 @@
 <div class="container" id="books" data-test="tag-{{tag.slug}}">
     <div class="row">
         <div class="col-7 col-sm-10 mb-4">
-            <h4>{{tag_name}}</h4>
+            <h4>{% dtranslate tag_name %}</h4>
         </div>
         <div class="col-5 col-sm-2 text-end ">
             <a class="text-decoration-none tag-selected" href="{% url 'catalog-for-tag' tag_slug %}">
-                {{tag.total_books|by_plural:"кніга,кнігі,кніг"}}
+                {% dtranslate tag.total_books|by_plural:"кніга,кнігі,кніг" %}
                 <i class="bi bi-chevron-right"></i>
             </a>
         </div>

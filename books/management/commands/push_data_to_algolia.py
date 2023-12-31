@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from algoliasearch.search_client import SearchClient
 from books import models
+import belorthography
 
 
 def _person_has_active_books(person: models.Person) -> bool:
@@ -23,6 +24,12 @@ def _publisher_has_active_books(publisher: models.Publisher) -> bool:
                           books)
     return any(active_books)
 
+def _lacinify(text: str) -> str:
+    return belorthography.convert(
+        text,
+        belorthography.Orthography.OFFICIAL,
+        belorthography.Orthography.LATIN
+    )
 
 class Command(BaseCommand):
     '''See help.'''
@@ -49,14 +56,17 @@ class Command(BaseCommand):
         for book in books:
             authors = [author.name for author in book.authors.all()]
             authors_ru = [author.name_ru for author in book.authors.all()]
+            authors_lac = [_lacinify(author.name) for author in book.authors.all()]
             data.append({
                 'objectID': book.uuid,
                 'model': 'book',
                 'title': book.title,
                 'title_ru': book.title_ru,
+                'title_lac': _lacinify(book.title),
                 'slug': book.slug,
                 'authors': authors,
                 'authors_ru': authors_ru,
+                'authors_lac': authors_lac,
             })
         people = models.Person.objects.all().prefetch_related(
             'books_authored', 'narrations_translated', 'narrations')
@@ -69,6 +79,7 @@ class Command(BaseCommand):
                 'model': 'person',
                 'name': person.name,
                 'name_ru': person.name_ru,
+                'name_lac': _lacinify(person.name),
                 'slug': person.slug,
             })
         publishers = models.Publisher.objects.all()
@@ -79,6 +90,7 @@ class Command(BaseCommand):
                 'objectID': publisher.uuid,
                 'model': 'publisher',
                 'name': publisher.name,
+                'name_lac': _lacinify(publisher.name),
                 'slug': publisher.slug,
             })
         print(

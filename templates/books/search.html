@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Вынікі пошука{% endblock title %}
+{% block title %}{% translate "Вынікі пошука" %}{% endblock title %}
 {% block og_title %}Вынікі пошука{% endblock og_title %}
 
 {% block content %}
 
     <div class="container" id='books'>
-        <h2 id="searched-query">Вынікі пошука '{{ query }}'</h2>
+        <h2 id="searched-query">{% translate "Вынікі пошука" %} '{{ query }}'</h2>
         <ul>
             {% for item in results %}
                 {% if item.type == 'person' %}

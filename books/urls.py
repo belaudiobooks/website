@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from books.views import stats, catalog, book, person, support, articles, publisher
 
 urlpatterns = [
@@ -28,5 +28,6 @@ urlpatterns = [
     path('job/update_read_by_author_tag', support.update_read_by_author_tag),
     path('job/sync_image_cache', support.sync_image_cache),
     path('api/markdown_preview', support.markdown_to_html),
-    path('api/livelib_books', support.get_livelib_books)
+    path('api/livelib_books', support.get_livelib_books),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]

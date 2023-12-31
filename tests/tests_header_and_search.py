@@ -1,8 +1,6 @@
 from datetime import date, timedelta
-import time
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 
 
@@ -48,15 +46,6 @@ class HeaderAndSearchTests(WebdriverTestCase):
         self.assertEqual(f'{self.live_server_url}/about',
                          self.driver.current_url)
 
-    def _wait_for_suggestion(self, text: str, link: str) -> None:
-        autocomplete = self.driver.find_element(By.CSS_SELECTOR,
-                                                '#autocomplete')
-        time.sleep(1)
-        element = WebDriverWait(self.driver, 10).until(
-            lambda wd: autocomplete.find_element(by=By.LINK_TEXT, value=text),
-            f'Did not see suggestion with text "{text}"')
-        self.assertEqual(link, element.get_dom_attribute('href'))
-
     def _init_algolia(self) -> None:
         self.driver.get(f'{self.live_server_url}/job/push_data_to_algolia')
 
@@ -67,8 +56,8 @@ class HeaderAndSearchTests(WebdriverTestCase):
         for query in ['каханне', 'КАХАННЕ', 'ЛюБвИ']:
             search.clear()
             search.send_keys(query)
-            self._wait_for_suggestion(f'Кніга пра каханнеА. Алесявіч',
-                                      '/books/kniga-pra-kakhanne')
+            self.wait_for_search_suggestion('Кніга пра каханнеА. Алесявіч',
+                                            '/books/kniga-pra-kakhanne')
 
     def test_client_side_search_author(self):
         self._init_algolia()
@@ -77,8 +66,8 @@ class HeaderAndSearchTests(WebdriverTestCase):
         for query in ['алесь', 'АЛЕСЬ', 'Александр']:
             search.clear()
             search.send_keys(query)
-            self._wait_for_suggestion('Алесь Алесявіч',
-                                      '/person/ales-alesievich')
+            self.wait_for_search_suggestion('Алесь Алесявіч',
+                                            '/person/ales-alesievich')
 
     def test_client_side_search_publisher(self):
         self._init_algolia()
@@ -87,7 +76,7 @@ class HeaderAndSearchTests(WebdriverTestCase):
         for query in ['audiob', 'audiobooks.by', 'AUDIOBO']:
             search.clear()
             search.send_keys(query)
-            self._wait_for_suggestion(
+            self.wait_for_search_suggestion(
                 'audiobooks.by',
                 f'/publisher/{self.fake_data.publisher_audiobooksby.slug}')
 

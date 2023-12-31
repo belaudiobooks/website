@@ -2,8 +2,9 @@
 {% load static %}
 {% load books_extras %}
 {% load markdownify %}
+{% load i18n %}
 
-{% block title %}{{ book.title | title}} аўдыякніга{% endblock title %}
+{% block title %}{% dtranslate book.title|title %} {% translate "аўдыякніга" %}{% endblock title %}
 {% block og_title %}{{ book.title | title}}{% endblock og_title %}
 {% block og_image %}{% spaceless %}
     {% if book.narrations.all|length == 1 and book.narrations.first.cover_image %}
@@ -32,7 +33,7 @@
         <div class="col-12 col-md-6 col-lg-8" data-test="book-section">
 
             <!--Book Title-->
-            <h1 class="h2">{{ book.title }}</h1>
+            <h1 class="h2">{% dtranslate book.title %}</h1>
             {% if show_russian_title %}
                 <div class="mb-2">{{ book.title_ru }}</div>
             {% endif %}
@@ -40,7 +41,7 @@
             <!--Book Duration-->
             {% if single_narration %}
                 {% if narrations.first.duration %}
-                    <p class="text-secondary">{{ narrations.first | duration }}</p>
+                    <p class="text-secondary">{% dtranslate narrations.first|duration %}</p>
                 {% endif %}
             {% endif %}
 
@@ -63,32 +64,34 @@
             <!--Publisher-->
             {% if single_narration and narrations.first.publishers.all.exists %}
             <div>
-                Выдавецтва: {% include 'partials/_publisher.html' with publishers=narrations.first.publishers.all %}
+                {% translate "Выдавецтва" %}: {% include 'partials/_publisher.html' with publishers=narrations.first.publishers.all %}
             </div>
             {% endif %}
 
             {% if single_language is not None %}
             <div>
-                Мова: {{ single_language | to_human_language }}
+                {% translate "Мова" %}: {% dtranslate single_language|to_human_language %}
             </div>
             {% endif %}
 
             <!--Book description-->
             <div class="my-4" data-test="book-description">
-                {{ book.description | markdownify:"book_description" | linebreaks }}
+                {% dtranslate book.description as book_description %}
+                {{ book_description | markdownify:"book_description" | linebreaks }}
                 {% if single_narration %}
-                    {{ narrations.first.description | markdownify:"book_description" | linebreaks }}
+                    {% dtranslate narrations.first.description as narrations_description %}
+                    {{ narrations_description | markdownify:"book_description" | linebreaks }}
                 {% endif %}
                 {% cite_source book.description_source "cit-description" %}
             </div>
 
             {% if book.preview_url %}
-                Першую частку можна паслухаць бясплатна на <a href="{{ book.preview_url }}" target="_blank">YouTube</a>.
+                {% translate "Першую частку можна паслухаць бясплатна на" %} <a href="{{ book.preview_url }}" target="_blank">YouTube</a>.
             {% endif %}
 
             {% if book.livelib_url %}
             <div class="mb-4">
-                Водгукі на <a href="{{ book.livelib_url }}" target="_blank">LiveLib</a>
+                {% translate "Водгукі на" %} <a href="{{ book.livelib_url }}" target="_blank">LiveLib</a>
             </div>
             {% endif %}
         </div>
@@ -107,7 +110,7 @@
         <div class="col-12 col-md-6 col-lg-8" data-test="narration-section" data-narration-id="{{narration.uuid}}">
             <div class="col-12 links-header">
                 {% if not single_narration %}
-                    <h3>Агучка {{ forloop.counter }}</h3>
+                    <h3>{% translate "Агучка" %} {{ forloop.counter }}</h3>
                     <div data-test="translators">
                         {% include 'partials/_person.html' with persons=narration.translators.all multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
                     </div>
@@ -116,31 +119,32 @@
                         {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
                         <!--check if no name-->
                         {% if not narration.narrators.all.exists %}
-                            Агучка: удакладняецца...
+                            {% translate "Агучка: удакладняецца..." %}
                         {% endif %}
                     </div>
                     {% if narration.publishers.all.exists %}
                         <div>
-                            Выдавецтва: {% include 'partials/_publisher.html' with publishers=narration.publishers.all %}
+                            {% translate "Выдавецтва:" %} {% include 'partials/_publisher.html' with publishers=narration.publishers.all %}
                         </div>
                     {% endif %}
                     {% if narration.duration %}
-                        <div>{{ narration | duration }}</div>
+                        <div>{% dtranslate  narration|duration %}</div>
                     {% endif %}
                 {% endif %}
                 {% if single_language is  None %}
-                    <div>Мова: {{ narration.language | to_human_language }}</div>
+                    <div>{% translate "Мова:" %} {% dtranslate narration.language|to_human_language %}</div>
                 {% endif %}
                 {% if not single_narration %}
                     <div class="my-4" data-test="narration-description">
-                        {{ narration.description | markdownify:"book_description" | linebreaks }}
+                        {% dtranslate narration.description as narration_description %}
+                        {{ narration_description | markdownify:"book_description" | linebreaks }}
                     </div>
                 {% endif %}
                 <strong>
                 {% if narration.paid %}
-                    Дзе купіць
+                    {% translate "Дзе купіць" %}
                 {% else %}
-                    Дзе паслухаць бясплатна
+                    {% translate "Дзе паслухаць бясплатна" %}
                 {% endif %}
                 </strong>
             </div>
@@ -151,8 +155,8 @@
                         <a href="{{ link.url }}" class="text-decoration-none d-flex align-items-center" target="_blank">
                             <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">
                             <div class="d-inline-block flex-grow-1">
-                                <span>{{ link.url_type.caption }}</span>
-                                <span class="link-type-availability">{{ link.url_type.availability | link_type_availibility }}</span>
+                                <span>{% dtranslate link.url_type.caption %}</span>
+                                <span class="link-type-availability">{% dtranslate link.url_type.availability|link_type_availibility %}</span>
                             </div>
                         </a>
                     </div>
@@ -170,7 +174,7 @@
                     {% if not tag.hidden %}
                     <div class="col-auto p-1">
                         <a href="{% url 'catalog-for-tag' tag.slug %}" class="btn btn-tag p-2">
-                            {{tag}}
+                            {% dtranslate tag.name %}
                         </a>
                     </div>
                     {% endif %}

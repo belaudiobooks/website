@@ -24,3 +24,4 @@ webdriver-manager>=4.0.1
 django-markdownify
 belorthography>=1.0.0
 django-debug-toolbar
+polib

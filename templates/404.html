@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}
-Старонка не знойдзена
+{% translate "Старонка не знойдзена" %}
 {% endblock title %}
 
 {% block content %}
 <div class="container d-flex justify-content-center flex-column align-items-center mt-5">
     <h2>404</h2>
-    <h2>Cтаронка не знойдзена.</h2>
-    <p>Вы шукалі {{ request_path }}, але такой старонкі не існуе.</p>
-    <p>Таксама магчыма, што ў нас сайт не працуе правільна.</p>
-    <p>Напішыце нам на contact@audiobooks.by, калі ласка.</p>
+    <h2>{% translate "Cтаронка не знойдзена." %}</h2>
+    <p>{% translate "Вы шукалі" %} {{ request_path }}, {% translate "але такой старонкі не існуе." %}</p>
+    <p>{% translate "Таксама магчыма, што ў нас сайт не працуе правільна." %}</p>
+    <p>{% translate "Напішыце нам на contact@audiobooks.by, калі ласка." %}</p>
 </div>
 {% endblock content %}

@@ -104,6 +104,36 @@ The major issue is to setup DB as you have to use Cloud SQL Auth proxy in order 
 
 4. Verify that new version is working correctly and migrate traffic to the new version using https://console.cloud.google.com/appengine/versions
 
+## Lacinization
+
+We support two languages - cyrillic Belarusian and Lacinka. Lacinization is done programmatically. We use `belorthography` library for automatic lacinization. Interface language is implemented using standard Django internalization tools: https://docs.djangoproject.com/en/5.0/topics/i18n/translation/.
+
+In development use the following patterns:
+
+### Static text in templates
+
+If text is static (hardcoded) use Django `translate` and `blocktranslate` tags:
+
+```html
+<div>{% translate "Тут тэкст" %}</div>
+```
+
+### Dynamic text in templates
+
+If text is dynamic (comes from database) like book description or author name use our custom `dtranslate` tag. It will run lacinizator during page rendering:
+
+```html
+<div>{% dtranslate person.name %}</div>
+```
+
+### Renegenerating translations
+
+When updating or adding new static strings (used with `translate` and `blocktranslate`) tags you need to regenerate translations. Translations are stored in `locale/be_Latn/LC_MESSAGES/django.po` file. To do it run:
+
+```bash
+python manage.py update_translations
+```
+
 ## Image resizing
 
 Book, photos and other images uploaded in size 500x500px. This is too big for catalog view where we show 150x150px covers. In order to reduce bandwidth images are automatically scaled down upon upload. Scaled down versions are used on pages like catalog. Here is the process:

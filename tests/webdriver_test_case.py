@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.ui import WebDriverWait
 
 from books import models
 from tests import fake_data
@@ -85,3 +86,13 @@ class WebdriverTestCase(StaticLiveServerTestCase):
         res = len((el or self.driver).find_elements(By.CSS_SELECTOR, selector))
         self.driver.implicitly_wait(10)
         return res
+
+    def wait_for_search_suggestion(self, text: str, link: str):
+        '''Helper function to check whether a suggesion is shown when user types in search.'''
+        autocomplete = self.driver.find_element(By.CSS_SELECTOR,
+                                                '#autocomplete')
+        time.sleep(1)
+        element = WebDriverWait(self.driver, 10).until(
+            lambda wd: autocomplete.find_element(by=By.LINK_TEXT, value=text),
+            f'Did not see suggestion with text "{text}". All suggestions: {autocomplete.text}')
+        self.assertEqual(link, element.get_dom_attribute('href'))

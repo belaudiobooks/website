@@ -2,8 +2,9 @@
 {% load static %}
 {% load books_extras %}
 {% load markdownify %}
+{% load i18n %}
 
-{% block title %}{{ publisher.name }}, аўдыякнігі{% endblock title %}
+{% block title %}{% dtranslate publisher.name %}, {% translate "аўдыякнігі" %}{% endblock title %}
 {% block og_title %}{{ publisher.name }}{% endblock og_title %}
 {% block og_image %}{% spaceless %}
 {% if publisher.logo %}
@@ -27,22 +28,23 @@
             <img class="img-fluid mx-auto mb-3 photo d-block" src="{{ publisher.logo.url }}" alt="{{ publisher.name }}">
             {% endif %}
             <h1 class="h3 text-center">
-                {{ publisher.name }}
+                {% dtranslate publisher.name %}
             </h1>
             {% if publisher.url %}
             <a href="{{ publisher.url }}" class="text-decoration-none text-center w-100 d-inline-block">
-                {{ publisher.url }}
+                {% dtranslate publisher.url %}
             </a>
             {% endif %}
             <p>
-                {{ publisher.description | markdownify:"book_description" | linebreaks }}
+                {% dtranslate publisher.description as description %}
+                {{ description | markdownify:"book_description" | linebreaks }}
             </p>
         </div>
         <!--Books section-->
         <div class="col-12 col-md-9 mt-1 mt-sm-5" id="books">
             {% if books %}
             <div class="mt-3">
-                <h4>Аўдыякнігі выдавецтва</h4>
+                <h4>{% translate "Аўдыякнігі выдавецтва" %}</h4>
                 {% include 'partials/_books_list.html' with books=books %}
             </div>
             {% endif %}

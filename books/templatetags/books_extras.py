@@ -6,7 +6,9 @@ from zoneinfo import ZoneInfo
 from django import template
 from datetime import datetime
 from django.utils import html
-from django.db.models import ImageField
+from django.utils.translation import get_language
+from django.utils.translation import gettext as _
+import belorthography
 
 from books import models, image_cache
 
@@ -154,9 +156,13 @@ def cite_source(source: str, cls: Optional[str]):
     if source == '' or source.count(';') != 1:
         return ''
     parts = source.split(';')
+    source = _('Крыніца')
     return html.format_html(
-        '<p class="mb-3 citation {}">Крыніца: <a href="{}">{}</a></p>', cls,
-        parts[1], parts[0])
+        '<p class="mb-3 citation {}">{}: <a href="{}">{}</a></p>', 
+        cls,
+        source,
+        parts[1],
+        parts[0])
 
 
 @register.filter
@@ -201,3 +207,16 @@ def overlapping_cover_scale(book: models.Book) -> float:
     Thus we need to scale them down.
     '''
     return 1 - (book.narrations.count() - 1) * OVERLAP_COVER_OFFSET / 150
+
+
+
+@register.simple_tag
+def dtranslate(text: str):
+    if get_language() == 'be-latn':
+        return belorthography.convert(
+            text,
+            belorthography.Orthography.OFFICIAL,
+            belorthography.Orthography.LATIN
+        )
+    else:
+        return text

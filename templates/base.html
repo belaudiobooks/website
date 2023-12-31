@@ -1,13 +1,15 @@
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
-<html lang="be">
+{% get_current_language as LANGUAGE %}
+<html lang="{{LANGUAGE}}">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Беларускія аўдыякнігі{% endblock %}</title>
+    <title>{% block title %}{% translate "Беларускія аўдыякнігі" %}{% endblock %}</title>
     <meta name="description"
         content="{% block description %}Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў.{% endblock %}">
     <meta property="og:title" content="{% block og_title %}Беларускія аўдыякнігі{% endblock %}" />

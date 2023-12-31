@@ -1,22 +1,23 @@
 {% load static %}
+{% load i18n %}
 
 <!-- Footer -->
 <footer id="footer" class="py-4 text-white text-start">
     <div class="container">
         <div class="row">
-            <div class="order-0 col-12 order-sm-0 col-sm-6 py-2">
-                Дасылайце вашыя пытанні і прапановы на пошту contact@audiobooks.by
+            <div class="order-0 col-12 order-md-0 col-md-5 py-2">
+                {% translate "Дасылайце вашыя пытанні і прапановы на пошту contact@audiobooks.by" %}
             </div>
-            <div class="order-2 col-12 order-sm-1 col-sm-6 py-2">
-                Сачыце за апошнімі навінамі:
+            <div class="order-2 col-12 order-md-1 col-md-4 py-2">
+                {% translate "Сачыце за апошнімі навінамі:" %}
             </div>
 
-            <div class="order-1 col-12 order-sm-2 col-sm-6 d-grid pe-5 py-2">
+            <div class="order-1 col-12 order-md-3 col-md-5 d-grid py-2">
                 <a class="btn btn-light" href="mailto:contact@audiobooks.by" target="_blank">
                     <img style="width: 27px; height: 19px" src="{% static 'images/Mail.png' %}" alt="email icon">
                 </a>
             </div>
-            <div class="order-3 col-12 order-sm-3 col-sm-6 py-2">
+            <div class="order-3 col-12 order-md-4 col-md-4 py-2">
                 <a class="me-3 me-md-5 icon" href="https://t.me/bel_audiobooks" target="_blank" aria-label="telegram">
                     <i class="bi bi-telegram"></i>
                 </a>
@@ -28,6 +29,24 @@
                     aria-label="instagram">
                     <i class="bi bi-instagram"></i>
                 </a>
+            </div>
+
+            <div class="order-4 col-12 order-md-2 col-md-3 d-grid py-2">
+                <form action="{% url 'set_language' %}" method="post"
+                    class="form-floating">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}" >
+                    <select name="language" class="form-select" onchange="this.form.submit()" id="language-switcher">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for language in LANGUAGES %}
+                            <option value="{{ language.0 }}"{% if language.0 == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ language.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <label for="language-switcher" class="text-body">{% translate "Алфавіт" %}</label>
+                </form>
             </div>
         </div>
     </div>

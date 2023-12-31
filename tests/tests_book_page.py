@@ -303,6 +303,12 @@ class BookPageTests(WebdriverTestCase):
             title='Казкі',
         )
         self.assertEquals('kazki', book1.slug)
+
+        # test for a bug when saving again might detect a slug conflict coming from the
+        # book itself
+        book1.save()
+        self.assertEquals('kazki', book1.slug)
+
         book2 = models.Book.objects.create(
             title='Казкі',
         )

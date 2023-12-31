@@ -1,20 +1,22 @@
 {% load static %}
+{% load i18n %}
 
 <!-- Top navigation that dissapaer when scrolled -->
 <nav class="{% if request.path == '/' %}main-page{% endif %}">
   <div class="container">
     <a href="{% url 'index' %}" class="link-dark text-decoration-none text-white logo-title">
       <img class="img-fluid logo" src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY">
-      <div class="h3 text-center site-title fw-bold">БЕЛАРУСКIЯ АЎДЫЯКНIГI</div>
+      <div class="h3 text-center site-title fw-bold">{% translate "БЕЛАРУСКІЯ АЎДЫЯКНІГІ" %}</div>
     </a>
     <div class="site-description text-white">
-      <p class="title_lead show-on-main">Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў</p>
-      <p class="show-on-main">Тут вы можаце хутка знайсці аўдыякнігі сучасных аўтараў, а таксама класічныя і дзіцячыя
+      <p class="title_lead show-on-main">{% translate "Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў" %}</p>
+      <p class="show-on-main">{% blocktranslate %}
+        Тут вы можаце хутка знайсці аўдыякнігі сучасных аўтараў, а таксама класічныя і дзіцячыя
         творы ў аўдыяфармаце. Сайт не змяшчае кнігі, а дае спасылкі на пляцоўкі, дзе іх можна паслухаць альбо набыць.
-      </p>
+      {% endblocktranslate %}</p>
 
       <div class="d-flex align-items-center my-3">
-        Сачыце за навінамі:
+        {% translate "Сачыце за навінамі:" %}
         <div class="ms-2 d-flex justify-content-around justify-content-lg-start flex-grow-1">
           <a class="icon mx-3" href="https://t.me/bel_audiobooks" target="_blank" aria-label="telegram">
             <i class="bi bi-telegram"></i>
@@ -33,24 +35,24 @@
       <ul class="buttons nav navbar-nav mb-0">
         <li class="nav-item">
           <a class="catalog nav-link text-white {% if '/catalog' in request.path %}active{% else %}text-opacity-75{% endif %}"
-            href="{% url 'catalog-all-books' %}">Каталог
+            href="{% url 'catalog-all-books' %}">{% translate "Каталог" %}
           </a>
         </li>
         <li class="nav-item">
           <a class="catalog nav-link text-white {% if '/articles' in request.path %}active{% else %}text-opacity-75{% endif %}"
-            href="{% url 'all-articles' %}">Артыкулы
+            href="{% url 'all-articles' %}">{% translate "Артыкулы" %}
           </a>
         </li>
         <li class="nav-item">
           <a class="about-us nav-link text-white {% if '/about' in request.path %}active{% else %}text-opacity-75{% endif %}"
-            href="{% url 'about' %}">Пра нас
+            href="{% url 'about' %}">{% translate "Пра нас" %}
           </a>
         </li>
       </ul>
       <div class="search-container col-12 col-md-6 col-lg-3 position-relative ">
         <form class="d-flex" action="{% url 'search' %}" method="get" autocomplete="off">
           <div class="input-group">
-            <input type="text" class="form-control bg-white border-white" placeholder="Аўтар, кніга"
+            <input type="text" class="form-control bg-white border-white" placeholder="{% translate "Аўтар, кніга" %}"
               aria-label="Аўтар, кніга" aria-describedby="button-search" name="query" id="search">
             <button class="btn p-0" type="submit" id="button-search">
               <i class="bi bi-search"></i>

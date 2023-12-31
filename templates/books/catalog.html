@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load books_extras %}
+{% load i18n %}
 
-{% block title %}{% if selected_tag %}{{ selected_tag.name }}{% else %}Усе аўдыякнігі{% endif %}{% endblock title %}
+{% block title %}{% if selected_tag %}{% dtranslate selected_tag.name %}{% else %}{% translate "Усе аўдыякнігі" %}{% endif %}{% endblock title %}
 {% block og_title %}{% if selected_tag %}{{ selected_tag.name }}{% else %}Усе аўдыякнігі{% endif %}{%endblock og_title%}
 
 {% block content %}
@@ -15,7 +16,7 @@
             <!--Buddont Genre shown only on mobile-->
             <button class="btn hidden visible-xs d-block d-md-none btn-genre" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseGenre" aria-expanded="false" aria-controls="collapseGenre">
-                Жанры і фільтры<i class="ms-2 bi bi-chevron-down"></i><i class="ms-2 bi bi-chevron-up"></i>
+                {% translate "Жанры і фільтры" %}<i class="ms-2 bi bi-chevron-down"></i><i class="ms-2 bi bi-chevron-up"></i>
             </button>
 
 
@@ -26,7 +27,7 @@
                     <li>
                         <a class="text-decoration-none text-start tag {% if tag.id == selected_tag.id %}tag-selected{% endif %}"
                             href="{% url 'catalog-for-tag' tag.slug %}{{ query_params }}">
-                            {{ tag.name }}
+                            {% dtranslate tag.name %}
                         </a>
                     </li>
                     {% endif %}
@@ -34,37 +35,37 @@
                 </ul>
                 <div class="filters  mb-3">
                     <span class="head">
-                        <i class="bi bi-funnel-fill"></i>Фільтры
+                        <i class="bi bi-funnel-fill"></i>{% translate "Фільтры" %}
                     </span>
                     <div class="form-floating">
                         <select class="form-select" id="filter-language">
                             {% for language in language_options %}
                             <option value="{{ language.0 }}" {% if language.2 %}selected{% endif %}>
-                                {{ language.1 }}
+                                {% dtranslate language.1 %}
                             </option>
                             {% endfor %}
                         </select>
-                        <label for="filter-language">Мова</label>
+                        <label for="filter-language">{% translate "Мова" %}</label>
                     </div>
                     <div class="form-floating">
                         <select class="form-select" id="filter-price">
                             {% for price in price_options %}
                             <option value="{{ price.0 }}" {% if price.2 %}selected{% endif %}>
-                                {{ price.1 }}
+                                {% dtranslate price.1 %}
                             </option>
                             {% endfor %}
                         </select>
-                        <label for="filter-price">Кошт</label>
+                        <label for="filter-price">{% translate "Кошт" %}</label>
                     </div>
                     <div class="form-floating">
                         <select class="form-select" id="filter-links">
                             {% for link in link_options %}
                             <option value="{{ link.0 }}" {% if link.2 %}selected{% endif %}>
-                                {{ link.1 }}
+                                {% dtranslate link.1 %}
                             </option>
                             {% endfor %}
                         </select>
-                        <label for="filter-links">Пляцоўка</label>
+                        <label for="filter-links">{% translate "Пляцоўка" %}</label>
                     </div>
                 </div>
             </div>
@@ -75,9 +76,9 @@
             <div class="row">
                 <div class="col-12 catalog-title">
                     {% if selected_tag %}
-                    <h1>{{ selected_tag.name }}</h1>
+                    <h1>{% dtranslate selected_tag.name %}</h1>
                     {% if selected_tag.description %}
-                    <div class="mb-3">{{ selected_tag.description }}</div>
+                    <div class="mb-3">{% dtranslate selected_tag.description %}</div>
                     {% endif %}
                     {% endif %}
                 </div>
@@ -114,7 +115,9 @@
 
                             <!--Current Page-->
                             <span class="books-text">
-                                Старонка {{ paginator.number }} з {{ paginator.paginator.num_pages }}
+                                {% blocktranslate with cur=paginator.number total=paginator.paginator.num_pages %}
+                                Старонка {{ cur }} з {{ total }}
+                                {% endblocktranslate %}
                             </span>
 
                             <!--Next Page Link-->

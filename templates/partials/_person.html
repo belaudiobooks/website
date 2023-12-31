@@ -2,13 +2,13 @@
 {% load books_extras %}
 
 {% if persons.exists %}
-{% if persons.count > 1 or persons.0.gender == "PLURAL" %}{{ multiple }}:
+{% if persons.count > 1 or persons.0.gender == "PLURAL" %}{% dtranslate  multiple %}:
 {% else %}
-{{single}}{{persons.0|gender:gender_variants}}:
+{% dtranslate single %}{% dtranslate persons.0|gender:gender_variants %}:
 {% endif %}
 {% for person in persons %}
 <a class="text-decoration-none" href="{% url 'person-detail-page' person.slug %}">
-    {{ person.name }}
+    {% dtranslate person.name %}
 </a>
 {% if not forloop.last %},{% endif %}
 {% endfor %}

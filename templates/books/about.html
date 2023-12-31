@@ -1,32 +1,37 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load books_extras %}
+{% load i18n %}
 
-{% block title %}Пра нас{% endblock title %}
+{% block title %}{% translate "Пра нас" %}{% endblock title %}
 {% block og_title %}Пра нас{% endblock og_title %}
 
 {% block content %}
 <div class="container" id="books">
     <div class="col-12">
-        <h1>Пра нас</h1>
+        <h1>{% translate "Пра нас" %}</h1>
     </div>
     <div class="col-12">
-        <p> audiobooks.by - навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў. Тут вы можаце хутка
+        <p>{% blocktranslate %}
+            audiobooks.by - навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў. Тут вы можаце хутка
             знайсці як аўдыякнігі сучасных аўтараў, так і дзіцячыя альбо класічныя кнігі. Сайт не змяшчае самі кнігі, а
             дае спасылкі на пляцоўкі, дзе іх можна паслухаць альбо набыць.
-        </p>
-        <p>
+        {% endblocktranslate %}</p>
+        <p>{% dtranslate books_count|by_plural:"кнігу,кнігі,кніг" as book_count %}
+            {% blocktranslate %}
             На дадзены момант запісана шмат беларускіх аўдыякніг, але яны раскіданыя па розных кутках інтэрнэту. Таму
             бывае цяжка высветліць, ці ёсць кантрэтная кніга ў аўдыяфармаце, альбо паглядзець усе аўдыякнігі аўтара.
-            Дапамагчы вам зможа гэты сайт. На дадзены момант на сайце сабраныя спасылкі на
-            {{books_count|by_plural:"кнігу,кнігі,кніг"}} з такіх крыніц, як
-            <a href="https://knizhnyvoz.by/">Кніжны Воз</a>,
-            <a href="https://knihi.com/audyjoknihi.html">Беларуская палічка</a>,
-            <a href="https://kamunikat.org/audyjoknihi.html">Камунікат</a>,
-            <a href="https://soundcloud.com/svaboda/sets">Радыё Свабода</a>,
-            <a href="https://audio.penbelarus.org/">Беларускі ПЭН-цэнтр</a>,
-            <a href="http://mininform.gov.by/by/news/aktualna/u-dapamogu-batskam-i-shkolnikam-a-dyyaknigi/">Мінінфарм
-                РБ</a> і іншых. Сачыць за апошнімі навінамі вы можаце ў нашых сацыяльных сетках:
+            Дапамагчы вам зможа гэты сайт. На дадзены момант на сайце сабраныя спасылкі на {{ book_count }}.
+            з такіх крыніц, як
+            {% endblocktranslate %}
+            <a href="https://knizhnyvoz.by/">{% translate "Кніжны Воз" %}</a>,
+            <a href="https://knihi.com/audyjoknihi.html">{% translate "Беларуская палічка" %}</a>,
+            <a href="https://kamunikat.org/audyjoknihi.html">{% translate "Камунікат" %}</a>,
+            <a href="https://soundcloud.com/svaboda/sets">{% translate "Радыё Свабода" %}</a>,
+            <a href="https://audio.penbelarus.org/">{% translate "Беларускі ПЭН-цэнтр" %}</a>,
+            <a href="http://mininform.gov.by/by/news/aktualna/u-dapamogu-batskam-i-shkolnikam-a-dyyaknigi/">
+                {% translate "Мінінфарм РБ" %}</a> 
+            {% translate "і іншых. Сачыць за апошнімі навінамі вы можаце ў нашых сацыяльных сетках:" %}
         </p>
 
         <p>
@@ -43,24 +48,28 @@
             </a>
         </p>
         <p>
-
-            Калі на нашым сайце няма якой-небудзь аўдыякнігі, альбо калі вы знайшлі памылку, калі ласка, напішыце нам на
-            <strong>contact@audiobooks.by</strong> альбо праз <a
-                href="https://forms.gle/hP2KTip81EVshqUr6">Гугл-форму</a>. Будзем удзячныя за водгукі і прапановы.
+            {% translate "Калі на нашым сайце няма якой-небудзь аўдыякнігі, альбо калі вы знайшлі памылку, калі ласка, напішыце нам на" %}
+            <strong>contact@audiobooks.by</strong> {% translate "альбо праз" %} <a
+                href="https://forms.gle/hP2KTip81EVshqUr6">{% translate "Гугл-форму" %}</a>.
+                {% translate "Будзем удзячныя за водгукі і прапановы." %}"
         </p>
         <p>
 
         </p>
         <p>
+            {% blocktranslate %}
             Мы адкрыты да супрацоўніцтва. Калі вы жадаеце запісаць і выкласці аўдыякнігу, ці нават толькі выкласці -
             напішыце нам на <strong>contact@audiobooks.by</strong>.
+            {% endblocktranslate %}
         </p>
         <p>
+            {% blocktranslate %}
             Зыходны код сайта размяшчаецца на гітхабе: <a
                 href="https://github.com/belaudiobooks/website">belaudiobooks/website</a>
+            {% endblocktranslate %}
     </div>
     <div class="col-12">
-        <h3>Наша каманда</h3>
+        <h3>{% translate "Наша каманда" %}</h3>
     </div>
 
     <div class="row">
@@ -68,7 +77,7 @@
         <div class="col-12 col-sm-6 col-lg-3 mt-4 border-white team-member">
             <!-- <img src="{% static member.1 %}" alt="photo"> -->
             <img src="{% static 'images/person-outline.png' %}" alt="photo">
-            <span class="ms-2">{{ member.0 }}</span>
+            <span class="ms-2">{% dtranslate member.0 %}</span>
         </div>
         {% endfor %}
     </div>

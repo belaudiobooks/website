@@ -15,11 +15,11 @@
                 background-image: url({{ narration | colors:ind }});
                 color: black;">
         <div class="col-12 pm-2 upper-half">
-            {% for author in narration.book.authors.all %}{{ author.name }}{% endfor %}
+            {% for author in narration.book.authors.all %}{% dtranslate author.name %}{% endfor %}
         </div>
         <div class="separator"></div>
         <div class="col-12 lower-half pt-2">
-            {{ narration.book.title }}
+            {% dtranslate  narration.book.title %}
         </div>
     </div>
 {% endif %}

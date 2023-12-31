@@ -24,9 +24,11 @@ function renderHit(hit) {
   const content = document.createElement('div');
   content.classList.add('content');
   hitAnchor.appendChild(content);
+  const language = document.documentElement.lang;
+  const suffix = language === 'be-latn' ? '_lac' : '';
   if (hit['model'] === 'book') {
-    content.textContent = hit['title'];
-    const authors = hit['authors'].map(shortenName).join(', ');
+    content.textContent = hit['title' + suffix];
+    const authors = hit['authors' + suffix].map(shortenName).join(', ');
     const authorsSpan = document.createElement('span');
     authorsSpan.textContent = authors;
     authorsSpan.classList.add('authors');
@@ -34,11 +36,11 @@ function renderHit(hit) {
     hitAnchor.href = `/books/${hit['slug']}`;
   }
   if (hit['model'] === 'person') {
-    content.textContent = hit['name'];
+    content.textContent = hit['name' + suffix];
     hitAnchor.href = `/person/${hit['slug']}`;
   }
   if (hit['model'] === 'publisher') {
-    content.textContent = hit['name'];
+    content.textContent = hit['name' + suffix];
     hitAnchor.href = `/publisher/${hit['slug']}`;
   }
   return hitAnchor;

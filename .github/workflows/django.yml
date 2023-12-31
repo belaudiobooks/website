@@ -28,16 +28,18 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
+        sudo apt-get install gettext
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         cp .env.test .env
         echo "ALGOLIA_APPLICATION_ID=${{ secrets.ALGOLIA_APPLICATION_ID }}" >> $GITHUB_ENV
         echo "ALGOLIA_MODIFY_KEY=${{ secrets.ALGOLIA_MODIFY_KEY }}" >> $GITHUB_ENV
         echo "ALGOLIA_SEARCH_KEY=${{ secrets.ALGOLIA_SEARCH_KEY }}" >> $GITHUB_ENV
-    - name: Create migrations
+    - name: Create migrations and translations
       run: |
         mkdir media
         python manage.py makemigrations
+        python manage.py update_translations
     - name: Run Tests
       run: |
         python manage.py test --verbosity=2

@@ -36,23 +36,23 @@ def index(request: HttpRequest) -> HttpResponse:
     '''Index page, starting page'''
     # Getting all Tags and creating querystring objects for each to pass to template
     tags_to_render = []
-    books = Book.objects.active_books_ordered_by_date()
+    books = Book.objects.active_books_ordered_by_date(['authors', 'narrations'])
     for tag in Tag.objects.filter(name__in=TAGS_TO_SHOW_ON_MAIN_PAGE):
+        books_by_tag = books.filter(tag=tag.id)
+        count_books_by_tag = len(books_by_tag)
         tags_to_render.append({
             'name':
             tag.name,
             'slug':
             tag.slug,
             'books':
-            with_latest_narration(books.filter(tag=tag.id)[:6]),
-            'total_books': books.filter(tag=tag.id).count(),
+            with_latest_narration(books_by_tag[:6]),
+            'total_books': count_books_by_tag,
         })
-
     context = {
         'recently_added_books': with_latest_narration(books[:6]),
         'tags_to_render': tags_to_render,
     }
-
     return render(request, 'books/index.html', context)
 
 

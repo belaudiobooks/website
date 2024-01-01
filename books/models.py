@@ -142,10 +142,10 @@ class BookStatus(models.TextChoices):
 
 
 class BookManager(models.Manager):
-    def active_books_ordered_by_date(self) -> models.QuerySet:
+    def active_books_ordered_by_date(self, prefetch_fields=['authors']) -> models.QuerySet:
         return (
             self
-            .prefetch_related('authors')
+            .prefetch_related(*prefetch_fields)
             .filter(status=BookStatus.ACTIVE)
             # We order by nartation date. Books with the most recent narrations go first.
             .annotate(recent_annotation=models.Max('narrations__date'))

@@ -16,4 +16,6 @@ class StatsPagesTest(WebdriverTestCase):
     def test_birthdays_page(self):
         # Just verify that it renders without errors.
         # TODO: Add more checks.
+        self.fake_data.create_book_with_single_narration(title='Book')
+        self.fake_data.create_book_with_single_narration(title='Book 2')
         self.driver.get(f'{self.live_server_url}/stats/birthdays')

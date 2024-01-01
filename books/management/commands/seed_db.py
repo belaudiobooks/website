@@ -107,16 +107,19 @@ def fill_with_data():
         slug='adam-adamovich',
         description='Біяграфія тут',
         photo='photos/adam.png',
+        date_of_birth='1990-01-01',
         gender=Gender.MALE)
     person_bahdana = Person.objects.create(
         name='Багдана Багданаўна',
         slug='bahdana-bahdanawna',
         description='Біяграфія Багданы Багданаўны тут',
         photo='photos/bahdana.png',
+        date_of_birth='1980-02-02',
         gender=Gender.FEMALE)
     person_valer = Person.objects.create(
         name='Валер Валеравіч',
         slug='valer-valeravich',
+        date_of_birth='1970-03-03',
         gender=Gender.MALE)
 
     for i in range(6):

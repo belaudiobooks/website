@@ -47,18 +47,21 @@ class FakeData:
             name_ru='Александр Алесевич',
             slug='ales-alesievich',
             gender=models.Gender.MALE,
+            date_of_birth='1990-01-01',
         )
         self.person_bela = models.Person.objects.create(
             name='Бэла Бэлаўна',
             name_ru='Белла Беловна',
             slug='bela-belawna',
             gender=models.Gender.FEMALE,
+            date_of_birth='1980-02-02',
         )
         self.person_viktar = models.Person.objects.create(
             name='Віктар Віктаравіч',
             name_ru='Виктор Викторович',
             slug='viktar-viktavarich',
             gender=models.Gender.MALE,
+            date_of_birth='1970-03-03',
         )
         self.person_volha = models.Person.objects.create(
             name='Вольга Янаўна',

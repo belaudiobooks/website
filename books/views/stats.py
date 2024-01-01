@@ -54,7 +54,7 @@ def birthdays(request: HttpRequest) -> HttpResponse:
             'stats':
             '%d - %d - %d' % (
                 person.books_authored.count(),
-                person.books_translated.count(),
+                person.narrations_translated.count(),
                 person.narrations.count(),
             ),
         })

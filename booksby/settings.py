@@ -289,7 +289,6 @@ if env('ENV') == 'local':
         # Uncomment to log all SQL queries
         # 'loggers': {
         #     'django.db.backends': {
-        #         'handlers': ['console'],
         #         'level': 'DEBUG',
         #     },
         # }

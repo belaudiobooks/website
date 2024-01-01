@@ -49,10 +49,12 @@ def index(request: HttpRequest) -> HttpResponse:
             with_latest_narration(books_by_tag[:6]),
             'total_books': count_books_by_tag,
         })
+
     context = {
         'recently_added_books': with_latest_narration(books[:6]),
         'tags_to_render': tags_to_render,
     }
+
     return render(request, 'books/index.html', context)
 
 

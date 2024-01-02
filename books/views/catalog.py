@@ -72,7 +72,7 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
     page = request.GET.get('page')
     tags = Tag.objects.all()
     filtered_books = maybe_filter_links(
-        Book.objects.active_books_ordered_by_date(), request).distinct()
+        Book.objects.active_books_ordered_by_date(['authors', 'narrations']), request).distinct()
 
     tag = None
     if tag_slug:

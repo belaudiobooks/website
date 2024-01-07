@@ -28,5 +28,8 @@ class Command(BaseCommand):
                 belorthography.Orthography.OFFICIAL,
                 belorthography.Orthography.LATIN
             )
+        # Set creation date to constant so that re-running update_translation doesn't
+        # mark file as changed when it there are no actual changes in messages.
+        po_file.metadata['POT-Creation-Date'] = '2024-01-01 03:32+0000'
         po_file.save()
         call_command('compilemessages', ignore=['venv', 'data'], use_fuzzy=True)

@@ -24,6 +24,11 @@ class Article:
 
 
 ARTICLES: List[Article] = [
+    Article(title='Łacinka',
+            short_description=
+            'Бібліятэка для канвертавання ў лацінку',
+            slug='lacinka',
+            template='lacinka.html'),
     Article(
         title='Як выкласці аўдыякнігу',
         short_description=

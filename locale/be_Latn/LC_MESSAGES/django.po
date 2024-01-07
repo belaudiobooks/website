@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-31 06:30+0000\n"
+"POT-Creation-Date: 2024-01-01 03:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1047,6 +1047,79 @@ msgstr ""
 "        contact@audiobooks.by.\n"
 "    </p>\n"
 "</section>\n"
+
+#: templates/books/articles/lacinka.html:7
+msgid ""
+"\n"
+"    Сайт audiobooks.by падтрымлівае лацінку. Вы можаце пераключыцца на яе з дапамогай меню \n"
+"    ўнізе кожнай старонкі. Ніжэй вы можаце паспрабаваць канвертар з кірыліцы на лацініцу, які\n"
+"    выкарыстоўваецца для перакладу наша сайта. \n"
+msgstr ""
+"\n"
+"    Sajt audiobooks.by padtrymlivaje łacinku. Vy možacie pieraklučycca na jaje z dapamohaj mieniu \n"
+"    ŭnizie kožnaj staronki. Nižej vy možacie pasprabavać kanviertar z kirylicy na łacinicu, jaki\n"
+"    vykarystoŭvajecca dla pierakładu naša sajta. \n"
+
+#: templates/books/articles/lacinka.html:12
+msgid ""
+"\n"
+"    Мы выкарыстоўваем нашу ўласную бібліятэку на пітоне \n"
+"    <a href=\"https://github.com/belaudiobooks/belorthography\">belorthography</a>. Калі вы жадаеце\n"
+"    дадаць бібліятэку для іншай мовы - можаце выкарыстаць наш \n"
+"    <a href=\"https://github.com/belaudiobooks/belorthography/tree/main/tests\">набор тэстаў</a>. А таксама \n"
+"    выкарыстаць наш рэпазіторый для хостынга вашай бібліятэкі. З пытаннямі і прапановамі пішыце на \n"
+"    contact@audiobooks.by альбо стварыце багу на Гітхабе. \n"
+msgstr ""
+"\n"
+"    My vykarystoŭvajem našu ŭłasnuju biblijateku na pitonie \n"
+"    <a href=\"https://github.com/belaudiobooks/belorthography\">belorthography</a>. Kali vy žadajecie\n"
+"    dadać biblijateku dla inšaj movy - možacie vykarystać naš \n"
+"    <a href=\"https://github.com/belaudiobooks/belorthography/tree/main/tests\">nabor testaŭ</a>. A taksama \n"
+"    vykarystać naš repazitoryj dla chostynha vašaj biblijateki. Z pytańniami i prapanovami pišycie na \n"
+"    contact@audiobooks.by albo stvarycie bahu na Hitchabie. \n"
+
+#: templates/books/articles/lacinka.html:21
+msgid "Канвертар"
+msgstr "Kanviertar"
+
+#: templates/books/articles/lacinka.html:26
+#: templates/books/articles/lacinka.html:37
+msgid "напісанне"
+msgstr "napisańnie"
+
+#: templates/books/articles/lacinka.html:42
+msgid "Тэкст для канвертацыі..."
+msgstr "Tekst dla kanviertacyi..."
+
+#: templates/books/articles/lacinka.html:45
+#, fuzzy
+#| msgid "Вы шукалі"
+msgid "Вынік будзе тут"
+msgstr "Vynik budzie tut"
+
+#: templates/books/articles/lacinka.html:49
+msgid "Знайшлі памылку ў канвертацыі?"
+msgstr "Znajšli pamyłku ŭ kanviertacyi?"
+
+#: templates/books/articles/lacinka.html:51
+msgid "паведаміце нам"
+msgstr "paviedamicie nam"
+
+#: templates/books/articles/lacinka.html:56
+msgid "афіцыйнае (наркамаўка)"
+msgstr "aficyjnaje (narkamaŭka)"
+
+#: templates/books/articles/lacinka.html:57
+msgid "класічнае (тарашкевіца)"
+msgstr "kłasičnaje (taraškievica)"
+
+#: templates/books/articles/lacinka.html:58
+msgid "лацінка"
+msgstr "łacinka"
+
+#: templates/books/articles/lacinka.html:59
+msgid "лацінка без гачыкаў"
+msgstr "łacinka biez hačykaŭ"
 
 #: templates/books/book-detail.html:7
 #, fuzzy

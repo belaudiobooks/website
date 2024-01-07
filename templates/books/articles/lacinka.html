@@ -1,0 +1,61 @@
+{% extends 'books/articles/article.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block article_content %}
+
+<p>{% blocktranslate %}
+    Сайт audiobooks.by падтрымлівае лацінку. Вы можаце пераключыцца на яе з дапамогай меню 
+    ўнізе кожнай старонкі. Ніжэй вы можаце паспрабаваць канвертар з кірыліцы на лацініцу, які
+    выкарыстоўваецца для перакладу наша сайта. 
+{% endblocktranslate %}</p>
+<p>{% blocktranslate %}
+    Мы выкарыстоўваем нашу ўласную бібліятэку на пітоне 
+    <a href="https://github.com/belaudiobooks/belorthography">belorthography</a>. Калі вы жадаеце
+    дадаць бібліятэку для іншай мовы - можаце выкарыстаць наш 
+    <a href="https://github.com/belaudiobooks/belorthography/tree/main/tests">набор тэстаў</a>. А таксама 
+    выкарыстаць наш рэпазіторый для хостынга вашай бібліятэкі. З пытаннямі і прапановамі пішыце на 
+    contact@audiobooks.by альбо стварыце багу на Гітхабе. 
+{% endblocktranslate %}</p>
+
+<h2>{% translate "Канвертар" %}</h2>
+<div class="d-block d-lg-flex align-items-center flex-wrap">
+    <div class="form-floating w-auto">
+        <select class="form-select" id="orthography-from">
+        </select>
+        <label for="orthography-from" class="text-body">{% translate "напісанне" %}</label>
+    </div>
+
+    <div class="px-3 text-center">
+        <i class="d-lg-inline d-none bi bi-arrow-right"></i>
+        <i class="d-lg-none d-inline bi bi-arrow-down"></i>
+    </div>
+
+    <div class="form-floating w-auto">
+        <select class="form-select" id="orthography-to">
+        </select>
+        <label for="orthography-from" class="text-body">{% translate "напісанне" %}</label>
+    </div>
+</div>
+
+<div class="form mt-4">
+    <textarea class="form-control" placeholder="{% translate 'Тэкст для канвертацыі...' %}" id="text-from"></textarea>
+</div>
+<div class="form mt-4">
+    <textarea class="form-control" placeholder="{% translate 'Вынік будзе тут' %}" id="text-to"></textarea>
+</div>
+
+<div class="mt-4">
+    {% translate "Знайшлі памылку ў канвертацыі?" %}
+    <button type="button" class="btn btn-info" id="button-notify">
+        {% translate "паведаміце нам" %}
+    </button>
+</div>
+
+<script 
+    data-ortho-official="{% translate 'афіцыйнае (наркамаўка)' %}"
+    data-ortho-classical="{% translate 'класічнае (тарашкевіца)' %}"
+    data-ortho-latin="{% translate 'лацінка' %}"
+    data-ortho-latin-no-diactric="{% translate 'лацінка без гачыкаў' %}"
+    src="{% static 'js/lacinka.js' %} "></script>
+{% endblock article_content %}

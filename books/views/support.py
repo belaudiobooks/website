@@ -28,6 +28,8 @@ from books.views.utils import BookForPreview
 
 from .articles import ARTICLES
 
+import belorthography
+
 logger = logging.getLogger(__name__)
 
 
@@ -264,6 +266,45 @@ def get_livelib_books(request: HttpRequest) -> HttpResponse:
                         content_type='application/json',
                         headers={'Access-Control-Allow-Origin': '*'})
 
+SUPPORTED_ORTHOGRAPHIES = set([
+    belorthography.Orthography.OFFICIAL,
+    belorthography.Orthography.CLASSICAL,
+    belorthography.Orthography.LATIN,
+    belorthography.Orthography.LATIN_NO_DIACTRIC,
+])
+
+CONVERT_EXAMPLE = f'''
+Example conversion request
+https://audiobooks.by/api/convert_orthography?text=снег&from=OFFICIAL&to=LATIN
+
+Supported orthographies {SUPPORTED_ORTHOGRAPHIES}
+'''
+
+@require_GET
+def convert_orthography(request: HttpRequest) -> HttpResponse:
+    text = request.GET.get('text')
+    fr = request.GET.get('from')
+    to = request.GET.get('to')
+    if fr not in SUPPORTED_ORTHOGRAPHIES:
+        return HttpResponse(
+            content=f'Unsupported orthography {fr}. {CONVERT_EXAMPLE}',
+            status=400,
+        )
+    if to not in SUPPORTED_ORTHOGRAPHIES:
+        return HttpResponse(
+            content=f'Unsupported orthography {to}. {CONVERT_EXAMPLE}',
+            status=400,
+        )
+    if text == '' or text is None:
+        return HttpResponse(
+            content=f'Empty or missing "text" param. {CONVERT_EXAMPLE}',
+            status=400
+        )
+
+    converted = belorthography.convert(text, fr, to)
+    return HttpResponse(content=converted,
+                        content_type='plain/text',
+                        headers={'Access-Control-Allow-Origin': '*'})
 
 @csrf_exempt
 def sync_image_cache(request: HttpRequest) -> HttpResponse:

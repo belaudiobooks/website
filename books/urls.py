@@ -29,5 +29,6 @@ urlpatterns = [
     path('job/sync_image_cache', support.sync_image_cache),
     path('api/markdown_preview', support.markdown_to_html),
     path('api/livelib_books', support.get_livelib_books),
+    path('api/convert_orthography', support.convert_orthography),
     path("i18n/", include("django.conf.urls.i18n")),
 ]

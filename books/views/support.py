@@ -69,14 +69,16 @@ def search(request: HttpRequest) -> HttpResponse:
         for publisher in Publisher.objects.all().filter(
                 uuid__in=publishers_ids):
             loaded_models[str(publisher.uuid)] = publisher
-            for book in set(
-                [narration.book for narration in publisher.narrations.all()]):
-                loaded_models[str(book.uuid)] = book
+            for narration in publisher.narrations.all():
+                loaded_models[str(narration.book.uuid)] = BookForPreview(
+                    book = narration.book,
+                    narrations = [narration]
+                )
 
         def _gettype(value):
             if isinstance(value, Person):
                 return 'person'
-            elif isinstance(value, Book):
+            elif isinstance(value, BookForPreview):
                 return 'book'
             elif isinstance(value, Publisher):
                 return 'publisher'
@@ -90,6 +92,10 @@ def search(request: HttpRequest) -> HttpResponse:
             'object': loaded_models.pop(hit['objectID'])
         } for hit in hits]
 
+        # Add all other items from loaded_models dict. This objects weren't
+        # returned by Algolia, but they are still relevant to the search. For
+        # example if user searched for publisher "audiobooks.by" we also
+        # show all books published by that publisher.
         search_results.extend([{
             'type': _gettype(lm),
             'object': lm

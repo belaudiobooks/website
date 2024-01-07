@@ -80,7 +80,7 @@ class HeaderAndSearchTests(WebdriverTestCase):
                 'audiobooks.by',
                 f'/publisher/{self.fake_data.publisher_audiobooksby.slug}')
 
-    def test_server_side_search(self):
+    def test_server_side_searc_author(self):
         self._init_algolia()
         self.driver.get(self.live_server_url)
         search = self.driver.find_element(By.CSS_SELECTOR, '#search')
@@ -104,6 +104,37 @@ class HeaderAndSearchTests(WebdriverTestCase):
             item.find_element(by=By.CSS_SELECTOR,
                               value='a').get_dom_attribute('href'))
 
+        item = self.driver.find_element(
+            By.CSS_SELECTOR, f'a[href="/books/{self.book.slug}"] .card-title')
+        self.assertIsNotNone(item)
+        self.assertIn(self.book.title, item.text)
+
+    def test_server_side_search_publisher(self):
+        self._init_algolia()
+        self.driver.get(self.live_server_url)
+        search = self.driver.find_element(By.CSS_SELECTOR, '#search')
+        search.send_keys('audiobooks.by')
+        self.driver.find_element(By.CSS_SELECTOR, '#button-search').click()
+        self.assertIn('/search', self.driver.current_url)
+        search_results = self.driver.find_elements(By.CSS_SELECTOR,
+                                                   '#books .card')
+        print(self.driver.find_element(By.CSS_SELECTOR,
+                                                   '#books').text)
+        self.assertEqual(
+            f'Вынікі пошука \'audiobooks.by\'',
+            self.driver.find_element(By.CSS_SELECTOR, '#searched-query').text)
+
+        # Search should return author himself plus all his books (one book).
+        self.assertEqual(2, len(search_results))
+
+        # First item should be publisher.
+        item = search_results[0]
+        self.assertEqual(self.fake_data.publisher_audiobooksby.name, item.text.strip())
+        self.assertEqual(
+            f'/publisher/audiobooksby',
+            item.find_element(by=By.CSS_SELECTOR,
+                              value='a').get_dom_attribute('href'))
+        # Second item should be a book of this publisher
         item = self.driver.find_element(
             By.CSS_SELECTOR, f'a[href="/books/{self.book.slug}"] .card-title')
         self.assertIsNotNone(item)

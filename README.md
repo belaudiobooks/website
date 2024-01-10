@@ -13,7 +13,7 @@ This project is created to allow users quickly find audioboooks that are transla
 
 ## Backend setup
 
-**Note: You should have Python and Postgresql installed on your local env**
+**Note: You should have Python installed on your local env**
 
 ### Update ENV
 
@@ -22,7 +22,6 @@ Update values:
 * DEBUG=True for dev env
 * SECRET_KEY=_any symbols for dev, don't change in prod_
 * ALLOWED_HOSTS=localhost for local
-* DATABASE - your Postgres DB values to connect to local DB
 
 ### Create Python virtual enviroment
 
@@ -70,15 +69,15 @@ Also checkout admin page: http://127.0.0.1:8000/admin. Use `admin@example.com` a
 
 ### Run tests
 
-To run tests you need to have chromedriver installed and available on path. Install chromedriver that matches your current chrome version from here: https://chromedriver.chromium.org/downloads. Then run tests:
-
 ```shell
 python manage.py test --verbosity=2
 ```
 
+We have only integration webdriver tests that launch server, fill it with test data and then use webdriver to interact with the site and verify that it's behaving correctly. 
+
 ### Algolia setup
 
-We use http://algolia.com to implement fast, fuzzy book and people search. Algolia is a cloud service where we push JSON built from books/people and then use HTTP API to search over that data. For local development algolia is not necessary unless you work on the search part. To setup algolia you need to set a few variables, check .env.dist. To get app id and API keys - ask @nbeloglazov to add you to the algolia project.
+We use http://algolia.com to implement fast, fuzzy search. Algolia is a cloud service where we push JSON built from books/people and then use HTTP API to search over that data. For local development algolia is not necessary unless you work on the search part. To setup algolia you need to set a few variables, check .env.dist. To get app id and API keys - ask @nbeloglazov to add you to the algolia project.
 
 To push data to algolia you can use the following command:
 

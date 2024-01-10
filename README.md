@@ -5,11 +5,14 @@ This project is created to allow users quickly find audioboooks that are transla
 ![Django CI](https://github.com/belaudiobooks/website/actions/workflows/django.yml/badge.svg)
 
 ## Project structure
-* booksby - main project folder with settings and project top url setup
-* books, user, person - apps for each instance 
-* templates - all html templates based on each other
-* static - static files, css, js, images
-* data - contains data.json with books data and scripts that synchronize data. See Books Data section below.
+* `booksby` - main project folder with settings and project top url setup. Doesn't contain actual .
+* `books` - folder containing the main part of the site. That's where the most work is done.
+* `user` - app containing user model for admin page.
+* `templates` - html templates, used by views in `books`.
+* `functions` - python functions for Google Cloud batch processing. See [README](https://github.com/belaudiobooks/website/blob/main/functions/README.md).
+* `locale` - contains localization (text in lacinka). See Lacinization section below in this file.
+* `seed_media` - folder containing images for local development (fake book cover, people photo).
+* `tests` - webdriver tests.
 
 ## Backend setup
 

@@ -24,6 +24,9 @@ urlpatterns = [
     path('sitemap.txt', support.sitemap),
     path('data.json', support.get_data_json),
     path('job/push_data_to_algolia', support.push_data_to_algolia),
+    # /_ah/warmup - App Engine specific endpoint to pre-warm application for traffic
+    # https://cloud.google.com/appengine/docs/standard/configuring-warmup-requests?tab=python#enabling_warmup_requests
+    path('_ah/warmup', support.generate_data_json),
     path('job/generate_data_json', support.generate_data_json),
     path('job/update_read_by_author_tag', support.update_read_by_author_tag),
     path('job/sync_image_cache', support.sync_image_cache),

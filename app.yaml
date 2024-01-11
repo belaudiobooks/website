@@ -13,4 +13,7 @@ handlers:
 - url: /.*
   script: auto
   secure: always
+# Enable warmup requests to prepare instance for production load
+inbound_services:
+- warmup
 # [END django_app]

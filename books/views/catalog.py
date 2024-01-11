@@ -7,9 +7,10 @@ from collections.abc import Iterable
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator, Page
+from books.constants import MONTHS
 
 from books.templatetags.books_extras import to_human_language
-from books.models import LinkType, Tag, Language, Book
+from books.models import BookStatus, LinkType, Tag, Language, Book, Narration
 
 from .utils import maybe_filter_links, BookForPreview
 
@@ -147,3 +148,21 @@ def catalog(request: HttpRequest, tag_slug: str = '') -> HttpResponse:
         'link_options': link_options,
     }
     return render(request, 'books/catalog.html', context)
+
+def releases(request: HttpRequest, year: int, month: int = 0) -> HttpResponse:
+    '''Returns books released in a given year or month, if month is not 0.'''
+    if year < 2000 or year > 2100 or month < 0 or month > 12:
+        return render(request, '404.html', status=404)
+    narrations = Narration.objects.prefetch_related('book').filter(
+        date__year=year,
+        book__status=BookStatus.ACTIVE,
+    )
+    if month != 0:
+        narrations = narrations.filter(date__month=month)
+    narrations = narrations.order_by('date')
+    title = f'Навінкі {year} года' if month == 0 else f'Навінкі {MONTHS[month - 1][1]} {year}'
+    context = {
+        'books': [BookForPreview(narration.book, [narration]) for narration in narrations],
+        'title': title,
+    }
+    return render(request, 'books/releases.html', context)

@@ -6,26 +6,14 @@ from books.views.catalog import BOOKS_PER_PAGE
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
-from urllib.parse import urlparse
 
 
 class CatalogPageTests(WebdriverTestCase):
     '''Selenium tests for catalog page.'''
 
-    def _assert_page_contains_books(self, books: List[models.Book]) -> None:
-        titles = self._get_all_books_on_page()
-        for book in books:
-            self.assertIn(book.title, titles)
-
-    def _assert_page_does_not_contain_books(self,
-                                            books: List[models.Book]) -> None:
-        titles = self._get_all_books_on_page()
-        for book in books:
-            self.assertNotIn(book.title, titles)
-
     def _test_pagination(self, books: List[models.Book]) -> None:
         total_pages = math.ceil(len(books) / BOOKS_PER_PAGE)
-        self._assert_page_contains_books(books[:BOOKS_PER_PAGE])
+        self.assert_page_contains_books(books[:BOOKS_PER_PAGE])
         self.assertIn(
             f'Старонка 1 з {total_pages}',
             self.driver.find_element(By.CSS_SELECTOR, '.pagination').text)
@@ -33,7 +21,7 @@ class CatalogPageTests(WebdriverTestCase):
         # Go to next page.
         self.scroll_and_click(
             self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
-        self._assert_page_contains_books(books[BOOKS_PER_PAGE:BOOKS_PER_PAGE *
+        self.assert_page_contains_books(books[BOOKS_PER_PAGE:BOOKS_PER_PAGE *
                                                2])
         self.assertIn(
             f'Старонка 2 з {total_pages}',
@@ -44,7 +32,7 @@ class CatalogPageTests(WebdriverTestCase):
             self.driver.find_element(By.CSS_SELECTOR, '.last-page'))
         last_page_book_start = int(
             len(books) / BOOKS_PER_PAGE * BOOKS_PER_PAGE)
-        self._assert_page_contains_books(books[last_page_book_start:])
+        self.assert_page_contains_books(books[last_page_book_start:])
         self.assertIn(
             f'Старонка {total_pages} з {total_pages}',
             self.driver.find_element(By.CSS_SELECTOR, '.pagination').text)
@@ -52,7 +40,7 @@ class CatalogPageTests(WebdriverTestCase):
         # Go to the page before last.
         self.scroll_and_click(
             self.driver.find_element(By.CSS_SELECTOR, '.prev-page'))
-        self._assert_page_contains_books(books[last_page_book_start -
+        self.assert_page_contains_books(books[last_page_book_start -
                                                BOOKS_PER_PAGE:BOOKS_PER_PAGE])
         self.assertIn(
             f'Старонка {total_pages - 1} з {total_pages}',
@@ -61,13 +49,7 @@ class CatalogPageTests(WebdriverTestCase):
         # Go to the first page.
         self.scroll_and_click(
             self.driver.find_element(By.CSS_SELECTOR, '.first-page'))
-        self._assert_page_contains_books(books[0:BOOKS_PER_PAGE])
-
-    def _get_all_books_on_page(self) -> Set[str]:
-        return set([
-            el.text for el in self.driver.find_elements(
-                By.CSS_SELECTOR, '[data-test="book-title"]')
-        ])
+        self.assert_page_contains_books(books[0:BOOKS_PER_PAGE])
 
     def _last_n_days(self, n: int) -> List[date]:
         next_date = date.today()
@@ -113,24 +95,24 @@ class CatalogPageTests(WebdriverTestCase):
 
         self.driver.get(f'{self.live_server_url}/catalog')
         # Initially first page contains half of books of each type.
-        self._assert_page_contains_books(books_kobo[:BOOKS_PER_PAGE // 2])
-        self._assert_page_contains_books(books_knizhny_voz[:BOOKS_PER_PAGE //
+        self.assert_page_contains_books(books_kobo[:BOOKS_PER_PAGE // 2])
+        self.assert_page_contains_books(books_knizhny_voz[:BOOKS_PER_PAGE //
                                                            2])
         self._choose_filter('#filter-links',
                             self.fake_data.link_type_kobo.caption)
 
-        self._assert_page_contains_books(books_kobo[:BOOKS_PER_PAGE])
-        self._assert_page_does_not_contain_books(books_knizhny_voz)
+        self.assert_page_contains_books(books_kobo[:BOOKS_PER_PAGE])
+        self.assert_page_does_not_contain_books(books_knizhny_voz)
 
         # Go to next page and make sure that filter remains.
         self.scroll_and_click(
             self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
-        self._assert_page_contains_books(books_kobo[BOOKS_PER_PAGE:])
+        self.assert_page_contains_books(books_kobo[BOOKS_PER_PAGE:])
 
         # Go to genre page and make sure that filter remains.
         self.driver.find_element(By.LINK_TEXT,
                                  self.fake_data.tag_classics.name).click()
-        self._assert_page_contains_books(books_kobo[:BOOKS_PER_PAGE])
+        self.assert_page_contains_books(books_kobo[:BOOKS_PER_PAGE])
 
     def test_all_books_with_custom_limit(self):
         for i, d in enumerate(self._last_n_days(100)):
@@ -139,11 +121,11 @@ class CatalogPageTests(WebdriverTestCase):
                 date=d,
             )
         self.driver.get(f'{self.live_server_url}/catalog?limit=50')
-        self.assertEqual(len(self._get_all_books_on_page()), 50)
+        self.assertEqual(len(self.get_all_books_on_page()), 50)
         # Go to next page and make sure that limit remains.
         self.scroll_and_click(
             self.driver.find_element(By.CSS_SELECTOR, '.next-page'))
-        self.assertEqual(len(self._get_all_books_on_page()), 50)
+        self.assertEqual(len(self.get_all_books_on_page()), 50)
 
     def test_limit_of_author_list_on_book_preview(self):
         self.fake_data.create_book_with_single_narration(f'Кніга A', authors=[
@@ -197,8 +179,8 @@ class CatalogPageTests(WebdriverTestCase):
         self.driver.get(f'{self.live_server_url}/catalog')
         self.driver.find_element(
             By.LINK_TEXT, self.fake_data.tag_read_by_author.name).click()
-        self._assert_page_contains_books([book_read_by_author])
-        self._assert_page_does_not_contain_books([book_read_by_someone_else])
+        self.assert_page_contains_books([book_read_by_author])
+        self.assert_page_does_not_contain_books([book_read_by_someone_else])
 
     def test_language_filter(self):
         book_belarusian = self.fake_data.create_book_with_single_narration(
@@ -224,23 +206,23 @@ class CatalogPageTests(WebdriverTestCase):
         self.driver.get(f'{self.live_server_url}/catalog')
 
         self._choose_filter('#filter-language', 'беларуская')
-        self._assert_page_contains_books(
+        self.assert_page_contains_books(
             [book_belarusian, book_both_languages])
-        self._assert_page_does_not_contain_books([book_russian])
+        self.assert_page_does_not_contain_books([book_russian])
 
         self._choose_filter('#filter-language', 'усе')
-        self._assert_page_contains_books(
+        self.assert_page_contains_books(
             [book_russian, book_belarusian, book_both_languages])
 
         self._choose_filter('#filter-language', 'руская')
-        self._assert_page_contains_books([book_russian, book_both_languages])
-        self._assert_page_does_not_contain_books([book_belarusian])
+        self.assert_page_contains_books([book_russian, book_both_languages])
+        self.assert_page_does_not_contain_books([book_belarusian])
 
         # Ensure that language filter remains when navigating to other pages.
         self.driver.find_element(By.LINK_TEXT,
                                  self.fake_data.tag_classics.name).click()
-        self._assert_page_contains_books([book_russian])
-        self._assert_page_does_not_contain_books([book_belarusian])
+        self.assert_page_contains_books([book_russian])
+        self.assert_page_does_not_contain_books([book_belarusian])
 
     def test_price_filter(self):
         book_paid = self.fake_data.create_book_with_single_narration(
@@ -266,18 +248,18 @@ class CatalogPageTests(WebdriverTestCase):
         self.driver.get(f'{self.live_server_url}/catalog')
 
         self._choose_filter('#filter-price', 'платныя')
-        self._assert_page_contains_books([book_paid, book_both])
-        self._assert_page_does_not_contain_books([book_free])
+        self.assert_page_contains_books([book_paid, book_both])
+        self.assert_page_does_not_contain_books([book_free])
 
         self._choose_filter('#filter-price', 'усе')
-        self._assert_page_contains_books([book_paid, book_free, book_both])
+        self.assert_page_contains_books([book_paid, book_free, book_both])
 
         self._choose_filter('#filter-price', 'бясплатныя')
-        self._assert_page_contains_books([book_free, book_both])
-        self._assert_page_does_not_contain_books([book_paid])
+        self.assert_page_contains_books([book_free, book_both])
+        self.assert_page_does_not_contain_books([book_paid])
 
         # Ensure that price filter remains when navigating to other pages.
         self.driver.find_element(By.LINK_TEXT,
                                  self.fake_data.tag_classics.name).click()
-        self._assert_page_contains_books([book_free])
-        self._assert_page_does_not_contain_books([book_paid, book_both])
+        self.assert_page_contains_books([book_free])
+        self.assert_page_does_not_contain_books([book_paid, book_both])

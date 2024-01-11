@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load books_extras %}
+{% load i18n %}
+
+{% block title %}{% dtranslate title %}{% endblock title %}
+{% block og_title %}{{ title }}{%endblock og_title%}
+
+
+{% block content %}
+<div class="container">
+    <div class="row" id="books">
+        <h1>{% dtranslate title %}</h1>
+        {% include 'partials/_books_list.html' with books=books%}
+    </div>
+</div>
+{% endblock content %}

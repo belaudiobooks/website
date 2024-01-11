@@ -1,8 +1,7 @@
 '''Various helper template filters for books.'''
 
 from atexit import register
-from typing import List, Optional, Tuple
-from zoneinfo import ZoneInfo
+from typing import Optional
 from django import template
 from datetime import datetime
 from django.utils import html
@@ -11,6 +10,7 @@ from django.utils.translation import gettext as _
 import belorthography
 
 from books import models, image_cache
+from books.constants import MONTHS
 
 register = template.Library()
 
@@ -104,29 +104,6 @@ COVER_PATTERNS = [
 def colors(narration: models.Narration, ind=0) -> str:
     '''Returns random cover template for a narration that has no cover.'''
     return COVER_PATTERNS[(narration.book.uuid.int + ind) % len(COVER_PATTERNS)]
-
-
-MONTHS: List[Tuple[str, str]] = [
-    ('снежань', 'снежня'),
-    ('люты', 'лютага'),
-    ('сакавік', 'сакавіка'),
-    ('красавік', 'красавіка'),
-    ('травень', 'траўня'),
-    ('чэрвень', 'чэрвеня'),
-    ('ліпень', 'ліпеня'),
-    ('жнівень', 'жніўня'),
-    ('верасень', 'верасня'),
-    ('кастрычнік', 'кастрычніка'),
-    ('лістапад', 'лістапада'),
-    ('студзень', 'студзеня'),
-]
-
-
-@register.simple_tag
-def books_of_the_month() -> str:
-    '''Returns text corresponding to current month.'''
-    month = datetime.now(ZoneInfo('Europe/Minsk')).month
-    return f'Кнігі {MONTHS[month - 1][0]}'
 
 
 @register.filter

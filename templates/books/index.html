@@ -5,21 +5,6 @@
 
 {% block content %}
 
-{% comment %}
-<div class="container" id="books">
-    <div class="row">
-        <h4 class="col-12 mb-4">{% books_of_the_month %}</h4>
-    </div>
-    <div class="row">
-        {% for book in promo_books %}
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                {% include 'partials/_book_preview.html' %}
-            </div>
-        {% endfor %}
-    </div>
-</div>
-{% endcomment %}
-
 <div class="container" id="books" data-test="latest-books">
     <div class="row">
         <h4 class="col-12 mb-4">{% translate 'Навінкі' %}</h4>

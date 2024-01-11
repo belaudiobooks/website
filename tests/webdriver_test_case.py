@@ -1,5 +1,5 @@
 import time
-from typing import Optional
+from typing import List, Optional, Set
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
 from selenium import webdriver
@@ -97,3 +97,20 @@ class WebdriverTestCase(StaticLiveServerTestCase):
             lambda wd: autocomplete.find_element(by=By.LINK_TEXT, value=text),
             f'Did not see suggestion with text "{text}". All suggestions: {autocomplete.text}')
         self.assertEqual(link, element.get_dom_attribute('href'))
+
+    def assert_page_contains_books(self, books: List[models.Book]):
+        titles = self.get_all_books_on_page()
+        for book in books:
+            self.assertIn(book.title, titles)
+
+    def assert_page_does_not_contain_books(self,
+                                            books: List[models.Book]):
+        titles = self.get_all_books_on_page()
+        for book in books:
+            self.assertNotIn(book.title, titles)
+
+    def get_all_books_on_page(self) -> Set[str]:
+        return set([
+            el.text for el in self.driver.find_elements(
+                By.CSS_SELECTOR, '[data-test="book-title"]')
+        ])

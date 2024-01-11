@@ -185,7 +185,7 @@ msgstr "Link Id"
 msgid "URL"
 msgstr "URL"
 
-#: books/templatetags/books_extras.py:159
+#: books/templatetags/books_extras.py:136
 msgid "Крыніца"
 msgstr "Krynica"
 
@@ -1202,7 +1202,7 @@ msgstr ""
 "                                Staronka %(cur)s z %(total)s\n"
 "                                "
 
-#: templates/books/index.html:25
+#: templates/books/index.html:10
 msgid "Навінкі"
 msgstr "Navinki"
 

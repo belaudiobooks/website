@@ -5,6 +5,8 @@ urlpatterns = [
     path('', catalog.index, name='index'),
     path('catalog', catalog.catalog, name='catalog-all-books'),
     path('catalog/<slug:tag_slug>', catalog.catalog, name='catalog-for-tag'),
+    path('releases/<int:year>', catalog.releases),
+    path('releases/<int:year>/<int:month>', catalog.releases),
     path('books/<slug:slug>', book.book_detail, name='book-detail-page'),
     path('person/<slug:slug>', person.person_detail,
          name='person-detail-page'),

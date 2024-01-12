@@ -200,6 +200,9 @@ else:
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'books/static')]
+    # Keep alive and health checking DB connections
+    CONN_MAX_AGE = None
+    CONN_HEALTH_CHECKS = True
 
     # StackDriver setup
     client = logging.Client()

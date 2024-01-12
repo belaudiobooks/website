@@ -16,4 +16,8 @@ handlers:
 # Enable warmup requests to prepare instance for production load
 inbound_services:
 - warmup
+# App Engine scaling policy:
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
 # [END django_app]

@@ -19,9 +19,9 @@ class PersonPageTests(WebdriverTestCase):
         self.assertGreater(len(books), 0)
         for book in books:
             books_links = section.find_elements(By.LINK_TEXT, book.title)
-            self.assertEquals(
+            self.assertEqual(
                 1, len(books_links), f'Book "{book.title}" not found or found more than once')
-            self.assertEquals(f'/books/{book.slug}', books_links[0].get_dom_attribute('href'))
+            self.assertEqual(f'/books/{book.slug}', books_links[0].get_dom_attribute('href'))
 
     def test_shows_correct_books(self):
         book_authored_1 = self.fake_data.create_book_with_single_narration(
@@ -69,16 +69,16 @@ class PersonPageTests(WebdriverTestCase):
 
         # No citation should be rendered by default, when photo_source is not set.
         self.driver.get(self._get_person_url())
-        self.assertEquals(0, self.count_elements('[data-test="bio"] .citation'))
+        self.assertEqual(0, self.count_elements('[data-test="bio"] .citation'))
 
         self.person.photo_source = 'YouTube;https://www.youtube.com/watch?v=123'
         self.person.save()
 
         self.driver.get(self._get_person_url())
-        self.assertEquals(1, self.count_elements('[data-test="bio"] .citation'))
+        self.assertEqual(1, self.count_elements('[data-test="bio"] .citation'))
         source_element = self.driver.find_element(
             By.CSS_SELECTOR, '[data-test="bio"] .citation')
-        self.assertEquals('Крыніца: YouTube', source_element.text)
-        self.assertEquals(
+        self.assertEqual('Крыніца: YouTube', source_element.text)
+        self.assertEqual(
             'https://www.youtube.com/watch?v=123',
             source_element.find_element(By.CSS_SELECTOR, 'a').get_dom_attribute('href'))

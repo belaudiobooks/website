@@ -35,11 +35,11 @@ class DataValidationTests(WebdriverTestCase):
         fake_data.person_ales.save()
 
         response = requests.get(f'{self.live_server_url}/job/generate_data_json', timeout=20)
-        self.assertEquals(204, response.status_code)
+        self.assertEqual(204, response.status_code)
 
         response = requests.get(f'{self.live_server_url}/data.json', timeout=20)
-        self.assertEquals(200, response.status_code)
-        self.assertEquals( \
+        self.assertEqual(200, response.status_code)
+        self.assertEqual( \
             {'books': [{'authors': [str(fake_data.person_ales.uuid)],
                         'description': 'Book description',
                         'description_source': '',

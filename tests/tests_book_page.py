@@ -43,7 +43,7 @@ class BookPageTests(WebdriverTestCase):
         self.assertGreaterEqual(len(persons), 1)
         for person in persons:
             elem = section.find_element(By.LINK_TEXT, person.name)
-            self.assertEquals(f'/person/{person.slug}', elem.get_dom_attribute('href'))
+            self.assertEqual(f'/person/{person.slug}', elem.get_dom_attribute('href'))
 
     def _check_narration_links_present(self, expected_section: Union[models.Book, models.Narration],
                                        narration: models.Narration):
@@ -51,7 +51,7 @@ class BookPageTests(WebdriverTestCase):
         for link in narration.links.all():
             caption = link.url_type.caption
             elem = section.find_element(By.LINK_TEXT, caption)
-            self.assertEquals(link.url, elem.get_dom_attribute('href'))
+            self.assertEqual(link.url, elem.get_dom_attribute('href'))
 
     def _create_narration(self, language: models.Language,
                           narrator: models.Person,
@@ -247,9 +247,9 @@ class BookPageTests(WebdriverTestCase):
         self.driver.get(self._get_book_url())
 
         # When book has a single narration - only book cover is displayed.
-        self.assertEquals(
+        self.assertEqual(
             1, self.count_elements('[data-test="book-cover"] .cover-large'))
-        self.assertEquals(
+        self.assertEqual(
             0, self.count_elements('[data-test="narration-cover"] .cover-large'))
 
         # When a book has two or more narrations - we display covers per narration.
@@ -261,9 +261,9 @@ class BookPageTests(WebdriverTestCase):
         )
         self.driver.get(self._get_book_url())
 
-        self.assertEquals(
+        self.assertEqual(
             0, self.count_elements('[data-test="book-cover"] .cover-large'))
-        self.assertEquals(
+        self.assertEqual(
             2, self.count_elements('[data-test="narration-cover"] .cover-large'))
 
     def test_cover_source_rendered_correctly(self):
@@ -273,17 +273,17 @@ class BookPageTests(WebdriverTestCase):
 
         # No citation should be rendered by default, when cover_image_source is not set.
         self.driver.get(self._get_book_url())
-        self.assertEquals(0, self.count_elements('[data-test="book-cover"] .citation'))
+        self.assertEqual(0, self.count_elements('[data-test="book-cover"] .citation'))
 
         narration.cover_image_source = 'YouTube;https://www.youtube.com/watch?v=123'
         narration.save()
 
         self.driver.get(self._get_book_url())
-        self.assertEquals(1, self.count_elements('[data-test="book-cover"] .citation'))
+        self.assertEqual(1, self.count_elements('[data-test="book-cover"] .citation'))
         source_element = self.driver.find_element(
             By.CSS_SELECTOR, '[data-test="book-cover"] .citation')
-        self.assertEquals('Крыніца: YouTube', source_element.text)
-        self.assertEquals(
+        self.assertEqual('Крыніца: YouTube', source_element.text)
+        self.assertEqual(
             'https://www.youtube.com/watch?v=123',
             source_element.find_element(By.CSS_SELECTOR, 'a').get_dom_attribute('href'))
 
@@ -296,24 +296,24 @@ class BookPageTests(WebdriverTestCase):
 
         # No citation should be rendered by default, when cover_image_source is not set.
         self.driver.get(self._get_book_url())
-        self.assertEquals(0, self.count_elements('[data-test="book-cover"] .citation'))
+        self.assertEqual(0, self.count_elements('[data-test="book-cover"] .citation'))
 
     def test_slug_generation(self):
         book1 = models.Book.objects.create(
             title='Казкі',
         )
-        self.assertEquals('kazki', book1.slug)
+        self.assertEqual('kazki', book1.slug)
 
         # test for a bug when saving again might detect a slug conflict coming from the
         # book itself
         book1.save()
-        self.assertEquals('kazki', book1.slug)
+        self.assertEqual('kazki', book1.slug)
 
         book2 = models.Book.objects.create(
             title='Казкі',
         )
-        self.assertEquals('kazki-2', book2.slug)
+        self.assertEqual('kazki-2', book2.slug)
         book3 = models.Book.objects.create(
             title='Казкі',
         )
-        self.assertEquals('kazki-3', book3.slug)
+        self.assertEqual('kazki-3', book3.slug)

@@ -56,9 +56,9 @@ class HomePageTests(WebdriverTestCase):
     def assert_genre_section_correct(self, tag: models.Tag, expected_more_books_text: str):
         section = self.driver.find_element(
             By.CSS_SELECTOR, f'[data-test="tag-{tag.slug}"]')
-        self.assertEquals(self.count_elements('.card', section), 6)
+        self.assertEqual(self.count_elements('.card', section), 6)
         more_books = section.find_element(By.CSS_SELECTOR, '.tag-selected')
-        self.assertEquals(more_books.text, expected_more_books_text)
+        self.assertEqual(more_books.text, expected_more_books_text)
         self.assertIn(f'/catalog/{tag.slug}', more_books.get_attribute('href'))
 
     def test_book_count_for_genre_is_correct(self):

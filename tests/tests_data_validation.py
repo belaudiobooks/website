@@ -1,8 +1,6 @@
 from tests.fake_data import FakeData
 from tests.webdriver_test_case import WebdriverTestCase
 
-from books import models
-from tests.worker import fetch_head_urls
 import requests
 
 

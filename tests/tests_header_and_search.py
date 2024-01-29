@@ -118,8 +118,6 @@ class HeaderAndSearchTests(WebdriverTestCase):
         self.assertIn('/search', self.driver.current_url)
         search_results = self.driver.find_elements(By.CSS_SELECTOR,
                                                    '#books .card')
-        print(self.driver.find_element(By.CSS_SELECTOR,
-                                                   '#books').text)
         self.assertEqual(
             f'Вынікі пошука \'audiobooks.by\'',
             self.driver.find_element(By.CSS_SELECTOR, '#searched-query').text)

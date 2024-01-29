@@ -311,6 +311,10 @@ class Narration(models.Model):
                                           ])
 
     date = models.DateField(_('Release Date'), auto_now_add=False, null=False)
+    preview_url = models.CharField(_('Preview URL'),
+                                   max_length=100,
+                                   blank=True,
+                                   default='')
 
     def __str__(self) -> str:
         return '%s read by %s' % (

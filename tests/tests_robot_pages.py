@@ -1,8 +1,6 @@
 import requests
-from books import models
 from books.views import articles
 from tests.webdriver_test_case import WebdriverTestCase
-from tests.worker import fetch_head_urls
 
 
 class RobotPagesTests(WebdriverTestCase):
@@ -43,9 +41,7 @@ class RobotPagesTests(WebdriverTestCase):
 
     def test_all_sitemap_links_return_200(self):
         sitemap = requests.get(self.get_sitemap_url()).text.splitlines()
-        errors = [
-            status for status in fetch_head_urls(sitemap)
-            if status.response.status_code != 200
-            and status.response.status_code != 302
-        ]
-        self.assertListEqual(errors, [])
+
+        for url in sitemap:
+            self.assertIn(requests.head(url, timeout=20).status_code, [200, 302],
+                          f'Bad return code for url {url}')

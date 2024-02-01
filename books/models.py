@@ -192,10 +192,6 @@ class Book(models.Model):
                               max_length=20,
                               choices=BookStatus.choices,
                               blank=False)
-    preview_url = models.CharField(_('Preview URL'),
-                                   max_length=100,
-                                   blank=True,
-                                   default='')
     livelib_url = models.CharField(_('LiveLib URL'),
                                    max_length=256,
                                    blank=True,

@@ -145,6 +145,16 @@ class BookPageTests(WebdriverTestCase):
         header = self.driver.find_element(By.CSS_SELECTOR, '.links-header')
         self.assertIn('Дзе купіць', header.text)
 
+    def test_book_with_paid_narration_and_and_preview_url_has_link(self):
+        narration = self.book.narrations.first()
+        narration.paid = True
+        narration.preview_url = "https://youtube.com/ttt"
+        narration.save()
+        self.driver.get(self._get_book_url())
+        elem = self.driver.find_element(By.LINK_TEXT, "YouTube")
+        self.assertEqual('https://youtube.com/ttt',
+                         elem.get_attribute("href"))
+
     def test_russian_only_books_show_both_titles(self):
         self.book.title = 'Першая кніга'
         self.book.title_ru = 'Первая книга'

@@ -84,11 +84,6 @@
                 {% endif %}
                 {% cite_source book.description_source "cit-description" %}
             </div>
-
-            {% if book.preview_url %}
-                {% translate "Першую частку можна паслухаць бясплатна на" %} <a href="{{ book.preview_url }}" target="_blank">YouTube</a>.
-            {% endif %}
-
             {% if book.livelib_url %}
             <div class="mb-4">
                 {% translate "Водгукі на" %} <a href="{{ book.livelib_url }}" target="_blank">LiveLib</a>
@@ -139,6 +134,9 @@
                         {% dtranslate narration.description as narration_description %}
                         {{ narration_description | markdownify:"book_description" | linebreaks }}
                     </div>
+                {% endif %}
+                {% if narration.paid and narration.preview_url %}
+                        <div class="my-4" data-test="narration-description">{% translate "Першую частку можна паслухаць бясплатна на" %} <a href="{{ narration.preview_url }}" target="_blank">YouTube</a>.</div>
                 {% endif %}
                 <strong>
                 {% if narration.paid %}

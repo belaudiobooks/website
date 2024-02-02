@@ -46,7 +46,7 @@ class NarrationSimpleSerializer(serializers.ModelSerializer):
         fields = [
             'uuid', 'narrators', 'links', 'duration', 'publishers', 'paid',
             'language', 'translators', 'cover_image', 'cover_image_source', 'date',
-            'description',
+            'description', 'preview_url'
         ]
 
 

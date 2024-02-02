@@ -14,7 +14,7 @@ This project is created to allow users quickly find audioboooks that are transla
 * `seed_media` - folder containing images for local development (fake book cover, people photo).
 * `tests` - webdriver tests.
 
-## Backend setup
+## Setup
 
 **Note: You should have Python installed on your local env**
 
@@ -61,7 +61,21 @@ This command does two things:
 
 Running `seed_db` will overwrite existing `db.sqlite3` and `media`.
 
-### Run the project:
+### Algolia setup (optional)
+
+We use http://algolia.com to implement fast, fuzzy search. Algolia is a cloud service where we push JSON built from books/people and then use HTTP API to search over that data. For local development algolia is not necessary unless you work on the search part. To setup algolia you need to set a few variables, check .env.dist. To get app id and API keys - ask @nbeloglazov to add you to the algolia project.
+
+To push data to algolia you can use the following command:
+
+```shell
+python manage.py push_data_to_algolia
+```
+
+Also that command can be triggered by visiting `/job/push_data_to_algolia` url. This is used by hourly GCP job that triggers sync with algolia. Currently we don't update algolia on every DB write. The job is setup via `cron.yaml` file. To deploy it run `gcloud app deploy cron.yaml`.
+
+## Running
+
+### Run the website
 ```
 python manage.py runserver
 ```
@@ -78,17 +92,24 @@ python manage.py test --verbosity=2
 
 We have only integration webdriver tests that launch server, fill it with test data and then use webdriver to interact with the site and verify that it's behaving correctly.
 
-### Algolia setup
+## Linting and formatting
 
-We use http://algolia.com to implement fast, fuzzy search. Algolia is a cloud service where we push JSON built from books/people and then use HTTP API to search over that data. For local development algolia is not necessary unless you work on the search part. To setup algolia you need to set a few variables, check .env.dist. To get app id and API keys - ask @nbeloglazov to add you to the algolia project.
+We use [Black](https://github.com/psf/black) for Python code formatting and [Flake8](https://flake8.pycqa.org/en/latest/) for linting.
 
-To push data to algolia you can use the following command:
+One-time install:
 
-```shell
-python manage.py push_data_to_algolia
+```bash
+pip install pre-commit
+pre-commit install
 ```
 
-Also that command can be triggered by visiting `/job/push_data_to_algolia` url. This is used by hourly GCP job that triggers sync with algolia. Currently we don't update algolia on every DB write. The job is setup via `cron.yaml` file. To deploy it run `gcloud app deploy cron.yaml`.
+To run formatter and linter:
+
+```
+pre-commit
+```
+
+Additionally it will automatically run formatter and linter on `git commit`.
 
 ## Google Cloud Setup and Deployment
 Setup was followed by this tutorial: https://cloud.google.com/python/django/appengine with the adjustment to the our application.

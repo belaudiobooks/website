@@ -160,7 +160,6 @@ def fill_with_data():
         description_source='Github;https://github.com/belaudiobooks/website',
         status=BookStatus.ACTIVE,
         livelib_url='https://www.livelib.ru/book/1000000000',
-        preview_url='https://youtube.com',
     )
     megabook.authors.set([person_adam, person_bahdana, person_valer])
     megabook.tag.set([tag_proza, tag_classics, tag_children])
@@ -173,6 +172,7 @@ def fill_with_data():
         description='Апісанне першай агучкі',
         cover_image='covers/megabook_1.png',
         cover_image_source='ChatGPT;https://chat.openai.com',
+        preview_url='https://youtube.com',
     )
     megabook_nar_1.narrators.set([person_adam, person_bahdana, person_valer])
     megabook_nar_1.translators.set([person_adam, person_bahdana, person_valer])

@@ -27,6 +27,8 @@ class DataValidationTests(WebdriverTestCase):
         narration = book.narrations.first()
         narration.description = 'Narration description'
         narration.date = '2023-11-07'
+        narration.paid = True
+        narration.preview_url = 'https://youtube.com/'
         narration.save()
 
         fake_data.person_ales.description = 'Ales description'
@@ -50,7 +52,8 @@ class DataValidationTests(WebdriverTestCase):
                                         'links': [{'url': 'https://kobo.com/book-1',
                                                    'url_type': fake_data.link_type_kobo.pk}],
                                         'narrators': [str(fake_data.person_bela.uuid)],
-                                        'paid': False,
+                                        'paid': True,
+                                        'preview_url': 'https://youtube.com/',
                                         'publishers': [str(publisher.uuid)],
                                         'translators': [str(fake_data.person_viktar.uuid)],
                                         'uuid': str(book.narrations.first().uuid)}],

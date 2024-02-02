@@ -1,6 +1,6 @@
 # Audiobooks backend
 
-This project is created to allow users quickly find audioboooks that are translated to Belarusian
+This TEST project is created to allow users quickly find audioboooks that are translated to Belarusian
 
 ![Django CI](https://github.com/belaudiobooks/website/actions/workflows/django.yml/badge.svg)
 

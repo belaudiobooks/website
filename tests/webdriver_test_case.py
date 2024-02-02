@@ -116,7 +116,7 @@ class WebdriverTestCase(StaticLiveServerTestCase):
                 By.CSS_SELECTOR, '[data-test="book-title"]')
         ])
 
-    def init_algolia(self):
+    def init_algolia_or_skip_test(self):
         # Skip algolia tests when credentials are missing. This is needed for Github
         # PR where Github Actions don't have access to credentials for external
         # PRs.

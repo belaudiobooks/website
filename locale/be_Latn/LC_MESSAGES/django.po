@@ -101,87 +101,87 @@ msgstr "Promoted"
 msgid "Status"
 msgstr "Status"
 
-#: books/models.py:195 books/models.py:314
-msgid "Preview URL"
-msgstr "Preview URL"
-
-#: books/models.py:199
+#: books/models.py:195
 msgid "LiveLib URL"
 msgstr "LiveLib URL"
 
-#: books/models.py:233
+#: books/models.py:229
 msgid "Publisher ID"
 msgstr "Publisher ID"
 
-#: books/models.py:238
+#: books/models.py:234
 msgid "Publisher Name"
 msgstr "Publisher Name"
 
-#: books/models.py:239
+#: books/models.py:235
 msgid "Publisher Slug"
 msgstr "Publisher Slug"
 
-#: books/models.py:245
+#: books/models.py:241
 msgid "Publisher Website"
 msgstr "Publisher Website"
 
-#: books/models.py:250
+#: books/models.py:246
 msgid "Publisher Description"
 msgstr "Publisher Description"
 
-#: books/models.py:267
+#: books/models.py:263
 msgid "Narration ID"
 msgstr "Narration ID"
 
-#: books/models.py:282
+#: books/models.py:278
 msgid "Is narration paid?"
 msgstr "Is narration paid?"
 
-#: books/models.py:284
+#: books/models.py:280
 msgid "Language"
 msgstr "Language"
 
-#: books/models.py:289
+#: books/models.py:285
 msgid "Duration"
 msgstr "Duration"
 
-#: books/models.py:295
+#: books/models.py:291
 msgid "Narration Description"
 msgstr "Narration Description"
 
-#: books/models.py:302
+#: books/models.py:298
 msgid "Cover Source"
 msgstr "Cover Source"
 
-#: books/models.py:313
+#: books/models.py:309
 msgid "Release Date"
 msgstr "Release Date"
 
-#: books/models.py:344
+#: books/models.py:310
+msgid "Preview URL"
+msgstr "Preview URL"
+
+#: books/models.py:340
 msgid "Link Type Name"
 msgstr "Link Type Name"
 
-#: books/models.py:348
+#: books/models.py:344
 msgid "Link Caption"
 msgstr "Link Caption"
 
-#: books/models.py:353
+#: books/models.py:349
 msgid "Disabled"
 msgstr "Disabled"
 
-#: books/models.py:354
+#: books/models.py:350
 msgid "Url regex"
 msgstr "Url regex"
 
-#: books/models.py:358
+#: books/models.py:354
 msgid "Availability"
 msgstr "Availability"
 
-#: books/models.py:375
+#: books/models.py:371
 msgid "Link Id"
 msgstr "Link Id"
 
-#: books/models.py:380
+#: books/models.py:376
 msgid "URL"
 msgstr "URL"
 

@@ -2,7 +2,6 @@ from datetime import date, timedelta
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
-from django.conf import settings
 
 class HeaderAndSearchTests(WebdriverTestCase):
     '''Selenium tests for header elements including search.'''
@@ -46,13 +45,8 @@ class HeaderAndSearchTests(WebdriverTestCase):
         self.assertEqual(f'{self.live_server_url}/about',
                          self.driver.current_url)
 
-    def _init_algolia(self) -> None:
-        if settings.ALGOLIA_APPLICATION_ID == '':
-            self.skipTest("Algolia credentials are not provided. Skipping test.")
-        self.driver.get(f'{self.live_server_url}/job/push_data_to_algolia')
-
     def test_client_side_search_book(self):
-        self._init_algolia()
+        self.init_algolia()
         self.driver.get(self.live_server_url)
         search = self.driver.find_element(By.CSS_SELECTOR, '#search')
         for query in ['каханне', 'КАХАННЕ', 'ЛюБвИ']:
@@ -62,7 +56,7 @@ class HeaderAndSearchTests(WebdriverTestCase):
                                             '/books/kniga-pra-kakhanne')
 
     def test_client_side_search_author(self):
-        self._init_algolia()
+        self.init_algolia()
         self.driver.get(self.live_server_url)
         search = self.driver.find_element(By.CSS_SELECTOR, '#search')
         for query in ['алесь', 'АЛЕСЬ', 'Александр']:
@@ -72,7 +66,7 @@ class HeaderAndSearchTests(WebdriverTestCase):
                                             '/person/ales-alesievich')
 
     def test_client_side_search_publisher(self):
-        self._init_algolia()
+        self.init_algolia()
         self.driver.get(self.live_server_url)
         search = self.driver.find_element(By.CSS_SELECTOR, '#search')
         for query in ['audiob', 'audiobooks.by', 'AUDIOBO']:
@@ -83,7 +77,7 @@ class HeaderAndSearchTests(WebdriverTestCase):
                 f'/publisher/{self.fake_data.publisher_audiobooksby.slug}')
 
     def test_server_side_searc_author(self):
-        self._init_algolia()
+        self.init_algolia()
         self.driver.get(self.live_server_url)
         search = self.driver.find_element(By.CSS_SELECTOR, '#search')
         search.send_keys('алесявіч')
@@ -112,7 +106,7 @@ class HeaderAndSearchTests(WebdriverTestCase):
         self.assertIn(self.book.title, item.text)
 
     def test_server_side_search_publisher(self):
-        self._init_algolia()
+        self.init_algolia()
         self.driver.get(self.live_server_url)
         search = self.driver.find_element(By.CSS_SELECTOR, '#search')
         search.send_keys('audiobooks.by')

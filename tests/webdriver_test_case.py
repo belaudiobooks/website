@@ -8,6 +8,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
+from django.conf import settings
 
 from books import models
 from tests import fake_data
@@ -114,3 +115,11 @@ class WebdriverTestCase(StaticLiveServerTestCase):
             el.text for el in self.driver.find_elements(
                 By.CSS_SELECTOR, '[data-test="book-title"]')
         ])
+
+    def init_algolia(self):
+        # Skip algolia tests when credentials are missing. This is needed for Github
+        # PR where Github Actions don't have access to credentials for external
+        # PRs.
+        if settings.ALGOLIA_APPLICATION_ID == '':
+            self.skipTest("Algolia credentials are not provided. Skipping test.")
+        self.driver.get(f'{self.live_server_url}/job/push_data_to_algolia')

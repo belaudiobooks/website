@@ -67,7 +67,7 @@ class LacinizationTests(WebdriverTestCase):
             title=f'Кніга пра каханне',
             authors=[self.fake_data.person_ales],
         )
-        self.driver.get(f'{self.live_server_url}/job/push_data_to_algolia')
+        self.init_algolia()
         self.driver.get(self.live_server_url)
         Select(
             self.driver.find_element(By.CSS_SELECTOR, '#language-switcher')

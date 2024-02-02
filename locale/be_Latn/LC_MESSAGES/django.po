@@ -101,7 +101,7 @@ msgstr "Promoted"
 msgid "Status"
 msgstr "Status"
 
-#: books/models.py:195
+#: books/models.py:195 books/models.py:314
 msgid "Preview URL"
 msgstr "Preview URL"
 
@@ -157,31 +157,31 @@ msgstr "Cover Source"
 msgid "Release Date"
 msgstr "Release Date"
 
-#: books/models.py:340
+#: books/models.py:344
 msgid "Link Type Name"
 msgstr "Link Type Name"
 
-#: books/models.py:344
+#: books/models.py:348
 msgid "Link Caption"
 msgstr "Link Caption"
 
-#: books/models.py:349
+#: books/models.py:353
 msgid "Disabled"
 msgstr "Disabled"
 
-#: books/models.py:350
+#: books/models.py:354
 msgid "Url regex"
 msgstr "Url regex"
 
-#: books/models.py:354
+#: books/models.py:358
 msgid "Availability"
 msgstr "Availability"
 
-#: books/models.py:371
+#: books/models.py:375
 msgid "Link Id"
 msgstr "Link Id"
 
-#: books/models.py:376
+#: books/models.py:380
 msgid "URL"
 msgstr "URL"
 
@@ -1136,36 +1136,36 @@ msgid "Мова"
 msgstr "Mova"
 
 #: templates/books/book-detail.html:89
-msgid "Першую частку можна паслухаць бясплатна на"
-msgstr "Pieršuju častku možna pasłuchać biaspłatna na"
-
-#: templates/books/book-detail.html:94
 msgid "Водгукі на"
 msgstr "Vodhuki na"
 
-#: templates/books/book-detail.html:113
+#: templates/books/book-detail.html:108
 #, fuzzy
 #| msgid "агучкі"
 msgid "Агучка"
 msgstr "Ahučka"
 
-#: templates/books/book-detail.html:122
+#: templates/books/book-detail.html:117
 msgid "Агучка: удакладняецца..."
 msgstr "Ahučka: udakładniajecca..."
 
-#: templates/books/book-detail.html:127
+#: templates/books/book-detail.html:122
 msgid "Выдавецтва:"
 msgstr "Vydaviectva:"
 
-#: templates/books/book-detail.html:135
+#: templates/books/book-detail.html:130
 msgid "Мова:"
 msgstr "Mova:"
 
-#: templates/books/book-detail.html:145
+#: templates/books/book-detail.html:139
+msgid "Першую частку можна паслухаць бясплатна на"
+msgstr "Pieršuju častku možna pasłuchać biaspłatna na"
+
+#: templates/books/book-detail.html:143
 msgid "Дзе купіць"
 msgstr "Dzie kupić"
 
-#: templates/books/book-detail.html:147
+#: templates/books/book-detail.html:145
 msgid "Дзе паслухаць бясплатна"
 msgstr "Dzie pasłuchać biaspłatna"
 

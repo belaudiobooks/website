@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
-
+from django.conf import settings
 
 class HeaderAndSearchTests(WebdriverTestCase):
     '''Selenium tests for header elements including search.'''
@@ -47,6 +47,8 @@ class HeaderAndSearchTests(WebdriverTestCase):
                          self.driver.current_url)
 
     def _init_algolia(self) -> None:
+        if settings.ALGOLIA_APPLICATION_ID == '':
+            self.skipTest("Algolia credentials are not provided. Skipping test.")
         self.driver.get(f'{self.live_server_url}/job/push_data_to_algolia')
 
     def test_client_side_search_book(self):

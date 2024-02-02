@@ -2,6 +2,7 @@
 See Command desription.
 '''
 
+import logging
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from algoliasearch.search_client import SearchClient
@@ -93,9 +94,9 @@ class Command(BaseCommand):
                 'name_lac': _lacinify(publisher.name),
                 'slug': publisher.slug,
             })
-        print(
+        logging.info(
             f'Pushing {len(data)} objects to index "{settings.ALGOLIA_INDEX}"...'
         )
         res = index.replace_all_objects(data)
         res.wait()
-        print('Completed!')
+        logging.info('Completed!')

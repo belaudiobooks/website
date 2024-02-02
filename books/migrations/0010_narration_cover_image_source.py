@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0009_auto_20231027_0427'),
+        ("books", "0009_auto_20231027_0427"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='narration',
-            name='cover_image_source',
-            field=models.CharField(blank=True, default='', max_length=500, verbose_name='Cover Source'),
+            model_name="narration",
+            name="cover_image_source",
+            field=models.CharField(
+                blank=True, default="", max_length=500, verbose_name="Cover Source"
+            ),
         ),
     ]

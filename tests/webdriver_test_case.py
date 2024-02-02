@@ -18,18 +18,18 @@ from tests import fake_data
 # without any useful info in logs.
 @override_settings(DEBUG=True)
 class WebdriverTestCase(StaticLiveServerTestCase):
-    '''Base class for all webdriver tests. Initializes webdriver and seeds DB.'''
+    """Base class for all webdriver tests. Initializes webdriver and seeds DB."""
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         options = webdriver.ChromeOptions()
-        options.add_argument('--disable-gpu')
-        options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--headless')
-        cls.driver = webdriver.Chrome(options=options,
-                                      service=ChromeService(
-                                          ChromeDriverManager().install()))
+        options.add_argument("--disable-gpu")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--headless")
+        cls.driver = webdriver.Chrome(
+            options=options, service=ChromeService(ChromeDriverManager().install())
+        )
         cls.driver.implicitly_wait(10)
 
     @classmethod
@@ -47,79 +47,87 @@ class WebdriverTestCase(StaticLiveServerTestCase):
         self.fake_data.cleanup()
 
     def scroll_into_view(self, element: WebElement) -> WebElement:
-        '''
+        """
         Scrolls given element into view. Needed for elements
         below the fold to make them clickable.
-        '''
+        """
         self.driver.execute_script(
-            'arguments[0].scrollIntoView({block: "center"})', element)
+            'arguments[0].scrollIntoView({block: "center"})', element
+        )
         # Need to add sleep as scrolling doesn't finish quickly as expected_conditions
         # don't work for some reason.
         time.sleep(1)
         return element
 
     def scroll_and_click(self, element: WebElement) -> None:
-        '''Scroll and clicks.'''
+        """Scroll and clicks."""
         self.scroll_into_view(element).click()
 
     def assert_page_contains_only_books_of_link_type(
-            self, link_type: models.LinkType) -> None:
-        '''
+        self, link_type: models.LinkType
+    ) -> None:
+        """
         Verifies that current page contains non-empty list of books and all
         books have at least one link of the given type. This is used for tests
         that verify filtering by link type.
-        '''
-        books_links = self.driver.find_elements(By.CSS_SELECTOR,
-                                                'a[data-type="book-title"]')
+        """
+        books_links = self.driver.find_elements(
+            By.CSS_SELECTOR, 'a[data-type="book-title"]'
+        )
         self.assertNotEqual(books_links, [])
         for book_link in books_links:
-            slug = book_link.get_attribute('href').split('/')[-1]
+            slug = book_link.get_attribute("href").split("/")[-1]
             book = models.Book.objects.get(slug=slug)
             narrations = list(
-                book.narrations.filter(links__url_type__name=link_type.name))
+                book.narrations.filter(links__url_type__name=link_type.name)
+            )
             self.assertNotEqual(
-                narrations, [],
-                f'Book {book.title} does not have links of type {link_type.name}'
+                narrations,
+                [],
+                f"Book {book.title} does not have links of type {link_type.name}",
             )
 
     def count_elements(self, selector: str, el: Optional[WebElement] = None) -> int:
-        '''Returns number of elements matching given selector.'''
+        """Returns number of elements matching given selector."""
         self.driver.implicitly_wait(0)
         res = len((el or self.driver).find_elements(By.CSS_SELECTOR, selector))
         self.driver.implicitly_wait(10)
         return res
 
     def wait_for_search_suggestion(self, text: str, link: str):
-        '''Helper function to check whether a suggesion is shown when user types in search.'''
-        autocomplete = self.driver.find_element(By.CSS_SELECTOR,
-                                                '#autocomplete')
+        """Helper function to check whether a suggesion is shown when user types in search."""
+        autocomplete = self.driver.find_element(By.CSS_SELECTOR, "#autocomplete")
         time.sleep(1)
         element = WebDriverWait(self.driver, 10).until(
             lambda wd: autocomplete.find_element(by=By.LINK_TEXT, value=text),
-            f'Did not see suggestion with text "{text}". All suggestions: {autocomplete.text}')
-        self.assertEqual(link, element.get_dom_attribute('href'))
+            f'Did not see suggestion with text "{text}". All suggestions: {autocomplete.text}',
+        )
+        self.assertEqual(link, element.get_dom_attribute("href"))
 
     def assert_page_contains_books(self, books: List[models.Book]):
         titles = self.get_all_books_on_page()
         for book in books:
             self.assertIn(book.title, titles)
 
-    def assert_page_does_not_contain_books(self,
-                                            books: List[models.Book]):
+    def assert_page_does_not_contain_books(self, books: List[models.Book]):
         titles = self.get_all_books_on_page()
         for book in books:
             self.assertNotIn(book.title, titles)
 
     def get_all_books_on_page(self) -> Set[str]:
-        return set([
-            el.text for el in self.driver.find_elements(
-                By.CSS_SELECTOR, '[data-test="book-title"]')
-        ])
+        return set(
+            [
+                el.text
+                for el in self.driver.find_elements(
+                    By.CSS_SELECTOR, '[data-test="book-title"]'
+                )
+            ]
+        )
 
     def init_algolia_or_skip_test(self):
         # Skip algolia tests when credentials are missing. This is needed for Github
         # PR where Github Actions don't have access to credentials for external
         # PRs.
-        if settings.ALGOLIA_APPLICATION_ID == '':
+        if settings.ALGOLIA_APPLICATION_ID == "":
             self.skipTest("Algolia credentials are not provided. Skipping test.")
-        self.driver.get(f'{self.live_server_url}/job/push_data_to_algolia')
+        self.driver.get(f"{self.live_server_url}/job/push_data_to_algolia")

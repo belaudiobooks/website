@@ -17,175 +17,175 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: books/models.py:56
+#: books/models.py:63
 msgid "Person Id"
 msgstr "Person Id"
 
-#: books/models.py:61
+#: books/models.py:69
 msgid "Person Name"
 msgstr "Person Name"
 
-#: books/models.py:62
+#: books/models.py:70
 msgid "Person Name in russian"
 msgstr "Person Name in russian"
 
-#: books/models.py:65
+#: books/models.py:71
 msgid "Person Description"
 msgstr "Person Description"
 
-#: books/models.py:66
+#: books/models.py:73
 msgid "Person Description Source"
 msgstr "Person Description Source"
 
-#: books/models.py:80
+#: books/models.py:88
 msgid "Photo Source"
 msgstr "Photo Source"
 
-#: books/models.py:90
+#: books/models.py:100
 msgid "Person slug"
 msgstr "Person slug"
 
-#: books/models.py:96
+#: books/models.py:108
 msgid "Person gender"
 msgstr "Person gender"
 
-#: books/models.py:100
+#: books/models.py:111
 msgid "Date of birth"
 msgstr "Date of birth"
 
-#: books/models.py:119
+#: books/models.py:129
 msgid "Tag"
 msgstr "Tag"
 
-#: books/models.py:120
+#: books/models.py:131
 msgid "Tag slug"
 msgstr "Tag slug"
 
-#: books/models.py:124
+#: books/models.py:133
 msgid "Tag Description"
 msgstr "Tag Description"
 
-#: books/models.py:126
+#: books/models.py:135
 msgid "Hidden"
 msgstr "Hidden"
 
-#: books/models.py:162
+#: books/models.py:175
 msgid "Book ID"
 msgstr "Book ID"
 
-#: books/models.py:167
+#: books/models.py:177
 msgid "Book Title"
 msgstr "Book Title"
 
-#: books/models.py:168
+#: books/models.py:178
 msgid "Book Title in russian"
 msgstr "Book Title in russian"
 
-#: books/models.py:171
+#: books/models.py:179
 msgid "Book Description"
 msgstr "Book Description"
 
-#: books/models.py:172
+#: books/models.py:181
 msgid "Book Description Source"
 msgstr "Book Description Source"
 
-#: books/models.py:183
+#: books/models.py:194
 msgid "slug"
 msgstr "slug"
 
-#: books/models.py:190
+#: books/models.py:202
 msgid "Promoted"
 msgstr "Promoted"
 
-#: books/models.py:191
+#: books/models.py:204
 msgid "Status"
 msgstr "Status"
 
-#: books/models.py:195
+#: books/models.py:207
 msgid "LiveLib URL"
 msgstr "LiveLib URL"
 
-#: books/models.py:229
+#: books/models.py:240
 msgid "Publisher ID"
 msgstr "Publisher ID"
 
-#: books/models.py:234
+#: books/models.py:246
 msgid "Publisher Name"
 msgstr "Publisher Name"
 
-#: books/models.py:235
+#: books/models.py:248
 msgid "Publisher Slug"
 msgstr "Publisher Slug"
 
-#: books/models.py:241
+#: books/models.py:255
 msgid "Publisher Website"
 msgstr "Publisher Website"
 
-#: books/models.py:246
+#: books/models.py:259
 msgid "Publisher Description"
 msgstr "Publisher Description"
 
-#: books/models.py:263
+#: books/models.py:278
 msgid "Narration ID"
 msgstr "Narration ID"
 
-#: books/models.py:278
+#: books/models.py:290
 msgid "Is narration paid?"
 msgstr "Is narration paid?"
 
-#: books/models.py:280
+#: books/models.py:293
 msgid "Language"
 msgstr "Language"
 
-#: books/models.py:285
+#: books/models.py:296
 msgid "Duration"
 msgstr "Duration"
 
-#: books/models.py:291
+#: books/models.py:302
 msgid "Narration Description"
 msgstr "Narration Description"
 
-#: books/models.py:298
+#: books/models.py:309
 msgid "Cover Source"
 msgstr "Cover Source"
 
-#: books/models.py:309
+#: books/models.py:321
 msgid "Release Date"
 msgstr "Release Date"
 
-#: books/models.py:310
+#: books/models.py:323
 msgid "Preview URL"
 msgstr "Preview URL"
 
-#: books/models.py:340
+#: books/models.py:353
 msgid "Link Type Name"
 msgstr "Link Type Name"
 
-#: books/models.py:344
+#: books/models.py:355
 msgid "Link Caption"
 msgstr "Link Caption"
 
-#: books/models.py:349
+#: books/models.py:358
 msgid "Disabled"
 msgstr "Disabled"
 
-#: books/models.py:350
+#: books/models.py:359
 msgid "Url regex"
 msgstr "Url regex"
 
-#: books/models.py:354
+#: books/models.py:361
 msgid "Availability"
 msgstr "Availability"
 
-#: books/models.py:371
+#: books/models.py:378
 msgid "Link Id"
 msgstr "Link Id"
 
-#: books/models.py:376
+#: books/models.py:380
 msgid "URL"
 msgstr "URL"
 
-#: books/templatetags/books_extras.py:136
+#: books/templatetags/books_extras.py:138
 msgid "Крыніца"
 msgstr "Krynica"
 
@@ -1049,34 +1049,49 @@ msgstr ""
 "</section>\n"
 
 #: templates/books/articles/lacinka.html:7
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "    Сайт audiobooks.by падтрымлівае лацінку. Вы можаце пераключыцца на яе з дапамогай меню \n"
+#| "    ўнізе кожнай старонкі. Ніжэй вы можаце паспрабаваць канвертар з кірыліцы на лацініцу, які\n"
+#| "    выкарыстоўваецца для перакладу наша сайта. \n"
 msgid ""
 "\n"
-"    Сайт audiobooks.by падтрымлівае лацінку. Вы можаце пераключыцца на яе з дапамогай меню \n"
+"    Сайт audiobooks.by падтрымлівае лацінку. Вы можаце пераключыцца на яе з дапамогай меню\n"
 "    ўнізе кожнай старонкі. Ніжэй вы можаце паспрабаваць канвертар з кірыліцы на лацініцу, які\n"
-"    выкарыстоўваецца для перакладу наша сайта. \n"
+"    выкарыстоўваецца для перакладу наша сайта.\n"
 msgstr ""
 "\n"
-"    Sajt audiobooks.by padtrymlivaje łacinku. Vy možacie pieraklučycca na jaje z dapamohaj mieniu \n"
+"    Sajt audiobooks.by padtrymlivaje łacinku. Vy možacie pieraklučycca na jaje z dapamohaj mieniu\n"
 "    ŭnizie kožnaj staronki. Nižej vy možacie pasprabavać kanviertar z kirylicy na łacinicu, jaki\n"
-"    vykarystoŭvajecca dla pierakładu naša sajta. \n"
+"    vykarystoŭvajecca dla pierakładu naša sajta.\n"
 
 #: templates/books/articles/lacinka.html:12
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "    Мы выкарыстоўваем нашу ўласную бібліятэку на пітоне \n"
+#| "    <a href=\"https://github.com/belaudiobooks/belorthography\">belorthography</a>. Калі вы жадаеце\n"
+#| "    дадаць бібліятэку для іншай мовы - можаце выкарыстаць наш \n"
+#| "    <a href=\"https://github.com/belaudiobooks/belorthography/tree/main/tests\">набор тэстаў</a>. А таксама \n"
+#| "    выкарыстаць наш рэпазіторый для хостынга вашай бібліятэкі. З пытаннямі і прапановамі пішыце на \n"
+#| "    contact@audiobooks.by альбо стварыце багу на Гітхабе. \n"
 msgid ""
 "\n"
-"    Мы выкарыстоўваем нашу ўласную бібліятэку на пітоне \n"
+"    Мы выкарыстоўваем нашу ўласную бібліятэку на пітоне\n"
 "    <a href=\"https://github.com/belaudiobooks/belorthography\">belorthography</a>. Калі вы жадаеце\n"
-"    дадаць бібліятэку для іншай мовы - можаце выкарыстаць наш \n"
-"    <a href=\"https://github.com/belaudiobooks/belorthography/tree/main/tests\">набор тэстаў</a>. А таксама \n"
-"    выкарыстаць наш рэпазіторый для хостынга вашай бібліятэкі. З пытаннямі і прапановамі пішыце на \n"
-"    contact@audiobooks.by альбо стварыце багу на Гітхабе. \n"
+"    дадаць бібліятэку для іншай мовы - можаце выкарыстаць наш\n"
+"    <a href=\"https://github.com/belaudiobooks/belorthography/tree/main/tests\">набор тэстаў</a>. А таксама\n"
+"    выкарыстаць наш рэпазіторый для хостынга вашай бібліятэкі. З пытаннямі і прапановамі пішыце на\n"
+"    contact@audiobooks.by альбо стварыце багу на Гітхабе.\n"
 msgstr ""
 "\n"
-"    My vykarystoŭvajem našu ŭłasnuju biblijateku na pitonie \n"
+"    My vykarystoŭvajem našu ŭłasnuju biblijateku na pitonie\n"
 "    <a href=\"https://github.com/belaudiobooks/belorthography\">belorthography</a>. Kali vy žadajecie\n"
-"    dadać biblijateku dla inšaj movy - možacie vykarystać naš \n"
-"    <a href=\"https://github.com/belaudiobooks/belorthography/tree/main/tests\">nabor testaŭ</a>. A taksama \n"
-"    vykarystać naš repazitoryj dla chostynha vašaj biblijateki. Z pytańniami i prapanovami pišycie na \n"
-"    contact@audiobooks.by albo stvarycie bahu na Hitchabie. \n"
+"    dadać biblijateku dla inšaj movy - možacie vykarystać naš\n"
+"    <a href=\"https://github.com/belaudiobooks/belorthography/tree/main/tests\">nabor testaŭ</a>. A taksama\n"
+"    vykarystać naš repazitoryj dla chostynha vašaj biblijateki. Z pytańniami i prapanovami pišycie na\n"
+"    contact@audiobooks.by albo stvarycie bahu na Hitchabie.\n"
 
 #: templates/books/articles/lacinka.html:21
 msgid "Канвертар"

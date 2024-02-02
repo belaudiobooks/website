@@ -76,7 +76,7 @@ Also checkout admin page: http://127.0.0.1:8000/admin. Use `admin@example.com` a
 python manage.py test --verbosity=2
 ```
 
-We have only integration webdriver tests that launch server, fill it with test data and then use webdriver to interact with the site and verify that it's behaving correctly. 
+We have only integration webdriver tests that launch server, fill it with test data and then use webdriver to interact with the site and verify that it's behaving correctly.
 
 ### Algolia setup
 

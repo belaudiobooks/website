@@ -6,12 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0002_narration_duration'),
+        ("books", "0002_narration_duration"),
     ]
 
     operations = [
-        migrations.RunSQL(sql=[
-            """
+        migrations.RunSQL(
+            sql=[
+                """
             UPDATE books_narration
             SET duration = (
                 SELECT duration_sec
@@ -25,6 +26,7 @@ class Migration(migrations.Migration):
                 HAVING COUNT(*) = 1
             );
             """
-        ],
-                          reverse_sql=[]),
+            ],
+            reverse_sql=[],
+        ),
     ]

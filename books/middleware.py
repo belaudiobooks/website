@@ -8,8 +8,9 @@ class WwwRedirectMiddleware:
 
     def __call__(self, request: HttpRequest):
         host = request.get_host().partition(":")[0]
-        if host.startswith('www.'):
-            return HttpResponsePermanentRedirect(request.get_raw_uri().replace(
-                '://www.', '://'))
+        if host.startswith("www."):
+            return HttpResponsePermanentRedirect(
+                request.get_raw_uri().replace("://www.", "://")
+            )
         else:
             return self.get_response(request)

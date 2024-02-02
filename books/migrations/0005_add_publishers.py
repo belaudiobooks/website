@@ -9,24 +9,65 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0004_remove_book_duration_sec'),
+        ("books", "0004_remove_book_duration_sec"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Publisher',
+            name="Publisher",
             fields=[
-                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, unique=True, verbose_name='Publisher ID')),
-                ('name', models.CharField(default='', max_length=100, verbose_name='Publisher Name')),
-                ('slug', models.SlugField(allow_unicode=True, blank=True, max_length=100, unique=True, verbose_name='Publisher Slug')),
-                ('url', models.URLField(max_length=128, verbose_name='Publisher Website')),
-                ('logo', models.ImageField(blank=True, null=True, upload_to=functools.partial(books.models._get_image_name, *('logos',), **{}))),
-                ('description', models.TextField(blank=True, verbose_name='Publisher Description')),
+                (
+                    "uuid",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                        unique=True,
+                        verbose_name="Publisher ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        default="", max_length=100, verbose_name="Publisher Name"
+                    ),
+                ),
+                (
+                    "slug",
+                    models.SlugField(
+                        allow_unicode=True,
+                        blank=True,
+                        max_length=100,
+                        unique=True,
+                        verbose_name="Publisher Slug",
+                    ),
+                ),
+                (
+                    "url",
+                    models.URLField(max_length=128, verbose_name="Publisher Website"),
+                ),
+                (
+                    "logo",
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to=functools.partial(
+                            books.models._get_image_name, *("logos",), **{}
+                        ),
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(blank=True, verbose_name="Publisher Description"),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='narration',
-            name='publishers',
-            field=models.ManyToManyField(blank=True, related_name='narrations', to='books.Publisher'),
+            model_name="narration",
+            name="publishers",
+            field=models.ManyToManyField(
+                blank=True, related_name="narrations", to="books.Publisher"
+            ),
         ),
     ]

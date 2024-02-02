@@ -6,18 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0016_auto_20231230_0418'),
+        ("books", "0016_auto_20231230_0418"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='link',
-            name='url',
-            field=models.URLField(max_length=1024, verbose_name='Сеціўная спасылка'),
+            model_name="link",
+            name="url",
+            field=models.URLField(max_length=1024, verbose_name="Сеціўная спасылка"),
         ),
         migrations.AlterField(
-            model_name='narration',
-            name='duration',
-            field=models.DurationField(blank=True, null=True, verbose_name='Працягласць'),
+            model_name="narration",
+            name="duration",
+            field=models.DurationField(
+                blank=True, null=True, verbose_name="Працягласць"
+            ),
         ),
     ]

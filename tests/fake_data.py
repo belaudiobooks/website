@@ -15,58 +15,60 @@ class FakeData:
     def __init__(self):
         """Initialize fake data."""
         self.tag_classics = models.Tag.objects.create(
-            name='Класікі беларускай літаратуры',
-            slug='classics',
+            name="Класікі беларускай літаратуры",
+            slug="classics",
         )
         self.tag_contemporary = models.Tag.objects.create(
-            name='Сучасная проза',
-            slug='contemporary',
+            name="Сучасная проза",
+            slug="contemporary",
         )
         self.tag_read_by_author = models.Tag.objects.create(
-            name='чытае аўтар',
-            slug='cytaje-autar',
+            name="чытае аўтар",
+            slug="cytaje-autar",
         )
 
         self.link_type_knizhny_voz = models.LinkType.objects.create(
-            name='knizny_voz',
-            caption='Кніжны Воз',
+            name="knizny_voz",
+            caption="Кніжны Воз",
             icon=SimpleUploadedFile(
-                tempfile.NamedTemporaryFile(suffix=".jpg").name, b""),
+                tempfile.NamedTemporaryFile(suffix=".jpg").name, b""
+            ),
             availability=models.LinkAvailability.EVERYWHERE,
         )
         self.link_type_kobo = models.LinkType.objects.create(
-            name='kobo',
-            caption='Kobo',
+            name="kobo",
+            caption="Kobo",
             icon=SimpleUploadedFile(
-                tempfile.NamedTemporaryFile(suffix=".jpg").name, b""),
+                tempfile.NamedTemporaryFile(suffix=".jpg").name, b""
+            ),
             availability=models.LinkAvailability.EVERYWHERE,
         )
 
         self.person_ales = models.Person.objects.create(
-            name='Алесь Алесявіч',
-            name_ru='Александр Алесевич',
-            slug='ales-alesievich',
+            name="Алесь Алесявіч",
+            name_ru="Александр Алесевич",
+            slug="ales-alesievich",
             gender=models.Gender.MALE,
-            date_of_birth='1990-01-01',
+            date_of_birth="1990-01-01",
         )
         self.person_bela = models.Person.objects.create(
-            name='Бэла Бэлаўна',
-            name_ru='Белла Беловна',
-            slug='bela-belawna',
+            name="Бэла Бэлаўна",
+            name_ru="Белла Беловна",
+            slug="bela-belawna",
             gender=models.Gender.FEMALE,
-            date_of_birth='1980-02-02',
+            date_of_birth="1980-02-02",
         )
         self.person_viktar = models.Person.objects.create(
-            name='Віктар Віктаравіч',
-            name_ru='Виктор Викторович',
-            slug='viktar-viktavarich',
+            name="Віктар Віктаравіч",
+            name_ru="Виктор Викторович",
+            slug="viktar-viktavarich",
             gender=models.Gender.MALE,
-            date_of_birth='1970-03-03',
+            date_of_birth="1970-03-03",
         )
         self.person_volha = models.Person.objects.create(
-            name='Вольга Янаўна',
-            name_ru='Ольга Яновна',
-            slug='volha-yanayna',
+            name="Вольга Янаўна",
+            name_ru="Ольга Яновна",
+            slug="volha-yanayna",
             gender=models.Gender.FEMALE,
         )
 
@@ -75,12 +77,13 @@ class FakeData:
             slug="audiobooksby",
             url="https://audiobooks.by/about",
             logo=SimpleUploadedFile(
-                tempfile.NamedTemporaryFile(suffix=".jpg").name, b""),
-            description="Мы - каманда энтузіястаў.")
+                tempfile.NamedTemporaryFile(suffix=".jpg").name, b""
+            ),
+            description="Мы - каманда энтузіястаў.",
+        )
 
     def create_image(self) -> SimpleUploadedFile:
-        return SimpleUploadedFile(
-            tempfile.NamedTemporaryFile(suffix=".jpg").name, b"")
+        return SimpleUploadedFile(tempfile.NamedTemporaryFile(suffix=".jpg").name, b"")
 
     def cleanup(self):
         for link_type in models.LinkType.objects.all():
@@ -92,33 +95,32 @@ class FakeData:
         for narration in models.Narration.objects.all():
             narration.cover_image.delete()
 
-    def create_link(self, link_type: models.LinkType,
-                    book: models.Book) -> models.Link:
+    def create_link(self, link_type: models.LinkType, book: models.Book) -> models.Link:
         return models.Link.objects.create(
-            url=f'https://{link_type.name}.com/{book.slug}',
+            url=f"https://{link_type.name}.com/{book.slug}",
             url_type=link_type,
         )
 
     def create_book_with_single_narration(
-            self,
-            title: str,
-            authors: List[models.Person] = [],
-            translators: List[models.Person] = [],
-            narrators: List[models.Person] = [],
-            tags: List[models.Tag] = [],
-            link_types: List[models.LinkType] = [],
-            language: models.Language = models.Language.BELARUSIAN,
-            publishers: List[models.Publisher] = [],
-            date=date.today(),
-            duration: timedelta = timedelta(minutes=15),
-            paid: bool = False,
-            livelib_url: str = ''
+        self,
+        title: str,
+        authors: List[models.Person] = [],
+        translators: List[models.Person] = [],
+        narrators: List[models.Person] = [],
+        tags: List[models.Tag] = [],
+        link_types: List[models.LinkType] = [],
+        language: models.Language = models.Language.BELARUSIAN,
+        publishers: List[models.Publisher] = [],
+        date=date.today(),
+        duration: timedelta = timedelta(minutes=15),
+        paid: bool = False,
+        livelib_url: str = "",
     ):
         book = models.Book.objects.create(
             title=title,
-            title_ru=f'{title} по-русски',
+            title_ru=f"{title} по-русски",
             status=models.BookStatus.ACTIVE,
-            livelib_url=livelib_url
+            livelib_url=livelib_url,
         )
         book.authors.set(authors)
         book.tag.set(tags)

@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0001_initial'),
+        ("books", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='narration',
-            name='duration',
-            field=models.DurationField(blank=True, null=True, verbose_name='Duration'),
+            model_name="narration",
+            name="duration",
+            field=models.DurationField(blank=True, null=True, verbose_name="Duration"),
         ),
     ]

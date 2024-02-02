@@ -24,7 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, []))
+    ALLOWED_HOSTS=(list, []),
+)
 env_file = os.path.join(BASE_DIR, ".env")
 
 # Take environment variables from .env file
@@ -40,99 +41,99 @@ elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
     client = secretmanager.SecretManagerServiceClient()
     settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
     name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
-    payload = client.access_secret_version(
-        name=name).payload.data.decode("UTF-8")
+    payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
 
     env.read_env(io.StringIO(payload))
 else:
-    raise Exception(
-        "No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
+    raise Exception("No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
 # [END gaestd_py_django_secret_config]
 
 # False if not in os.environ because of casting above
-DEBUG = env('DEBUG')
+DEBUG = env("DEBUG")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = os.environ['SECRET_KEY']
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env("SECRET_KEY")
 
-ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework', 'django.contrib.admin', 'django.contrib.auth',
-    'django.contrib.contenttypes', 'django.contrib.sessions',
-    'django.contrib.messages', 'django.contrib.staticfiles', 'books', 'user',
-    'markdownify.apps.MarkdownifyConfig',
-    'debug_toolbar',
+    "rest_framework",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "books",
+    "user",
+    "markdownify.apps.MarkdownifyConfig",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'books.middleware.WwwRedirectMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "books.middleware.WwwRedirectMiddleware",
 ]
 
-ROOT_URLCONF = 'booksby.urls'
+ROOT_URLCONF = "booksby.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'books.context_processors.algolia',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "books.context_processors.algolia",
             ],
         },
     },
 ]
 
 MARKDOWNIFY = {
-    "default": {
-        "WHITELIST_TAGS": ["a", "p", "h1"]
-    },
-    "book_description": {
-        "WHITELIST_TAGS": ["a"]
-    }
+    "default": {"WHITELIST_TAGS": ["a", "p", "h1"]},
+    "book_description": {"WHITELIST_TAGS": ["a"]},
 }
 
-WSGI_APPLICATION = 'booksby.wsgi.application'
+WSGI_APPLICATION = "booksby.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if env('ENV') == 'local':
+if env("ENV") == "local":
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "db.sqlite3",
         },
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env("DATABASE_NAME"),
-            'USER': env("DATABASE_USER"),
-            'PASSWORD': env("DATABASE_PASSWORD"),
-            'HOST': env("DATABASE_HOST"),
-            'PORT': env("DATABASE_PORT")
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": env("DATABASE_NAME"),
+            "USER": env("DATABASE_USER"),
+            "PASSWORD": env("DATABASE_PASSWORD"),
+            "HOST": env("DATABASE_HOST"),
+            "PORT": env("DATABASE_PORT"),
         }
     }
 
@@ -141,37 +142,33 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
 USE_L10N = True
 
-LOCALE_PATHS=["locale"]
+LOCALE_PATHS = ["locale"]
 
-LANGUAGE_CODE='be'
+LANGUAGE_CODE = "be"
 
-LANGUAGES=[('be','кірыліца'),('be-latn','łacinka')]
+LANGUAGES = [("be", "кірыліца"), ("be-latn", "łacinka")]
 
 USE_TZ = True
 
@@ -182,24 +179,24 @@ INTERNAL_IPS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-if env('ENV') == 'local':
-    STATIC_URL = '/static/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'books/static')]
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if env("ENV") == "local":
+    STATIC_URL = "/static/"
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, "books/static")]
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Adding support of Google Cloud Storages
 else:
-    DEFAULT_FILE_STORAGE = 'booksby.gcloud.GoogleCloudMediaFileStorage'
-    GS_PROJECT_ID = env('GOOGLE_CLOUD_PROJECT')
-    GS_BUCKET_NAME = env('GS_BUCKET_NAME')
-    MEDIA_ROOT = 'media/'
+    DEFAULT_FILE_STORAGE = "booksby.gcloud.GoogleCloudMediaFileStorage"
+    GS_PROJECT_ID = env("GOOGLE_CLOUD_PROJECT")
+    GS_BUCKET_NAME = env("GS_BUCKET_NAME")
+    MEDIA_ROOT = "media/"
     # UPLOAD_ROOT = 'media/uploads/'
-    MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_BUCKET_NAME)
-    STATIC_URL = '/static/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'books/static')]
+    MEDIA_URL = "https://storage.googleapis.com/{}/".format(GS_BUCKET_NAME)
+    STATIC_URL = "/static/"
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, "books/static")]
     # Keep alive and health checking DB connections
     CONN_MAX_AGE = None
     CONN_HEALTH_CHECKS = True
@@ -211,24 +208,19 @@ else:
     client.setup_logging()
 
     LOGGING = {
-        'version': 1,
-        'handlers': {
-            'stackdriver': {
-                'level': 'INFO',
-                'class': 'google.cloud.logging.handlers.CloudLoggingHandler',
-                'client': client,
+        "version": 1,
+        "handlers": {
+            "stackdriver": {
+                "level": "INFO",
+                "class": "google.cloud.logging.handlers.CloudLoggingHandler",
+                "client": client,
             }
         },
-        'loggers': {
-            'django': {
-                'handlers': ['stackdriver'],
-                'level': 'INFO'
-            }
-        },
+        "loggers": {"django": {"handlers": ["stackdriver"], "level": "INFO"}},
     }
 
-    #implementation of logging to file, disabling until figuring out hot to save it in root,
-    #the above implementation should log into the Cloud Logging API
+    # implementation of logging to file, disabling until figuring out hot to save it in root,
+    # the above implementation should log into the Cloud Logging API
     # LOGGING = {
     #     'version': 1,
     #     'disable_existing_loggers': False,
@@ -253,41 +245,40 @@ else:
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom User model that supports e-mail instead of username
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = "user.User"
 
 # Variables needed for Algolia search to work
 # https://www.algolia.com/
-ALGOLIA_INDEX = env('ALGOLIA_INDEX', default='dev')
-ALGOLIA_APPLICATION_ID = env('ALGOLIA_APPLICATION_ID', default='')
-ALGOLIA_SEARCH_KEY = env('ALGOLIA_SEARCH_KEY', default='')
-ALGOLIA_MODIFY_KEY = env('ALGOLIA_MODIFY_KEY', default='')
-RESIZE_IMAGES_URL = env('RESIZE_IMAGES_URL', default='')
+ALGOLIA_INDEX = env("ALGOLIA_INDEX", default="dev")
+ALGOLIA_APPLICATION_ID = env("ALGOLIA_APPLICATION_ID", default="")
+ALGOLIA_SEARCH_KEY = env("ALGOLIA_SEARCH_KEY", default="")
+ALGOLIA_MODIFY_KEY = env("ALGOLIA_MODIFY_KEY", default="")
+RESIZE_IMAGES_URL = env("RESIZE_IMAGES_URL", default="")
 
 # for debugging sql
-if env('ENV') == 'local':
+if env("ENV") == "local":
     LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'console': {
-                'level': 'DEBUG',
-                'class': 'logging.StreamHandler',
-                'formatter': 'verbose',
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "level": "DEBUG",
+                "class": "logging.StreamHandler",
+                "formatter": "verbose",
             }
         },
-        'formatters': {
-            'verbose': {
-                'format':
-                '%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
-                'datefmt': '%Y-%m-%d %H:%M:%S',
+        "formatters": {
+            "verbose": {
+                "format": "%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
             }
         },
-        'root': {
-            'handlers': ['console'],
-            'level': 'INFO',
+        "root": {
+            "handlers": ["console"],
+            "level": "INFO",
         },
         # Uncomment to log all SQL queries
         # 'loggers': {
@@ -306,5 +297,5 @@ CACHES = {
 
 DEBUG_TOOLBAR_CONFIG = {
     # Comment the line below to enable debug toolbar.
-    'SHOW_TOOLBAR_CALLBACK': lambda r: False,
+    "SHOW_TOOLBAR_CALLBACK": lambda r: False,
 }

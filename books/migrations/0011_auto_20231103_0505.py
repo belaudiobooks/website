@@ -4,22 +4,20 @@ from django.db import migrations
 
 
 def migrate_release_date(apps, schema_editor):
-    '''Copy release date from Book to Narrations.'''
-    Book = apps.get_model('books', 'Book')
-    for idx, book in enumerate(
-            Book.objects.prefetch_related('narrations').all()):
+    """Copy release date from Book to Narrations."""
+    Book = apps.get_model("books", "Book")
+    for idx, book in enumerate(Book.objects.prefetch_related("narrations").all()):
         for narration in book.narrations.all():
             if narration.date is None:
-                print(f'#{idx} Updating date {book.title}')
+                print(f"#{idx} Updating date {book.title}")
                 narration.date = book.date
                 narration.save()
 
 
 def migrate_translators(apps, schema_editor):
-    '''Copy translators from Book to Narrations where Narrations don't have translation yet.'''
-    Book = apps.get_model('books', 'Book')
-    for idx, book in enumerate(
-            Book.objects.prefetch_related('narrations').all()):
+    """Copy translators from Book to Narrations where Narrations don't have translation yet."""
+    Book = apps.get_model("books", "Book")
+    for idx, book in enumerate(Book.objects.prefetch_related("narrations").all()):
         if book.translators.count() == 0:
             continue
         has_translators = False
@@ -29,23 +27,22 @@ def migrate_translators(apps, schema_editor):
         if has_translators:
             continue
         for narration in book.narrations.all():
-            print(f'#{idx} Updating translators {book.title}')
+            print(f"#{idx} Updating translators {book.title}")
             narration.translators.set(book.translators.all())
             narration.save()
 
 
 def migrate_covers(apps, schema_editor):
-    '''Copy covers from Book to Narrations.'''
-    Book = apps.get_model('books', 'Book')
-    for idx, book in enumerate(
-            Book.objects.prefetch_related('narrations').all()):
+    """Copy covers from Book to Narrations."""
+    Book = apps.get_model("books", "Book")
+    for idx, book in enumerate(Book.objects.prefetch_related("narrations").all()):
         if not bool(book.cover_image):
             continue
         for narration in book.narrations.all():
             if bool(narration.cover_image):
-                print('Skipping ' + narration.cover_image.url)
+                print("Skipping " + narration.cover_image.url)
                 continue
-            print(f'#{idx} Updating covers {book.title}')
+            print(f"#{idx} Updating covers {book.title}")
             narration.cover_image = book.cover_image
             narration.cover_image_source = book.cover_image_source
             narration.save()
@@ -54,7 +51,7 @@ def migrate_covers(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0010_narration_cover_image_source'),
+        ("books", "0010_narration_cover_image_source"),
     ]
 
     operations = [

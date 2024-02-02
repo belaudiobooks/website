@@ -1,0 +1,4 @@
+[flake8]
+# Disable certain rules that are enforced by black
+# See https://www.flake8rules.com/
+extend-ignore = E203, E704, E501

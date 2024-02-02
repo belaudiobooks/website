@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0007_book_livelib_url'),
+        ("books", "0007_book_livelib_url"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='narration',
-            name='description',
-            field=models.TextField(blank=True, verbose_name='Narration Description'),
+            model_name="narration",
+            name="description",
+            field=models.TextField(blank=True, verbose_name="Narration Description"),
         ),
     ]

@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0006_linktype_weight'),
+        ("books", "0006_linktype_weight"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='book',
-            name='livelib_url',
-            field=models.CharField(blank=True, default='', max_length=256, verbose_name='LiveLib URL'),
+            model_name="book",
+            name="livelib_url",
+            field=models.CharField(
+                blank=True, default="", max_length=256, verbose_name="LiveLib URL"
+            ),
         ),
     ]

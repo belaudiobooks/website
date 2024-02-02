@@ -7,28 +7,72 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0015_alter_narration_date'),
+        ("books", "0015_alter_narration_date"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='book',
-            name='description_source',
-            field=models.CharField(blank=True, default='', max_length=500, validators=[django.core.validators.RegexValidator(message='Source must have format "caption;url"', regex='^[^;]+;[^;]+$')], verbose_name='Book Description Source'),
+            model_name="book",
+            name="description_source",
+            field=models.CharField(
+                blank=True,
+                default="",
+                max_length=500,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        message='Source must have format "caption;url"',
+                        regex="^[^;]+;[^;]+$",
+                    )
+                ],
+                verbose_name="Book Description Source",
+            ),
         ),
         migrations.AlterField(
-            model_name='narration',
-            name='cover_image_source',
-            field=models.CharField(blank=True, default='', max_length=500, validators=[django.core.validators.RegexValidator(message='Source must have format "caption;url"', regex='^[^;]+;[^;]+$')], verbose_name='Cover Source'),
+            model_name="narration",
+            name="cover_image_source",
+            field=models.CharField(
+                blank=True,
+                default="",
+                max_length=500,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        message='Source must have format "caption;url"',
+                        regex="^[^;]+;[^;]+$",
+                    )
+                ],
+                verbose_name="Cover Source",
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='description_source',
-            field=models.CharField(blank=True, default='', max_length=500, validators=[django.core.validators.RegexValidator(message='Source must have format "caption;url"', regex='^[^;]+;[^;]+$')], verbose_name='Person Description Source'),
+            model_name="person",
+            name="description_source",
+            field=models.CharField(
+                blank=True,
+                default="",
+                max_length=500,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        message='Source must have format "caption;url"',
+                        regex="^[^;]+;[^;]+$",
+                    )
+                ],
+                verbose_name="Person Description Source",
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='photo_source',
-            field=models.CharField(blank=True, default='', max_length=500, validators=[django.core.validators.RegexValidator(message='Source must have format "caption;url"', regex='^[^;]+;[^;]+$')], verbose_name='Photo Source'),
+            model_name="person",
+            name="photo_source",
+            field=models.CharField(
+                blank=True,
+                default="",
+                max_length=500,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        message='Source must have format "caption;url"',
+                        regex="^[^;]+;[^;]+$",
+                    )
+                ],
+                verbose_name="Photo Source",
+            ),
         ),
     ]

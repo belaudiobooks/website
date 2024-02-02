@@ -6,12 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0018_narration_preview_url'),
+        ("books", "0018_narration_preview_url"),
     ]
 
     operations = [
-        migrations.RunSQL(sql=[
-            """
+        migrations.RunSQL(
+            sql=[
+                """
             UPDATE books_narration
             SET preview_url = (
                 SELECT preview_url
@@ -25,6 +26,7 @@ class Migration(migrations.Migration):
                 HAVING COUNT(*) = 1
             );
             """
-        ],
-                          reverse_sql=[]),
+            ],
+            reverse_sql=[],
+        ),
     ]

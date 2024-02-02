@@ -7,4 +7,3 @@ gcloud functions deploy resize-images \
     --trigger-http \
     --allow-unauthenticated \
     --timeout=600s
-

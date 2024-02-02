@@ -7,13 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0005_add_publishers'),
+        ("books", "0005_add_publishers"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='linktype',
-            name='weight',
-            field=models.PositiveIntegerField(default=10, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(100)]),
+            model_name="linktype",
+            name="weight",
+            field=models.PositiveIntegerField(
+                default=10,
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(100),
+                ],
+            ),
         ),
     ]

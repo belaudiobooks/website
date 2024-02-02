@@ -7,14 +7,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0014_remove_book_date'),
+        ("books", "0014_remove_book_date"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='narration',
-            name='date',
-            field=models.DateField(default=datetime.date(2022, 1, 1), verbose_name='Release Date'),
+            model_name="narration",
+            name="date",
+            field=models.DateField(
+                default=datetime.date(2022, 1, 1), verbose_name="Release Date"
+            ),
             preserve_default=False,
         ),
     ]

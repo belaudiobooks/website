@@ -1,6 +1,6 @@
-'''
+"""
 Views that render articles.
-'''
+"""
 
 from dataclasses import dataclass
 from typing import List
@@ -12,7 +12,8 @@ from django.urls import reverse
 
 @dataclass
 class Article:
-    '''Data related to a single article.'''
+    """Data related to a single article."""
+
     # Example: 'Як выкласці аўдыякнігу'
     title: str
     # Example: jak-vyklasci-audyjaknihu
@@ -24,41 +25,48 @@ class Article:
 
 
 ARTICLES: List[Article] = [
-    Article(title='Łacinka',
-            short_description=
-            'Бібліятэка для канвертавання ў лацінку',
-            slug='lacinka',
-            template='lacinka.html'),
     Article(
-        title='Як выкласці аўдыякнігу',
-        short_description=
-        'Гайд пра тое, як лепей распаўсюдзіць аўдыякнігу на беларускай мове.',
-        slug='jak-vyklasci-audyjaknihu',
-        template='how-to-publish-audiobook.html'),
-    Article(title='База даных audiobooks.by',
-            short_description=
-            'Дзе знайсці і як карыстацца базай даных сайта audiobooks.by',
-            slug='baza-danych-audiobooksby',
-            template='audiobooksby-database.html'),
-    Article(title='Гайд па вокладках аўдыякніг',
-            short_description=
-            'Як зрабіць добрыя вокладкі аўдыякніг: фармат, памеры, змест.',
-            slug='hajd-pa-vokladkach-audyjaknih',
-            template='covers-guide.html'),
+        title="Łacinka",
+        short_description="Бібліятэка для канвертавання ў лацінку",
+        slug="lacinka",
+        template="lacinka.html",
+    ),
+    Article(
+        title="Як выкласці аўдыякнігу",
+        short_description="Гайд пра тое, як лепей распаўсюдзіць аўдыякнігу на беларускай мове.",
+        slug="jak-vyklasci-audyjaknihu",
+        template="how-to-publish-audiobook.html",
+    ),
+    Article(
+        title="База даных audiobooks.by",
+        short_description="Дзе знайсці і як карыстацца базай даных сайта audiobooks.by",
+        slug="baza-danych-audiobooksby",
+        template="audiobooksby-database.html",
+    ),
+    Article(
+        title="Гайд па вокладках аўдыякніг",
+        short_description="Як зрабіць добрыя вокладкі аўдыякніг: фармат, памеры, змест.",
+        slug="hajd-pa-vokladkach-audyjaknih",
+        template="covers-guide.html",
+    ),
 ]
 
 
 def redirect_to_first_article(request: HttpRequest) -> HttpRequest:
-    '''Redirects to the first article'''
-    return redirect(reverse('single-article', args=(ARTICLES[0].slug, )))
+    """Redirects to the first article"""
+    return redirect(reverse("single-article", args=(ARTICLES[0].slug,)))
 
 
 def single_article(request: HttpRequest, slug: str) -> HttpResponse:
-    '''Serve an article'''
+    """Serve an article"""
     for article in ARTICLES:
         if article.slug == slug:
-            return render(request, f'books/articles/{article.template}', {
-                'article': article,
-                'all_articles': ARTICLES,
-            })
+            return render(
+                request,
+                f"books/articles/{article.template}",
+                {
+                    "article": article,
+                    "all_articles": ARTICLES,
+                },
+            )
     return views.defaults.page_not_found(request, None)

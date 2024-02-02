@@ -1,4 +1,4 @@
-/** 
+/**
  * @fileoverview JS file that powers https://audiobooks.by/articles/lacinka
  */
 
@@ -87,9 +87,9 @@ function handleInput() {
 
 function handleNotifyErrorButton() {
     document.querySelector('#button-notify').addEventListener('click', () => {
-        const textFrom = encodeURIComponent(document.querySelector('#text-from').value); 
-        const textTo = encodeURIComponent(document.querySelector('#text-to').value); 
-        const prefilledFormUrl = 
+        const textFrom = encodeURIComponent(document.querySelector('#text-from').value);
+        const textTo = encodeURIComponent(document.querySelector('#text-to').value);
+        const prefilledFormUrl =
             `https://docs.google.com/forms/d/e/1FAIpQLScIZHxrKhtDRORl91JgXkWFnMO2nw9reTWZgMS3ZPdnj6ZMWg/viewform?usp=pp_url&entry.866058195=${textFrom}&entry.1652077591=${textTo}`;
         window.open(prefilledFormUrl, '_blank');
     });

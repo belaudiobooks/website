@@ -112,10 +112,6 @@
                     <div data-test="narrators">
                         <!--Narrators with check on multiples and gender-->
                         {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
-                        <!--check if no name-->
-                        {% if not narration.narrators.all.exists %}
-                            {% translate "Агучка: удакладняецца..." %}
-                        {% endif %}
                     </div>
                     {% if narration.publishers.all.exists %}
                         <div>

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://audiobooks.by/data.schema.json",
+  "$id": "https://audiobooks.by/schema.data.json",
   "title": "audiobooks.by data",
   "description": "Schema of https://audiobooks.by/data.json",
   "type": "object",

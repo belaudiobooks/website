@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  contract-test:
+  continuous-testing-job:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout

@@ -1,11 +1,17 @@
 from tests.fake_data import FakeData
 from tests.webdriver_test_case import WebdriverTestCase
 
+import json
 import requests
+from jsonschema import validate
 
 
 class DataValidationTests(WebdriverTestCase):
     """Tests that validate data."""
+
+    def get_schema(self):
+        with open("tests/schema.data.json", "r") as f:
+            return json.load(f)
 
     def test_data_json_generates(self):
         self.maxDiff = None
@@ -167,3 +173,4 @@ class DataValidationTests(WebdriverTestCase):
             },
             response.json(),
         )
+        validate(instance=response.json(), schema=self.get_schema())

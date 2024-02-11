@@ -1,0 +1,415 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://audiobooks.by/schema.data.json",
+  "title": "audiobooks.by data",
+  "description": "Schema of https://audiobooks.by/data.json",
+  "type": "object",
+  "properties": {
+    "books": {
+      "description": "Books",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "description": "The unique identifier for a book",
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "description": "Human readable book's name",
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "description": "Book description",
+            "type": "string",
+            "minLength": 0
+          },
+          "description_source": {
+            "description": "Source of the book's description",
+            "type": "string",
+            "minLength": 0
+          },
+          "authors": {
+            "description": "Book authors",
+            "type": "array",
+            "items": {
+              "description": "Person unique identifier",
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "slug": {
+            "description": "Book's slug",
+            "type": "string",
+            "minLength": 1
+          },
+          "tag": {
+            "description": "Book tags",
+            "type": "array",
+            "items": {
+              "description": "Tag unique identifier",
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          "narrations": {
+            "description": "Narrations",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "uuid": {
+                  "description": "Narration unique identifier",
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "narrators": {
+                  "description": "List of narrator's ids",
+                  "type": "array",
+                  "items": {
+                    "description": "Person unique identifier",
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "minItems": 0,
+                  "uniqueItems": true
+                },
+                "links": {
+                  "description": "Narrations",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "description": "Narration URI",
+                        "type": "string",
+                        "format": "uri",
+                        "minLength": 1
+                      },
+                      "url_type": {
+                        "description": "URL type identifier (platform identifier)",
+                        "type": "integer",
+                        "exclusiveMinimum": 0
+                      }
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "url_type"
+                  ],
+                  "minItems": 1,
+                  "uniqueItems": true
+                },
+                "duration": {
+                  "description": "Narration time in seconds",
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "exclusiveMinimum": 0
+                },
+                "publishers": {
+                  "description": "List of publisher's ids",
+                  "type": "array",
+                  "items": {
+                    "description": "Publisher unique identifier",
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "minItems": 0,
+                  "uniqueItems": true
+                },
+                "paid": {
+                  "description": "Is narration paid",
+                  "type": "boolean"
+                },
+                "language": {
+                  "description": "Narration language",
+                  "enum": [
+                    "BELARUSIAN",
+                    "RUSSIAN"
+                  ]
+                },
+                "translators": {
+                  "description": "List of translator's ids",
+                  "type": "array",
+                  "items": {
+                    "description": "Person unique identifier",
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "minItems": 0,
+                  "uniqueItems": true
+                },
+                "cover_image": {
+                  "description": "URI of the narration's cover image",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "uri",
+                  "minLength": 0
+                },
+                "cover_image_source": {
+                  "description": "Source of the narration's cover image",
+                  "type": "string",
+                  "minLength": 0
+                },
+                "date": {
+                  "description": "Narrations adding date",
+                  "type": "string",
+                  "format": "date"
+                },
+                "description": {
+                  "description": "Narration's description",
+                  "type": "string",
+                  "minLength": 0
+                }
+              },
+              "required": [
+                "uuid",
+                "narrators",
+                "links",
+                "duration",
+                "publishers",
+                "paid",
+                "language",
+                "translators",
+                "cover_image",
+                "cover_image_source",
+                "date",
+                "description"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "uuid",
+          "title",
+          "description",
+          "description_source",
+          "authors",
+          "slug",
+          "tag",
+          "narrations"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "people": {
+      "description": "People",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "description": "Person's unique identifier",
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "description": "Person's full name",
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "description": "Person's description",
+            "type": "string",
+            "minLength": 0
+          },
+          "description_source": {
+            "description": "Source of the person's description",
+            "type": "string",
+            "minLength": 0
+          },
+          "photo": {
+            "description": "URI of the person's photo",
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "minLength": 0
+          },
+          "photo_source": {
+            "description": "Source of person's photo",
+            "type": "string",
+            "minLength": 0
+          },
+          "slug": {
+            "description": "Person's slug",
+            "type": "string",
+            "minLength": 1
+          },
+          "gender": {
+            "description": "Person's gender",
+            "enum": [
+              "FEMALE",
+              "MALE",
+              "PLURAL"
+            ]
+          }
+        },
+        "required": [
+          "uuid",
+          "name",
+          "description",
+          "description_source",
+          "photo",
+          "photo_source",
+          "slug",
+          "gender"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "link_types": {
+      "description": "Types of the links to audiobooks platforms",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique identifier for a link type (platform)",
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "name": {
+            "description": "Name of the platform by latin characters (words separated by underscore)",
+            "type": "string",
+            "minLength": 1
+          },
+          "caption": {
+            "description": "Human readable platform name",
+            "type": "string",
+            "minLength": 1
+          },
+          "icon": {
+            "description": "URI of the platform brand icon",
+            "type": "string",
+            "format": "uri",
+            "minLength": 0
+          },
+          "availability": {
+            "description": "Platform's availability in geographical region",
+            "enum": [
+              "EVERYWHERE",
+              "UNAVAILABLE_IN_BELARUS",
+              "USA_ONLY"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "caption",
+          "icon",
+          "availability"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "tags": {
+      "description": "Tags",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique identifier for a tag",
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "name": {
+            "description": "Tag's name",
+            "type": "string",
+            "minLength": 1
+          },
+          "slug": {
+            "description": "Tag's slug",
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "description": "Tag's description",
+            "type": "string",
+            "minLength": 0
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "description"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "publishers": {
+      "description": "Publishers",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "description": "The unique identifier for a publisher",
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "description": "Name of the publisher",
+            "type": "string",
+            "minLength": 1
+          },
+          "slug": {
+            "description": "Publisher's slug",
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "description": "Link to official publisher's web page",
+            "type": "string",
+            "format": "uri"
+          },
+          "logo": {
+            "description": "Link to a publisher brand icon",
+            "type": "string",
+            "format": "uri"
+          },
+          "description": {
+            "description": "Publisher's description",
+            "type": "string",
+            "minLength": 0
+          }
+        },
+        "required": [
+          "uuid",
+          "name",
+          "slug",
+          "description"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "books",
+    "people",
+    "link_types",
+    "tags",
+    "publishers"
+  ]
+}

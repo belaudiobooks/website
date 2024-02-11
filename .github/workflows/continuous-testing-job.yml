@@ -1,4 +1,4 @@
-name: continuous-testing-job
+name: Prod verification
 
 on:
   schedule:

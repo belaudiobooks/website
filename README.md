@@ -3,6 +3,7 @@
 This project is created to allow users quickly find audioboooks that are translated to Belarusian
 
 ![Django CI](https://github.com/belaudiobooks/website/actions/workflows/django.yml/badge.svg)
+![Prod verification](https://github.com/belaudiobooks/website/actions/workflows/continuous-testing-job.yml/badge.svg)
 
 ## Project structure
 * `booksby` - main project folder with settings and project top url setup. Doesn't contain actual .

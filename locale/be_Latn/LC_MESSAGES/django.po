@@ -1160,27 +1160,23 @@ msgstr "Vodhuki na"
 msgid "Агучка"
 msgstr "Ahučka"
 
-#: templates/books/book-detail.html:117
-msgid "Агучка: удакладняецца..."
-msgstr "Ahučka: udakładniajecca..."
-
-#: templates/books/book-detail.html:122
+#: templates/books/book-detail.html:118
 msgid "Выдавецтва:"
 msgstr "Vydaviectva:"
 
-#: templates/books/book-detail.html:130
+#: templates/books/book-detail.html:126
 msgid "Мова:"
 msgstr "Mova:"
 
-#: templates/books/book-detail.html:139
+#: templates/books/book-detail.html:135
 msgid "Першую частку можна паслухаць бясплатна на"
 msgstr "Pieršuju častku možna pasłuchać biaspłatna na"
 
-#: templates/books/book-detail.html:143
+#: templates/books/book-detail.html:139
 msgid "Дзе купіць"
 msgstr "Dzie kupić"
 
-#: templates/books/book-detail.html:145
+#: templates/books/book-detail.html:141
 msgid "Дзе паслухаць бясплатна"
 msgstr "Dzie pasłuchać biaspłatna"
 
@@ -1321,6 +1317,9 @@ msgstr "Permissions"
 #: user/admin.py:24
 msgid "Important dates"
 msgstr "Important dates"
+
+#~ msgid "Агучка: удакладняецца..."
+#~ msgstr "Ahučka: udakładniajecca..."
 
 #~ msgid "з такіх крыніц, як"
 #~ msgstr "z takich krynic, jak"

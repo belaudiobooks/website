@@ -28,7 +28,7 @@ a {
   margin: auto;
 }
 
-#books .cit-photo,
+.main-content .cit-photo,
 .cit-photo {
   text-align: center;
   font-size: 1rem;
@@ -75,7 +75,7 @@ a {
   line-height: 1;
 }
 
-#books .icon {
+.main-content .icon {
   color: #7879F1;
 }
 
@@ -402,9 +402,7 @@ nav .buttons .nav-item:hover {
   display: none;
 }
 
-#books,
-#content,
-#birthdays {
+.main-content {
   background-color: white;
   padding: 2rem;
   border-radius: 10px;
@@ -413,7 +411,7 @@ nav .buttons .nav-item:hover {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-#books h6 {
+.main-content h6 {
   font-style: normal;
   font-weight: 600;
   line-height: 17px;
@@ -421,23 +419,23 @@ nav .buttons .nav-item:hover {
   font-size: 1rem;
 }
 
-#books .card .author {
+.main-content .card .author {
   font-size: 0.9rem;
 }
 
-#books p {
+.main-content p {
   font-style: normal;
   font-weight: normal;
 }
 
-#books .tag {
+.main-content .tag {
   font-style: normal;
   font-weight: 600;
   font-size: 28px;
   line-height: 34px;
 }
 
-#books ul {
+.main-content ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -450,7 +448,7 @@ article li {
   margin-bottom: 0.5rem;
 }
 
-#books li {
+.main-content li {
   flex: 1;
 }
 
@@ -546,6 +544,6 @@ article .CodeMirror {
   }
 }
 
-#books hr {
+.main-content hr {
   margin: 2rem 0;
 }

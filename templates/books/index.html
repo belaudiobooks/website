@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="container" id="books" data-test="latest-books">
+<div class="container main-content" data-test="latest-books">
     <div class="row">
         <h4 class="col-12 mb-4">{% translate 'Навінкі' %}</h4>
     </div>
@@ -21,7 +21,7 @@
 <!--Getting all the tags and rendering 6 books for each-->
 {% for tag in tags_to_render %}
 {% with tag_name=tag.name tag_slug=tag.slug tag_books=tag.books %}
-<div class="container" id="books" data-test="tag-{{tag.slug}}">
+<div class="container main-content" data-test="tag-{{tag.slug}}">
     <div class="row">
         <div class="col-7 col-sm-10 mb-4">
             <h4>{% dtranslate tag_name %}</h4>

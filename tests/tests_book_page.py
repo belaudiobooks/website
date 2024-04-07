@@ -132,12 +132,12 @@ class BookPageTests(WebdriverTestCase):
             elem = self.driver.find_element(By.LINK_TEXT, tag.name)
             self.scroll_and_click(elem)
             self.assertIn(f"/catalog/{tag.slug}", self.driver.current_url)
-            tag_header = self.driver.find_element(By.CSS_SELECTOR, "#books h1")
+            tag_header = self.driver.find_element(By.CSS_SELECTOR, ".main-content h1")
             self.assertEqual(tag.name, tag_header.text)
 
     def test_renders_text_elements(self):
         self.driver.get(self._get_book_url())
-        book_elem = self.driver.find_element(By.CSS_SELECTOR, "#books")
+        book_elem = self.driver.find_element(By.CSS_SELECTOR, ".main-content")
         self.assertIn("14 гадзін 15 хвілін", book_elem.text)
         self.assertEqual("Першая Кніга аўдыякніга", self.driver.title)
         description = self.driver.find_element(
@@ -176,7 +176,7 @@ class BookPageTests(WebdriverTestCase):
         narration.language = models.Language.RUSSIAN
         narration.save()
         self.driver.get(self._get_book_url())
-        body_text = self.driver.find_element(By.CSS_SELECTOR, "#books").text
+        body_text = self.driver.find_element(By.CSS_SELECTOR, ".main-content").text
         self.assertIn("Першая кніга", body_text)
         self.assertIn("Первая книга", body_text)
 

@@ -218,7 +218,7 @@ msgid "Беларускія аўдыякнігі"
 msgstr "Biełaruskija aŭdyjaknihi"
 
 #: templates/books/about.html:6 templates/books/about.html:12
-#: templates/partials/_navbar.html:48
+#: templates/partials/_navbar.html:51
 msgid "Пра нас"
 msgstr "Pra nas"
 
@@ -231,15 +231,15 @@ msgstr "Pra nas"
 #| "      "
 msgid ""
 "\n"
-"            audiobooks.by - навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў. Тут вы можаце хутка\n"
-"            знайсці як аўдыякнігі сучасных аўтараў, так і дзіцячыя альбо класічныя кнігі. Сайт не змяшчае самі кнігі, а\n"
-"            дае спасылкі на пляцоўкі, дзе іх можна паслухаць альбо набыць.\n"
+"            audiobooks.by - <a href=\"/publisher/audiobooksby\">аўдыявыдавецтва</a> і навігатар па аўдыякнігах на беларускай\n"
+"            мове і беларускіх аўтараў. Тут вы можаце хутка знайсці як аўдыякнігі сучасных аўтараў, так і дзіцячыя альбо\n"
+"            класічныя кнігі. Сайт не змяшчае самі кнігі, а дае спасылкі на пляцоўкі, дзе іх можна паслухаць альбо набыць.\n"
 "        "
 msgstr ""
 "\n"
-"            audiobooks.by - navihatar pa aŭdyjaknihach na biełaruskaj movie i biełaruskich aŭtaraŭ. Tut vy možacie chutka\n"
-"            znajści jak aŭdyjaknihi sučasnych aŭtaraŭ, tak i dziciačyja albo kłasičnyja knihi. Sajt nie źmiaščaje sami knihi, a\n"
-"            daje spasyłki na placoŭki, dzie ich možna pasłuchać albo nabyć.\n"
+"            audiobooks.by - <a href=\"/publisher/audiobooksby\">aŭdyjavydaviectva</a> i navihatar pa aŭdyjaknihach na biełaruskaj\n"
+"            movie i biełaruskich aŭtaraŭ. Tut vy možacie chutka znajści jak aŭdyjaknihi sučasnych aŭtaraŭ, tak i dziciačyja albo\n"
+"            kłasičnyja knihi. Sajt nie źmiaščaje sami knihi, a daje spasyłki na placoŭki, dzie ich možna pasłuchać albo nabyć.\n"
 "        "
 
 #: templates/books/about.html:21
@@ -300,7 +300,7 @@ msgstr ""
 "i inšych. Sačyć za apošnimi navinami vy možacie ŭ našych sacyjalnych "
 "sietkach:"
 
-#: templates/books/about.html:51
+#: templates/books/about.html:55
 msgid ""
 "Калі на нашым сайце няма якой-небудзь аўдыякнігі, альбо калі вы знайшлі "
 "памылку, калі ласка, напішыце нам на"
@@ -308,19 +308,19 @@ msgstr ""
 "Kali na našym sajcie niama jakoj-niebudź aŭdyjaknihi, albo kali vy znajšli "
 "pamyłku, kali łaska, napišycie nam na"
 
-#: templates/books/about.html:52
+#: templates/books/about.html:56
 msgid "альбо праз"
 msgstr "albo praz"
 
-#: templates/books/about.html:53
+#: templates/books/about.html:57
 msgid "Гугл-форму"
 msgstr "Huhł-formu"
 
-#: templates/books/about.html:54
+#: templates/books/about.html:58
 msgid "Будзем удзячныя за водгукі і прапановы."
 msgstr "Budziem udziačnyja za vodhuki i prapanovy."
 
-#: templates/books/about.html:60
+#: templates/books/about.html:64
 msgid ""
 "\n"
 "            Мы адкрыты да супрацоўніцтва. Калі вы жадаеце запісаць і выкласці аўдыякнігу, ці нават толькі выкласці -\n"
@@ -332,7 +332,7 @@ msgstr ""
 "            napišycie nam na <strong>contact@audiobooks.by</strong>.\n"
 "            "
 
-#: templates/books/about.html:66
+#: templates/books/about.html:70
 msgid ""
 "\n"
 "            Зыходны код сайта размяшчаецца на гітхабе: <a\n"
@@ -344,11 +344,11 @@ msgstr ""
 "                href=\"https://github.com/belaudiobooks/website\">belaudiobooks/website</a>\n"
 "            "
 
-#: templates/books/about.html:72
+#: templates/books/about.html:76
 msgid "Наша каманда"
 msgstr "Naša kamanda"
 
-#: templates/books/articles/article.html:18 templates/partials/_navbar.html:43
+#: templates/books/articles/article.html:18 templates/partials/_navbar.html:46
 msgid "Артыкулы"
 msgstr "Artykuły"
 
@@ -1267,7 +1267,7 @@ msgstr "Dasyłajcie vašyja pytańni i prapanovy na poštu contact@audiobooks.by
 msgid "Сачыце за апошнімі навінамі:"
 msgstr "Sačycie za apošnimi navinami:"
 
-#: templates/partials/_footer.html:48
+#: templates/partials/_footer.html:52
 msgid "Алфавіт"
 msgstr "Ałfavit"
 
@@ -1298,11 +1298,11 @@ msgstr ""
 msgid "Сачыце за навінамі:"
 msgstr "Sačycie za navinami:"
 
-#: templates/partials/_navbar.html:38
+#: templates/partials/_navbar.html:41
 msgid "Каталог"
 msgstr "Katałoh"
 
-#: templates/partials/_navbar.html:55
+#: templates/partials/_navbar.html:58
 msgid "Аўтар, кніга"
 msgstr "Aŭtar, kniha"
 

@@ -41,7 +41,7 @@
         <div class="col-12 col-md-9 mt-1 mt-sm-5">
             {% if authored_books %}
             <div class="main-content" data-test="books-authored">
-                <h4>{% translate "Кнігі аўтар" %}{% dtranslate person|gender:"кі,а" %}</h4>
+                <h4>{% translate "Кнігі" %}</h4>
                 {% include 'partials/_books_list.html' with books=authored_books %}
             </div>
             {% endif %}

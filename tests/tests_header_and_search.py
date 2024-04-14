@@ -76,14 +76,16 @@ class HeaderAndSearchTests(WebdriverTestCase):
                 f"/publisher/{self.fake_data.publisher_audiobooksby.slug}",
             )
 
-    def test_server_side_searc_author(self):
+    def test_server_side_search_author(self):
         self.init_algolia_or_skip_test()
         self.driver.get(self.live_server_url)
         search = self.driver.find_element(By.CSS_SELECTOR, "#search")
         search.send_keys("алесявіч")
         self.driver.find_element(By.CSS_SELECTOR, "#button-search").click()
         self.assertIn("/search", self.driver.current_url)
-        search_results = self.driver.find_elements(By.CSS_SELECTOR, "#books .card")
+        search_results = self.driver.find_elements(
+            By.CSS_SELECTOR, ".main-content .card"
+        )
         self.assertEqual(
             "Вынікі пошука 'алесявіч'",
             self.driver.find_element(By.CSS_SELECTOR, "#searched-query").text,
@@ -113,7 +115,9 @@ class HeaderAndSearchTests(WebdriverTestCase):
         search.send_keys("audiobooks.by")
         self.driver.find_element(By.CSS_SELECTOR, "#button-search").click()
         self.assertIn("/search", self.driver.current_url)
-        search_results = self.driver.find_elements(By.CSS_SELECTOR, "#books .card")
+        search_results = self.driver.find_elements(
+            By.CSS_SELECTOR, ".main-content .card"
+        )
         self.assertEqual(
             "Вынікі пошука 'audiobooks.by'",
             self.driver.find_element(By.CSS_SELECTOR, "#searched-query").text,

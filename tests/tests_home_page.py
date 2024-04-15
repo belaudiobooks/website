@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from books import models
 from tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
@@ -139,3 +139,21 @@ class HomePageTests(WebdriverTestCase):
                 b6.title,
             ],
         )
+
+    def test_book_with_emoji_in_name(self):
+        book = self.fake_data.create_book_with_single_narration(
+            title="Book 😊",
+            authors=[self.fake_data.person_ales],
+            date=date.today() + timedelta(days=1),
+        )
+        narration = book.narrations.first()
+        narration.cover_image = self.fake_data.create_image()
+        narration.save()
+
+        self.assertEqual(book.title, "Book 😊")
+        self.assertEqual(book.slug, "book")
+
+        self.driver.get(self.live_server_url)
+        title = self.driver.find_element(By.LINK_TEXT, book.title)
+        self.scroll_and_click(title)
+        self.assertIn(f"/books/{book.slug}", self.driver.current_url)

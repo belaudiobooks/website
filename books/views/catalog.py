@@ -4,6 +4,7 @@ a catalog of books of particular genre.
 """
 
 from collections.abc import Iterable
+import random
 
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
@@ -53,8 +54,14 @@ def index(request: HttpRequest) -> HttpResponse:
             }
         )
 
+    mystery_book = Book.objects.filter(slug="audyjakniha-niespadziavanka").first()
+    if mystery_book:
+        new_books = list(books[:5])
+        new_books.insert(random.randint(0, 5), mystery_book)
+    else:
+        new_books = books[:6]
     context = {
-        "recently_added_books": with_latest_narration(books[:6]),
+        "recently_added_books": with_latest_narration(new_books),
         "tags_to_render": tags_to_render,
     }
 

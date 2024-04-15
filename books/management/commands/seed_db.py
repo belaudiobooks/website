@@ -141,6 +141,12 @@ def fill_with_data():
         date_of_birth="1970-03-03",
         gender=Gender.MALE,
     )
+    person_unknown = Person.objects.create(
+        name="Аўтар_ка 🤷",
+        slug="mystery-author",
+        date_of_birth="1960-04-04",
+        gender=Gender.PLURAL,
+    )
 
     for i in range(6):
         create_book_with_single_narration(
@@ -243,6 +249,26 @@ def fill_with_data():
             Link.objects.create(
                 url="http://spotify.com", url_type=link_type_spotify_audiobooks
             ),
+        ]
+    )
+
+    # Create mystery book
+    mystery_book = Book.objects.create(
+        title="Назва 🤷",
+        title_ru="Название 🤷",
+        slug="audyjakniha-niespadziavanka",
+        description="Кніга з невядомым аўтарам",
+        status=BookStatus.HIDDEN,
+    )
+    mystery_book.authors.set([person_unknown])
+    mystery_book_nar = Narration.objects.create(
+        language=Language.BELARUSIAN,
+        book=mystery_book,
+        date=date.today(),
+    )
+    mystery_book_nar.links.set(
+        [
+            Link.objects.create(url="http://kobo.com", url_type=link_type_kobo),
         ]
     )
 

@@ -1224,8 +1224,10 @@ msgid "аўдыякнігі"
 msgstr "aŭdyjaknihi"
 
 #: templates/books/person.html:44
-msgid "Кнігі аўтар"
-msgstr "Knihi aŭtar"
+#, fuzzy
+#| msgid "Кнігі аўтар"
+msgid "Кнігі"
+msgstr "Knihi"
 
 #: templates/books/person.html:50
 msgid "Пераклады"

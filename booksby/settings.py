@@ -73,11 +73,9 @@ INSTALLED_APPS = [
     "books",
     "user",
     "markdownify.apps.MarkdownifyConfig",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -295,7 +293,14 @@ CACHES = {
     }
 }
 
-DEBUG_TOOLBAR_CONFIG = {
-    # Comment the line below to enable debug toolbar.
-    "SHOW_TOOLBAR_CALLBACK": lambda r: False,
-}
+
+# Change this value to enable debug toolbar:
+ENABLE_DEBUG_TOOLBAR = False
+
+if ENABLE_DEBUG_TOOLBAR:
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+else:
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": lambda r: False,
+    }

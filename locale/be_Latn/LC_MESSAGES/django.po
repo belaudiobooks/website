@@ -1213,7 +1213,7 @@ msgstr ""
 "                                Staronka %(cur)s z %(total)s\n"
 "                                "
 
-#: templates/books/index.html:10
+#: templates/books/index.html:26
 msgid "Навінкі"
 msgstr "Navinki"
 

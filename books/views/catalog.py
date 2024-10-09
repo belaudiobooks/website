@@ -17,6 +17,7 @@ from books.models import BookStatus, LinkType, Tag, Language, Book, Narration
 from .utils import maybe_filter_links, BookForPreview
 
 TAGS_TO_SHOW_ON_MAIN_PAGE = [
+    "Катэгарычна раім",
     "Сучасная проза",
     "Класікі беларускай літаратуры",
     "Дзецям і падлеткам",

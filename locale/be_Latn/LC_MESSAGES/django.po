@@ -1150,35 +1150,23 @@ msgstr "Vydaviectva"
 msgid "Мова"
 msgstr "Mova"
 
-#: templates/books/book-detail.html:89
+#: templates/books/book-detail.html:93
 msgid "Водгукі на"
 msgstr "Vodhuki na"
 
-#: templates/books/book-detail.html:108
+#: templates/books/book-detail.html:112
 #, fuzzy
 #| msgid "агучкі"
 msgid "Агучка"
 msgstr "Ahučka"
 
-#: templates/books/book-detail.html:118
+#: templates/books/book-detail.html:122
 msgid "Выдавецтва:"
 msgstr "Vydaviectva:"
 
-#: templates/books/book-detail.html:126
+#: templates/books/book-detail.html:129
 msgid "Мова:"
 msgstr "Mova:"
-
-#: templates/books/book-detail.html:135
-msgid "Першую частку можна паслухаць бясплатна на"
-msgstr "Pieršuju častku možna pasłuchać biaspłatna na"
-
-#: templates/books/book-detail.html:139
-msgid "Дзе купіць"
-msgstr "Dzie kupić"
-
-#: templates/books/book-detail.html:141
-msgid "Дзе паслухаць бясплатна"
-msgstr "Dzie pasłuchać biaspłatna"
 
 #: templates/books/catalog.html:6
 #, fuzzy
@@ -1272,6 +1260,18 @@ msgstr "Sačycie za apošnimi navinami:"
 #: templates/partials/_footer.html:52
 msgid "Алфавіт"
 msgstr "Ałfavit"
+
+#: templates/partials/_narration_links.html:7
+msgid "Першую частку можна паслухаць бясплатна на"
+msgstr "Pieršuju častku možna pasłuchać biaspłatna na"
+
+#: templates/partials/_narration_links.html:11
+msgid "Дзе купіць"
+msgstr "Dzie kupić"
+
+#: templates/partials/_narration_links.html:13
+msgid "Дзе паслухаць бясплатна"
+msgstr "Dzie pasłuchać biaspłatna"
 
 #: templates/partials/_navbar.html:9
 #, fuzzy

@@ -74,6 +74,10 @@
             </div>
             {% endif %}
 
+            {% if single_narration %}
+                {% include 'partials/_narration_links.html' with narration=narrations.first %}
+            {% endif %}
+
             <!--Book description-->
             <div class="my-4" data-test="book-description">
                 {% dtranslate book.description as book_description %}
@@ -92,19 +96,19 @@
         </div>
 
     <!--Adding Links-->
-    {% for narration in narrations %}
-        {% if not single_narration %} <hr> {% endif %}
+    {% if not single_narration %}
+        {% for narration in narrations %}
+            {% if not single_narration %} <hr> {% endif %}
 
-        <!--Book image-->
-        <div class="col-12 col-md-6 col-lg-4" data-test="narration-cover">
-            {% if not single_narration %}
-                {% include 'partials/_cover.html' with narration=narration type="large" ind=forloop.counter0 %}
-            {% endif %}
-        </div>
-        <!--Book details-->
-        <div class="col-12 col-md-6 col-lg-8" data-test="narration-section" data-narration-id="{{narration.uuid}}">
-            <div class="col-12 links-header">
+            <!--Book image-->
+            <div class="col-12 col-md-6 col-lg-4" data-test="narration-cover">
                 {% if not single_narration %}
+                    {% include 'partials/_cover.html' with narration=narration type="large" ind=forloop.counter0 %}
+                {% endif %}
+            </div>
+            <!--Book details-->
+            <div class="col-12 col-md-6 col-lg-8" data-test="narration-section" data-narration-id="{{narration.uuid}}">
+                <div class="col-12">
                     <h3>{% translate "Агучка" %} {{ forloop.counter }}</h3>
                     <div data-test="translators">
                         {% include 'partials/_person.html' with persons=narration.translators.all base_word='Перакла' gender_variants="ла,ў,лі"%}
@@ -121,43 +125,18 @@
                     {% if narration.duration %}
                         <div>{% dtranslate  narration|duration %}</div>
                     {% endif %}
-                {% endif %}
-                {% if single_language is  None %}
-                    <div>{% translate "Мова:" %} {% dtranslate narration.language|to_human_language %}</div>
-                {% endif %}
-                {% if not single_narration %}
+                    {% if single_language is  None %}
+                        <div>{% translate "Мова:" %} {% dtranslate narration.language|to_human_language %}</div>
+                    {% endif %}
                     <div class="my-4" data-test="narration-description">
                         {% dtranslate narration.description as narration_description %}
                         {{ narration_description | markdownify:"book_description" | linebreaks }}
                     </div>
-                {% endif %}
-                {% if narration.paid and narration.preview_url %}
-                        <div class="my-4" data-test="narration-description">{% translate "Першую частку можна паслухаць бясплатна на" %} <a href="{{ narration.preview_url }}" target="_blank">YouTube</a>.</div>
-                {% endif %}
-                <strong>
-                {% if narration.paid %}
-                    {% translate "Дзе купіць" %}
-                {% else %}
-                    {% translate "Дзе паслухаць бясплатна" %}
-                {% endif %}
-                </strong>
+                </div>
+                {% include 'partials/_narration_links.html' with narration=narration%}
             </div>
-            <!--Access to the link type-->
-            {% for link in narration.links.all|dictsortreversed:'url_type.weight' %}
-                {% if not link.url_type.disabled %}
-                    <div class="mt-2">
-                        <a href="{{ link.url }}" class="text-decoration-none d-flex align-items-center" target="_blank">
-                            <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">
-                            <div class="d-inline-block flex-grow-1">
-                                <span>{% dtranslate link.url_type.caption %}</span>
-                                <span class="link-type-availability">{% dtranslate link.url_type.availability|link_type_availibility %}</span>
-                            </div>
-                        </a>
-                    </div>
-                {% endif %}
-            {% endfor %}
-            </div>
-     {% endfor %}
+        {% endfor %}
+     {% endif %}
 
 
      <div class="col-12 col-md-6 col-lg-4"></div>

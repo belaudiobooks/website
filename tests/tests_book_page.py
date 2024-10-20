@@ -99,11 +99,13 @@ class BookPageTests(WebdriverTestCase):
             name="Nar 2",
             name_ru="Nar 2",
             slug="nar-2",
+            gender=models.Gender.FEMALE,
         )
         nar2_translator = models.Person.objects.create(
             name="Tran 2",
             name_ru="Tran 2",
             slug="tran-2",
+            gender=models.Gender.FEMALE,
         )
         nar2 = self._create_narration(
             language=models.Language.BELARUSIAN, narrator=nar2_narrator

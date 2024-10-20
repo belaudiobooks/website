@@ -38,7 +38,7 @@ class HomePageTests(WebdriverTestCase):
             # when image is missing - find first auto-generated cover.
             # It should match the first book.
             cover_selector = ".cover-small"
-        self.driver.find_element(By.CSS_SELECTOR, cover_selector).click()
+        self.scroll_and_click(self.driver.find_element(By.CSS_SELECTOR, cover_selector))
         self.assertIn(f"/books/{book.slug}", self.driver.current_url)
 
     def test_click_book_author(self):

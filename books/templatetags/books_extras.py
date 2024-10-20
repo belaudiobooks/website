@@ -1,6 +1,6 @@
 """Various helper template filters for books."""
 
-from typing import Optional
+from typing import Optional, Sequence
 from django import template
 from datetime import datetime
 from django.utils import html
@@ -35,12 +35,20 @@ def by_plural(value, variants) -> str:
 
 
 @register.filter
-def gender(person: models.Person, variants: str) -> str:
+def gender(persons: Sequence[models.Person] | models.Person, variants: str) -> str:
     """Choses correct ending of a gender-full word given comma-separated endings as "variants"."""
-    if person.gender == "FEMALE":
-        variant = 0
+    if isinstance(persons, models.Person):
+        gender = persons.gender
     else:
+        gender = models.Gender.PLURAL if persons.count() > 1 else persons[0].gender
+    if gender == models.Gender.FEMALE:
+        variant = 0
+    elif gender == models.Gender.MALE:
         variant = 1
+    elif gender == models.Gender.PLURAL:
+        variant = 2
+    else:
+        raise ValueError(f"Gender {gender} is not supported")
 
     return variants.split(",")[variant]
 

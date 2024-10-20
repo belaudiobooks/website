@@ -2,14 +2,11 @@
 {% load books_extras %}
 
 {% if persons.exists %}
-{% if persons.count > 1 or persons.0.gender == "PLURAL" %}{% dtranslate  multiple %}:
-{% else %}
-{% dtranslate single %}{% dtranslate persons.0|gender:gender_variants %}:
-{% endif %}
-{% for person in persons %}
-<a class="text-decoration-none" href="{% url 'person-detail-page' person.slug %}">
-    {% dtranslate person.name %}
-</a>
-{% if not forloop.last %},{% endif %}
-{% endfor %}
+    {% dtranslate base_word %}{% dtranslate persons|gender:gender_variants %}:
+    {% for person in persons %}
+        <a class="text-decoration-none" href="{% url 'person-detail-page' person.slug %}">
+            {% dtranslate person.name %}
+        </a>
+        {% if not forloop.last %},{% endif %}
+    {% endfor %}
 {% endif %}

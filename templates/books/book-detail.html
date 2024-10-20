@@ -47,17 +47,17 @@
 
             <!--Authors with check on multiples and gender-->
             <div data-test="authors">
-                {% include 'partials/_person.html' with persons=book.authors.all multiple='Аўтары' single='Aўтар' gender_variants="ка,"%}
+                {% include 'partials/_person.html' with persons=book.authors.all base_word='Aўтар' gender_variants="ка,,ы"%}
             </div>
 
             {% if single_narration %}
                 <!--Translators with check on multiples and gender-->
                 <div data-test="translators">
-                    {% include 'partials/_person.html' with persons=book.narrations.first.translators.all multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
+                    {% include 'partials/_person.html' with persons=book.narrations.first.translators.all base_word='Перакла' gender_variants="ла,ў,лі"%}
                 </div>
 
                 <div data-test="narrators">
-                    {% include 'partials/_person.html' with persons=narrations.first.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
+                    {% include 'partials/_person.html' with persons=narrations.first.narrators.all base_word='Агучы' gender_variants="ла,ў,лі"%}
                 </div>
             {% endif %}
 
@@ -107,11 +107,11 @@
                 {% if not single_narration %}
                     <h3>{% translate "Агучка" %} {{ forloop.counter }}</h3>
                     <div data-test="translators">
-                        {% include 'partials/_person.html' with persons=narration.translators.all multiple='Пераклалі' single='Перакла' gender_variants="ла,ў"%}
+                        {% include 'partials/_person.html' with persons=narration.translators.all base_word='Перакла' gender_variants="ла,ў,лі"%}
                     </div>
                     <div data-test="narrators">
                         <!--Narrators with check on multiples and gender-->
-                        {% include 'partials/_person.html' with persons=narration.narrators.all multiple='Агучылі' single='Агучы' gender_variants="ла,ў"%}
+                        {% include 'partials/_person.html' with persons=narration.narrators.all base_word='Агучы' gender_variants="ла,ў,лі"%}
                     </div>
                     {% if narration.publishers.all.exists %}
                         <div>

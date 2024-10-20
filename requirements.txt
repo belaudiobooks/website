@@ -1,7 +1,6 @@
-Django>=5.0.1,<5.0.2
+Django==5.0.9
 # djangorestframework>=3.12.4,<3.13.0
 django-environ
-psycopg2>=2.9.2,<2.10.0 #only run it in EC2 - Mac M1 don't need it
 psycopg2-binary
 Pillow # for files upload management
 types-Pillow

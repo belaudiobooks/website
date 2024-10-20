@@ -180,9 +180,11 @@ class CatalogPageTests(WebdriverTestCase):
         )
         self.driver.get(f"{self.live_server_url}/job/update_read_by_author_tag")
         self.driver.get(f"{self.live_server_url}/catalog")
-        self.driver.find_element(
-            By.LINK_TEXT, self.fake_data.tag_read_by_author.name
-        ).click()
+        self.scroll_and_click(
+            self.driver.find_element(
+                By.LINK_TEXT, self.fake_data.tag_read_by_author.name
+            )
+        )
         self.assert_page_contains_books([book_read_by_author])
         self.assert_page_does_not_contain_books([book_read_by_someone_else])
 

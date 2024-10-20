@@ -9,7 +9,7 @@ class PersonPageTests(WebdriverTestCase):
 
     def setUp(self):
         super().setUp()
-        self.person = self.fake_data.person_ales
+        self.person = self.fake_data.person_bela
 
     def _get_person_url(self) -> str:
         return f"{self.live_server_url}/person/{self.person.slug}"
@@ -71,6 +71,38 @@ class PersonPageTests(WebdriverTestCase):
             By.CSS_SELECTOR, 'meta[name="description"]'
         ).get_dom_attribute("content")
         self.assertIn(self.person.name, description)
+
+    def test_page_description_one_book(self):
+        self.fake_data.create_book_with_single_narration(
+            title="Book 1",
+            authors=[self.person],
+        )
+        self.driver.get(self._get_person_url())
+        description = self.driver.find_element(
+            By.CSS_SELECTOR, 'meta[name="description"]'
+        ).get_dom_attribute("content")
+        self.assertIn(f"якія напісала {self.person.name}", description)
+
+    def test_page_description_three_book(self):
+        self.fake_data.create_book_with_single_narration(
+            title="Book 1",
+            authors=[self.person],
+        )
+        self.fake_data.create_book_with_single_narration(
+            title="Book 2",
+            translators=[self.person],
+        )
+        self.fake_data.create_book_with_single_narration(
+            title="Book 3",
+            narrators=[self.person],
+        )
+        self.driver.get(self._get_person_url())
+        description = self.driver.find_element(
+            By.CSS_SELECTOR, 'meta[name="description"]'
+        ).get_dom_attribute("content")
+        self.assertIn(
+            f"якія напісала, пераклала і агучыла {self.person.name}", description
+        )
 
     def test_photo_source_rendered_correctly(self):
         self.person.photo = self.fake_data.create_image()

@@ -185,7 +185,7 @@ msgstr "Link Id"
 msgid "URL"
 msgstr "URL"
 
-#: books/templatetags/books_extras.py:138
+#: books/templatetags/books_extras.py:146
 msgid "Крыніца"
 msgstr "Krynica"
 

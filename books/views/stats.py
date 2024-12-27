@@ -11,15 +11,14 @@ def about(request: HttpRequest) -> HttpResponse:
     """About us page containing info about the website and the team."""
     people = [
         ("Мікіта", "images/member-mikita.jpg"),
-        ("Яўген", "images/member-jauhen.jpg"),
-        ("Павал", "images/member-paval.jpg"),
+        ("Крысціна", "images/member-alena.jpg"),
+        ("Міра", "images/member-andrey.jpg"),
+        ("Жэня", "images/member-andrey.jpg"),
         ("Алесь", "images/member-ales.jpg"),
         # ('Наста', 'images/member-nasta.jpg'),
         ("Алёна", "images/member-alena.jpg"),
-        ("Юры", "images/member-jura.jpg"),
-        ("Андрэй", "images/member-andrey.jpg"),
-        ("Вікторыя", "images/member-andrey.jpg"),
-        ("Жэня", "images/member-andrey.jpg"),
+        ("Павал", "images/member-paval.jpg"),
+        ("Яўген", "images/member-jauhen.jpg"),
     ]
     context = {
         "team_members": people,

@@ -185,7 +185,7 @@ msgstr "Link Id"
 msgid "URL"
 msgstr "URL"
 
-#: books/templatetags/books_extras.py:146
+#: books/templatetags/books_extras.py:134
 msgid "Крыніца"
 msgstr "Krynica"
 
@@ -1201,7 +1201,7 @@ msgstr ""
 "                                Staronka %(cur)s z %(total)s\n"
 "                                "
 
-#: templates/books/index.html:26
+#: templates/books/index.html:10
 msgid "Навінкі"
 msgstr "Navinki"
 
@@ -1261,17 +1261,19 @@ msgstr "Sačycie za apošnimi navinami:"
 msgid "Алфавіт"
 msgstr "Ałfavit"
 
-#: templates/partials/_narration_links.html:7
-msgid "Першую частку можна паслухаць бясплатна на"
-msgstr "Pieršuju častku možna pasłuchać biaspłatna na"
-
-#: templates/partials/_narration_links.html:11
+#: templates/partials/_narration_links.html:8
 msgid "Дзе купіць"
 msgstr "Dzie kupić"
 
-#: templates/partials/_narration_links.html:13
+#: templates/partials/_narration_links.html:10
 msgid "Дзе паслухаць бясплатна"
 msgstr "Dzie pasłuchać biaspłatna"
+
+#: templates/partials/_narration_links.html:36
+#, fuzzy
+#| msgid "Першую частку можна паслухаць бясплатна на"
+msgid "Першую частку можна паслухаць бясплатна:"
+msgstr "Pieršuju častku možna pasłuchać biaspłatna:"
 
 #: templates/partials/_navbar.html:9
 #, fuzzy

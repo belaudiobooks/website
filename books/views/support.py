@@ -9,7 +9,7 @@ from typing import Dict, List, Union
 from uuid import UUID
 from django import views
 from django.conf import settings
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
@@ -18,6 +18,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.core.management import call_command
 from django.urls import reverse
+from django.utils.html import escape
 from algoliasearch.search_client import SearchClient
 from markdownify.templatetags.markdownify import markdownify
 from books.thirdparty.livelibru import search_books_with_reviews, DataclassJSONEncoder
@@ -297,18 +298,16 @@ def convert_orthography(request: HttpRequest) -> HttpResponse:
     fr = request.GET.get("from")
     to = request.GET.get("to")
     if fr not in SUPPORTED_ORTHOGRAPHIES:
-        return HttpResponse(
-            content=f"Unsupported orthography {fr}. {CONVERT_EXAMPLE}",
-            status=400,
+        return HttpResponseBadRequest(
+            content=f"Unsupported orthography {escape(fr)}. {CONVERT_EXAMPLE}",
         )
     if to not in SUPPORTED_ORTHOGRAPHIES:
-        return HttpResponse(
-            content=f"Unsupported orthography {to}. {CONVERT_EXAMPLE}",
-            status=400,
+        return HttpResponseBadRequest(
+            content=f"Unsupported orthography {escape(to)}. {CONVERT_EXAMPLE}",
         )
     if text == "" or text is None:
-        return HttpResponse(
-            content=f'Empty or missing "text" param. {CONVERT_EXAMPLE}', status=400
+        return HttpResponseBadRequest(
+            content=f'Empty or missing "text" param. {CONVERT_EXAMPLE}'
         )
 
     converted = belorthography.convert(text, fr, to)

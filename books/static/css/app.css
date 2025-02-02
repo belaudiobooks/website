@@ -547,3 +547,10 @@ article .CodeMirror {
 .main-content hr {
   margin: 2rem 0;
 }
+
+.youtube-player {
+  aspect-ratio: 16 / 9;
+  max-width: 560px;
+  width: 100%;
+  display: block;
+}

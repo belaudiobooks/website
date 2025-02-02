@@ -198,7 +198,7 @@ def fill_with_data():
         description="Апісанне першай агучкі",
         cover_image="covers/megabook_1.png",
         cover_image_source="ChatGPT;https://chat.openai.com",
-        preview_url="https://youtube.com",
+        preview_url="https://youtu.be/-Unlh-02pEc?si=ZwYwZxQdFwyxhTS-",
     )
     megabook_nar_1.narrators.set([person_adam, person_bahdana, person_valer])
     megabook_nar_1.translators.set([person_adam, person_bahdana, person_valer])

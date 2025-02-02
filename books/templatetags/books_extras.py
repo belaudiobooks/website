@@ -1,6 +1,7 @@
 """Various helper template filters for books."""
 
 from typing import Optional, Sequence
+from urllib.parse import urlparse, parse_qs
 from django import template
 from datetime import datetime
 from django.utils import html
@@ -205,3 +206,18 @@ def dtranslate(text: str):
         )
     else:
         return text
+
+
+@register.filter
+def youtube_embed_link(youtube_link: str) -> str:
+    link = urlparse(youtube_link)
+    id = ""
+    if link.netloc == "youtu.be":
+        id = link.path[1:]
+    elif (
+        link.netloc == "youtube.com" or link.netloc == "www.youtube.com"
+    ) and link.path == "/watch":
+        params = parse_qs(link.query)
+        if "v" in params:
+            id = params["v"][0]
+    return f"https://www.youtube.com/embed/{id}"

@@ -3,9 +3,6 @@
 {% load books_extras %}
 
 <div class="col-12 links-header mt-4">
-    {% if narration.paid and narration.preview_url %}
-        <div class="my-4" data-test="narration-description">{% translate "Першую частку можна паслухаць бясплатна на" %} <a href="{{ narration.preview_url }}" target="_blank">YouTube</a>.</div>
-    {% endif %}
     <strong>
     {% if narration.paid %}
         {% translate "Дзе купіць" %}
@@ -27,3 +24,18 @@
         </div>
     {% endif %}
 {% endfor %}
+
+{% if narration.paid and narration.preview_url %}
+
+<div class="col-12 links-header mt-4">
+    <div class="mt-4" data-test="narration-description">{% translate "Першую частку можна паслухаць бясплатна:" %}</div>
+    <iframe class="youtube-player"
+            src="{{ narration.preview_url | youtube_embed_link }}"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+    </iframe>
+</div>
+{% endif %}

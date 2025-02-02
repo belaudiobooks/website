@@ -90,7 +90,7 @@ class BookPageTests(WebdriverTestCase):
             self.book, narration.translators.all()
         )
         self._check_persons_present_and_clickable(self.book, narration.narrators.all())
-        self._check_narration_links_present(narration, narration)
+        self._check_narration_links_present(self.book, narration)
 
     def test_elements_rendered_per_narration_with_multiple_narrations(self):
         nar1 = self.book.narrations.first()

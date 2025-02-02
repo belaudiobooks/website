@@ -66,19 +66,6 @@ def to_human_language(lang: str) -> str:
 
 
 @register.filter
-def link_type_availibility(availability: str) -> str:
-    """Converts link availability enum to human readable."""
-    if availability == models.LinkAvailability.EVERYWHERE:
-        return ""
-    elif availability == models.LinkAvailability.UNAVAILABLE_IN_BELARUS:
-        return "не працуе ў Беларусі"
-    elif availability == models.LinkAvailability.USA_ONLY:
-        return "толькі ў ЗША"
-    else:
-        raise ValueError("Uknown avalability " + availability)
-
-
-@register.filter
 def duration(narration: models.Narration) -> str:
     """Formats book duration using "36 hours 12 minutes" format."""
     day = narration.duration.days

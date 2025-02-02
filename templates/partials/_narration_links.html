@@ -18,7 +18,12 @@
                 <img class="mx-auto me-3 link-icon" src="{{ link.url_type.icon.url }}" alt="{{ link.url_type.caption }}">
                 <div class="d-inline-block flex-grow-1">
                     <span>{% dtranslate link.url_type.caption %}</span>
-                    <span class="link-type-availability">{% dtranslate link.url_type.availability|link_type_availibility %}</span>
+                    <span class="link-type-availability">
+                        {% if link.url_type.availability == 'EVERYWHERE' %}
+                            <img style="width: 27px; height: 27px" src="{% static 'images/vasmiroh.png' %}" alt="email icon">
+                            працуе ў Беларусі
+                        {% endif %}
+                    </span>
                 </div>
             </a>
         </div>

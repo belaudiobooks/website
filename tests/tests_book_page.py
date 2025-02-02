@@ -60,7 +60,7 @@ class BookPageTests(WebdriverTestCase):
         section = self._get_section(expected_section)
         for link in narration.links.all():
             caption = link.url_type.caption
-            elem = section.find_element(By.LINK_TEXT, caption)
+            elem = section.find_element(By.PARTIAL_LINK_TEXT, caption)
             self.assertEqual(link.url, elem.get_dom_attribute("href"))
 
     def _create_narration(
@@ -164,11 +164,13 @@ class BookPageTests(WebdriverTestCase):
     def test_book_with_paid_narration_and_and_preview_url_has_link(self):
         narration = self.book.narrations.first()
         narration.paid = True
-        narration.preview_url = "https://youtube.com/ttt"
+        narration.preview_url = "https://youtube.com/watch?v=12345"
         narration.save()
         self.driver.get(self._get_book_url())
-        elem = self.driver.find_element(By.LINK_TEXT, "YouTube")
-        self.assertEqual("https://youtube.com/ttt", elem.get_attribute("href"))
+        elem = self.driver.find_element(By.CSS_SELECTOR, ".youtube-player")
+        self.assertEqual(
+            "https://www.youtube.com/embed/12345", elem.get_attribute("src")
+        )
 
     def test_russian_only_books_show_both_titles(self):
         self.book.title = "Першая кніга"

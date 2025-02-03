@@ -1,4 +1,4 @@
-""" Integration with livelib mobile API.
+"""Integration with livelib mobile API.
 
 Module responsible for integration with https://livelib.ru/ mobile API
 and provides functions:

@@ -129,59 +129,65 @@ msgstr "Publisher Description"
 msgid "Narration ID"
 msgstr "Narration ID"
 
-#: books/models.py:290
+#: books/models.py:285
+#, fuzzy
+#| msgid "Narration ID"
+msgid "Narration Title"
+msgstr "Narration Title"
+
+#: books/models.py:293
 msgid "Is narration paid?"
 msgstr "Is narration paid?"
 
-#: books/models.py:293
+#: books/models.py:296
 msgid "Language"
 msgstr "Language"
 
-#: books/models.py:296
+#: books/models.py:299
 msgid "Duration"
 msgstr "Duration"
 
-#: books/models.py:302
+#: books/models.py:305
 msgid "Narration Description"
 msgstr "Narration Description"
 
-#: books/models.py:309
+#: books/models.py:312
 msgid "Cover Source"
 msgstr "Cover Source"
 
-#: books/models.py:321
+#: books/models.py:324
 msgid "Release Date"
 msgstr "Release Date"
 
-#: books/models.py:323
+#: books/models.py:326
 msgid "Preview URL"
 msgstr "Preview URL"
 
-#: books/models.py:353
+#: books/models.py:356
 msgid "Link Type Name"
 msgstr "Link Type Name"
 
-#: books/models.py:355
+#: books/models.py:358
 msgid "Link Caption"
 msgstr "Link Caption"
 
-#: books/models.py:358
+#: books/models.py:361
 msgid "Disabled"
 msgstr "Disabled"
 
-#: books/models.py:359
+#: books/models.py:362
 msgid "Url regex"
 msgstr "Url regex"
 
-#: books/models.py:361
+#: books/models.py:364
 msgid "Availability"
 msgstr "Availability"
 
-#: books/models.py:378
+#: books/models.py:381
 msgid "Link Id"
 msgstr "Link Id"
 
-#: books/models.py:380
+#: books/models.py:383
 msgid "URL"
 msgstr "URL"
 
@@ -1154,17 +1160,17 @@ msgstr "Mova"
 msgid "Водгукі на"
 msgstr "Vodhuki na"
 
-#: templates/books/book-detail.html:112
+#: templates/books/book-detail.html:116
 #, fuzzy
 #| msgid "агучкі"
 msgid "Агучка"
 msgstr "Ahučka"
 
-#: templates/books/book-detail.html:122
+#: templates/books/book-detail.html:128
 msgid "Выдавецтва:"
 msgstr "Vydaviectva:"
 
-#: templates/books/book-detail.html:129
+#: templates/books/book-detail.html:135
 msgid "Мова:"
 msgstr "Mova:"
 

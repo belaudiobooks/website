@@ -281,6 +281,9 @@ class Narration(models.Model):
         editable=False,
         unique=True,
     )
+    title = models.CharField(
+        _("Narration Title"), max_length=100, blank=True, default=""
+    )
     narrators = models.ManyToManyField(Person, related_name="narrations", blank=True)
     translators = models.ManyToManyField(
         Person, related_name="narrations_translated", blank=True

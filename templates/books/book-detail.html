@@ -109,7 +109,13 @@
             <!--Book details-->
             <div class="col-12 col-md-6 col-lg-8" data-test="narration-section" data-narration-id="{{narration.uuid}}">
                 <div class="col-12">
-                    <h3>{% translate "Агучка" %} {{ forloop.counter }}</h3>
+                    <h3>
+                        {% if narration.title %}
+                            {% dtranslate narration.title %}
+                        {% else %}
+                            {% translate "Агучка" %} {{ forloop.counter }}
+                        {% endif %}
+                    </h3>
                     <div data-test="translators">
                         {% include 'partials/_person.html' with persons=narration.translators.all base_word='Перакла' gender_variants="ла,ў,лі"%}
                     </div>

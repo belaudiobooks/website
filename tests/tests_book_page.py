@@ -358,3 +358,39 @@ class BookPageTests(WebdriverTestCase):
             title="Казкі",
         )
         self.assertEqual("kazki-3", book3.slug)
+
+    def test_custom_narration_title_with_fallback(self):
+        # Get the first narration (created in setUp with today's date)
+        # and set custom title on it
+        narration1 = self.book.narrations.get(date=date.today())
+        narration1.title = "Спецыяльная агучка"
+        narration1.save()
+
+        # Create second narration without custom title (older date so it appears second)
+        narration2 = models.Narration.objects.create(
+            book=self.book,
+            language=models.Language.BELARUSIAN,
+            paid=False,
+            date=date.today() - timedelta(days=1),
+        )
+        narration2.narrators.set([self.fake_data.person_bela])
+
+        self.driver.get(self._get_book_url())
+
+        # Find all narration sections
+        narration_sections = self.driver.find_elements(
+            By.CSS_SELECTOR, '[data-test="narration-section"]'
+        )
+        self.assertEqual(2, len(narration_sections))
+
+        # First narration should show custom title
+        first_section_title = (
+            narration_sections[0].find_element(By.CSS_SELECTOR, "h3").text
+        )
+        self.assertEqual("Спецыяльная агучка", first_section_title)
+
+        # Second narration should show default "Агучка 2"
+        second_section_title = (
+            narration_sections[1].find_element(By.CSS_SELECTOR, "h3").text
+        )
+        self.assertEqual("Агучка 2", second_section_title)

@@ -31,3 +31,11 @@ class RoyaltyRow:
     exchange_rate: Optional[float]
     royalty_payable_currency: str
     royalty_payable: float
+
+
+@dataclass
+class DriveFile:
+    """Represents a file in Google Drive."""
+
+    id: str
+    name: str

@@ -5,3 +5,4 @@ google-cloud-pubsub
 Wand
 django-environ
 requests
+openpyxl

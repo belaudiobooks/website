@@ -61,6 +61,18 @@ The function will automatically use the attached service account's credentials:
 fetcher = GoogleDriveFetcher(folder_id="your-folder-id")
 ```
 
+## Deploying the Cloud Function
+
+To deploy the `push_royalties` function run `deploy.sh`.
+
+## Debugging the Cloud Function
+
+You can use the following command to debug:
+
+```bash
+GOOGLE_CLOUD_PROJECT=audiobooksbysite GOOGLE_APPLICATION_CREDENTIALS=key.json BIGQUERY_DATASET_ID=DATASET_ID  BIGQUERY_TABLE_ID=TABLE_ID GOOGLE_DRIVE_FOLDER_ID=FOLDER_ID  functions-framework-python --target push_royalties --debug
+```
+
 ## Running tests
 
 ```bash

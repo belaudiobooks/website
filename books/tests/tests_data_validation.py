@@ -1,5 +1,5 @@
-from tests.fake_data import FakeData
-from tests.webdriver_test_case import WebdriverTestCase
+from books.tests.fake_data import FakeData
+from books.tests.webdriver_test_case import WebdriverTestCase
 
 import json
 import requests
@@ -10,7 +10,7 @@ class DataValidationTests(WebdriverTestCase):
     """Tests that validate data."""
 
     def get_schema(self):
-        with open("tests/schema.data.json", "r") as f:
+        with open("books/tests/schema.data.json", "r") as f:
             return json.load(f)
 
     def test_data_json_generates(self):

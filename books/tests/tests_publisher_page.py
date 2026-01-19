@@ -1,5 +1,5 @@
 from books import models
-from tests.webdriver_test_case import WebdriverTestCase
+from books.tests.webdriver_test_case import WebdriverTestCase
 from selenium.webdriver.common.by import By
 
 

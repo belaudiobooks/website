@@ -11,7 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from django.conf import settings
 
 from books import models
-from tests import fake_data
+from books.tests import fake_data
 
 
 # Uncomment to run tests in debug mode. Useful when server returns 500 and test fails

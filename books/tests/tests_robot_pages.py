@@ -1,6 +1,6 @@
 import requests
 from books.views import articles
-from tests.webdriver_test_case import WebdriverTestCase
+from books.tests.webdriver_test_case import WebdriverTestCase
 
 
 class RobotPagesTests(WebdriverTestCase):

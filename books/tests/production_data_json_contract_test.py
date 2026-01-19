@@ -11,7 +11,7 @@ class ProductionDataJsonContractTest(unittest.TestCase):
         return requests.get("https://audiobooks.by/data.json").json()
 
     def get_schema(self):
-        with open("tests/schema.data.json", "r") as f:
+        with open("books/tests/schema.data.json", "r") as f:
             return json.load(f)
 
     def test_contract(self):

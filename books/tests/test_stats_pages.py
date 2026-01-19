@@ -1,4 +1,4 @@
-from tests.webdriver_test_case import WebdriverTestCase
+from books.tests.webdriver_test_case import WebdriverTestCase
 
 
 class StatsPagesTest(WebdriverTestCase):

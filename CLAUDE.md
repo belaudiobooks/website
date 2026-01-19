@@ -39,7 +39,7 @@ python manage.py runserver
 python manage.py test --verbosity=2
 
 # Run tests for a specific module
-python manage.py test tests.tests_book_page --verbosity=2
+python manage.py test books.tests.tests_book_page --verbosity=2
 ```
 
 ### Linting and Formatting
@@ -88,7 +88,7 @@ After deployment, verify the new version and migrate traffic via the Google Clou
 - **templates/** - HTML templates used by books app views
 - **functions/** - Google Cloud Functions for batch processing (primarily image resizing)
 - **locale/** - Lacinka translations for static text
-- **tests/** - Integration tests using Selenium WebDriver
+- **books/tests/** - Integration tests using Selenium WebDriver
 
 ### Database
 
@@ -176,7 +176,7 @@ Main routes defined in `books/urls.py`:
 
 ### Testing Strategy
 
-Tests are integration-focused using Selenium WebDriver (`tests/` directory). Tests:
+Tests are integration-focused using Selenium WebDriver (`books/tests/` directory). Tests:
 1. Launch development server
 2. Seed with test data
 3. Use WebDriver to interact with pages

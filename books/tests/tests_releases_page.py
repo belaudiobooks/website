@@ -1,6 +1,6 @@
 from datetime import date
 from books.models import BookStatus
-from tests.webdriver_test_case import WebdriverTestCase
+from books.tests.webdriver_test_case import WebdriverTestCase
 
 
 class ReleasesPageTests(WebdriverTestCase):

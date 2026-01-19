@@ -1,6 +1,5 @@
 from typing import List, Tuple
 
-
 MONTHS: List[Tuple[str, str]] = [
     ("студзень", "студзеня"),
     ("люты", "лютага"),

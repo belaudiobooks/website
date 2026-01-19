@@ -85,7 +85,7 @@ After deployment, verify the new version and migrate traffic via the Google Clou
 - **booksby/** - Main Django project settings and root URL configuration
 - **books/** - Core application containing models, views, templates, and business logic
 - **user/** - Custom user model for admin (uses email instead of username)
-- **templates/** - HTML templates used by books app views
+- **books/templates/** - HTML templates used by views
 - **functions/** - Google Cloud Functions for batch processing (primarily image resizing)
 - **locale/** - Lacinka translations for static text
 - **books/tests/** - Integration tests using Selenium WebDriver

@@ -9,8 +9,8 @@ This project is created to allow users quickly find audioboooks that are transla
 * `booksby` - main project folder with settings and project top url setup. Doesn't contain actual .
 * `books` - folder containing the main part of the site. That's where the most work is done.
 * `books/tests` - integration tests using Selenium WebDriver.
+* `books/templates` - HTML templates used by views.
 * `user` - app containing user model for admin page.
-* `templates` - html templates, used by views in `books`.
 * `functions` - python functions for Google Cloud batch processing. See [README](https://github.com/belaudiobooks/website/blob/main/functions/README.md).
 * `locale` - contains localization (text in lacinka). See Lacinization section below in this file.
 * `seed_media` - folder containing images for local development (fake book cover, people photo).

@@ -85,6 +85,7 @@ After deployment, verify the new version and migrate traffic via the Google Clou
 - **booksby/** - Main Django project settings and root URL configuration
 - **books/** - Core application containing models, views, templates, and business logic
 - **user/** - Custom user model for admin (uses email instead of username)
+- **partners/** - Partners app (accessible at `/partners`)
 - **books/templates/** - HTML templates used by views
 - **functions/** - Google Cloud Functions for batch processing (primarily image resizing)
 - **locale/** - Lacinka translations for static text
@@ -173,6 +174,7 @@ Main routes defined in `books/urls.py`:
 - `/search` - Search interface
 - `/job/*` - Background job endpoints (Algolia sync, image cache, etc.)
 - `/api/*` - API endpoints (markdown preview, livelib integration, orthography conversion)
+- `/partners` - Partners section
 
 ### Testing Strategy
 

@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "books",
     "user",
+    "partners",
     "markdownify.apps.MarkdownifyConfig",
 ]
 

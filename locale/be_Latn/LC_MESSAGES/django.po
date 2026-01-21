@@ -191,44 +191,40 @@ msgstr "Link Id"
 msgid "URL"
 msgstr "URL"
 
-#: books/templatetags/books_extras.py:134
-msgid "Крыніца"
-msgstr "Krynica"
-
-#: templates/404.html:5
+#: books/templates/404.html:5
 msgid "Старонка не знойдзена"
 msgstr "Staronka nie znojdziena"
 
-#: templates/404.html:11
+#: books/templates/404.html:11
 msgid "Cтаронка не знойдзена."
 msgstr "Ctaronka nie znojdziena."
 
-#: templates/404.html:12
+#: books/templates/404.html:12
 msgid "Вы шукалі"
 msgstr "Vy šukali"
 
-#: templates/404.html:12
+#: books/templates/404.html:12
 msgid "але такой старонкі не існуе."
 msgstr "ale takoj staronki nie isnuje."
 
-#: templates/404.html:13
+#: books/templates/404.html:13
 msgid "Таксама магчыма, што ў нас сайт не працуе правільна."
 msgstr "Taksama mahčyma, što ŭ nas sajt nie pracuje pravilna."
 
-#: templates/404.html:14
+#: books/templates/404.html:14
 msgid "Напішыце нам на contact@audiobooks.by, калі ласка."
 msgstr "Napišycie nam na contact@audiobooks.by, kali łaska."
 
-#: templates/base.html:12
+#: books/templates/base.html:12
 msgid "Беларускія аўдыякнігі"
 msgstr "Biełaruskija aŭdyjaknihi"
 
-#: templates/books/about.html:6 templates/books/about.html:12
-#: templates/partials/_navbar.html:51
+#: books/templates/books/about.html:6 books/templates/books/about.html:12
+#: books/templates/partials/_navbar.html:51
 msgid "Пра нас"
 msgstr "Pra nas"
 
-#: templates/books/about.html:15
+#: books/templates/books/about.html:15
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -248,7 +244,7 @@ msgstr ""
 "            kłasičnyja knihi. Sajt nie źmiaščaje sami knihi, a daje spasyłki na placoŭki, dzie ich možna pasłuchać albo nabyć.\n"
 "        "
 
-#: templates/books/about.html:21
+#: books/templates/books/about.html:21
 #, fuzzy, python-format
 #| msgid ""
 #| "\n"
@@ -271,42 +267,42 @@ msgstr ""
 "            z takich krynic, jak\n"
 "            "
 
-#: templates/books/about.html:27
+#: books/templates/books/about.html:27
 msgid "Кніжны Воз"
 msgstr "Knižny Voz"
 
-#: templates/books/about.html:28
+#: books/templates/books/about.html:28
 #, fuzzy
 #| msgid "Беларускія аўдыякнігі"
 msgid "Беларуская палічка"
 msgstr "Biełaruskaja palička"
 
-#: templates/books/about.html:29
+#: books/templates/books/about.html:29
 msgid "Камунікат"
 msgstr "Kamunikat"
 
-#: templates/books/about.html:30
+#: books/templates/books/about.html:30
 msgid "Радыё Свабода"
 msgstr "Radyjo Svaboda"
 
-#: templates/books/about.html:31
+#: books/templates/books/about.html:31
 #, fuzzy
 #| msgid "Беларускія аўдыякнігі"
 msgid "Беларускі ПЭН-цэнтр"
 msgstr "Biełaruski PEN-centr"
 
-#: templates/books/about.html:33
+#: books/templates/books/about.html:33
 msgid "Мінінфарм РБ"
 msgstr "Mininfarm RB"
 
-#: templates/books/about.html:34
+#: books/templates/books/about.html:34
 msgid ""
 "і іншых. Сачыць за апошнімі навінамі вы можаце ў нашых сацыяльных сетках:"
 msgstr ""
 "i inšych. Sačyć za apošnimi navinami vy možacie ŭ našych sacyjalnych "
 "sietkach:"
 
-#: templates/books/about.html:55
+#: books/templates/books/about.html:55
 msgid ""
 "Калі на нашым сайце няма якой-небудзь аўдыякнігі, альбо калі вы знайшлі "
 "памылку, калі ласка, напішыце нам на"
@@ -314,19 +310,19 @@ msgstr ""
 "Kali na našym sajcie niama jakoj-niebudź aŭdyjaknihi, albo kali vy znajšli "
 "pamyłku, kali łaska, napišycie nam na"
 
-#: templates/books/about.html:56
+#: books/templates/books/about.html:56
 msgid "альбо праз"
 msgstr "albo praz"
 
-#: templates/books/about.html:57
+#: books/templates/books/about.html:57
 msgid "Гугл-форму"
 msgstr "Huhł-formu"
 
-#: templates/books/about.html:58
+#: books/templates/books/about.html:58
 msgid "Будзем удзячныя за водгукі і прапановы."
 msgstr "Budziem udziačnyja za vodhuki i prapanovy."
 
-#: templates/books/about.html:64
+#: books/templates/books/about.html:64
 msgid ""
 "\n"
 "            Мы адкрыты да супрацоўніцтва. Калі вы жадаеце запісаць і выкласці аўдыякнігу, ці нават толькі выкласці -\n"
@@ -338,7 +334,7 @@ msgstr ""
 "            napišycie nam na <strong>contact@audiobooks.by</strong>.\n"
 "            "
 
-#: templates/books/about.html:70
+#: books/templates/books/about.html:70
 msgid ""
 "\n"
 "            Зыходны код сайта размяшчаецца на гітхабе: <a\n"
@@ -350,29 +346,30 @@ msgstr ""
 "                href=\"https://github.com/belaudiobooks/website\">belaudiobooks/website</a>\n"
 "            "
 
-#: templates/books/about.html:76
+#: books/templates/books/about.html:76
 msgid "Наша каманда"
 msgstr "Naša kamanda"
 
-#: templates/books/articles/article.html:18 templates/partials/_navbar.html:46
+#: books/templates/books/articles/article.html:18
+#: books/templates/partials/_navbar.html:46
 msgid "Артыкулы"
 msgstr "Artykuły"
 
-#: templates/books/articles/audiobooksby-database.html:6
-#: templates/books/articles/audiobooksby-database.html:20
+#: books/templates/books/articles/audiobooksby-database.html:6
+#: books/templates/books/articles/audiobooksby-database.html:20
 msgid "Навошта data.json?"
 msgstr "Navošta data.json?"
 
-#: templates/books/articles/audiobooksby-database.html:7
-#: templates/books/articles/audiobooksby-database.html:40
+#: books/templates/books/articles/audiobooksby-database.html:7
+#: books/templates/books/articles/audiobooksby-database.html:40
 msgid "Схема data.json"
 msgstr "Schiema data.json"
 
-#: templates/books/articles/audiobooksby-database.html:8
+#: books/templates/books/articles/audiobooksby-database.html:8
 msgid "Умовы карыстання"
 msgstr "Umovy karystańnia"
 
-#: templates/books/articles/audiobooksby-database.html:11
+#: books/templates/books/articles/audiobooksby-database.html:11
 msgid ""
 "\n"
 "  audiobooks.by - самы поўны каталог беларускіх аўдыякніг. У дадатак да зручнага вэб-інтэрфейса наш каталог кніг можна\n"
@@ -384,7 +381,7 @@ msgstr ""
 "  atrymać u strukturavanym <a href=\"https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON\"\n"
 "    target=\"_blank\">JSON</a> farmacie pa spasyłcy:\n"
 
-#: templates/books/articles/audiobooksby-database.html:22
+#: books/templates/books/articles/audiobooksby-database.html:22
 msgid ""
 "\n"
 "    data.json будзе карысны, калі вы хочаце стварыць свой уласны сайт ці праграму, альбо інтэграваць аўдыякнігі ва\n"
@@ -396,7 +393,7 @@ msgstr ""
 "    ŭžo isnujučy sajt. Zamiest taho, kab parsić staronki audiobooks.by, my pradstaŭlajem admysłovy fajł.\n"
 "  "
 
-#: templates/books/articles/audiobooksby-database.html:26
+#: books/templates/books/articles/audiobooksby-database.html:26
 msgid ""
 "\n"
 "    Таксама файл можа быць выкарыстаны, каб зрабіць аналіз беларускіх аўдыякніг. Напрыклад, знайсці аўдыякнігу з\n"
@@ -408,7 +405,7 @@ msgstr ""
 "    najbolšaj kolkaściu ahučak:\n"
 "  "
 
-#: templates/books/articles/audiobooksby-database.html:42
+#: books/templates/books/articles/audiobooksby-database.html:42
 msgid ""
 "\n"
 "    Ніжэй мы апісваем схему файла з дапамогай TypeScript сінтаксіса. Але майце на ўвазе, што бягучая схема можа не\n"
@@ -420,11 +417,11 @@ msgstr ""
 "    supadać z tym, što nižej. Tamu samy nadziejny sposab — heta adkryć data.json i pahladzieć.\n"
 "  "
 
-#: templates/books/articles/audiobooksby-database.html:125
+#: books/templates/books/articles/audiobooksby-database.html:125
 msgid "Умовы выкарыстання"
 msgstr "Umovy vykarystańnia"
 
-#: templates/books/articles/audiobooksby-database.html:127
+#: books/templates/books/articles/audiobooksby-database.html:127
 msgid ""
 "\n"
 "    Пры выкарыстанні data.json спасылацца на audiobooks.by не абавязкова, але пажадана. Нам будзе прыемна ведаць,\n"
@@ -436,7 +433,7 @@ msgstr ""
 "    što plon našaj pracy karysny inšym.\n"
 "  "
 
-#: templates/books/articles/audiobooksby-database.html:131
+#: books/templates/books/articles/audiobooksby-database.html:131
 msgid ""
 "\n"
 "    data.json аднаўляецца штогадзінна.\n"
@@ -446,7 +443,7 @@ msgstr ""
 "    data.json adnaŭlajecca štohadzinna.\n"
 "  "
 
-#: templates/books/articles/audiobooksby-database.html:134
+#: books/templates/books/articles/audiobooksby-database.html:134
 #, fuzzy
 #| msgid ""
 #| "Дасылайце вашыя пытанні і прапановы на пошту contact@audiobooks.by"
@@ -459,29 +456,29 @@ msgstr ""
 "    Kali jość pytańni — pišycie na contact@audiobooks.by.\n"
 "  "
 
-#: templates/books/articles/covers-guide.html:7
-#: templates/books/articles/covers-guide.html:21
+#: books/templates/books/articles/covers-guide.html:7
+#: books/templates/books/articles/covers-guide.html:21
 msgid "Квадратны фармат"
 msgstr "Kvadratny farmat"
 
-#: templates/books/articles/covers-guide.html:8
-#: templates/books/articles/covers-guide.html:30
+#: books/templates/books/articles/covers-guide.html:8
+#: books/templates/books/articles/covers-guide.html:30
 msgid "Памер мінімум 1400х1400 пікселяў"
 msgstr "Pamier minimum 1400ch1400 piksielaŭ"
 
-#: templates/books/articles/covers-guide.html:9
-#: templates/books/articles/covers-guide.html:45
+#: books/templates/books/articles/covers-guide.html:9
+#: books/templates/books/articles/covers-guide.html:45
 #, fuzzy
 #| msgid "Кнігі аўтар"
 msgid "Назва твора і аўтар"
 msgstr "Nazva tvora i aŭtar"
 
-#: templates/books/articles/covers-guide.html:10
-#: templates/books/articles/covers-guide.html:66
+#: books/templates/books/articles/covers-guide.html:10
+#: books/templates/books/articles/covers-guide.html:66
 msgid "Выканаўца і перакладчык"
 msgstr "Vykanaŭca i pierakładčyk"
 
-#: templates/books/articles/covers-guide.html:13
+#: books/templates/books/articles/covers-guide.html:13
 msgid ""
 "\n"
 "    Аўдыякнігі адрозніваюцца ад папяровых кніг: яны спажываюцца праз электронныя прылады, па большасці з тэлефонаў —\n"
@@ -495,7 +492,7 @@ msgstr ""
 "    vokładak aŭdyjaknih adroźnivajucca ad pravił afarmleńnia vokładak papiarovych knih. My padrychtavali hetyja praviły\n"
 "    pieradusim dziela ŭłasnaha karystańnia, ale budziem radyja, kali jany buduć karysnyja inšym prajektam.\n"
 
-#: templates/books/articles/covers-guide.html:23
+#: books/templates/books/articles/covers-guide.html:23
 msgid ""
 "\n"
 "        Квадратныя вокладкі — стандарт аўдыякніжнай індустрыі. Усе буйныя сайты і мабільныя праграмы выкарыстоўваюць\n"
@@ -507,7 +504,7 @@ msgstr ""
 "        mienavita taki farmat.\n"
 "    "
 
-#: templates/books/articles/covers-guide.html:32
+#: books/templates/books/articles/covers-guide.html:32
 msgid ""
 "\n"
 "        Вокладка павінна быць у высокай якасці. Многія платформы патрабуюць вокладку ў памеры 2400х2400 пікселяў —\n"
@@ -531,7 +528,7 @@ msgstr ""
 "        1400ch1400 piksielaŭ.\n"
 "    "
 
-#: templates/books/articles/covers-guide.html:47
+#: books/templates/books/articles/covers-guide.html:47
 msgid ""
 "\n"
 "        На вокладцы павінны быць назва твора і аўтар. Яны мусяць добра чытацца, нават калі вокладка будзе паказана ў\n"
@@ -545,21 +542,21 @@ msgstr ""
 "        vokładcy nievialiki, jaho niemahčyma budzie pračytać u katałozie.\n"
 "    "
 
-#: templates/books/articles/covers-guide.html:52
+#: books/templates/books/articles/covers-guide.html:52
 #, fuzzy
 #| msgid "Пераклады"
 msgid "Прыклады"
 msgstr "Prykłady"
 
-#: templates/books/articles/covers-guide.html:54
+#: books/templates/books/articles/covers-guide.html:54
 msgid "Вокладкі з дробным тэкстам, які складана прачытаць:"
 msgstr "Vokładki z drobnym tekstam, jaki składana pračytać:"
 
-#: templates/books/articles/covers-guide.html:59
+#: books/templates/books/articles/covers-guide.html:59
 msgid "Вокладкі з вялікім, чытабельным тэкстам:"
 msgstr "Vokładki ź vialikim, čytabielnym tekstam:"
 
-#: templates/books/articles/covers-guide.html:68
+#: books/templates/books/articles/covers-guide.html:68
 msgid ""
 "\n"
 "        Голас — важная частка кожнай аўдыякнігі. Менавіта голас выканаўцы часта становіцца прычынай, па якой слухачу\n"
@@ -575,7 +572,7 @@ msgstr ""
 "        hałasy i navat abirać aŭdyjaknihi, addajučy pieravahu tamu ci inšamu vykanaŭcu.\n"
 "    "
 
-#: templates/books/articles/covers-guide.html:74
+#: books/templates/books/articles/covers-guide.html:74
 msgid ""
 "\n"
 "        Калі кніга з’яўляецца перакладам — пажадана дадаць імя перакладчыка на вокладку. Праца перакладчыка — складаны\n"
@@ -595,7 +592,7 @@ msgstr ""
 "            pierievodčika dołžno byt ukazano na obłožkie knihi”</a> ot The Guardian.\n"
 "    "
 
-#: templates/books/articles/how-to-publish-audiobook.html:5
+#: books/templates/books/articles/how-to-publish-audiobook.html:5
 #, python-format
 msgid ""
 "\n"
@@ -1054,7 +1051,7 @@ msgstr ""
 "    </p>\n"
 "</section>\n"
 
-#: templates/books/articles/lacinka.html:7
+#: books/templates/books/articles/lacinka.html:7
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -1072,7 +1069,7 @@ msgstr ""
 "    ŭnizie kožnaj staronki. Nižej vy možacie pasprabavać kanviertar z kirylicy na łacinicu, jaki\n"
 "    vykarystoŭvajecca dla pierakładu naša sajta.\n"
 
-#: templates/books/articles/lacinka.html:12
+#: books/templates/books/articles/lacinka.html:12
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -1099,104 +1096,105 @@ msgstr ""
 "    vykarystać naš repazitoryj dla chostynha vašaj biblijateki. Z pytańniami i prapanovami pišycie na\n"
 "    contact@audiobooks.by albo stvarycie bahu na Hitchabie.\n"
 
-#: templates/books/articles/lacinka.html:21
+#: books/templates/books/articles/lacinka.html:21
 msgid "Канвертар"
 msgstr "Kanviertar"
 
-#: templates/books/articles/lacinka.html:26
-#: templates/books/articles/lacinka.html:37
+#: books/templates/books/articles/lacinka.html:26
+#: books/templates/books/articles/lacinka.html:37
 msgid "напісанне"
 msgstr "napisańnie"
 
-#: templates/books/articles/lacinka.html:42
+#: books/templates/books/articles/lacinka.html:42
 msgid "Тэкст для канвертацыі..."
 msgstr "Tekst dla kanviertacyi..."
 
-#: templates/books/articles/lacinka.html:45
+#: books/templates/books/articles/lacinka.html:45
 #, fuzzy
 #| msgid "Вы шукалі"
 msgid "Вынік будзе тут"
 msgstr "Vynik budzie tut"
 
-#: templates/books/articles/lacinka.html:49
+#: books/templates/books/articles/lacinka.html:49
 msgid "Знайшлі памылку ў канвертацыі?"
 msgstr "Znajšli pamyłku ŭ kanviertacyi?"
 
-#: templates/books/articles/lacinka.html:51
+#: books/templates/books/articles/lacinka.html:51
 msgid "паведаміце нам"
 msgstr "paviedamicie nam"
 
-#: templates/books/articles/lacinka.html:56
+#: books/templates/books/articles/lacinka.html:56
 msgid "афіцыйнае (наркамаўка)"
 msgstr "aficyjnaje (narkamaŭka)"
 
-#: templates/books/articles/lacinka.html:57
+#: books/templates/books/articles/lacinka.html:57
 msgid "класічнае (тарашкевіца)"
 msgstr "kłasičnaje (taraškievica)"
 
-#: templates/books/articles/lacinka.html:58
+#: books/templates/books/articles/lacinka.html:58
 msgid "лацінка"
 msgstr "łacinka"
 
-#: templates/books/articles/lacinka.html:59
+#: books/templates/books/articles/lacinka.html:59
 msgid "лацінка без гачыкаў"
 msgstr "łacinka biez hačykaŭ"
 
-#: templates/books/book-detail.html:7
+#: books/templates/books/book-detail.html:7
 #, fuzzy
 #| msgid "Аўтар, кніга"
 msgid "аўдыякніга"
 msgstr "aŭdyjakniha"
 
-#: templates/books/book-detail.html:67
+#: books/templates/books/book-detail.html:67
 msgid "Выдавецтва"
 msgstr "Vydaviectva"
 
-#: templates/books/book-detail.html:73 templates/books/catalog.html:48
+#: books/templates/books/book-detail.html:73
+#: books/templates/books/catalog.html:48
 msgid "Мова"
 msgstr "Mova"
 
-#: templates/books/book-detail.html:93
+#: books/templates/books/book-detail.html:93
 msgid "Водгукі на"
 msgstr "Vodhuki na"
 
-#: templates/books/book-detail.html:116
+#: books/templates/books/book-detail.html:116
 #, fuzzy
 #| msgid "агучкі"
 msgid "Агучка"
 msgstr "Ahučka"
 
-#: templates/books/book-detail.html:128
+#: books/templates/books/book-detail.html:128
 msgid "Выдавецтва:"
 msgstr "Vydaviectva:"
 
-#: templates/books/book-detail.html:135
+#: books/templates/books/book-detail.html:135
 msgid "Мова:"
 msgstr "Mova:"
 
-#: templates/books/catalog.html:6
+#: books/templates/books/catalog.html:6
 #, fuzzy
 #| msgid "Беларускія аўдыякнігі"
 msgid "Усе аўдыякнігі"
 msgstr "Usie aŭdyjaknihi"
 
-#: templates/books/catalog.html:19
+#: books/templates/books/catalog.html:19
 msgid "Жанры і фільтры"
 msgstr "Žanry i filtry"
 
-#: templates/books/catalog.html:38
+#: books/templates/books/catalog.html:38
 msgid "Фільтры"
 msgstr "Filtry"
 
-#: templates/books/catalog.html:58
+#: books/templates/books/catalog.html:58
 msgid "Кошт"
 msgstr "Košt"
 
-#: templates/books/catalog.html:68
+#: books/templates/books/catalog.html:68
 msgid "Пляцоўка"
 msgstr "Placoŭka"
 
-#: templates/books/catalog.html:118
+#: books/templates/books/catalog.html:118
 #, python-format
 msgid ""
 "\n"
@@ -1207,92 +1205,92 @@ msgstr ""
 "                                Staronka %(cur)s z %(total)s\n"
 "                                "
 
-#: templates/books/index.html:10
+#: books/templates/books/index.html:10
 msgid "Навінкі"
 msgstr "Navinki"
 
-#: templates/books/person.html:7 templates/books/publisher.html:7
+#: books/templates/books/person.html:7 books/templates/books/publisher.html:7
 #, fuzzy
 #| msgid "Беларускія аўдыякнігі"
 msgid "аўдыякнігі"
 msgstr "aŭdyjaknihi"
 
-#: templates/books/person.html:44
+#: books/templates/books/person.html:44
 #, fuzzy
 #| msgid "Кнігі аўтар"
 msgid "Кнігі"
 msgstr "Knihi"
 
-#: templates/books/person.html:50
+#: books/templates/books/person.html:50
 msgid "Пераклады"
 msgstr "Pierakłady"
 
-#: templates/books/person.html:56
+#: books/templates/books/person.html:56
 #, fuzzy
 #| msgid "Беларускія аўдыякнігі"
 msgid "Агучаныя кнігі"
 msgstr "Ahučanyja knihi"
 
-#: templates/books/publisher.html:47
+#: books/templates/books/publisher.html:47
 #, fuzzy
 #| msgid "Выдавецтва"
 msgid "Аўдыякнігі выдавецтва"
 msgstr "Aŭdyjaknihi vydaviectva"
 
-#: templates/books/search.html:5 templates/books/search.html:11
+#: books/templates/books/search.html:5 books/templates/books/search.html:11
 #, fuzzy
 #| msgid "Вы шукалі"
 msgid "Вынікі пошука"
 msgstr "Vyniki pošuka"
 
-#: templates/partials/_book_preview.html:37
+#: books/templates/partials/_book_preview.html:37
 msgid "і інш."
 msgstr "i inš."
 
-#: templates/partials/_book_preview.html:42
+#: books/templates/partials/_book_preview.html:42
 msgid "агучкі"
 msgstr "ahučki"
 
-#: templates/partials/_footer.html:9
+#: books/templates/partials/_footer.html:9
 msgid "Дасылайце вашыя пытанні і прапановы на пошту contact@audiobooks.by"
 msgstr "Dasyłajcie vašyja pytańni i prapanovy na poštu contact@audiobooks.by"
 
-#: templates/partials/_footer.html:12
+#: books/templates/partials/_footer.html:12
 #, fuzzy
 #| msgid "Сачыце за навінамі:"
 msgid "Сачыце за апошнімі навінамі:"
 msgstr "Sačycie za apošnimi navinami:"
 
-#: templates/partials/_footer.html:52
+#: books/templates/partials/_footer.html:52
 msgid "Алфавіт"
 msgstr "Ałfavit"
 
-#: templates/partials/_narration_links.html:8
+#: books/templates/partials/_narration_links.html:8
 msgid "Дзе купіць"
 msgstr "Dzie kupić"
 
-#: templates/partials/_narration_links.html:10
+#: books/templates/partials/_narration_links.html:10
 msgid "Дзе паслухаць бясплатна"
 msgstr "Dzie pasłuchać biaspłatna"
 
-#: templates/partials/_narration_links.html:36
+#: books/templates/partials/_narration_links.html:36
 #, fuzzy
 #| msgid "Першую частку можна паслухаць бясплатна на"
 msgid "Першую частку можна паслухаць бясплатна:"
 msgstr "Pieršuju častku možna pasłuchać biaspłatna:"
 
-#: templates/partials/_navbar.html:9
+#: books/templates/partials/_navbar.html:9
 #, fuzzy
 #| msgid "БЕЛАРУСКIЯ АЎДЫЯКНIГI"
 msgid "БЕЛАРУСКІЯ АЎДЫЯКНІГІ"
 msgstr "BIEŁARUSKIJA AŬDYJAKNIHI"
 
-#: templates/partials/_navbar.html:12
+#: books/templates/partials/_navbar.html:12
 msgid "Навігатар па аўдыякнігах на беларускай мове і беларускіх аўтараў"
 msgstr ""
 "Navihatar pa aŭdyjaknihach na biełaruskaj movie i biełaruskich aŭtaraŭ"
 
-#: templates/partials/_navbar.html:13
+#: books/templates/partials/_navbar.html:13
 msgid ""
 "\n"
 "        Тут вы можаце хутка знайсці аўдыякнігі сучасных аўтараў, а таксама класічныя і дзіцячыя\n"
@@ -1304,17 +1302,25 @@ msgstr ""
 "        tvory ŭ aŭdyjafarmacie. Sajt nie źmiaščaje knihi, a daje spasyłki na placoŭki, dzie ich možna pasłuchać albo nabyć.\n"
 "      "
 
-#: templates/partials/_navbar.html:19
+#: books/templates/partials/_navbar.html:19
 msgid "Сачыце за навінамі:"
 msgstr "Sačycie za navinami:"
 
-#: templates/partials/_navbar.html:41
+#: books/templates/partials/_navbar.html:41
 msgid "Каталог"
 msgstr "Katałoh"
 
-#: templates/partials/_navbar.html:58
+#: books/templates/partials/_navbar.html:58
 msgid "Аўтар, кніга"
 msgstr "Aŭtar, kniha"
+
+#: books/templatetags/books_extras.py:134
+msgid "Крыніца"
+msgstr "Krynica"
+
+#: partners/templates/partners/index.html:4
+msgid "Партнёры"
+msgstr "Partniory"
 
 #: user/admin.py:13
 msgid "Personal Info"

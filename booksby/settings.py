@@ -249,6 +249,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Custom User model that supports e-mail instead of username
 AUTH_USER_MODEL = "user.User"
 
+# Authentication backends
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",  # for admin users
+    "partners.auth.PartnerUserBackend",  # for partner users
+]
+
 # Variables needed for Algolia search to work
 # https://www.algolia.com/
 ALGOLIA_INDEX = env("ALGOLIA_INDEX", default="dev")

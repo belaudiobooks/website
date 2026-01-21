@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate "Уваход для партнёраў" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <h1 class="mb-4">{% translate "Уваход для партнёраў" %}</h1>
+
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {% translate "Няправільны емэйл або пароль" %}
+            </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'partners:login' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="email" class="form-label">{% translate "Емэйл" %}</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">{% translate "Пароль" %}</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">{% translate "Увайсці" %}</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

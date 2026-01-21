@@ -1322,6 +1322,33 @@ msgstr "Krynica"
 msgid "Партнёры"
 msgstr "Partniory"
 
+#: partners/templates/partners/index.html:8
+#, fuzzy
+#| msgid "Беларускія аўдыякнігі"
+msgid "Партнёрская панэль"
+msgstr "Partniorskaja panel"
+
+#: partners/templates/partners/login.html:4
+#: partners/templates/partners/login.html:10
+msgid "Уваход для партнёраў"
+msgstr "Uvachod dla partnioraŭ"
+
+#: partners/templates/partners/login.html:14
+msgid "Няправільны емэйл або пароль"
+msgstr "Niapravilny jemejł abo parol"
+
+#: partners/templates/partners/login.html:21
+msgid "Емэйл"
+msgstr "Jemejł"
+
+#: partners/templates/partners/login.html:25
+msgid "Пароль"
+msgstr "Parol"
+
+#: partners/templates/partners/login.html:28
+msgid "Увайсці"
+msgstr "Uvajści"
+
 #: user/admin.py:13
 msgid "Personal Info"
 msgstr "Personal Info"

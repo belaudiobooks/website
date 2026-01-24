@@ -88,9 +88,12 @@ def search(request: HttpRequest) -> HttpResponse:
 
         # Build search result list in the same order as returned by algolia.
         # So that most relevant are shown first.
+        # Note: Some hits from Algolia may not exist in the database (e.g., if
+        # data was deleted but Algolia index wasn't synced yet), so we skip those.
         search_results = [
             {"type": hit["model"], "object": loaded_models.pop(hit["objectID"])}
             for hit in hits
+            if hit["objectID"] in loaded_models
         ]
 
         # Add all other items from loaded_models dict. This objects weren't

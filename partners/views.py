@@ -18,8 +18,29 @@ def partner_login_required(view_func):
 
 @partner_login_required
 def index(request):
+    """Redirect authenticated user to their partner's dashboard."""
+    return redirect("partners:dashboard", partner_id=request.user.partner_id)
+
+
+@partner_login_required
+def dashboard(request, partner_id):
     """Partners dashboard page. Requires partner login."""
-    return render(request, "partners/index.html")
+    partner = get_object_or_404(Partner, id=partner_id)
+
+    # Check that logged-in user belongs to this partner
+    if request.user.partner_id != partner.id:
+        return HttpResponseForbidden()
+
+    # Count total books and narrations across all agreements
+    agreements_count = 0
+    for agreement in partner.agreements.prefetch_related("narrations", "books"):
+        agreements_count += agreement.narrations.count() + agreement.books.count()
+
+    return render(
+        request,
+        "partners/dashboard.html",
+        {"partner": partner, "agreements_count": agreements_count},
+    )
 
 
 def login_view(request):

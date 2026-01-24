@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate "Партнёры" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% translate "Партнёрская панэль" %}</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-6 mb-3">
+            <a href="{% url 'partners:agreements' partner.id %}"
+               class="text-decoration-none"
+               data-test-id="agreements-card">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{% translate "Дамовы" %}</h5>
+                        <p class="card-text display-4"
+                           data-test-id="agreements-count">
+                           {{ agreements_count }}
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{% translate "Продажы" %}</h5>
+                    <p class="card-text display-4">—</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

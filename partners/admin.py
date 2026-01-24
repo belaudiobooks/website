@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.admin.decorators import display
 
 from partners.models import Agreement, Partner, PartnerUser
 
@@ -38,23 +39,20 @@ class PartnerUserAdmin(BaseUserAdmin):
 @admin.register(Agreement)
 class AgreementAdmin(admin.ModelAdmin):
     list_display = [
+        "get_books_names",
         "partner",
         "royalty_percent",
-        "narrations_count",
-        "books_count",
         "created_at",
     ]
     list_filter = ["partner", "created_at"]
-    search_fields = ["partner__name"]
+    autocomplete_fields = ["narrations", "books"]
+    search_fields = ["partner__name", "books__title", "narrations__book__title"]
     filter_horizontal = ["narrations", "books"]
     readonly_fields = ["created_at"]
 
-    def narrations_count(self, obj):
-        return obj.narrations.count()
-
-    narrations_count.short_description = "Narrations"
-
-    def books_count(self, obj):
-        return obj.books.count()
-
-    books_count.short_description = "Books"
+    @display(description="Books")
+    def get_books_names(self, obj):
+        all_books = list(obj.books.all()) + [
+            narration.book for narration in obj.narrations.all()
+        ]
+        return ", ".join([book.title for book in all_books])

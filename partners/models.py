@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.translation import gettext as _
 
 from books.models import Book, Narration
 
@@ -83,10 +84,18 @@ class Agreement(models.Model):
     )
     # For published audiobooks - link to actual Narration records
     narrations = models.ManyToManyField(
-        Narration, related_name="agreements", blank=True
+        Narration,
+        related_name="agreements",
+        blank=True,
+        verbose_name=_("Narrations (published books)"),
     )
     # For books without narrations yet
-    books = models.ManyToManyField(Book, related_name="agreements", blank=True)
+    books = models.ManyToManyField(
+        Book,
+        related_name="agreements",
+        blank=True,
+        verbose_name=_("Books (unpublished)"),
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -1318,15 +1318,59 @@ msgstr "Aŭtar, kniha"
 msgid "Крыніца"
 msgstr "Krynica"
 
-#: partners/templates/partners/index.html:4
+#: partners/templates/partners/agreements.html:6
+#: partners/templates/partners/agreements.html:10
+#: partners/templates/partners/dashboard.html:17
+msgid "Дамовы"
+msgstr "Damovy"
+
+#: partners/templates/partners/agreements.html:16
+#, fuzzy
+#| msgid "Кнігі аўтар"
+msgid "Кніга"
+msgstr "Kniha"
+
+#: partners/templates/partners/agreements.html:17
+#, fuzzy
+#| msgid "Аўтар, кніга"
+msgid "Аўтар_ка"
+msgstr "Aŭtar_ka"
+
+#: partners/templates/partners/agreements.html:18
+#, fuzzy
+#| msgid "Аўтар, кніга"
+msgid "Аўдыякніга"
+msgstr "Aŭdyjakniha"
+
+#: partners/templates/partners/agreements.html:19
+msgid "Роялці"
+msgstr "Rojałci"
+
+#: partners/templates/partners/agreements.html:40
+msgid "Апублікавана"
+msgstr "Apublikavana"
+
+#: partners/templates/partners/agreements.html:44
+msgid "Не апублікавана"
+msgstr "Nie apublikavana"
+
+#: partners/templates/partners/agreements.html:53
+msgid "Дамоваў пакуль няма."
+msgstr "Damovaŭ pakul niama."
+
+#: partners/templates/partners/dashboard.html:4
 msgid "Партнёры"
 msgstr "Partniory"
 
-#: partners/templates/partners/index.html:8
+#: partners/templates/partners/dashboard.html:8
 #, fuzzy
 #| msgid "Беларускія аўдыякнігі"
 msgid "Партнёрская панэль"
 msgstr "Partniorskaja panel"
+
+#: partners/templates/partners/dashboard.html:29
+msgid "Продажы"
+msgstr "Prodažy"
 
 #: partners/templates/partners/login.html:4
 #: partners/templates/partners/login.html:10

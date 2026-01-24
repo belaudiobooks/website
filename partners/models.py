@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+from books.models import Book, Narration
 
 
 class Partner(models.Model):
@@ -60,3 +63,31 @@ class PartnerUser(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+
+class Agreement(models.Model):
+    """
+    Agreement between us and a partner for recording and publishing audiobooks.
+    Contains royalty share percentage and references to narrations (published)
+    and books (not yet published as audiobooks).
+    """
+
+    partner = models.ForeignKey(
+        Partner, on_delete=models.CASCADE, related_name="agreements"
+    )
+    royalty_percent = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        help_text="Royalty share percentage (0-100)",
+    )
+    # For published audiobooks - link to actual Narration records
+    narrations = models.ManyToManyField(
+        Narration, related_name="agreements", blank=True
+    )
+    # For books without narrations yet
+    books = models.ManyToManyField(Book, related_name="agreements", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Agreement with {self.partner.name} ({self.royalty_percent}%)"

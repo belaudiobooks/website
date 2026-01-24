@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseForbidden
 
-from partners.models import PartnerUser
+from partners.models import Partner, PartnerUser
 
 
 def partner_login_required(view_func):
@@ -44,3 +45,47 @@ def logout_view(request):
     """Logout partner user."""
     logout(request)
     return redirect("partners:login")
+
+
+@partner_login_required
+def agreements(request, partner_id):
+    """View all agreements for a partner."""
+    partner = get_object_or_404(Partner, id=partner_id)
+
+    # Check that logged-in user belongs to this partner
+    if request.user.partner_id != partner.id:
+        return HttpResponseForbidden()
+
+    # Build list of items (narrations and books) with royalty
+    items = []
+    for agreement in partner.agreements.prefetch_related(
+        "narrations__book__authors", "books__authors"
+    ):
+        for narration in agreement.narrations.all():
+            authors = [a.name for a in narration.book.authors.all()]
+            items.append(
+                {
+                    "type": "narration",
+                    "title": narration.book.title,
+                    "authors": authors,
+                    "narration": narration,
+                    "book_slug": narration.book.slug,
+                    "royalty_percent": agreement.royalty_percent,
+                }
+            )
+        for book in agreement.books.order_by("title"):
+            authors = [a.name for a in book.authors.all()]
+            items.append(
+                {
+                    "type": "book",
+                    "title": book.title,
+                    "authors": authors,
+                    "royalty_percent": agreement.royalty_percent,
+                }
+            )
+
+    return render(
+        request,
+        "partners/agreements.html",
+        {"partner": partner, "items": items},
+    )

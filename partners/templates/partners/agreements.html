@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load partners_extras %}
+{% load books_extras %}
+
+{% block title %}{% translate "Дамовы" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% translate "Дамовы" %}</h1>
+
+    {% if items %}
+    <table class="table table-responsive" data-test-id="agreements-table">
+        <thead>
+            <tr>
+                <th scope="col">{% translate "Кніга" %}</th>
+                <th scope="col">{% translate "Аўтар_ка" %}</th>
+                <th scope="col" class="text-center">{% translate "Аўдыякніга" %}</th>
+                <th scope="col" class="text-center">{% translate "Роялці" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr data-test-id="agreement-row">
+                <td data-test-id="title">{{ item.title }}</td>
+                <td data-test-id="authors">
+                    {% for author in item.authors %}
+                        {{ author }}
+                        {% if not forloop.last %}<br>{% endif %}
+                    {% endfor %}
+                </td>
+                <td data-test-id="status" class="text-center">
+                    {% if item.type == "narration" %}
+                        <a href="{% url 'book-detail-page' item.book_slug %}" data-test-id="book-link">
+                            {% if item.narration.cover_image %}
+                                <img src="{{ item.narration.cover_image.url|resized_image:'small' }}"
+                                     alt="{{ item.title }}"
+                                     style="max-height: 60px;">
+                            {% else %}
+                                {% translate "Апублікавана" %}
+                            {% endif %}
+                        </a>
+                    {% else %}
+                        {% translate "Не апублікавана" %}
+                    {% endif %}
+                </td>
+                <td data-test-id="royalty" class="text-center">{{ item.royalty_percent|format_royalty }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p data-test-id="empty-message">{% translate "Дамоваў пакуль няма." %}</p>
+    {% endif %}
+</div>
+{% endblock %}

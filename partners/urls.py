@@ -8,4 +8,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
+    path("<int:partner_id>/agreements/", views.agreements, name="agreements"),
 ]

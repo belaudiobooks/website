@@ -1,4 +1,4 @@
-Django==5.1.14
+Django==5.2.10
 # djangorestframework>=3.12.4,<3.13.0
 django-environ
 psycopg2-binary

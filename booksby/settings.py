@@ -86,6 +86,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "books.middleware.WwwRedirectMiddleware",
+    "google.cloud.logging_v2.handlers.middleware.RequestMiddleware",
 ]
 
 ROOT_URLCONF = "booksby.urls"
@@ -176,7 +177,7 @@ INTERNAL_IPS = [
 ]
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 if env("ENV") == "local":
     STATIC_URL = "/static/"
@@ -187,10 +188,17 @@ if env("ENV") == "local":
 
 # Adding support of Google Cloud Storages
 else:
-    DEFAULT_FILE_STORAGE = "booksby.gcloud.GoogleCloudMediaFileStorage"
+    STORAGES = {
+        "default": {
+            "BACKEND": "booksby.gcloud.GoogleCloudMediaFileStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
     GS_PROJECT_ID = env("GOOGLE_CLOUD_PROJECT")
     GS_BUCKET_NAME = env("GS_BUCKET_NAME")
-    MEDIA_ROOT = "media/"
+    MEDIA_ROOT = ""
     # UPLOAD_ROOT = 'media/uploads/'
     MEDIA_URL = "https://storage.googleapis.com/{}/".format(GS_BUCKET_NAME)
     STATIC_URL = "/static/"
@@ -206,17 +214,17 @@ else:
     # this captures all logs at INFO level and higher
     client.setup_logging()
 
-    LOGGING = {
-        "version": 1,
-        "handlers": {
-            "stackdriver": {
-                "level": "INFO",
-                "class": "google.cloud.logging.handlers.CloudLoggingHandler",
-                "client": client,
-            }
-        },
-        "loggers": {"django": {"handlers": ["stackdriver"], "level": "INFO"}},
-    }
+    # LOGGING = {
+    #     "version": 1,
+    #     "handlers": {
+    #         "stackdriver": {
+    #             "level": "INFO",
+    #             "class": "google.cloud.logging.handlers.CloudLoggingHandler",
+    #             "client": client,
+    #         }
+    #     },
+    #     "loggers": {"django": {"handlers": ["stackdriver"], "level": "INFO"}},
+    # }
 
     # implementation of logging to file, disabling until figuring out hot to save it in root,
     # the above implementation should log into the Cloud Logging API

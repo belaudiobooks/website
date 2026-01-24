@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
 from books.tests.fake_data import FakeData
-from partners.models import Partner, PartnerUser
+from partners.models import Agreement, Partner, PartnerUser
 
 
 @override_settings(DEBUG=True)
@@ -41,6 +41,9 @@ class WebdriverTestCase(StaticLiveServerTestCase):
 
     def tearDown(self):
         self.books_fake_data.cleanup()
+        for agreement in Agreement.objects.all():
+            if agreement.agreement_file:
+                agreement.agreement_file.delete()
         super().tearDown()
 
     def login(self):

@@ -1318,6 +1318,14 @@ msgstr "Aŭtar, kniha"
 msgid "Крыніца"
 msgstr "Krynica"
 
+#: partners/models.py:99
+msgid "Narrations (published books)"
+msgstr "Narrations (published books)"
+
+#: partners/models.py:106
+msgid "Books (unpublished)"
+msgstr "Books (unpublished)"
+
 #: partners/templates/partners/agreements.html:6
 #: partners/templates/partners/agreements.html:10
 #: partners/templates/partners/dashboard.html:17
@@ -1346,15 +1354,23 @@ msgstr "Aŭdyjakniha"
 msgid "Роялці"
 msgstr "Rojałci"
 
-#: partners/templates/partners/agreements.html:40
-msgid "Апублікавана"
-msgstr "Apublikavana"
+#: partners/templates/partners/agreements.html:20
+#, fuzzy
+#| msgid "Дамовы"
+msgid "Дамова"
+msgstr "Damova"
 
-#: partners/templates/partners/agreements.html:44
-msgid "Не апублікавана"
-msgstr "Nie apublikavana"
+#: partners/templates/partners/agreements.html:41
+#, fuzzy
+#| msgid "Выдавецтва"
+msgid "Выдадзена"
+msgstr "Vydadziena"
 
-#: partners/templates/partners/agreements.html:53
+#: partners/templates/partners/agreements.html:45
+msgid "Не выдадзена"
+msgstr "Nie vydadziena"
+
+#: partners/templates/partners/agreements.html:61
 msgid "Дамоваў пакуль няма."
 msgstr "Damovaŭ pakul niama."
 
@@ -1404,6 +1420,12 @@ msgstr "Permissions"
 #: user/admin.py:24
 msgid "Important dates"
 msgstr "Important dates"
+
+#~ msgid "Апублікавана"
+#~ msgstr "Apublikavana"
+
+#~ msgid "Не апублікавана"
+#~ msgstr "Nie apublikavana"
 
 #~ msgid "Агучка: удакладняецца..."
 #~ msgstr "Ahučka: udakładniajecca..."

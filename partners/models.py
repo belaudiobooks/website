@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -66,6 +68,13 @@ class PartnerUser(AbstractBaseUser):
         return self.email
 
 
+def agreement_file_path(instance, filename):
+    """Generate file path for agreement files: agreements/agreement_{partner_id}_{agreement_id}.ext"""
+
+    ext = os.path.splitext(filename)[1]
+    return f"agreements/agreement_{instance.partner_id}{ext}"
+
+
 class Agreement(models.Model):
     """
     Agreement between us and a partner for recording and publishing audiobooks.
@@ -95,6 +104,12 @@ class Agreement(models.Model):
         related_name="agreements",
         blank=True,
         verbose_name=_("Books (unpublished)"),
+    )
+    agreement_file = models.FileField(
+        upload_to=agreement_file_path,
+        blank=True,
+        null=True,
+        help_text="PDF file of the signed agreement",
     )
     created_at = models.DateTimeField(auto_now_add=True)
 

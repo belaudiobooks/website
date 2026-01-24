@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseForbidden
+from django.http import FileResponse, Http404, HttpResponseForbidden
 
-from partners.models import Partner, PartnerUser
+from partners.models import Agreement, Partner, PartnerUser
 
 
 def partner_login_required(view_func):
@@ -92,6 +92,8 @@ def agreements(request, partner_id):
                     "narration": narration,
                     "book_slug": narration.book.slug,
                     "royalty_percent": agreement.royalty_percent,
+                    "agreement_id": agreement.id,
+                    "has_agreement_file": bool(agreement.agreement_file),
                 }
             )
         for book in agreement.books.order_by("title"):
@@ -102,6 +104,8 @@ def agreements(request, partner_id):
                     "title": book.title,
                     "authors": authors,
                     "royalty_percent": agreement.royalty_percent,
+                    "agreement_id": agreement.id,
+                    "has_agreement_file": bool(agreement.agreement_file),
                 }
             )
 
@@ -109,4 +113,23 @@ def agreements(request, partner_id):
         request,
         "partners/agreements.html",
         {"partner": partner, "items": items},
+    )
+
+
+@partner_login_required
+def download_agreement_file(request, partner_id, agreement_id):
+    """Serve the agreement PDF file."""
+    agreement = get_object_or_404(Agreement, id=agreement_id, partner_id=partner_id)
+
+    # Check that logged-in user belongs to this partner
+    if request.user.partner_id != partner_id:
+        return HttpResponseForbidden()
+
+    if not agreement.agreement_file:
+        raise Http404("Agreement file not found")
+
+    return FileResponse(
+        agreement.agreement_file.open("rb"),
+        as_attachment=True,
+        filename=agreement.agreement_file.name.split("/")[-1],
     )

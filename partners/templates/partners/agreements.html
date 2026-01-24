@@ -17,6 +17,7 @@
                 <th scope="col">{% translate "Аўтар_ка" %}</th>
                 <th scope="col" class="text-center">{% translate "Аўдыякніга" %}</th>
                 <th scope="col" class="text-center">{% translate "Роялці" %}</th>
+                <th scope="col" class="text-center">{% translate "Дамова" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -37,14 +38,21 @@
                                      alt="{{ item.title }}"
                                      style="max-height: 60px;">
                             {% else %}
-                                {% translate "Апублікавана" %}
+                                {% translate "Выдадзена" %}
                             {% endif %}
                         </a>
                     {% else %}
-                        {% translate "Не апублікавана" %}
+                        {% translate "Не выдадзена" %}
                     {% endif %}
                 </td>
                 <td data-test-id="royalty" class="text-center">{{ item.royalty_percent|format_royalty }}</td>
+                <td data-test-id="agreement-file" class="text-center">
+                    {% if item.has_agreement_file %}
+                        <a href="{% url 'partners:download_agreement_file' partner.id item.agreement_id %}">
+                            <i class="bi bi-file-earmark-arrow-down fs-3"></i>
+                        </a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

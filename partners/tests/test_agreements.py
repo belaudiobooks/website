@@ -76,7 +76,7 @@ class AgreementsTest(WebdriverTestCase):
         empty_message = self.driver.find_element(
             By.CSS_SELECTOR, "[data-test-id='empty-message']"
         )
-        self.assertEqual("Дамоў пакуль няма.", empty_message.text)
+        self.assertEqual("Дамоваў пакуль няма.", empty_message.text)
 
     def test_agreement_with_narration_displayed(self):
         """Agreement with a narration should display book title and royalty."""

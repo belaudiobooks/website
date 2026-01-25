@@ -9,7 +9,6 @@ import logging
 from google.cloud import secretmanager, storage
 import requests
 from wand.image import Image
-from royalties.push_royalties import push_royalties as push_royalties_function
 
 # Number of images to process in one run. This can be set as
 # runtime variable from Google Cloud Console without the need to
@@ -180,6 +179,3 @@ def resize_images(request):
 
     logging.info("Finished resizing images")
     return "ok"
-
-
-push_royalties = push_royalties_function

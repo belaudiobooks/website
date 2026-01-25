@@ -1,11 +1,12 @@
 import io
 import re
 from datetime import date
+from decimal import Decimal
 from typing import List
 
 from openpyxl import load_workbook
 
-from .models import RoyaltyRow
+from partners.models import SaleRecord
 
 MONTH_NAMES = {
     "January": 1,
@@ -45,23 +46,26 @@ EXPECTED_HEADERS = (
 )
 
 
-def parse_findaway_report(content: bytes, filename: str) -> List[RoyaltyRow]:
+def parse_findaway_report(
+    content: bytes, filename: str, drive_id: str = ""
+) -> List[SaleRecord]:
     """
     Parse a Findaway royalty report XLSX file.
 
     Args:
         content: The raw bytes of the XLSX file.
         filename: The name of the source file (used for source_file field).
+        drive_id: Google Drive file ID (optional, can be added later).
 
     Returns:
-        A list of RoyaltyRow objects representing each row in the report.
+        A list of unsaved SaleRecord objects representing each row in the report.
     """
     wb = load_workbook(io.BytesIO(content))
 
     # Parse period from Summary sheet
-    sale_month = _parse_period(wb["Summary"])
+    month_of_sale = _parse_period(wb["Summary"])
 
-    rows: List[RoyaltyRow] = []
+    rows: List[SaleRecord] = []
 
     # Parse data from each sheet
     for sheet_name in ["Retail", "Subscription", "Pool"]:
@@ -75,8 +79,8 @@ def parse_findaway_report(content: bytes, filename: str) -> List[RoyaltyRow]:
         _validate_headers(sheet_rows[0], sheet_name)
         # Parse data rows (skip header)
         for row in sheet_rows[1:]:
-            royalty_row = _parse_row(row, sale_month, filename)
-            rows.append(royalty_row)
+            sale_record = _parse_row(row, month_of_sale, filename, drive_id)
+            rows.append(sale_record)
 
     return rows
 
@@ -113,28 +117,23 @@ def _parse_period(summary_sheet) -> date:
     raise ValueError("Could not find Period in Summary sheet")
 
 
-def _parse_row(row: tuple, sale_month: date, filename: str) -> RoyaltyRow:
-    """Parse a single data row into a RoyaltyRow object."""
-    return RoyaltyRow(
-        sale_month=sale_month,
+def _parse_row(
+    row: tuple, month_of_sale: date, filename: str, drive_id: str
+) -> SaleRecord:
+    """Parse a single data row into an unsaved SaleRecord object."""
+    # Column indices from EXPECTED_HEADERS:
+    # 0: Title, 1: Sales Type, 4: ISBN #, 6: Partner, 8: Sale Territory,
+    # 12: Sales Qty, 17: Royalty Payable Currency, 18: Royalty Payable
+    return SaleRecord(
+        month_of_sale=month_of_sale,
         source_file=filename,
+        drive_id=drive_id,
         title=row[0],
         sales_type=row[1],
-        royalty_rate=row[2],
-        display_number=row[3],
-        isbn=row[4],
-        publisher=row[5],
-        partner=row[6],
-        promotion=row[7],
-        sale_territory=row[8],
-        currency=row[9],
-        dlp=row[10],
-        price_type=row[11],
-        sales_qty=row[12],
-        revenue=row[13],
-        royalty_earned=row[14],
-        less_distribution_fee=row[15],
-        exchange_rate=row[16],
-        royalty_payable_currency=row[17],
-        royalty_payable=row[18],
+        isbn=row[4] or "",
+        retailer=row[6],
+        country=row[8],
+        quantity=row[12] or 0,
+        amount_currency=row[17],
+        amount=Decimal(str(row[18])) if row[18] is not None else Decimal("0"),
     )

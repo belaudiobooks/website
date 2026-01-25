@@ -1,6 +1,6 @@
 from django.urls import path
 
-from partners import views
+from partners import jobs, views
 
 app_name = "partners"
 
@@ -15,4 +15,5 @@ urlpatterns = [
         views.download_agreement_file,
         name="download_agreement_file",
     ),
+    path("job/sync_sales_reports", jobs.sync_sales_reports, name="sync_sales_reports"),
 ]

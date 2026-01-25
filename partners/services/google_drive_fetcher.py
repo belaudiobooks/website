@@ -1,4 +1,5 @@
 import io
+from dataclasses import dataclass
 from typing import List, Optional
 
 from google.oauth2 import service_account
@@ -6,7 +7,13 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
 
-from .models import DriveFile
+
+@dataclass
+class DriveFile:
+    """Represents a file in Google Drive."""
+
+    id: str
+    name: str
 
 
 class GoogleDriveFetcher:

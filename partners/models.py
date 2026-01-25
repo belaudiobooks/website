@@ -140,7 +140,7 @@ class SaleRecord(models.Model):
     retailer = models.CharField(
         max_length=255, help_text="Retailer/platform where the audiobook was sold"
     )
-    country = models.CharField(max_length=100)
+    country = models.CharField(max_length=100, null=True, blank=True)
     quantity = models.IntegerField(help_text="Number of books acquired in this sale")
     amount_currency = models.CharField(max_length=10)
     amount = models.DecimalField(

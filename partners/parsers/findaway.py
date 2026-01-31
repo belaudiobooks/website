@@ -73,10 +73,15 @@ def parse_findaway_report(
 
         rows: List[SaleRecord] = []
 
-        # Parse data from each sheet
-        for sheet_name in ["Retail", "Subscription", "Pool"]:
+        # Parse channel names from Summary sheet
+        channels = _parse_channels(summary_sheet)
+
+        # Parse data from each channel sheet
+        for sheet_name in channels:
             if sheet_name not in wb.sheetnames:
-                continue
+                raise ValueError(
+                    f"Channel '{sheet_name}' listed in Summary but sheet not found"
+                )
             ws = wb[sheet_name]
             sheet_rows = list(ws.iter_rows(values_only=True))
             if not sheet_rows:
@@ -140,6 +145,27 @@ def _parse_net_amount(summary_sheet) -> Decimal:
             if match:
                 return Decimal(match.group(1))
     raise ValueError("Could not find Net Amount in Summary sheet")
+
+
+def _parse_channels(summary_sheet) -> List[str]:
+    """Extract channel names from the Payments by Channel section."""
+    channels = []
+    in_channels_section = False
+    for row in summary_sheet.iter_rows(values_only=True):
+        if row[0] == "Payments by Channel:":
+            in_channels_section = True
+            continue
+        if in_channels_section:
+            # Skip the header row
+            if row[0] == "Channel":
+                continue
+            # Stop at empty row
+            if row[0] is None:
+                break
+            channels.append(row[0])
+    if not channels:
+        raise ValueError("Could not find channels in Summary sheet")
+    return channels
 
 
 def _verify_total_amount(

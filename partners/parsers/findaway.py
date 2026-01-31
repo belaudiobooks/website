@@ -60,29 +60,33 @@ def parse_findaway_report(
     Returns:
         A list of unsaved SaleRecord objects representing each row in the report.
     """
-    wb = load_workbook(io.BytesIO(content))
+    wb = load_workbook(io.BytesIO(content), read_only=True, data_only=True)
+    try:
+        # Parse period from Summary sheet
+        month_of_sale = _parse_period(wb["Summary"])
 
-    # Parse period from Summary sheet
-    month_of_sale = _parse_period(wb["Summary"])
+        rows: List[SaleRecord] = []
 
-    rows: List[SaleRecord] = []
+        # Parse data from each sheet
+        for sheet_name in ["Retail", "Subscription", "Pool"]:
+            if sheet_name not in wb.sheetnames:
+                continue
+            ws = wb[sheet_name]
+            sheet_rows = list(ws.iter_rows(values_only=True))
+            if not sheet_rows:
+                continue
+            # Validate header row
+            _validate_headers(sheet_rows[0], sheet_name)
+            # Parse data rows (skip header and empty rows)
+            for row in sheet_rows[1:]:
+                if row[0] is None:  # Skip empty rows (read_only mode includes them)
+                    continue
+                sale_record = _parse_row(row, month_of_sale, filename, drive_id)
+                rows.append(sale_record)
 
-    # Parse data from each sheet
-    for sheet_name in ["Retail", "Subscription", "Pool"]:
-        if sheet_name not in wb.sheetnames:
-            continue
-        ws = wb[sheet_name]
-        sheet_rows = list(ws.iter_rows(values_only=True))
-        if not sheet_rows:
-            continue
-        # Validate header row
-        _validate_headers(sheet_rows[0], sheet_name)
-        # Parse data rows (skip header)
-        for row in sheet_rows[1:]:
-            sale_record = _parse_row(row, month_of_sale, filename, drive_id)
-            rows.append(sale_record)
-
-    return rows
+        return rows
+    finally:
+        wb.close()
 
 
 def _validate_headers(header_row: tuple, sheet_name: str) -> None:

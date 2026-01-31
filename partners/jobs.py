@@ -2,6 +2,7 @@
 Background jobs for the partners app.
 """
 
+import gc
 import logging
 import os
 
@@ -73,12 +74,15 @@ def sync_sales_reports(request: HttpRequest) -> HttpResponse:
         logger.info(f"Downloading and parsing: {f.name}")
         content = fetcher.download_file(f.id)
         rows = parse_findaway_report(content, f.name, drive_id=f.id)
+        del content  # Free file bytes before bulk insert
         logger.info(f"Parsed {len(rows)} row(s) from {f.name}")
 
         # Bulk create records
         SaleRecord.objects.bulk_create(rows)
         total_rows += len(rows)
         logger.info(f"Saved {len(rows)} row(s) to database")
+        del rows  # Free SaleRecord list
+        gc.collect()  # Force garbage collection
 
     summary = (
         f"Sync complete. Processed {len(files)} file(s), saved {total_rows} row(s)."

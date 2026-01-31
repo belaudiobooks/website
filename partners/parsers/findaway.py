@@ -48,7 +48,7 @@ EXPECTED_HEADERS = (
 
 def parse_findaway_report(
     content: bytes, filename: str, drive_id: str = ""
-) -> List[SaleRecord]:
+) -> List[tuple[SaleRecord, str]]:
     """
     Parse a Findaway royalty report XLSX file.
 
@@ -58,7 +58,9 @@ def parse_findaway_report(
         drive_id: Google Drive file ID (optional, can be added later).
 
     Returns:
-        A list of unsaved SaleRecord objects representing each row in the report.
+        A list of (SaleRecord, isbn_code) tuples. SaleRecords are unsaved and
+        have isbn=None. Caller is responsible for creating ISBN objects and
+        assigning them to SaleRecords.
 
     Raises:
         ValueError: If the sum of parsed row amounts doesn't match the Net Amount.
@@ -71,7 +73,7 @@ def parse_findaway_report(
         # Parse expected net amount for verification
         expected_net_amount = _parse_net_amount(summary_sheet)
 
-        rows: List[SaleRecord] = []
+        rows_with_isbns: List[tuple[SaleRecord, str]] = []
 
         # Parse channel names from Summary sheet
         channels = _parse_channels(summary_sheet)
@@ -94,13 +96,16 @@ def parse_findaway_report(
                     not row or row[0] is None
                 ):  # Skip empty rows (read_only mode includes them)
                     continue
-                sale_record = _parse_row(row, month_of_sale, filename, drive_id)
-                rows.append(sale_record)
+                sale_record, isbn_code = _parse_row(
+                    row, month_of_sale, filename, drive_id
+                )
+                rows_with_isbns.append((sale_record, isbn_code))
 
         # Verify total amount matches expected net amount
+        rows = [row for row, _ in rows_with_isbns]
         _verify_total_amount(rows, expected_net_amount, filename)
 
-        return rows
+        return rows_with_isbns
     finally:
         wb.close()
 
@@ -186,21 +191,27 @@ def _verify_total_amount(
 
 def _parse_row(
     row: tuple, month_of_sale: date, filename: str, drive_id: str
-) -> SaleRecord:
-    """Parse a single data row into an unsaved SaleRecord object."""
+) -> tuple[SaleRecord, str]:
+    """Parse a single data row into an unsaved SaleRecord object.
+
+    Returns:
+        Tuple of (SaleRecord, isbn_code). The SaleRecord.isbn is not set;
+        caller must assign it after bulk-creating ISBN objects.
+    """
     # Column indices from EXPECTED_HEADERS:
     # 0: Title, 1: Sales Type, 4: ISBN #, 6: Partner, 8: Sale Territory,
     # 12: Sales Qty, 17: Royalty Payable Currency, 18: Royalty Payable
-    return SaleRecord(
+    isbn_code = row[4] or ""
+    sale_record = SaleRecord(
         month_of_sale=month_of_sale,
         source_file=filename,
         drive_id=drive_id,
         title=row[0],
         sales_type=row[1],
-        isbn=row[4] or "",
         retailer=row[6],
         country=row[8],
         quantity=row[12] or 0,
         amount_currency=row[17],
         amount=Decimal(str(row[18])) if row[18] is not None else Decimal("0"),
     )
+    return sale_record, isbn_code

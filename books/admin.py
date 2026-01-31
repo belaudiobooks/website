@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin.decorators import display
 from django.db.models import Count
 
-from .models import Person, Book, Tag, LinkType, Link, Narration, Publisher
+from .models import Person, Book, Tag, LinkType, Link, Narration, Publisher, ISBN
 
 
 class IncompleteBookListFilter(admin.SimpleListFilter):
@@ -286,3 +286,38 @@ class LinkTypeAdmin(admin.ModelAdmin):
     list_display = ("name", "caption", "weight")
     ordering = ["-weight"]
     sortable_by = ["weight"]
+
+
+class HasNarrationFilter(admin.SimpleListFilter):
+    title = "has narration"
+    parameter_name = "has_narration"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("yes", "Yes"),
+            ("no", "No"),
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value() == "yes":
+            return queryset.filter(narration__isnull=False)
+        if self.value() == "no":
+            return queryset.filter(narration__isnull=True)
+        return queryset
+
+
+@admin.register(ISBN)
+class ISBNAdmin(admin.ModelAdmin):
+    list_display = ("code", "narration")
+    list_filter = (HasNarrationFilter,)
+    search_fields = ["code", "narration__book__title", "sale_records__title"]
+    autocomplete_fields = ["narration"]
+    readonly_fields = ("get_sale_record_title",)
+    fields = ("code", "narration", "get_sale_record_title")
+
+    @display(description="Sample Sale Title")
+    def get_sale_record_title(self, obj):
+        sale_record = obj.sale_records.first()
+        if sale_record:
+            return sale_record.title
+        return "-"

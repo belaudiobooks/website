@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.admin.decorators import display
 
-from partners.models import Agreement, Partner, PartnerUser
+from partners.models import Agreement, Partner, PartnerUser, SaleRecord
 
 
 @admin.register(Partner)
@@ -56,3 +56,20 @@ class AgreementAdmin(admin.ModelAdmin):
             narration.book for narration in obj.narrations.all()
         ]
         return ", ".join([book.title for book in all_books])
+
+
+@admin.register(SaleRecord)
+class SaleRecordAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "month_of_sale",
+        "isbn",
+        "retailer",
+        "quantity",
+        "amount",
+        "amount_currency",
+    )
+    list_filter = ("month_of_sale", "retailer", "sales_type", "amount_currency")
+    search_fields = ["title", "isbn__code", "retailer"]
+    autocomplete_fields = ["isbn"]
+    date_hierarchy = "month_of_sale"

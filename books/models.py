@@ -337,6 +337,32 @@ class Narration(models.Model):
         image_cache.trigger_image_resizing()
 
 
+class ISBN(models.Model):
+    """
+    Represents an ISBN number, optionally linked to a Narration.
+    One Narration can have many ISBNs (accessed via narration.isbns.all()).
+    Used to track sales records for audiobooks.
+    """
+
+    code = models.CharField(
+        _("ISBN Code"),
+        max_length=50,
+        primary_key=True,
+    )
+    narration = models.ForeignKey(
+        Narration,
+        related_name="isbns",
+        on_delete=SET_NULL,
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self) -> str:
+        if self.narration:
+            return f"{self.code} ({self.narration.book.title})"
+        return self.code
+
+
 class LinkAvailability(models.TextChoices):
     """
     Enum representing where the link is available. For example it can be unavailable in Belarus.

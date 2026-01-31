@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext as _
 
-from books.models import Book, Narration
+from books.models import Book, ISBN, Narration
 
 
 class Partner(models.Model):
@@ -136,7 +136,13 @@ class SaleRecord(models.Model):
     sales_type = models.CharField(
         max_length=100, help_text="Channel of sale, e.g. retail, subscription, or pool"
     )
-    isbn = models.CharField(max_length=50)
+    isbn = models.ForeignKey(
+        ISBN,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="sale_records",
+    )
     retailer = models.CharField(
         max_length=255, help_text="Retailer/platform where the audiobook was sold"
     )

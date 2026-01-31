@@ -20,7 +20,7 @@ class TestParseFindawayReport(TestCase):
 
         filename = "Findaway Belaudiobooks (2025-06 Digital Royalty).xlsx"
         drive_id = "test_drive_id"
-        rows = parse_findaway_report(content, filename, drive_id)
+        rows_with_isbns = parse_findaway_report(content, filename, drive_id)
 
         month_of_sale = date(2025, 6, 1)
 
@@ -141,13 +141,15 @@ class TestParseFindawayReport(TestCase):
             ),
         ]
 
-        self.assertEqual(len(rows), len(expected_rows))
+        self.assertEqual(len(rows_with_isbns), len(expected_rows))
 
-        for i, (row, expected) in enumerate(zip(rows, expected_rows)):
+        for i, ((row, isbn_code), expected) in enumerate(
+            zip(rows_with_isbns, expected_rows)
+        ):
             (
                 title,
                 sales_type,
-                isbn,
+                expected_isbn,
                 retailer,
                 country,
                 quantity,
@@ -165,7 +167,7 @@ class TestParseFindawayReport(TestCase):
             self.assertEqual(
                 row.sales_type, sales_type, f"Row {i}: sales_type mismatch"
             )
-            self.assertEqual(row.isbn, isbn, f"Row {i}: isbn mismatch")
+            self.assertEqual(isbn_code, expected_isbn, f"Row {i}: isbn mismatch")
             self.assertEqual(row.retailer, retailer, f"Row {i}: retailer mismatch")
             self.assertEqual(row.country, country, f"Row {i}: country mismatch")
             self.assertEqual(row.quantity, quantity, f"Row {i}: quantity mismatch")

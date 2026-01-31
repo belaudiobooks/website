@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 
 from django.test import TransactionTestCase, Client
 
+from books.models import ISBN
 from partners.models import SaleRecord
 from partners.services.google_drive_fetcher import DriveFile
 
@@ -49,7 +50,7 @@ class TestSyncSalesReports(TransactionTestCase):
         self.assertEqual(first_record.source_file, "test-report.xlsx")
         self.assertEqual(first_record.drive_id, "file-123")
         self.assertEqual(first_record.sales_type, "Retail")
-        self.assertEqual(first_record.isbn, "9798347944019")
+        self.assertEqual(first_record.isbn.code, "9798347944019")
         self.assertEqual(first_record.retailer, "Google Play")
         self.assertEqual(first_record.country, "PL")
         self.assertEqual(first_record.quantity, 1)
@@ -60,13 +61,14 @@ class TestSyncSalesReports(TransactionTestCase):
     @patch.dict(os.environ, {"GOOGLE_DRIVE_FOLDER_ID": "test-folder-id"})
     def test_sync_deletes_existing_records(self, mock_fetcher_class):
         # Create an existing record
+        old_isbn = ISBN.objects.create(code="123")
         SaleRecord.objects.create(
             month_of_sale=date(2020, 1, 1),
             source_file="old-file.xlsx",
             drive_id="old-id",
             title="Old Record",
             sales_type="Retail",
-            isbn="123",
+            isbn=old_isbn,
             retailer="Old Retailer",
             country="US",
             quantity=1,

@@ -163,31 +163,35 @@ msgstr "Release Date"
 msgid "Preview URL"
 msgstr "Preview URL"
 
-#: books/models.py:356
+#: books/models.py:348
+msgid "ISBN Code"
+msgstr "ISBN Code"
+
+#: books/models.py:382
 msgid "Link Type Name"
 msgstr "Link Type Name"
 
-#: books/models.py:358
+#: books/models.py:384
 msgid "Link Caption"
 msgstr "Link Caption"
 
-#: books/models.py:361
+#: books/models.py:387
 msgid "Disabled"
 msgstr "Disabled"
 
-#: books/models.py:362
+#: books/models.py:388
 msgid "Url regex"
 msgstr "Url regex"
 
-#: books/models.py:364
+#: books/models.py:390
 msgid "Availability"
 msgstr "Availability"
 
-#: books/models.py:381
+#: books/models.py:407
 msgid "Link Id"
 msgstr "Link Id"
 
-#: books/models.py:383
+#: books/models.py:409
 msgid "URL"
 msgstr "URL"
 

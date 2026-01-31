@@ -10,4 +10,4 @@ cron:
   schedule: every 1 hours
 - description: "run partner sales report sync"
   url: /partners/job/sync_sales_reports
-  schedule: every 1 hours
+  schedule: every 6 hours

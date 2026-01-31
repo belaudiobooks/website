@@ -175,3 +175,22 @@ class TestParseFindawayReport(TestCase):
                 f"Row {i}: amount_currency mismatch",
             )
             self.assertEqual(row.amount, amount, f"Row {i}: amount mismatch")
+
+    def test_parse_report_with_mismatched_net_amount(self):
+        """Test that parsing fails when row amounts don't match Net Amount."""
+        test_file = os.path.join(
+            os.path.dirname(__file__),
+            "data",
+            "Bad Report.xlsx",
+        )
+        with open(test_file, "rb") as f:
+            content = f.read()
+
+        with self.assertRaises(ValueError) as context:
+            parse_findaway_report(content, "Bad Report.xlsx")
+
+        self.assertEqual(
+            str(context.exception),
+            "Amount mismatch in 'Bad Report.xlsx': "
+            "sum of rows is 12.28, expected Net Amount is 24.28",
+        )

@@ -59,11 +59,17 @@ def parse_findaway_report(
 
     Returns:
         A list of unsaved SaleRecord objects representing each row in the report.
+
+    Raises:
+        ValueError: If the sum of parsed row amounts doesn't match the Net Amount.
     """
     wb = load_workbook(io.BytesIO(content), read_only=True, data_only=True)
     try:
+        summary_sheet = wb["Summary"]
         # Parse period from Summary sheet
-        month_of_sale = _parse_period(wb["Summary"])
+        month_of_sale = _parse_period(summary_sheet)
+        # Parse expected net amount for verification
+        expected_net_amount = _parse_net_amount(summary_sheet)
 
         rows: List[SaleRecord] = []
 
@@ -83,6 +89,9 @@ def parse_findaway_report(
                     continue
                 sale_record = _parse_row(row, month_of_sale, filename, drive_id)
                 rows.append(sale_record)
+
+        # Verify total amount matches expected net amount
+        _verify_total_amount(rows, expected_net_amount, filename)
 
         return rows
     finally:
@@ -119,6 +128,30 @@ def _parse_period(summary_sheet) -> date:
                 month = MONTH_NAMES[month_name]
                 return date(int(year), month, 1)
     raise ValueError("Could not find Period in Summary sheet")
+
+
+def _parse_net_amount(summary_sheet) -> Decimal:
+    """Extract the Net Amount from the Summary sheet."""
+    for row in summary_sheet.iter_rows(values_only=True):
+        if row[0] == "Net Amount:":
+            # Format: "12.28 USD"
+            net_amount_str = row[1]
+            match = re.match(r"([\d.]+)\s+USD", net_amount_str)
+            if match:
+                return Decimal(match.group(1))
+    raise ValueError("Could not find Net Amount in Summary sheet")
+
+
+def _verify_total_amount(
+    rows: List[SaleRecord], expected: Decimal, filename: str
+) -> None:
+    """Verify that the sum of row amounts matches the expected net amount."""
+    actual = sum(row.amount for row in rows)
+    if actual != expected:
+        raise ValueError(
+            f"Amount mismatch in '{filename}': "
+            f"sum of rows is {actual}, expected Net Amount is {expected}"
+        )
 
 
 def _parse_row(

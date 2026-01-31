@@ -8,3 +8,6 @@ cron:
 - description: "hourly job to update 'Read by author' tag"
   url: /job/update_read_by_author_tag
   schedule: every 1 hours
+- description: "run partner sales report sync"
+  url: /partners/job/sync_sales_reports
+  schedule: every 1 hours

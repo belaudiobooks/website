@@ -90,7 +90,9 @@ def parse_findaway_report(
             _validate_headers(sheet_rows[0], sheet_name)
             # Parse data rows (skip header and empty rows)
             for row in sheet_rows[1:]:
-                if row[0] is None:  # Skip empty rows (read_only mode includes them)
+                if (
+                    not row or row[0] is None
+                ):  # Skip empty rows (read_only mode includes them)
                     continue
                 sale_record = _parse_row(row, month_of_sale, filename, drive_id)
                 rows.append(sale_record)
@@ -152,6 +154,11 @@ def _parse_channels(summary_sheet) -> List[str]:
     channels = []
     in_channels_section = False
     for row in summary_sheet.iter_rows(values_only=True):
+        # Skip empty rows
+        if not row or row[0] is None:
+            if in_channels_section:
+                break
+            continue
         if row[0] == "Payments by Channel:":
             in_channels_section = True
             continue
@@ -159,9 +166,6 @@ def _parse_channels(summary_sheet) -> List[str]:
             # Skip the header row
             if row[0] == "Channel":
                 continue
-            # Stop at empty row
-            if row[0] is None:
-                break
             channels.append(row[0])
     if not channels:
         raise ValueError("Could not find channels in Summary sheet")

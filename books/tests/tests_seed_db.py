@@ -6,6 +6,9 @@ from books import models
 class SeedDbTestCase(SimpleTestCase):
     databases = "__all__"
 
+    def tearDown(self):
+        call_command("flush", "--noinput")
+
     def test_seeding_works(self):
         call_command("flush", "--noinput")
         call_command("seed_db")

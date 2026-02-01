@@ -1337,12 +1337,16 @@ msgid "Дамовы"
 msgstr "Damovy"
 
 #: partners/templates/partners/agreements.html:16
+#: partners/templates/partners/sales.html:19
+#: partners/templates/partners/sales.html:67
 #, fuzzy
 #| msgid "Кнігі аўтар"
 msgid "Кніга"
 msgstr "Kniha"
 
 #: partners/templates/partners/agreements.html:17
+#: partners/templates/partners/sales.html:20
+#: partners/templates/partners/sales.html:68
 #, fuzzy
 #| msgid "Аўтар, кніга"
 msgid "Аўтар_ка"
@@ -1388,7 +1392,9 @@ msgstr "Partniory"
 msgid "Партнёрская панэль"
 msgstr "Partniorskaja panel"
 
-#: partners/templates/partners/dashboard.html:29
+#: partners/templates/partners/dashboard.html:32
+#: partners/templates/partners/sales.html:5
+#: partners/templates/partners/sales.html:9
 msgid "Продажы"
 msgstr "Prodažy"
 
@@ -1412,6 +1418,91 @@ msgstr "Parol"
 #: partners/templates/partners/login.html:28
 msgid "Увайсці"
 msgstr "Uvajści"
+
+#: partners/templates/partners/sales.html:14
+msgid "Гадавы выгляд"
+msgstr "Hadavy vyhlad"
+
+#: partners/templates/partners/sales.html:21
+#: partners/templates/partners/sales.html:69
+msgid "Год"
+msgstr "Hod"
+
+#: partners/templates/partners/sales.html:22
+#: partners/templates/partners/sales.html:70
+msgid "Месяц"
+msgstr "Miesiac"
+
+#: partners/templates/partners/sales.html:23
+#: partners/templates/partners/sales.html:71
+msgid "Колькасць"
+msgstr "Kolkaść"
+
+#: partners/templates/partners/sales.html:24
+#: partners/templates/partners/sales.html:72
+msgid "Арыг. сума (USD)"
+msgstr "Aryh. suma (USD)"
+
+#: partners/templates/partners/sales.html:25
+#: partners/templates/partners/sales.html:73
+#, fuzzy
+#| msgid "Роялці"
+msgid "Доля роялці"
+msgstr "Dola rojałci"
+
+#: partners/templates/partners/sales.html:26
+#: partners/templates/partners/sales.html:74
+#, fuzzy
+#| msgid "Роялці"
+msgid "Роялці (USD)"
+msgstr "Rojałci (USD)"
+
+#: partners/templates/partners/sales.html:33
+#: partners/templates/partners/sales.html:75
+msgid "Разам"
+msgstr "Razam"
+
+#: partners/templates/partners/sales.html:45
+#, fuzzy
+#| msgid "Дамоваў пакуль няма."
+msgid "Дадзеных пра продажы пакуль няма."
+msgstr "Dadzienych pra prodažy pakul niama."
+
+#: partners/templates/partners/sales.html:54
+msgid "Пошук:"
+msgstr "Pošuk:"
+
+#: partners/templates/partners/sales.html:55
+msgid "Паказаць _MENU_ запісаў"
+msgstr "Pakazać _MENU_ zapisaŭ"
+
+#: partners/templates/partners/sales.html:56
+msgid "Паказаны _START_ - _END_ з _TOTAL_ запісаў"
+msgstr "Pakazany _START_ - _END_ z _TOTAL_ zapisaŭ"
+
+#: partners/templates/partners/sales.html:57
+msgid "Няма запісаў"
+msgstr "Niama zapisaŭ"
+
+#: partners/templates/partners/sales.html:58
+msgid "(адфільтравана з _MAX_ запісаў)"
+msgstr "(adfiltravana z _MAX_ zapisaŭ)"
+
+#: partners/templates/partners/sales.html:60
+msgid "Першая"
+msgstr "Pieršaja"
+
+#: partners/templates/partners/sales.html:61
+msgid "Апошняя"
+msgstr "Apošniaja"
+
+#: partners/templates/partners/sales.html:62
+msgid "Наступная"
+msgstr "Nastupnaja"
+
+#: partners/templates/partners/sales.html:63
+msgid "Папярэдняя"
+msgstr "Papiaredniaja"
 
 #: user/admin.py:13
 msgid "Personal Info"

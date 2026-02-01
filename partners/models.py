@@ -1,4 +1,5 @@
 import os
+import uuid
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
@@ -40,6 +41,9 @@ class PartnerUser(AbstractBaseUser):
     partner = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name="users")
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    login_uuid = models.UUIDField(
+        default=uuid.uuid4, unique=True, null=True, blank=True
+    )
 
     objects = PartnerUserManager()
 

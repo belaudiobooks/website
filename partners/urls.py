@@ -7,6 +7,7 @@ app_name = "partners"
 urlpatterns = [
     path("", views.index, name="index"),
     path("login/", views.login_view, name="login"),
+    path("login/<uuid:login_uuid>/", views.login_by_uuid, name="login_by_uuid"),
     path("logout/", views.logout_view, name="logout"),
     path("<int:partner_id>/", views.dashboard, name="dashboard"),
     path("<int:partner_id>/agreements/", views.agreements, name="agreements"),

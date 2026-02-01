@@ -91,3 +91,16 @@ class DashboardTest(WebdriverTestCase):
             f"{self.live_server_url}/partners/{self.partner.id}/agreements/",
             self.driver.current_url,
         )
+
+    def test_login_by_uuid(self):
+        """Partner user can login via UUID link."""
+        self.driver.get(
+            f"{self.live_server_url}/partners/login/{self.user.login_uuid}/"
+        )
+
+        # Should be redirected to partner's dashboard
+        self.assertEqual(
+            f"{self.live_server_url}/partners/{self.partner.id}/",
+            self.driver.current_url,
+        )
+        self.assertIn("Партнёрская панэль", self.driver.page_source)

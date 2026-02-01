@@ -72,6 +72,13 @@ def logout_view(request):
     return redirect("partners:login")
 
 
+def login_by_uuid(request, login_uuid):
+    """Log in a partner user via their unique login UUID."""
+    user = get_object_or_404(PartnerUser, login_uuid=login_uuid, is_active=True)
+    login(request, user, backend="partners.auth.PartnerUserBackend")
+    return redirect("partners:index")
+
+
 @partner_login_required
 def agreements(request, partner_id):
     """View all agreements for a partner."""

@@ -22,7 +22,7 @@ class PartnerUserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         ("Personal Info", {"fields": ("name", "partner")}),
-        ("Status", {"fields": ("is_active",)}),
+        ("Status", {"fields": ("is_active", "login_uuid")}),
         ("Important dates", {"fields": ("last_login",)}),
     )
     add_fieldsets = (

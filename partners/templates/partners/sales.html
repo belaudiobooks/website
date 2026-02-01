@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% translate "Продажы" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{% translate "Продажы" %}</h1>
+
+    {% if sales_data_json %}
+    <div class="mb-3 form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="yearly-toggle">
+        <label class="form-check-label" for="yearly-toggle">{% translate "Гадавы выгляд" %}</label>
+    </div>
+    <table id="sales-table" class="table table-striped table-responsive" data-test-id="sales-table">
+        <thead>
+            <tr>
+                <th scope="col">{% translate "Кніга" %}</th>
+                <th scope="col">{% translate "Аўтар_ка" %}</th>
+                <th scope="col">{% translate "Год" %}</th>
+                <th scope="col">{% translate "Месяц" %}</th>
+                <th scope="col" class="text-end">{% translate "Колькасць" %}</th>
+                <th scope="col" class="text-end">{% translate "Арыг. сума (USD)" %}</th>
+                <th scope="col" class="text-end">{% translate "Доля роялці" %}</th>
+                <th scope="col" class="text-end">{% translate "Роялці (USD)" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr class="table-secondary fw-bold">
+                <td>{% translate "Разам" %}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-end" data-test-id="total-quantity">0</td>
+                <td></td>
+                <td></td>
+                <td class="text-end" data-test-id="total-payable-royalty">$0.00</td>
+            </tr>
+        </tfoot>
+    </table>
+    {% else %}
+    <p data-test-id="empty-message">{% translate "Дадзеных пра продажы пакуль няма." %}</p>
+    {% endif %}
+</div>
+
+{{ sales_data_json|json_script:"sales-data" }}
+
+<script id="sales-config" type="application/json">
+{
+    "language": {
+        "search": "{% translate 'Пошук:' %}",
+        "lengthMenu": "{% translate 'Паказаць _MENU_ запісаў' %}",
+        "info": "{% translate 'Паказаны _START_ - _END_ з _TOTAL_ запісаў' %}",
+        "infoEmpty": "{% translate 'Няма запісаў' %}",
+        "infoFiltered": "{% translate '(адфільтравана з _MAX_ запісаў)' %}",
+        "paginate": {
+            "first": "{% translate 'Першая' %}",
+            "last": "{% translate 'Апошняя' %}",
+            "next": "{% translate 'Наступная' %}",
+            "previous": "{% translate 'Папярэдняя' %}"
+        }
+    },
+    "labels": {
+        "book": "{% translate 'Кніга' %}",
+        "author": "{% translate 'Аўтар_ка' %}",
+        "year": "{% translate 'Год' %}",
+        "month": "{% translate 'Месяц' %}",
+        "quantity": "{% translate 'Колькасць' %}",
+        "originalAmount": "{% translate 'Арыг. сума (USD)' %}",
+        "royaltyShare": "{% translate 'Доля роялці' %}",
+        "payableRoyalty": "{% translate 'Роялці (USD)' %}",
+        "total": "{% translate 'Разам' %}"
+    }
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet">
+<script src="{% static 'js/datatables.min.js' %}"></script>
+<script src="{% static 'js/sales.js' %}"></script>
+{% endblock %}

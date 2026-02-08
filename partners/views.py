@@ -35,15 +35,10 @@ def dashboard(request, partner_id):
     if request.user.partner_id != partner.id:
         return HttpResponseForbidden()
 
-    # Count total books and narrations across all agreements
-    agreements_count = 0
-    for agreement in partner.agreements.prefetch_related("narrations", "books"):
-        agreements_count += agreement.narrations.count() + agreement.books.count()
-
     return render(
         request,
         "partners/dashboard.html",
-        {"partner": partner, "agreements_count": agreements_count},
+        {"partner": partner},
     )
 
 

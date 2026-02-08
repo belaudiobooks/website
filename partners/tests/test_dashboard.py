@@ -1,8 +1,6 @@
-from decimal import Decimal
-
 from selenium.webdriver.common.by import By
 
-from partners.models import Agreement, Partner
+from partners.models import Partner
 from partners.tests.webdriver_test_case import WebdriverTestCase
 
 
@@ -19,7 +17,7 @@ class DashboardTest(WebdriverTestCase):
         self.login()
         self.driver.get(f"{self.live_server_url}/partners/{other_partner.id}/")
         # HttpResponseForbidden returns empty body
-        self.assertNotIn("Партнёрская панэль", self.driver.page_source)
+        self.assertNotIn("Партнёрскі партал", self.driver.page_source)
 
     def test_login_and_view_dashboard(self):
         """Partner user can login and see the dashboard."""
@@ -30,7 +28,7 @@ class DashboardTest(WebdriverTestCase):
             f"{self.live_server_url}/partners/{self.partner.id}/",
             self.driver.current_url,
         )
-        self.assertIn("Партнёрская панэль", self.driver.page_source)
+        self.assertIn("Партнёрскі партал", self.driver.page_source)
 
     def test_invalid_login_shows_error(self):
         """Invalid credentials should show error message."""
@@ -49,34 +47,6 @@ class DashboardTest(WebdriverTestCase):
         # Should stay on login page with error
         self.assertIn("/partners/login/", self.driver.current_url)
         self.assertIn("Няправільны емэйл або пароль", self.driver.page_source)
-
-    def test_dashboard_shows_agreements_count(self):
-        """Dashboard should display correct count of books and narrations."""
-        fake = self.books_fake_data
-        book1 = fake.create_book_with_single_narration(
-            title="Book 1",
-            authors=[fake.person_ales],
-            narrators=[fake.person_bela],
-        )
-        book2 = fake.create_book_with_single_narration(
-            title="Book 2",
-            authors=[fake.person_viktar],
-            narrators=[fake.person_volha],
-        )
-
-        # Create agreement with 1 narration and 1 book = 2 total
-        agreement = Agreement.objects.create(
-            partner=self.partner, royalty_percent=Decimal("10.00")
-        )
-        agreement.narrations.add(book1.narrations.first())
-        agreement.books.add(book2)
-
-        self.login()
-
-        count = self.driver.find_element(
-            By.CSS_SELECTOR, "[data-test-id='agreements-count']"
-        )
-        self.assertEqual("2", count.text)
 
     def test_clicking_agreements_card_redirects_to_agreements(self):
         """Clicking on agreements card should redirect to agreements page."""
@@ -103,4 +73,4 @@ class DashboardTest(WebdriverTestCase):
             f"{self.live_server_url}/partners/{self.partner.id}/",
             self.driver.current_url,
         )
-        self.assertIn("Партнёрская панэль", self.driver.page_source)
+        self.assertIn("Партнёрскі партал", self.driver.page_source)

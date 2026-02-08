@@ -1333,7 +1333,7 @@ msgstr "Books (unpublished)"
 
 #: partners/templates/partners/agreements.html:6
 #: partners/templates/partners/agreements.html:10
-#: partners/templates/partners/dashboard.html:18
+#: partners/templates/partners/dashboard.html:15
 #: partners/templates/partners/partials/_navbar.html:36
 #: partners/templates/partners/partials/_navbar.html:38
 msgid "Дамовы"
@@ -1385,7 +1385,7 @@ msgstr "Damovaŭ pakul niama."
 msgid "Партнёры"
 msgstr "Partniory"
 
-#: partners/templates/partners/dashboard.html:33
+#: partners/templates/partners/dashboard.html:29
 #: partners/templates/partners/partials/_navbar.html:44
 #: partners/templates/partners/partials/_navbar.html:46
 #: partners/templates/partners/sales.html:5

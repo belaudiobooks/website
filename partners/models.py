@@ -73,10 +73,12 @@ class PartnerUser(AbstractBaseUser):
 
 
 def agreement_file_path(instance, filename):
-    """Generate file path for agreement files: agreements/agreement_{partner_id}_{agreement_id}.ext"""
+    """Generate file path for agreement files: agreements/agreement_{partner_id}_{short_id}.ext"""
 
     ext = os.path.splitext(filename)[1]
-    return f"agreements/agreement_{instance.partner_id}{ext}"
+    short_id = uuid.uuid4().hex[:8]
+    partner_id = instance.agreement.partner_id
+    return f"agreements/agreement_{partner_id}_{short_id}{ext}"
 
 
 class Agreement(models.Model):
@@ -109,16 +111,23 @@ class Agreement(models.Model):
         blank=True,
         verbose_name=_("Books (unpublished)"),
     )
-    agreement_file = models.FileField(
-        upload_to=agreement_file_path,
-        blank=True,
-        null=True,
-        help_text="PDF file of the signed agreement",
-    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Agreement with {self.partner.name} ({self.royalty_percent}%)"
+
+
+class AgreementFile(models.Model):
+    """A file attached to an agreement (e.g., original agreement, amendments)."""
+
+    agreement = models.ForeignKey(
+        Agreement, on_delete=models.CASCADE, related_name="files"
+    )
+    file = models.FileField(upload_to=agreement_file_path)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"File for {self.agreement} ({self.file.name})"
 
 
 class SaleRecord(models.Model):

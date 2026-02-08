@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.admin.decorators import display
 
-from partners.models import Agreement, Partner, PartnerUser, SaleRecord
+from partners.models import Agreement, AgreementFile, Partner, PartnerUser, SaleRecord
 
 
 @admin.register(Partner)
@@ -36,8 +36,14 @@ class PartnerUserAdmin(BaseUserAdmin):
     )
 
 
+class AgreementFileInline(admin.TabularInline):
+    model = AgreementFile
+    extra = 1
+
+
 @admin.register(Agreement)
 class AgreementAdmin(admin.ModelAdmin):
+    inlines = [AgreementFileInline]
     list_display = [
         "get_books_names",
         "partner",

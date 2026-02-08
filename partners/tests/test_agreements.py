@@ -6,7 +6,7 @@ from typing import List
 from django.core.files.uploadedfile import SimpleUploadedFile
 from selenium.webdriver.common.by import By
 
-from partners.models import Agreement, Partner
+from partners.models import Agreement, AgreementFile, Partner
 from partners.tests.webdriver_test_case import WebdriverTestCase
 
 
@@ -208,17 +208,17 @@ class AgreementsTest(WebdriverTestCase):
         )
 
         # Create agreement with file
+        agreement_with_file = Agreement.objects.create(
+            partner=self.partner,
+            royalty_percent=Decimal("15.00"),
+        )
+        agreement_with_file.books.add(book_with_file)
         pdf_file = SimpleUploadedFile(
             "agreement.pdf",
             b"%PDF-1.4 fake pdf content",
             content_type="application/pdf",
         )
-        agreement_with_file = Agreement.objects.create(
-            partner=self.partner,
-            royalty_percent=Decimal("15.00"),
-            agreement_file=pdf_file,
-        )
-        agreement_with_file.books.add(book_with_file)
+        AgreementFile.objects.create(agreement=agreement_with_file, file=pdf_file)
 
         # Create agreement without file
         agreement_without_file = Agreement.objects.create(
@@ -245,7 +245,7 @@ class AgreementsTest(WebdriverTestCase):
         links_with = file_cell_with.find_elements(By.TAG_NAME, "a")
         self.assertEqual(len(links_with), 1)
         self.assertIn(
-            f"/partners/{self.partner.id}/agreements/",
+            f"/partners/{self.partner.id}/agreements/files/",
             links_with[0].get_attribute("href"),
         )
 
@@ -273,20 +273,22 @@ class AgreementsTest(WebdriverTestCase):
         agreement = Agreement.objects.create(
             partner=self.partner,
             royalty_percent=Decimal("10.00"),
-            agreement_file=pdf_file,
         )
         agreement.books.add(book)
+        agreement_file = AgreementFile.objects.create(
+            agreement=agreement, file=pdf_file
+        )
 
         # File should be downloaded to the current directory.
         # Verify that it does not exist before download.
-        expected_file_name = agreement.agreement_file.name.split("/")[-1]
+        expected_file_name = agreement_file.file.name.split("/")[-1]
         self.assertFalse(os.path.exists(expected_file_name))
 
         self.login()
 
         # Navigate to the file URL
         self.driver.get(
-            f"{self.live_server_url}/partners/{self.partner.id}/agreements/{agreement.id}/file/"
+            f"{self.live_server_url}/partners/{self.partner.id}/agreements/files/{agreement_file.id}/"
         )
 
         # For file downloads, Selenium will show the content or trigger download
@@ -320,18 +322,20 @@ class AgreementsTest(WebdriverTestCase):
         agreement = Agreement.objects.create(
             partner=other_partner,
             royalty_percent=Decimal("20.00"),
-            agreement_file=pdf_file,
         )
         agreement.books.add(book)
+        agreement_file = AgreementFile.objects.create(
+            agreement=agreement, file=pdf_file
+        )
 
         # File should be downloaded to the current directory.
         # Verify that it does not exist before download.
-        expected_file_name = agreement.agreement_file.name.split("/")[-1]
+        expected_file_name = agreement_file.file.name.split("/")[-1]
         self.assertFalse(os.path.exists(expected_file_name))
 
         self.login()
         self.driver.get(
-            f"{self.live_server_url}/partners/{other_partner.id}/agreements/{agreement.id}/file/"
+            f"{self.live_server_url}/partners/{other_partner.id}/agreements/files/{agreement_file.id}/"
         )
 
         # Make sure that file still does not exist.

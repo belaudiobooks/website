@@ -47,11 +47,11 @@
                 </td>
                 <td data-test-id="royalty" class="text-center">{{ item.royalty_percent|format_royalty }}</td>
                 <td data-test-id="agreement-file" class="text-center">
-                    {% if item.has_agreement_file %}
-                        <a href="{% url 'partners:download_agreement_file' partner.id item.agreement_id %}">
+                    {% for af in item.agreement_files %}
+                        <a href="{% url 'partners:download_agreement_file' partner.id af.id %}">
                             <i class="bi bi-file-earmark-arrow-down fs-3"></i>
                         </a>
-                    {% endif %}
+                    {% endfor %}
                 </td>
             </tr>
             {% endfor %}

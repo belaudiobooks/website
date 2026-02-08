@@ -1323,11 +1323,11 @@ msgstr "Aŭtar, kniha"
 msgid "Крыніца"
 msgstr "Krynica"
 
-#: partners/models.py:103
+#: partners/models.py:105
 msgid "Narrations (published books)"
 msgstr "Narrations (published books)"
 
-#: partners/models.py:110
+#: partners/models.py:112
 msgid "Books (unpublished)"
 msgstr "Books (unpublished)"
 

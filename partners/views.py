@@ -3,10 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import models
 from django.db.models import OuterRef, Subquery, Sum
 from django.db.models.functions import TruncMonth
-from django.http import FileResponse, Http404, HttpResponseForbidden
+from django.http import FileResponse, HttpResponseForbidden
 
 from books.models import Book, Narration
-from partners.models import Agreement, Partner, PartnerUser, SaleRecord
+from partners.models import Agreement, AgreementFile, Partner, PartnerUser, SaleRecord
 
 
 def partner_login_required(view_func):
@@ -86,8 +86,9 @@ def agreements(request, partner_id):
     # Build list of items (narrations and books) with royalty
     items = []
     for agreement in partner.agreements.prefetch_related(
-        "narrations__book__authors", "books__authors"
+        "narrations__book__authors", "books__authors", "files"
     ):
+        agreement_files = list(agreement.files.all())
         for narration in agreement.narrations.all():
             authors = [a.name for a in narration.book.authors.all()]
             items.append(
@@ -98,8 +99,7 @@ def agreements(request, partner_id):
                     "narration": narration,
                     "book_slug": narration.book.slug,
                     "royalty_percent": agreement.royalty_percent,
-                    "agreement_id": agreement.id,
-                    "has_agreement_file": bool(agreement.agreement_file),
+                    "agreement_files": agreement_files,
                 }
             )
         for book in agreement.books.order_by("title"):
@@ -110,8 +110,7 @@ def agreements(request, partner_id):
                     "title": book.title,
                     "authors": authors,
                     "royalty_percent": agreement.royalty_percent,
-                    "agreement_id": agreement.id,
-                    "has_agreement_file": bool(agreement.agreement_file),
+                    "agreement_files": agreement_files,
                 }
             )
 
@@ -123,21 +122,20 @@ def agreements(request, partner_id):
 
 
 @partner_login_required
-def download_agreement_file(request, partner_id, agreement_id):
-    """Serve the agreement PDF file."""
-    agreement = get_object_or_404(Agreement, id=agreement_id, partner_id=partner_id)
+def download_agreement_file(request, partner_id, agreement_file_id):
+    """Serve an agreement file."""
+    agreement_file = get_object_or_404(
+        AgreementFile, id=agreement_file_id, agreement__partner_id=partner_id
+    )
 
     # Check that logged-in user belongs to this partner
     if request.user.partner_id != partner_id:
         return HttpResponseForbidden()
 
-    if not agreement.agreement_file:
-        raise Http404("Agreement file not found")
-
     return FileResponse(
-        agreement.agreement_file.open("rb"),
+        agreement_file.file.open("rb"),
         as_attachment=True,
-        filename=agreement.agreement_file.name.split("/")[-1],
+        filename=agreement_file.file.name.split("/")[-1],
     )
 
 

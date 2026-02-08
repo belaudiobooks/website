@@ -101,13 +101,27 @@ class SalesPageTest(WebdriverTestCase):
             amount=Decimal("80.00"),
         )
 
-    def get_table_rows(self, is_yearly=False):
-        """Parse table rows into list of dicts."""
+    def get_table_rows(self, view_mode="all-time"):
+        """Parse table rows into list of dicts.
+
+        Args:
+            view_mode: One of 'all-time', 'yearly', or 'monthly'
+        """
         rows = self.driver.find_elements(By.CSS_SELECTOR, "#sales-table tbody tr")
         row_data = []
         for row in rows:
             cells = row.find_elements(By.TAG_NAME, "td")
-            if is_yearly:
+            if view_mode == "all-time":
+                row_data.append(
+                    {
+                        "title": cells[0].text,
+                        "quantity": cells[2].text,
+                        "original_amount": cells[3].text,
+                        "royalty_share": cells[4].text,
+                        "payable_royalty": cells[5].text,
+                    }
+                )
+            elif view_mode == "yearly":
                 row_data.append(
                     {
                         "title": cells[0].text,
@@ -118,7 +132,7 @@ class SalesPageTest(WebdriverTestCase):
                         "payable_royalty": cells[6].text,
                     }
                 )
-            else:
+            else:  # monthly
                 row_data.append(
                     {
                         "title": cells[0].text,
@@ -142,6 +156,45 @@ class SalesPageTest(WebdriverTestCase):
         )
         return {"quantity": total_quantity.text, "payable_royalty": total_payable.text}
 
+    def test_all_time_view_is_default_and_shows_two_rows(self):
+        """All-time view should be the default and show 2 rows (one per book)."""
+        self.login()
+        self.driver.get(f"{self.live_server_url}/partners/{self.partner.id}/sales/")
+
+        # Wait for DataTable to initialize
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "#sales-table tbody tr"))
+        )
+
+        # Verify all-time is selected by default
+        all_time_toggle = self.driver.find_element(By.ID, "view-all-time")
+        self.assertTrue(all_time_toggle.is_selected())
+
+        row_data = self.get_table_rows(view_mode="all-time")
+        self.assertEqual(
+            [
+                {
+                    "title": "First Book",
+                    "quantity": "15",
+                    "original_amount": "$150.00",
+                    "royalty_share": "50%",
+                    "payable_royalty": "$75.00",
+                },
+                {
+                    "title": "Second Book",
+                    "quantity": "28",
+                    "original_amount": "$280.00",
+                    "royalty_share": "25%",
+                    "payable_royalty": "$70.00",
+                },
+            ],
+            row_data,
+        )
+
+        self.assertEqual(
+            {"quantity": "43", "payable_royalty": "$145.00"}, self.get_totals()
+        )
+
     def test_monthly_view_shows_three_rows_with_correct_data(self):
         """Monthly view should show 3 rows (one per book per month)."""
         self.login()
@@ -152,7 +205,19 @@ class SalesPageTest(WebdriverTestCase):
             EC.presence_of_element_located((By.CSS_SELECTOR, "#sales-table tbody tr"))
         )
 
-        row_data = self.get_table_rows(is_yearly=False)
+        # Switch to monthly view (click label, as Bootstrap hides the input)
+        monthly_label = self.driver.find_element(
+            By.CSS_SELECTOR, "label[for='view-monthly']"
+        )
+        monthly_label.click()
+
+        # Wait for table to rebuild with 3 rows
+        WebDriverWait(self.driver, 10).until(
+            lambda d: len(d.find_elements(By.CSS_SELECTOR, "#sales-table tbody tr"))
+            == 3
+        )
+
+        row_data = self.get_table_rows(view_mode="monthly")
         self.assertEqual(
             [
                 {
@@ -200,17 +265,20 @@ class SalesPageTest(WebdriverTestCase):
             EC.presence_of_element_located((By.CSS_SELECTOR, "#sales-table tbody tr"))
         )
 
-        # Toggle to yearly view
-        toggle = self.driver.find_element(By.ID, "yearly-toggle")
-        toggle.click()
+        # Switch to yearly view (click label, as Bootstrap hides the input)
+        yearly_label = self.driver.find_element(
+            By.CSS_SELECTOR, "label[for='view-yearly']"
+        )
+        yearly_label.click()
 
-        # Wait for table to rebuild
+        # Wait for table to rebuild - yearly view has 2 rows (one per year per book)
+        # In this case: First Book 2025, Second Book 2026
         WebDriverWait(self.driver, 10).until(
             lambda d: len(d.find_elements(By.CSS_SELECTOR, "#sales-table tbody tr"))
             == 2
         )
 
-        row_data = self.get_table_rows(is_yearly=True)
+        row_data = self.get_table_rows(view_mode="yearly")
         self.assertEqual(
             [
                 {

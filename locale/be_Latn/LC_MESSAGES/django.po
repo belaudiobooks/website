@@ -1337,16 +1337,16 @@ msgid "Дамовы"
 msgstr "Damovy"
 
 #: partners/templates/partners/agreements.html:16
-#: partners/templates/partners/sales.html:19
-#: partners/templates/partners/sales.html:67
+#: partners/templates/partners/sales.html:25
+#: partners/templates/partners/sales.html:73
 #, fuzzy
 #| msgid "Кнігі аўтар"
 msgid "Кніга"
 msgstr "Kniha"
 
 #: partners/templates/partners/agreements.html:17
-#: partners/templates/partners/sales.html:20
-#: partners/templates/partners/sales.html:68
+#: partners/templates/partners/sales.html:26
+#: partners/templates/partners/sales.html:74
 #, fuzzy
 #| msgid "Аўтар, кніга"
 msgid "Аўтар_ка"
@@ -1419,88 +1419,102 @@ msgstr "Parol"
 msgid "Увайсці"
 msgstr "Uvajści"
 
-#: partners/templates/partners/sales.html:14
-msgid "Гадавы выгляд"
-msgstr "Hadavy vyhlad"
+#: partners/templates/partners/sales.html:12
+msgid "Выгляд"
+msgstr "Vyhlad"
 
-#: partners/templates/partners/sales.html:21
-#: partners/templates/partners/sales.html:69
+#: partners/templates/partners/sales.html:14
+msgid "За ўвесь час"
+msgstr "Za ŭvieś čas"
+
+#: partners/templates/partners/sales.html:17
+msgid "Па гадах"
+msgstr "Pa hadach"
+
+#: partners/templates/partners/sales.html:20
+#, fuzzy
+#| msgid "Месяц"
+msgid "Па месяцах"
+msgstr "Pa miesiacach"
+
+#: partners/templates/partners/sales.html:27
+#: partners/templates/partners/sales.html:75
 msgid "Год"
 msgstr "Hod"
 
-#: partners/templates/partners/sales.html:22
-#: partners/templates/partners/sales.html:70
+#: partners/templates/partners/sales.html:28
+#: partners/templates/partners/sales.html:76
 msgid "Месяц"
 msgstr "Miesiac"
 
-#: partners/templates/partners/sales.html:23
-#: partners/templates/partners/sales.html:71
+#: partners/templates/partners/sales.html:29
+#: partners/templates/partners/sales.html:77
 msgid "Колькасць"
 msgstr "Kolkaść"
 
-#: partners/templates/partners/sales.html:24
-#: partners/templates/partners/sales.html:72
+#: partners/templates/partners/sales.html:30
+#: partners/templates/partners/sales.html:78
 msgid "Арыг. сума (USD)"
 msgstr "Aryh. suma (USD)"
 
-#: partners/templates/partners/sales.html:25
-#: partners/templates/partners/sales.html:73
+#: partners/templates/partners/sales.html:31
+#: partners/templates/partners/sales.html:79
 #, fuzzy
 #| msgid "Роялці"
 msgid "Доля роялці"
 msgstr "Dola rojałci"
 
-#: partners/templates/partners/sales.html:26
-#: partners/templates/partners/sales.html:74
+#: partners/templates/partners/sales.html:32
+#: partners/templates/partners/sales.html:80
 #, fuzzy
 #| msgid "Роялці"
 msgid "Роялці (USD)"
 msgstr "Rojałci (USD)"
 
-#: partners/templates/partners/sales.html:33
-#: partners/templates/partners/sales.html:75
+#: partners/templates/partners/sales.html:39
+#: partners/templates/partners/sales.html:81
 msgid "Разам"
 msgstr "Razam"
 
-#: partners/templates/partners/sales.html:45
+#: partners/templates/partners/sales.html:51
 #, fuzzy
 #| msgid "Дамоваў пакуль няма."
 msgid "Дадзеных пра продажы пакуль няма."
 msgstr "Dadzienych pra prodažy pakul niama."
 
-#: partners/templates/partners/sales.html:54
+#: partners/templates/partners/sales.html:60
 msgid "Пошук:"
 msgstr "Pošuk:"
 
-#: partners/templates/partners/sales.html:55
+#: partners/templates/partners/sales.html:61
 msgid "Паказаць _MENU_ запісаў"
 msgstr "Pakazać _MENU_ zapisaŭ"
 
-#: partners/templates/partners/sales.html:56
+#: partners/templates/partners/sales.html:62
 msgid "Паказаны _START_ - _END_ з _TOTAL_ запісаў"
 msgstr "Pakazany _START_ - _END_ z _TOTAL_ zapisaŭ"
 
-#: partners/templates/partners/sales.html:57
+#: partners/templates/partners/sales.html:63
 msgid "Няма запісаў"
 msgstr "Niama zapisaŭ"
 
-#: partners/templates/partners/sales.html:58
+#: partners/templates/partners/sales.html:64
 msgid "(адфільтравана з _MAX_ запісаў)"
 msgstr "(adfiltravana z _MAX_ zapisaŭ)"
 
-#: partners/templates/partners/sales.html:60
+#: partners/templates/partners/sales.html:66
 msgid "Першая"
 msgstr "Pieršaja"
 
-#: partners/templates/partners/sales.html:61
+#: partners/templates/partners/sales.html:67
 msgid "Апошняя"
 msgstr "Apošniaja"
 
-#: partners/templates/partners/sales.html:62
+#: partners/templates/partners/sales.html:68
 msgid "Наступная"
 msgstr "Nastupnaja"
 
-#: partners/templates/partners/sales.html:63
+#: partners/templates/partners/sales.html:69
 msgid "Папярэдняя"
 msgstr "Papiaredniaja"
 
@@ -1515,6 +1529,9 @@ msgstr "Permissions"
 #: user/admin.py:24
 msgid "Important dates"
 msgstr "Important dates"
+
+#~ msgid "Гадавы выгляд"
+#~ msgstr "Hadavy vyhlad"
 
 #~ msgid "Апублікавана"
 #~ msgstr "Apublikavana"

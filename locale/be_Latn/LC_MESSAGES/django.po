@@ -1284,6 +1284,7 @@ msgid "Першую частку можна паслухаць бясплатн�
 msgstr "Pieršuju častku možna pasłuchać biaspłatna:"
 
 #: books/templates/partials/_navbar.html:9
+#: partners/templates/partners/partials/_navbar.html:13
 #, fuzzy
 #| msgid "БЕЛАРУСКIЯ АЎДЫЯКНIГI"
 msgid "БЕЛАРУСКІЯ АЎДЫЯКНІГІ"
@@ -1332,17 +1333,15 @@ msgstr "Books (unpublished)"
 
 #: partners/templates/partners/agreements.html:6
 #: partners/templates/partners/agreements.html:10
-#: partners/templates/partners/dashboard.html:17
+#: partners/templates/partners/dashboard.html:18
+#: partners/templates/partners/partials/_navbar.html:36
+#: partners/templates/partners/partials/_navbar.html:38
 msgid "Дамовы"
 msgstr "Damovy"
 
 #: partners/templates/partners/agreements.html:16
-#: partners/templates/partners/sales.html:25
-#: partners/templates/partners/sales.html:73
-#, fuzzy
-#| msgid "Кнігі аўтар"
-msgid "Кніга"
-msgstr "Kniha"
+msgid "Назва"
+msgstr "Nazva"
 
 #: partners/templates/partners/agreements.html:17
 #: partners/templates/partners/sales.html:26
@@ -1386,13 +1385,9 @@ msgstr "Damovaŭ pakul niama."
 msgid "Партнёры"
 msgstr "Partniory"
 
-#: partners/templates/partners/dashboard.html:8
-#, fuzzy
-#| msgid "Беларускія аўдыякнігі"
-msgid "Партнёрская панэль"
-msgstr "Partniorskaja panel"
-
-#: partners/templates/partners/dashboard.html:32
+#: partners/templates/partners/dashboard.html:33
+#: partners/templates/partners/partials/_navbar.html:44
+#: partners/templates/partners/partials/_navbar.html:46
 #: partners/templates/partners/sales.html:5
 #: partners/templates/partners/sales.html:9
 msgid "Продажы"
@@ -1419,6 +1414,53 @@ msgstr "Parol"
 msgid "Увайсці"
 msgstr "Uvajści"
 
+#: partners/templates/partners/login.html:32
+msgid ""
+"Таксама можна залагініцца праз спецыяльную спасылку. Калі ласка, звяжыцеся з"
+" прадстаўніком audiobooks.by"
+msgstr ""
+"Taksama možna załahinicca praź śpiecyjalnuju spasyłku. Kali łaska, "
+"źviažyciesia z pradstaŭnikom audiobooks.by"
+
+#: partners/templates/partners/partials/_footer.html:9
+#, fuzzy
+#| msgid "Выканаўца і перакладчык"
+msgid "Пытанні і прапановы:"
+msgstr "Pytańni i prapanovy:"
+
+#: partners/templates/partners/partials/_footer.html:14
+msgid "Перайсці на асноўны сайт"
+msgstr "Pierajści na asnoŭny sajt"
+
+#: partners/templates/partners/partials/_navbar.html:17
+#, fuzzy
+#| msgid "Беларускія аўдыякнігі"
+msgid "Партнёрскі партал"
+msgstr "Partniorski partał"
+
+#: partners/templates/partners/partials/_navbar.html:18
+msgid ""
+"\n"
+"        Тут вы можаце праглядаць свае дамовы і статыстыку продажаў.\n"
+"        Калі ў вас яшчэ няма лагіна і пароля, калі ласка, звяжыцеся з намі праз электронную пошту.\n"
+"      "
+msgstr ""
+"\n"
+"        Tut vy možacie prahladać svaje damovy i statystyku prodažaŭ.\n"
+"        Kali ŭ vas jašče niama łahina i parola, kali łaska, źviažyciesia z nami praz elektronnuju poštu.\n"
+"      "
+
+#: partners/templates/partners/partials/_navbar.html:28
+#: partners/templates/partners/partials/_navbar.html:30
+msgid "Галоўная"
+msgstr "Hałoŭnaja"
+
+#: partners/templates/partners/partials/_navbar.html:53
+#, fuzzy
+#| msgid "Увайсці"
+msgid "Выйсці"
+msgstr "Vyjści"
+
 #: partners/templates/partners/sales.html:12
 msgid "Выгляд"
 msgstr "Vyhlad"
@@ -1436,6 +1478,13 @@ msgstr "Pa hadach"
 #| msgid "Месяц"
 msgid "Па месяцах"
 msgstr "Pa miesiacach"
+
+#: partners/templates/partners/sales.html:25
+#: partners/templates/partners/sales.html:73
+#, fuzzy
+#| msgid "Кнігі аўтар"
+msgid "Кніга"
+msgstr "Kniha"
 
 #: partners/templates/partners/sales.html:27
 #: partners/templates/partners/sales.html:75
@@ -1529,6 +1578,9 @@ msgstr "Permissions"
 #: user/admin.py:24
 msgid "Important dates"
 msgstr "Important dates"
+
+#~ msgid "ПАРТНЁРСКАЯ ПАНЭЛЬ"
+#~ msgstr "PARTNIORSKAJA PANEL"
 
 #~ msgid "Гадавы выгляд"
 #~ msgstr "Hadavy vyhlad"

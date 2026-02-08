@@ -1,12 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'partners/base.html' %}
 {% load i18n %}
 
 {% block title %}{% translate "Партнёры" %}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>{% translate "Партнёрская панэль" %}</h1>
-
+<div class="container main-content">
     <div class="row mt-4">
         <div class="col-md-6 mb-3">
             <a href="{% url 'partners:agreements' partner.id %}"

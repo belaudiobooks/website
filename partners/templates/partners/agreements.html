@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'partners/base.html' %}
 {% load i18n %}
 {% load partners_extras %}
 {% load books_extras %}
@@ -6,14 +6,14 @@
 {% block title %}{% translate "Дамовы" %}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container main-content">
     <h1>{% translate "Дамовы" %}</h1>
 
     {% if items %}
     <table class="table table-responsive" data-test-id="agreements-table">
         <thead>
             <tr>
-                <th scope="col">{% translate "Кніга" %}</th>
+                <th scope="col">{% translate "Назва" %}</th>
                 <th scope="col">{% translate "Аўтар_ка" %}</th>
                 <th scope="col" class="text-center">{% translate "Аўдыякніга" %}</th>
                 <th scope="col" class="text-center">{% translate "Роялці" %}</th>

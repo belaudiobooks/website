@@ -1,0 +1,59 @@
+{% load static %}
+{% load i18n %}
+
+<!-- Partners portal navigation -->
+<nav class="main-page sticky-top">
+  <div class="container" style="height: 220px">
+    {% if partner %}
+    <a href="{% url 'partners:dashboard' partner.id %}" class="link-dark text-decoration-none text-white logo-title">
+    {% else %}
+    <span class="link-dark text-decoration-none text-white logo-title">
+    {% endif %}
+      <img class="img-fluid logo" src="{% static 'images/AudioBooksLogo-lg.svg' %}" alt="Audiobooks BY">
+      <div class="h3 text-center site-title fw-bold">{% translate "БЕЛАРУСКІЯ АЎДЫЯКНІГІ" %}</div>
+    {% if partner %}</a>{% else %}</span>{% endif %}
+
+    <div class="site-description text-white">
+      <p class="title_lead show-on-main">{% translate "Партнёрскі партал" %}</p>
+      <p class="show-on-main">{% blocktranslate %}
+        Тут вы можаце праглядаць свае дамовы і статыстыку продажаў.
+        Калі ў вас яшчэ няма лагіна і пароля, калі ласка, звяжыцеся з намі праз электронную пошту.
+      {% endblocktranslate %}</p>
+    </div>
+    <div class="controls sticky-top">
+      <ul class="buttons nav navbar-nav mb-0">
+        <li class="nav-item">
+          {% if partner %}
+          <a class="nav-link text-white {% if 'dashboard' in request.resolver_match.url_name %}active{% else %}text-opacity-75{% endif %}"
+            href="{% url 'partners:dashboard' partner.id %}">{% translate "Галоўная" %}</a>
+          {% else %}
+          <span class="nav-link text-white text-opacity-50 disabled">{% translate "Галоўная" %}</span>
+          {% endif %}
+        </li>
+        <li class="nav-item">
+          {% if partner %}
+          <a class="nav-link text-white {% if 'agreements' in request.resolver_match.url_name %}active{% else %}text-opacity-75{% endif %}"
+            href="{% url 'partners:agreements' partner.id %}">{% translate "Дамовы" %}</a>
+          {% else %}
+          <span class="nav-link text-white text-opacity-50 disabled">{% translate "Дамовы" %}</span>
+          {% endif %}
+        </li>
+        <li class="nav-item">
+          {% if partner %}
+          <a class="nav-link text-white {% if 'sales' in request.resolver_match.url_name %}active{% else %}text-opacity-75{% endif %}"
+            href="{% url 'partners:sales' partner.id %}">{% translate "Продажы" %}</a>
+          {% else %}
+          <span class="nav-link text-white text-opacity-50 disabled">{% translate "Продажы" %}</span>
+          {% endif %}
+        </li>
+      </ul>
+      {% if partner %}
+      <div class="d-flex align-items-center">
+        <a href="{% url 'partners:logout' %}" class="btn btn-outline-light btn-sm">
+          {% translate "Выйсці" %}
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</nav>

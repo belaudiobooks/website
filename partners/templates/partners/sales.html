@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'partners/base.html' %}
 {% load i18n %}
 {% load static %}
 
 {% block title %}{% translate "Продажы" %}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container main-content">
     <h1>{% translate "Продажы" %}</h1>
 
     {% if sales_data_json %}

@@ -26,13 +26,13 @@
 
 <body>
     <!-- Navbar-->
-    {% include 'partials/_navbar.html' %}
+    {% block navbar %}{% include 'partials/_navbar.html' %}{% endblock %}
 
     <!-- Main conten block {% endcomment -->
     {% block content %}{% endblock content %}
 
     <!-- Footer -->
-    {% include 'partials/_footer.html' %}
+    {% block footer %}{% include 'partials/_footer.html' %}{% endblock %}
 
     <meta name="algolia" data-index="{{ algolia_index }}" data-app-id="{{ algolia_application_id }}"
         data-search-key="{{ algolia_search_key }}">

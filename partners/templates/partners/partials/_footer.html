@@ -1,0 +1,19 @@
+{% load static %}
+{% load i18n %}
+
+<!-- Partners portal footer -->
+<footer id="footer" class="py-4 text-white text-start">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 py-2">
+                {% translate "Пытанні і прапановы:" %}
+                <a href="mailto:contact@audiobooks.by" class="text-white">contact@audiobooks.by</a>
+            </div>
+            <div class="col-12 col-md-6 py-2 text-md-end">
+                <a href="{% url 'index' %}" class="text-white">
+                    {% translate "Перайсці на асноўны сайт" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>

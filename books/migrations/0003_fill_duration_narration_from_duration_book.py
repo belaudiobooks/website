@@ -11,8 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunSQL(
-            sql=[
-                """
+            sql=["""
             UPDATE books_narration
             SET duration = (
                 SELECT duration_sec
@@ -25,8 +24,7 @@ class Migration(migrations.Migration):
                 GROUP BY book_id
                 HAVING COUNT(*) = 1
             );
-            """
-            ],
+            """],
             reverse_sql=[],
         ),
     ]
